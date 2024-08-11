@@ -43,13 +43,13 @@
                href="{{site.main-url}}/multi-platform"
                role="button" data-toggle="dropdown"
                aria-haspopup="true" aria-expanded="false">
-               Multi-Platform
+               멀티 플랫폼
             </a>
             <div class="dropdown-menu" aria-labelledby="platform-navbar-dropdown">
-              <a class="dropdown-item" href="{{site.main-url}}/multi-platform/mobile">Mobile</a>
-              <a class="dropdown-item" href="{{site.main-url}}/multi-platform/web">Web</a>
-              <a class="dropdown-item" href="{{site.main-url}}/multi-platform/desktop">Desktop</a>
-              <a class="dropdown-item" href="{{site.main-url}}/multi-platform/embedded">Embedded</a>
+              <a class="dropdown-item" href="{{site.main-url}}/multi-platform/mobile">모바일</a>
+              <a class="dropdown-item" href="{{site.main-url}}/multi-platform/web">웹</a>
+              <a class="dropdown-item" href="{{site.main-url}}/multi-platform/desktop">데스크탑</a>
+              <a class="dropdown-item" href="{{site.main-url}}/multi-platform/embedded">임베디드</a>
             </div>
           </li>
           <li class="nav-item dropdown">
@@ -57,15 +57,15 @@
                href="{{site.main-url}}/"
                role="button" data-toggle="dropdown"
                aria-haspopup="true" aria-expanded="false">
-               Development
+               개발
             </a>
             <div class="dropdown-menu" aria-labelledby="dev-navbar-dropdown">
-              <a class="dropdown-item" href="{{site.main-url}}/learn">Learn</a>
-              <a class="dropdown-item" href="https://pub.dev/flutter/favorites" target="_blank">Flutter Favorites</a>
-              <a class="dropdown-item" href="https://pub.dev/" target="_blank">Packages</a>
-              <a class="dropdown-item" href="{{site.main-url}}/monetization">Monetization</a>
-              <a class="dropdown-item" href="{{site.main-url}}/games">Games</a>
-              <a class="dropdown-item" href="{{site.main-url}}/news">News</a>
+              <a class="dropdown-item" href="{{site.main-url}}/learn">학습</a>
+              <a class="dropdown-item" href="https://pub.dev/flutter/favorites" target="_blank">Flutter 즐겨찾기</a>
+              <a class="dropdown-item" href="https://pub.dev/" target="_blank">패키지</a>
+              <a class="dropdown-item" href="{{site.main-url}}/monetization">수익화</a>
+              <a class="dropdown-item" href="{{site.main-url}}/games">게임</a>
+              <a class="dropdown-item" href="{{site.main-url}}/news">뉴스</a>
             </div>
           </li>
           <li class="nav-item dropdown">
@@ -73,16 +73,16 @@
                href="{{site.main-url}}/ecosystem"
                role="button" data-toggle="dropdown"
                aria-haspopup="true" aria-expanded="false">
-               Ecosystem
+               에코시스템
             </a>
             <div class="dropdown-menu" aria-labelledby="ecosystem-navbar-dropdown">
-              <a class="dropdown-item" href="{{site.main-url}}/community">Community</a>
-              <a class="dropdown-item" href="{{site.main-url}}/events">Events</a>
-              <a class="dropdown-item" href="{{site.main-url}}/culture">Culture</a>
+              <a class="dropdown-item" href="{{site.main-url}}/community">커뮤니티</a>
+              <a class="dropdown-item" href="{{site.main-url}}/events">이벤트</a>
+              <a class="dropdown-item" href="{{site.main-url}}/culture">문화</a>
             </div>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{site.main-url}}/showcase">Showcase</a>
+            <a class="nav-link" href="{{site.main-url}}/showcase">쇼케이스</a>
           </li>
           <li class="nav-item dropdown docs-item">
             <a class="nav-link dropdown-toggle{% if route == '/' %} active{% endif %}"
@@ -90,25 +90,25 @@
                href="/"
                role="button" data-toggle="dropdown"
                aria-haspopup="true" aria-expanded="false">
-               Docs
+               문서
             </a>
             <div class="dropdown-menu" aria-labelledby="docs-navbar-dropdown">
               <a class="dropdown-item {% if route == '/release/whats-new' %} active{% endif %}"
-                 href="/release/whats-new">What's new</a>
+                 href="/release/whats-new">새로운 소식</a>
               <a class="dropdown-item {% if route contains '/get-started/editor' %} active{% endif %}"
-                 href="/get-started/editor">Editor support</a>
+                 href="/get-started/editor">에디터 지원</a>
               <a class="dropdown-item {% if route contains '/tools/hot-reload' %} active{% endif %}"
-                 href="/tools/hot-reload">Hot reload</a>
+                 href="/tools/hot-reload">핫 리로드</a>
               <a class="dropdown-item {% if route contains '/perf/ui-performance' %} active{% endif %}"
-                 href="/perf/ui-performance">Profiling</a>
+                 href="/perf/ui-performance">프로파일링</a>
               <a class="dropdown-item {% if route contains '/get-started/install' %} active{% endif %}"
-                 href="/get-started/install">Install Flutter</a>
+                 href="/get-started/install">Flutter 설치</a>
               <a class="dropdown-item {% if route contains '/tools/devtools' %} active{% endif %}"
                  href="/tools/devtools">DevTools</a>
               <a class="dropdown-item {% if route contains '/cookbook' %} active{% endif %}"
-                 href="/cookbook">Cookbook</a>
+                 href="/cookbook">쿡북</a>
               <a class="dropdown-item {% if route contains '/codelabs' %} active{% endif %}"
-                 href="/codelabs">Codelabs</a>
+                 href="/codelabs">코드랩</a>
             </div>
           </li>
         </ul>
@@ -116,7 +116,7 @@
           <input
             class="site-header__searchfield form-control search-field"
             type="search" name="q" id="q" autocomplete="off"
-            placeholder="Search" aria-label="Search">
+            placeholder="검색" aria-label="Search">
         </form>
       </div>
     </div>
@@ -152,7 +152,7 @@
     </div>
     <a
       class="site-header__cta btn btn-primary"
-      href="/get-started/install/">Get started
+      href="/get-started/install/">시작하기
     </a>
   </nav>
 </header>

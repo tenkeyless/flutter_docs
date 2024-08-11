@@ -1,678 +1,678 @@
-- title: Get started
+- title: 시작하기
   children:
-    - title: Install Flutter
+    - title: Flutter 설치
       permalink: /get-started/install
-    - title: Test drive
+    - title: 테스트 드라이브
       permalink: /get-started/test-drive
-    - title: Write your first app
+    - title: 첫 번째 앱을 작성하기
       permalink: /get-started/codelab
-    - title: Learn more
+    - title: 더 알아보기
       permalink: /get-started/learn-more
     - divider
-    - title: From another platform?
+    - title: 다른 플랫폼에서 왔나요?
       permalink: /get-started/flutter-for
       children:
-        - title: Flutter for Android devs
+        - title: Android 개발자를 위한 Flutter
           permalink: /get-started/flutter-for/android-devs
-        - title: Flutter for SwiftUI devs
+        - title: SwiftUI 개발자를 위한 Flutter
           permalink: /get-started/flutter-for/swiftui-devs
-        - title: Flutter for UIKit devs
+        - title: UIKit 개발자를 위한 Flutter
           permalink: /get-started/flutter-for/uikit-devs
-        - title: Flutter for React Native devs
+        - title: React Native 개발자를 위한 Flutter
           permalink: /get-started/flutter-for/react-native-devs
-        - title: Flutter for web devs
+        - title: 웹 개발자를 위한 플러터
           permalink: /get-started/flutter-for/web-devs
-        - title: Flutter for Xamarin.Forms devs
+        - title: Xamarin.Forms 개발자를 위한 Flutter
           permalink: /get-started/flutter-for/xamarin-forms-devs
         - divider
-        - title: Introduction to declarative UI
+        - title: 선언적 UI 소개
           permalink: /get-started/flutter-for/declarative
-        - title: Flutter versus Swift concurrency
+        - title: Flutter vs Swift concurrency
           permalink: /get-started/flutter-for/dart-swift-concurrency
-    - title: "Dart language overview"
+    - title: "Dart 언어 개요"
       permalink: https://dart.dev/overview
 
-- title: Stay up to date
+- title: 최신 소식
   permalink: /release
   children:
-    - title: Upgrade
+    - title: 업그레이드
       permalink: /release/upgrade
-    - title: SDK archive
+    - title: SDK 아카이브
       permalink: /release/archive
     - divider
-    - title: What's new
+    - title: 새로운 소식
       permalink: /release/whats-new
-    - title: Release notes
+    - title: 릴리스 노트
       permalink: /release/release-notes
-    - title: Breaking changes
+    - title: 중요한 변경 사항
       permalink: /release/breaking-changes
-    - title: Compatibility policy
+    - title: 호환성 정책
       permalink: /release/compatibility-policy
 
-- title: Codelabs & samples
+- title: 코드랩 & 샘플
   children:
-    - title: Codelabs
+    - title: 코드랩
       permalink: /codelabs
-    - title: Cookbook
+    - title: 쿡북
       permalink: /cookbook
-    - title: Samples and demos
+    - title: 샘플 및 데모
       permalink: https://flutter.github.io/samples/
 
-- title: App solutions
+- title: 앱 솔루션
   children:
     - title: AI
       children:
-      - title: Overview
+      - title: 개요
         permalink: /resources/ai-overview
-      - title: Get started with the Gemini API
+      - title: Gemini API 시작하기
         permalink: https://ai.google.dev/gemini-api/docs/get-started/dart
       - title: Google AI Dart SDK (pub.dev)
         permalink: https://pub.dev/packages/google_generative_ai
-      - title: Build with Google AI Dart SDK (video)
+      - title: Google AI Dart SDK로 빌드 (비디오)
         permalink: https://www.youtube.com/watch?v=1AuzJEiHjO4
     - title: Firebase & Firestore
       children:
-      - title: Overview
+      - title: 개요
         permalink: /data-and-backend/firebase
-      - title: Discover Firebase for Flutter
+      - title: Flutter를 위한 Firebase 발견하기
         permalink: https://firebase.google.com/docs/flutter
-      - title: Get to know Firebase for Flutter
+      - title: Flutter를 위한 Firebase 알아보기
         permalink: https://www.youtube.com/watch?v=wUSkeTaBonA
-      - title: Add a user authentication flow to a Flutter app using FirebaseUI
+      - title: FirebaseUI를 사용하여 Flutter 앱에 사용자 인증 흐름 추가
         permalink: https://firebase.google.com/codelabs/firebase-auth-in-flutter-apps
-      - title: Get to know Firebase for web
+      - title: 웹용 Firebase 알아보기
         permalink: https://firebase.google.com/codelabs/firebase-get-to-know-web
-    - title: Games
+    - title: 게임
       children:
-        - title: Overview
+        - title: 개요
           permalink: /resources/games-toolkit
-        - title: Add achievements and leaderboards
+        - title: 업적 및 리더보드 추가
           permalink: /cookbook/games/achievements-leaderboard
-        - title: Build leaderboards with Firestore
+        - title: Firestore로 리더보드 구축
           permalink: https://firebase.google.com/codelabs/build-leaderboards-with-firestore#0
-        - title: Add advertising
+        - title: 광고 추가
           permalink: /cookbook/plugins/google-mobile-ads
-        - title: Add multiplayer support
+        - title: 멀티플레이어 지원 추가
           permalink: /cookbook/games/firestore-multiplayer
-        - title: Add in-app purchases
+        - title: 앱 내 구매 추가
           permalink: https://codelabs.developers.google.com/codelabs/flutter-in-app-purchases
-        - title: Add user authentication
+        - title: 사용자 인증 추가
           permalink: https://firebase.google.com/codelabs/firebase-auth-in-flutter-apps
-        - title: Debug using Crashlytics
+        - title: Crashlytics를 사용하여 디버그
           permalink: https://firebase.google.com/docs/crashlytics/get-started?platform=flutter
-        - title: Intro to Flame with Flutter
+        - title: Flutter를 이용한 Flame 소개
           permalink: https://codelabs.developers.google.com/codelabs/flutter-flame-brick-breaker
-    - title: Monetization
+    - title: 수익화
       children:
-        - title: Advertising
+        - title: 광고
           children:
-          - title: Ads overview
+          - title: 광고 개요
             permalink: /resources/ads-overview
-          - title: Add advertising
+          - title: 광고 추가
             permalink: /cookbook/plugins/google-mobile-ads
-          - title: Add AdMob ads to your Flutter app
+          - title: Flutter 앱에 AdMob 광고 추가
             permalink: https://codelabs.developers.google.com/codelabs/admob-ads-in-flutter
-          - title: Add an AdMob banner and native inline ads
+          - title: AdMob 배너 및 네이티브 인라인 광고 추가
             permalink: https://codelabs.developers.google.com/codelabs/admob-inline-ads-in-flutter
-          - title: Google AdMob mediation
+          - title: Google AdMob 미디에이션
             permalink: https://developers.google.com/admob/flutter/mediation
           - title: Interactive Media Ads SDK
             permalink: https://pub.dev/packages/interactive_media_ads
-        - title: In-app purchases
+        - title: 앱 내 구매
           children:
-          - title: In-app purchases overview
+          - title: 앱 내 구매 개요
             permalink: /resources/in-app-purchases-overview
-          - title: Add in-app purchases
+          - title: 앱 내 구매 추가
             permalink: https://codelabs.developers.google.com/codelabs/flutter-in-app-purchases
-        - title: Payments
+        - title: 결제
           children:
-          - title: Payments overview
+          - title: 결제 개요
             permalink: /resources/payments-overview
-          - title: Google pay package
+          - title: Google pay 패키지
             permalink: https://pub.dev/packages/pay
-    - title: Maps
+    - title: 지도
       children:
-        - title: Add maps to your app
+        - title: 앱에 지도 추가
           permalink: https://developers.google.com/maps/flutter-package
-        - title: Add Google maps to a Flutter app
+        - title: Flutter 앱에 Google 지도 추가
           permalink: https://codelabs.developers.google.com/codelabs/google-maps-in-flutter
-    - title: News
+    - title: 뉴스
       children:
-        - title: Build a news app
+        - title: 뉴스 앱 빌드
           permalink: /resources/news-toolkit
 
 - divider
-- header: User interface
-- title: Introduction
+- header: 사용자 인터페이스
+- title: 소개
   permalink: /ui
-- title: Widget catalog
+- title: 위젯 카탈로그
   permalink: /ui/widgets      
-- title: Layout
+- title: 레이아웃
   permalink: /ui/layout
   children:
-    - title: Introduction
+    - title: 소개
       permalink: /ui/layout
       match-page-url-exactly: true
-    - title: Build a layout
+    - title: 레이아웃 빌드
       permalink: /ui/layout/tutorial
-    - title: Lists & grids
+    - title: 리스트 & 그리드
       permalink: /ui/layout/lists
       children:
-        - title: Create and use lists
+        - title: 리스트 만들기 및 사용
           permalink: /cookbook/lists/basic-list
-        - title: Create a horizontal list
+        - title: Horizontal 리스트 만들기
           permalink: /cookbook/lists/horizontal-list
-        - title: Create a grid view
+        - title: 그리드 뷰 만들기
           permalink: /cookbook/lists/grid-lists
-        - title: Create lists with different types of items
+        - title: 다양한 유형의 항목으로 리스트 만들기
           permalink: /cookbook/lists/mixed-list
-        - title: Create lists with spaced items
+        - title: 간격을 둔 항목으로 리스트 만들기
           permalink: /cookbook/lists/spaced-items
-        - title: Work with long lists
+        - title: 긴 리스트로 작업하기
           permalink: /cookbook/lists/long-lists
-    - title: Scrolling
+    - title: 스크롤
       permalink: /ui/layout/scrolling
       children:
-        - title: Overview
+        - title: 개요
           permalink: /ui/layout/scrolling
           match-page-url-exactly: true
-        - title: Use slivers to achieve fancy scrolling
+        - title: 멋진 스크롤링 구현을 위한 슬리버 사용
           permalink: /ui/layout/scrolling/slivers
-        - title: Place a floating app bar above a list
+        - title: 리스트 위에 떠 있는 앱 바 배치
           permalink: /cookbook/lists/floating-app-bar
-        - title: Create a scrolling parallax effect
+        - title: 스크롤링 패럴랙스 효과 만들기
           permalink: /cookbook/effects/parallax-scrolling
-- title: Adaptive & responsive design
+- title: 적응형 및 반응형 디자인
   permalink: /ui/adaptive-responsive
   children:
-    - title: Overview
+    - title: 개요
       permalink: /ui/adaptive-responsive
       match-page-url-exactly: true
-    - title: General approach
+    - title: 일반적인 접근 방식
       permalink: /ui/adaptive-responsive/general
     - title: SafeArea & MediaQuery
       permalink: /ui/adaptive-responsive/safearea-mediaquery
-    - title: Large screens & foldables
+    - title: 대형 스크린 및 폴더블
       permalink: /ui/adaptive-responsive/large-screens
-    - title: User input & accessibility
+    - title: 사용자 입력 및 접근성
       permalink: /ui/adaptive-responsive/input
-    - title: Capabilities & policies
+    - title: 역량(Capabilities) 및 정책
       permalink: /ui/adaptive-responsive/capabilities
-    - title: Best practices
+    - title: 모범 사례
       permalink: /ui/adaptive-responsive/best-practices
-    - title: Additional resources
+    - title: 추가 자료
       permalink: /ui/adaptive-responsive/more-info
-- title: Design & theming
+- title: 디자인 및 테마
   permalink: /ui/design
   children:
-    - title: Share styles with themes
+    - title: 테마로 스타일 공유
       permalink: /cookbook/design/themes
-    - title: Material design
+    - title: Material 디자인
       permalink: /ui/design/material
-    - title: Migrate to Material 3
+    - title: Material 3로 마이그레이션
       permalink: /release/breaking-changes/material-3-migration
-    - title: Text
+    - title: 텍스트
       permalink: /ui/design/text
       children:
-        - title: Fonts & typography
+        - title: 글꼴 및 타이포그래피
           permalink: /ui/design/text/typography
-        - title: Use a custom font
+        - title: 커스텀 글꼴 사용
           permalink: /cookbook/design/fonts
-        - title: Export fonts from a package
+        - title: 패키지로부터 글꼴 내보내기
           permalink: /cookbook/design/package-fonts
-        - title: Google Fonts package
+        - title: Google Fonts 패키지
           permalink: https://pub.dev/packages/google_fonts
       # Consider renaming this 'Custom drawing & graphics'
       # once more docs are added
-    - title: Custom graphics
+    - title: 커스텀 그래픽
       permalink: /ui/design/graphics
       children:
-        - title: Use custom fragment shaders
+        - title: 커스텀 조각 셰이더(fragment shaders) 사용
           permalink: /ui/design/graphics/fragment-shaders
       
-- title: Interactivity
+- title: 상호 작용성
   permalink: /ui/interactivity
   children:
-    - title: Add interactivity to your app
+    - title: 앱에 상호 작용성 추가
       permalink: /ui/interactivity
       match-page-url-exactly: true
-    - title: Gestures
+    - title: 제스쳐
       permalink: /ui/interactivity/gestures
       children:
-        - title: Introduction
+        - title: 소개
           permalink: /ui/interactivity/gestures
           match-page-url-exactly: true
-        - title: Handle taps
+        - title: 탭 다루기
           permalink: /cookbook/gestures/handling-taps
-        - title: Drag an object outside an app
+        - title: 앱 밖으로 객체 끌기
           permalink: /ui/interactivity/gestures/drag-outside
-        - title: Drag a UI element within an app
+        - title: 앱 내에서 UI 요소 드래그
           permalink: /cookbook/effects/drag-a-widget
-        - title: Add Material touch ripples
+        - title: 머티리얼 터치 리플(ripples) 추가
           permalink: /cookbook/gestures/ripples
-        - title: Implement swipe to dismiss
+        - title: 스와이프하여 dismiss 기능 구현
           permalink: /cookbook/gestures/dismissible
-    - title: Input & forms
+    - title: 입력 및 양식
       permalink: /ui/interactivity/input
       children:
-        - title: Create and style a text field
+        - title: 텍스트 필드 만들기 및 스타일 지정
           permalink: /cookbook/forms/text-input
-        - title: Retrieve the value of a text field
+        - title: 텍스트 필드의 값 검색
           permalink: /cookbook/forms/retrieve-input
-        - title: Handle changes to a text field
+        - title: 텍스트 필드의 변경 사항 처리
           permalink: /cookbook/forms/text-field-changes
-        - title: Manage focus in text fields
+        - title: 텍스트 필드에서 포커스 관리
           permalink: /cookbook/forms/focus
-        - title: Build a form with validation
+        - title: 검증이 있는 양식 빌드
           permalink: /cookbook/forms/validation
-    - title: Display a snackbar
+    - title: 스낵바 표시
       permalink: /cookbook/design/snackbars
-    - title: Implement actions & shortcuts
+    - title: 액션 및 shortcuts 구현
       permalink: /ui/interactivity/actions-and-shortcuts
-    - title: Manage keyboard focus
+    - title: 키보드 포커스 관리
       permalink: /ui/interactivity/focus
 
-- title: Assets & media
+- title: Assets 및 미디어
   permalink: /ui/assets
   children:
-    - title: Add assets and images
+    - title: Asset 및 이미지 추가
       permalink: /ui/assets/assets-and-images
-    - title: Display images from the internet
+    - title: 인터넷으로부터 이미지 표시
       permalink: /cookbook/images/network-image
-    - title: Fade in images with a placeholder
+    - title: 플레이스홀더를 사용하여 이미지 페이드 인
       permalink: /cookbook/images/fading-in-images
-    - title: Play and pause a video
+    - title: 비디오 재생 및 일시 정지
       permalink: /cookbook/plugins/play-video
-    - title: Transforming assets at build time
+    - title: 빌드 시에 asset 변환
       permalink: /ui/assets/asset-transformation
 
-- title: Navigation & routing
+- title: 네비게이션 & 라우팅
   permalink: /ui/navigation
   children:
-    - title: Overview
+    - title: 개요
       permalink: /ui/navigation
       match-page-url-exactly: true
-    - title: Add tabs to your app
+    - title: 앱에 탭 추가
       permalink: /cookbook/design/tabs
-    - title: Navigate to a new screen and back
+    - title: 새 화면으로 이동하고 뒤로 돌아가기
       permalink: /cookbook/navigation/navigation-basics
-    - title: Send data to a new screen
+    - title: 새 화면으로 데이터 보내기
       permalink: /cookbook/navigation/passing-data
-    - title: Return data from a screen
+    - title: 화면으로부터 데이터 반환
       permalink: /cookbook/navigation/returning-data
-    - title: Add a drawer to a screen
+    - title: 화면에 drawer 추가
       permalink: /cookbook/design/drawer
-    - title: Set up deep linking
+    - title: 딥링크 설정하기
       permalink: /ui/navigation/deep-linking
-    - title: Set up app links for Android
+    - title: Android용 앱 링크 설정
       permalink: /cookbook/navigation/set-up-app-links
-    - title: Set up universal links for iOS
+    - title: iOS용 유니버설 링크 설정
       permalink: /cookbook/navigation/set-up-universal-links
-    - title: Configure web URL strategies
+    - title: 웹 URL 전략 구성
       permalink: /ui/navigation/url-strategies
       
-- title: Animations & transitions
+- title: 애니메이션 및 전환
   permalink: /ui/animations
   children:
-    - title: Introduction
+    - title: 소개
       permalink: /ui/animations
       match-page-url-exactly: true
-    - title: Tutorial
+    - title: 튜토리얼
       permalink: /ui/animations/tutorial
-    - title: Implicit animations
+    - title: 암묵적 애니메이션
       permalink: /ui/animations/implicit-animations
-    - title: Animate the properties of a container
+    - title: 컨테이너의 속성에 애니메이팅
       permalink: /cookbook/animation/animated-container
-    - title: Fade a widget in and out
+    - title: 위젯 페이드 인 및 페이드 아웃
       permalink: /cookbook/animation/opacity-animation
-    - title: Hero animations
+    - title: 히어로 애니메이션
       permalink: /ui/animations/hero-animations
-    - title: Animate a page route transition
+    - title: 페이지 route 전환 애니메이션
       permalink: /cookbook/animation/page-route-animation
-    - title: Animate using a physic simulation
+    - title: 물리 시뮬레이션을 사용하여 애니메이션 만들기
       permalink: /cookbook/animation/physics-simulation
-    - title: Staggered animations
+    - title: Staggered 애니메이션
       permalink: /ui/animations/staggered-animations
-    - title: Create a staggered menu animation
+    - title: Staggered 메뉴 애니메이션 만들기
       permalink: /cookbook/effects/staggered-menu-animation
-    - title: API overview
+    - title: API 개요
       permalink: /ui/animations/overview
       
-- title: Accessibility & internationalization
+- title: 접근성 및 국제화
   permalink: /ui/accessibility-and-internationalization
   children:
-    - title: Accessibility
+    - title: 접근성
       permalink: /ui/accessibility-and-internationalization/accessibility
-    - title: Internationalization
+    - title: 국제화
       permalink: /ui/accessibility-and-internationalization/internationalization
 
 - divider
-- header: Beyond UI
+- header: UI를 넘어
 
-- title: Data & backend
+- title: 데이터 및 백엔드
   permalink: /data-and-backend
   children:
-    - title: State management
+    - title: State 관리
       permalink: /data-and-backend/state-mgmt
       children:
-        - title: Introduction
+        - title: 소개
           permalink: /data-and-backend/state-mgmt/intro
-        - title: Think declaratively
+        - title: 선언적으로 생각하기
           permalink: /data-and-backend/state-mgmt/declarative
-        - title: Ephemeral vs app state
+        - title: Ephemeral vs. app 상태
           permalink: /data-and-backend/state-mgmt/ephemeral-vs-app
-        - title: Simple app state management
+        - title: 간단한 앱 상태 관리
           permalink: /data-and-backend/state-mgmt/simple
-        - title: Options
+        - title: 옵션
           permalink: /data-and-backend/state-mgmt/options
-    - title: Networking & http
+    - title: 네트워킹 & http
       permalink: /data-and-backend/networking
       children:
-        - title: Overview
+        - title: 개요
           permalink: /data-and-backend/networking
           match-page-url-exactly: true
-        - title: Fetch data from the internet
+        - title: 인터넷으로부터 데이터 가져오기
           permalink: /cookbook/networking/fetch-data
-        - title: Make authenticated requests
+        - title: 인증된 요청을 만들기
           permalink: /cookbook/networking/authenticated-requests
-        - title: Send data to the internet
+        - title: 인터넷으로 데이터 보내기
           permalink: /cookbook/networking/send-data
-        - title: Update data over the internet
+        - title: 인터넷을 통해 데이터 업데이트
           permalink: /cookbook/networking/update-data
-        - title: Delete data on the internet
+        - title: 인터넷에서 데이터 삭제
           permalink: /cookbook/networking/delete-data
-        - title: Communicate with WebSockets
+        - title: WebSockets로 통신하기
           permalink: /cookbook/networking/web-sockets
-    - title: Serialization
+    - title: 직렬화
       permalink: /data-and-backend/serialization
       children:
-        - title: JSON serialization
+        - title: JSON 직렬화
           permalink: /data-and-backend/serialization/json
-        - title: Parse JSON in the background
+        - title: 백그라운드에서 JSON 구문 분석
           permalink: /cookbook/networking/background-parsing
-    - title: Persistence
+    - title: 저장
       permalink: /data-and-backend/persistence
       children: 
-        - title: Store key-value data on disk
+        - title: 디스크에 키-값 데이터 저장
           permalink: /cookbook/persistence/key-value
-        - title: Read and write files
+        - title: 파일 읽기 및 쓰기
           permalink: /cookbook/persistence/reading-writing-files
-        - title: Persist data with SQLite
+        - title: SQLite로 데이터 유지
           permalink: /cookbook/persistence/sqlite
     - title: Firebase
       permalink: /data-and-backend/firebase
       children:
-        - title: Overview
+        - title: 개요
           permalink: /data-and-backend/firebase
-        - title: Add Firebase to your Flutter app
+        - title: Flutter 앱에 Firebase 추가
           permalink: https://firebase.google.com/docs/flutter/setup?platform=ios
     - title: Google APIs
       permalink: /data-and-backend/google-apis
 
-- title: Platform integration
+- title: 플랫폼 통합
   permalink: /platform-integration
   children:
-    - title: Supported platforms
+    - title: 지원 플랫폼
       permalink: /reference/supported-platforms
-    - title: Build desktop apps with Flutter
+    - title: Flutter로 데스크톱 앱 빌드
       permalink: /platform-integration/desktop
-    - title: Write platform-specific code
+    - title: 플랫폼별 코드 작성
       permalink: /platform-integration/platform-channels
-    - title: Automatic platform adaptations
+    - title: 자동 플랫폼 적응
       permalink: /platform-integration/platform-adaptations
     - title: Android
       permalink: /platform-integration/android
       children:
-        - title: Add Android as build target
+        - title: 빌드 대상으로 Android 추가
           permalink: /platform-integration/android/install-android
-        - title: Add a splash screen
+        - title: 스플래시 화면 추가
           permalink: /platform-integration/android/splash-screen
-        - title: Add predictive back
+        - title: predictive back 추가
           permalink: /platform-integration/android/predictive-back
-        - title: Bind to native code
+        - title: 네이티브 코드에 바인딩
           permalink: /platform-integration/android/c-interop
-        - title: Host a native Android view
+        - title: 네이티브 Android 뷰 호스팅
           permalink: /platform-integration/android/platform-views
-        - title: Restore state on Android
+        - title: Android에서 상태 복원
           permalink: /platform-integration/android/restore-state-android
-        - title: Target ChromeOS with Android
+        - title: Android로 ChromeOS를 타겟팅
           permalink:  /platform-integration/android/chromeos
     - title: iOS
       permalink: /platform-integration/ios
       children:
-        - title: Add iOS as build target
+        - title: 빌드 대상으로 iOS 추가
           permalink: /platform-integration/ios/install-ios
-        - title: Leverage Apple's system libraries
+        - title: Apple의 시스템 라이브러리 활용
           permalink: /platform-integration/ios/apple-frameworks
-        - title: Add a launch screen
+        - title: 시작 화면 추가
           permalink: /platform-integration/ios/launch-screen
-        - title: Add iOS App Clip support
+        - title: iOS 앱 클립 지원 추가
           permalink: /platform-integration/ios/ios-app-clip
-        - title: Add iOS app extensions
+        - title: iOS 앱 확장 프로그램 추가
           permalink: /platform-integration/ios/app-extensions
-        - title: Bind to native code
+        - title: 네이티브 코드에 바인딩
           permalink: /platform-integration/ios/c-interop
-        - title: Host a native iOS view
+        - title: 네이티브 iOS 뷰 호스팅
           permalink: /platform-integration/ios/platform-views
-        - title: Enable debugging on iOS
+        - title: iOS에서 디버깅 활성화
           permalink: /platform-integration/ios/ios-debugging
-        - title: Restore state on iOS
+        - title: iOS에서 상태 복원
           permalink: /platform-integration/ios/restore-state-ios
     - title: Linux
       permalink: /platform-integration/linux
       children:
-        - title: Add Linux as build target
+        - title: 빌드 대상으로 Linux 추가
           permalink: /platform-integration/linux/install-linux
-        - title: Build a Linux app
+        - title: Linux 앱 빌드
           permalink: /platform-integration/linux/building
     - title: macOS
       permalink: /platform-integration/macos
       children:
-        - title: Add macOS as build target
+        - title: 빌드 대상으로 macOS 추가
           permalink: /platform-integration/macos/install-macos
-        - title: Build a macOS app
+        - title: macOS 앱 빌드
           permalink: /platform-integration/macos/building
-        - title: Bind to native code
+        - title: 네이티브 코드에 바인딩
           permalink: /platform-integration/macos/c-interop
-        - title: Host a native macOS view
+        - title: 네이티브 macOS 뷰 호스팅
           permalink: /platform-integration/macos/platform-views
-    - title: Web
+    - title: 웹
       permalink: /platform-integration/web
       children:
-        - title: Add web as build target
+        - title: 빌드 대상으로 웹 추가
           permalink: /platform-integration/web/install-web
-        - title: Build a web app
+        - title: 웹 앱 만들기
           permalink: /platform-integration/web/building
         - title: WebAssembly
           permalink: /platform-integration/web/wasm
-        - title: Customize app initialization
+        - title: 앱 초기화 사용자 정의
           permalink: /platform-integration/web/initialization
-        - title: Embedding Flutter web
+        - title: Flutter 웹 임베딩
           permalink: /platform-integration/web/embedding-flutter-web
-        - title: Web content in Flutter
+        - title: Flutter의 웹 콘텐츠
           permalink: /platform-integration/web/web-content-in-flutter
-        - title: Web renderers
+        - title: 웹 렌더러
           permalink: /platform-integration/web/renderers
-        - title: Display images on the web
+        - title: 웹에 이미지 표시
           permalink: /platform-integration/web/web-images
         - title: Web FAQ
           permalink: /platform-integration/web/faq
     - title: Windows
       permalink: /platform-integration/windows
       children:
-        - title: Add Windows as build target
+        - title: 빌드 대상으로 Windows 추가
           permalink: /platform-integration/windows/install-windows
-        - title: Build a Windows app
+        - title: Windows 앱 빌드
           permalink: /platform-integration/windows/building
 
-- title: Packages & plugins
+- title: 패키지 및 플러그인
   permalink: /packages-and-plugins
   children:
-    - title: Use packages & plugins
+    - title: 패키지와 플러그인 사용
       permalink: /packages-and-plugins/using-packages
-    - title: Develop packages & plugins
+    - title: 패키지 및 플러그인 개발
       permalink: /packages-and-plugins/developing-packages
     - title: Swift Package Manager
       permalink: /packages-and-plugins/swift-package-manager
       children:
-        - title: For app developers
+        - title: 앱 개발자를 위한
           permalink: /packages-and-plugins/swift-package-manager/for-app-developers
-        - title: For plugin authors
+        - title: 플러그인 작성자를 위한
           permalink: /packages-and-plugins/swift-package-manager/for-plugin-authors
     - divider
-    - title: Flutter Favorites
+    - title: Flutter 즐겨찾기
       permalink: /packages-and-plugins/favorites
-    - title: Package repository
+    - title: 패키지 저장소
       permalink: https://pub.dev/flutter
 
-- title: Testing & debugging
+- title: 테스트 및 디버깅
   permalink: /testing
   children:
-    - header: Testing
-    - title: Overview
+    - header: 테스트
+    - title: 개요
       permalink: /testing/overview
       match-page-url-exactly: true
-    - title: Unit testing
+    - title: 유닛 테스트
       children:
-        - title: Introduction
+        - title: 소개
           permalink: /cookbook/testing/unit/introduction
-        - title: Mock dependencies
+        - title: 의존성 Mock
           permalink: /cookbook/testing/unit/mocking
-    - title: Widget testing
+    - title: 위젯 테스트
       children:
-        - title: Introduction
+        - title: 소개
           permalink: /cookbook/testing/widget/introduction
-        - title: Find widgets
+        - title: 위젯 찾기
           permalink: /cookbook/testing/widget/finders
-        - title: Simulate scrolling
+        - title: 스크롤 시뮬레이션
           permalink: /cookbook/testing/widget/scrolling
-        - title: Simulate user interaction
+        - title: 사용자 상호 작용 시뮬레이션
           permalink: /cookbook/testing/widget/tap-drag
-    - title: Integration testing
+    - title: 통합 테스트
       children:
-        - title: Introduction
+        - title: 소개
           permalink: /cookbook/testing/integration/introduction
           match-page-url-exactly: true
-        - title: Write and run an integration test
+        - title: 통합 테스트 작성 및 실행
           permalink: /testing/integration-tests
-        - title: Profile an integration test
+        - title: 통합 테스트 프로파일링
           permalink: /cookbook/testing/integration/profiling
-    - title: Test a plugin
+    - title: 플러그인 테스트
       permalink: /testing/testing-plugins
-    - title: Handle plugin code in tests
+    - title: 테스트에서 플러그인 코드 처리
       permalink: /testing/plugins-in-tests
-    - header: Debugging
-    - title: Debugging tools
+    - header: 디버깅
+    - title: 디버깅 도구
       permalink: /testing/debugging
-    - title: Debug your app programmatically
+    - title: 프로그래밍 방식으로 앱 디버깅
       permalink: /testing/code-debugging
-    - title: Use a native language debugger
+    - title: 네이티브 언어 디버거 사용
       permalink: /testing/native-debugging
-    - title: Flutter's build modes
+    - title: Flutter의 빌드 모드
       permalink: /testing/build-modes
-    - title: Common Flutter errors
+    - title: 일반적인 Flutter 오류
       permalink: /testing/common-errors
-    - title: Handle errors
+    - title: 오류 처리
       permalink: /testing/errors
       match-page-url-exactly: true
-    - title: Report errors to a service
+    - title: 서비스에 오류 보고하기
       permalink: /cookbook/maintenance/error-reporting
 
-- title: Performance & optimization
+- title: 성능 및 최적화
   permalink: /perf
   children:
-    - title: Overview
+    - title: 개요
       permalink: /perf
       match-page-url-exactly: true
     - title: Impeller
       permalink: /perf/impeller
-    - title: Performance best practices
+    - title: 성능 모범 사례
       permalink: /perf/best-practices
-    - title: App size
+    - title: 앱 크기
       permalink: /perf/app-size
-    - title: Deferred components
+    - title: 지연된(Deferred) 컴포넌트
       permalink: /perf/deferred-components
 #    - title: Memory
 #      permalink: /perf/memory
 #    - title: Power usage
 #      permalink: /perf/power
-    - title: Rendering performance
+    - title: 렌더링 성능
       permalink: /perf/rendering-performance
-    - title: Performance profiling
+    - title: 성능 프로파일링
       permalink: /perf/ui-performance
-    - title: Performance profiling for web
+    - title: 웹을 위한 성능 프로파일링
       permalink: /perf/web-performance
-    - title: Shader compilation jank
+    - title: 셰이더 컴파일 잼크 (Shader compilation jank)
       permalink: /perf/shader
-    - title: Performance metrics
+    - title: 성능 지표
       permalink: /perf/metrics
-    - title: Concurrency and isolates
+    - title: 동시성 및 격리
       permalink: /perf/isolates
-    - title: Performance FAQ
+    - title: 성능 FAQ
       permalink: /perf/faq
-    - title: Appendix
+    - title: 부록
       permalink: /perf/appendix
 
-- title: Deployment
+- title: 배포
   permalink: /deployment
   children:
-    - title: Obfuscate Dart code
+    - title: Dart 코드 난독화
       permalink: /deployment/obfuscate
-    - title: Create flavors of an app
+    - title: 앱의 플레이버 생성
       permalink: /deployment/flavors
-    - title: Build and release an Android app
+    - title: Android 앱 빌드 및 릴리스
       permalink: /deployment/android
-    - title: Build and release an iOS app
+    - title: iOS 앱 빌드 및 릴리스
       permalink: /deployment/ios
-    - title: Build and release a macOS app
+    - title: macOS 앱 빌드 및 릴리스
       permalink: /deployment/macos
-    - title: Build and release a Linux app
+    - title: Linux 앱 빌드 및 릴리스
       permalink: /deployment/linux
-    - title: Build and release a Windows app
+    - title: Windows 앱 빌드 및 릴리스
       permalink: /deployment/windows
-    - title: Build and release a web app
+    - title: 웹 앱 빌드 및 릴리스
       permalink: /deployment/web
-    - title: Set up continuous deployment
+    - title: 지속적인 배포 설정
       permalink: /deployment/cd
 
-- title: Add to an existing app
+- title: 기존 앱에 추가
   permalink: /add-to-app
   children:
-    - title: Introduction
+    - title: 소개
       permalink: /add-to-app
       match-page-url-exactly: true
-    - title: Add to an Android app
+    - title: Android 앱에 추가
       permalink: /add-to-app/android
       children:
-        - title: Set up Android project
+        - title: Android 프로젝트 설정
           permalink: /add-to-app/android/project-setup
-        - title: Add a single Flutter screen
+        - title: 단일 Flutter 화면 추가
           permalink: /add-to-app/android/add-flutter-screen
-        - title: Add a Flutter Fragment
+        - title: Flutter 프래그먼트 추가
           permalink: /add-to-app/android/add-flutter-fragment
-        - title: Add a Flutter View
+        - title: Flutter 뷰 추가
           permalink: /add-to-app/android/add-flutter-view
-        - title: Use a Flutter plugin
+        - title: Flutter 플러그인 사용
           permalink: /add-to-app/android/plugin-setup
-    - title: Add to an iOS app
+    - title: iOS 앱에 추가
       permalink: /add-to-app/ios
       children:
-        - title: Set up iOS project
+        - title: iOS 프로젝트 설정
           permalink: /add-to-app/ios/project-setup
-        - title: Add a single Flutter screen
+        - title: 단일 Flutter 화면 추가
           permalink: /add-to-app/ios/add-flutter-screen
-    - title: Add to a web app
+    - title: 웹 앱에 추가
       permalink: /platform-integration/web/embedding-flutter-web
-    - title: Debug embedded Flutter module
+    - title: 디버그 임베디드 Flutter 모듈
       permalink: /add-to-app/debugging
-    - title: Add multiple Flutter instances
+    - title: 여러 개의 Flutter 인스턴스 추가
       permalink: /add-to-app/multiple-flutters
-    - title: Loading sequence and performance
+    - title: 로딩 sequence 및 성능
       permalink: /add-to-app/performance
 
 - divider
 
-- title: Tools & editors
+- title: 도구 및 편집기
   permalink: /tools
   children:
     - title: Android Studio & IntelliJ
@@ -682,91 +682,91 @@
     - title: DevTools
       permalink: /tools/devtools
       children:
-        - title: Overview
+        - title: 개요
           permalink: /tools/devtools
-        - title: Run from Android Studio & IntelliJ
+        - title: Android Studio 및 IntelliJ에서 실행
           permalink: /tools/devtools/android-studio
-        - title: Run from VS Code
+        - title: VS Code에서 실행
           permalink: /tools/devtools/vscode
-        - title: Run from command line
+        - title: 커맨드라인에서 실행
           permalink: /tools/devtools/cli
-        - title: Flutter inspector
+        - title: Flutter 인스펙터
           permalink: /tools/devtools/inspector
-        - title: Performance view
+        - title: 성능 보기
           permalink: /tools/devtools/performance
-        - title: CPU Profiler view
+        - title: CPU Profiler 보기
           permalink: /tools/devtools/cpu-profiler
-        - title: Memory view
+        - title: 메모리 보기
           permalink: /tools/devtools/memory
-        - title: Debug console view
+        - title: 디버그 콘솔 뷰
           permalink: /tools/devtools/console
-        - title: Network view
+        - title: Network 뷰
           permalink: /tools/devtools/network
         - title: Debugger
           permalink: /tools/devtools/debugger
-        - title: Logging view
+        - title: Logging 뷰
           permalink: /tools/devtools/logging
-        - title: App size tool
+        - title: App 크키 툴
           permalink: /tools/devtools/app-size
-        - title: DevTools extensions
+        - title: DevTools 확장 프로그램
           permalink: /tools/devtools/extensions
-        - title: Validate deep links
+        - title: 딥 링크 검증
           permalink: /tools/devtools/deep-links
-        - title: Release notes
+        - title: 릴리스 노트
           permalink: /tools/devtools/release-notes
-    - title: SDK overview
+    - title: SDK 개요
       permalink: /tools/sdk
-    - title: Flutter's pubspec options
+    - title: Flutter의 pubspec 옵션
       permalink: /tools/pubspec
-    - title: Automated fixes
+    - title: 자동화된 수정
       permalink: /tools/flutter-fix
-    - title: Code formatting
+    - title: 코드 포맷팅
       permalink: /tools/formatting
 
-- title: Flutter concepts
+- title: Flutter 컨셉
   children:
-    - title: Architectural overview
+    - title: 아키텍쳐 개요
       permalink: /resources/architectural-overview
-    - title: Inside Flutter
+    - title: Flutter 내부
       permalink: /resources/inside-flutter
-    - title: Understanding constraints
+    - title: 제약 조건 이해
       permalink: /ui/layout/constraints
-    - title: Flutter's build modes
+    - title: Flutter의 빌드 모드
       permalink: /testing/build-modes
-    - title: Hot reload
+    - title: 핫 리로드
       permalink: /tools/hot-reload
 
-- title: Resources
+- title: 리소스
   permalink: /resources
   children:
-    - header: Learning
+    - header: 학습
     - title: FAQ
       permalink: /resources/faq
-    - title: Books
+    - title: 책
       permalink: /resources/books
-    - title: Videos
+    - title: 비디오
       permalink: /resources/videos
-    - title: Courses
+    - title: 코스
       permalink: /resources/courses
-    - title: Learn Dart
+    - title: Dart 배우기
       permalink: /resources/bootstrap-into-dart
-    - header: Contributing
-    - title: Create useful bug reports
+    - header: 기여
+    - title: 유용한 버그 보고서 작성
       permalink: /resources/bug-reports
-    - title: Contribute to Flutter
+    - title: Flutter에 기여하기
       permalink: https://github.com/flutter/flutter/blob/main/CONTRIBUTING.md
-    - title: Design documents
+    - title: 디자인 문서
       permalink: /resources/design-docs
 
-- title: Reference
+- title: 참조
   permalink: /reference
   expanded: true
   children:
-    - title: Who is Dash?
+    - title: Dash는 누구인가요?
       permalink: /dash
-    - title: Widget index
+    - title: Widget 인덱스
       permalink: /reference/widgets
-    - title: API reference
+    - title: API 참조
       permalink: https://api.flutter.dev
-    - title: flutter CLI reference
+    - title: Flutter CLI 참조
       permalink: /reference/flutter-cli
