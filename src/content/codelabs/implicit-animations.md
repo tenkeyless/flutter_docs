@@ -1,8 +1,7 @@
 ---
-title: "Implicit animations"
+title: "암묵적 애니메이션 (Implicit animations)"
 description: >
-  Learn how to use Flutter's implicitly animated widgets
-  through interactive examples and exercises.
+  대화형 예제와 연습을 통해 Flutter의 암묵적 애니메이션 위젯을 사용하는 방법을 알아보세요.
 toc: true
 diff2html: true
 js:
@@ -12,76 +11,68 @@ js:
 
 <?code-excerpt path-base="animation/implicit"?>
 
-Welcome to the implicit animations codelab, where you learn how to use Flutter
-widgets that make it easy to create animations for a specific set of properties.
+암묵적 애니메이션 코드랩에 오신 것을 환영합니다. 
+여기서는 특정 속성 세트에 대한 애니메이션을 쉽게 만들 수 있는 
+Flutter 위젯을 사용하는 방법을 알아봅니다.
 
 {% include docs/dartpad-troubleshooting.md %}
 
-To get the most out of this codelab, you should have basic knowledge about:
+이 코드랩을 최대한 활용하려면, 다음에 대한 기본 지식이 있어야 합니다.
 
-- How to [make a Flutter app][].
-- How to use [stateful widgets][].
+- [Flutter 앱 만들기][make a Flutter app] 방법.
+- [Stateful 위젯][stateful widgets] 사용 방법.
 
-This codelab covers the following material:
+이 코드랩은 다음 내용을 다룹니다.
 
-- Using `AnimatedOpacity` to create a fade-in effect.
-- Using `AnimatedContainer` to animate transitions in size, color, and margin.
-- Overview of implicit animations and techniques for using them.
+- `AnimatedOpacity`를 사용하여 페이드인 효과 만들기.
+- `AnimatedContainer`를 사용하여 크기, 색상 및 여백에서 전환 애니메이션 만들기.
+- 암묵적 애니메이션 개요 및 사용 기술.
 
-**Estimated time to complete this codelab: 15-30 minutes.**
+**이 코드랩 완료 예상 시간: 15-30분**
 
-## What are implicit animations?
+## 암묵적 애니메이션이란? (What are implicit animations?)
 
-With Flutter's [animation library][],
-you can add motion and create visual effects
-for the widgets in your UI.
-One widget set in the library manages animations for you.
-These widgets are collectively referred to as _implicit animations_,
-or _implicitly animated widgets_, deriving their name from the
-[ImplicitlyAnimatedWidget][] class that they implement.
-With implicit animations,
-you can animate a widget property by setting a target value;
-whenever that target value changes,
-the widget animates the property from the old value to the new one.
-In this way, implicit animations trade control for convenience&mdash;they
-manage animation effects so that you don't have to.
+Flutter의 [애니메이션 라이브러리][animation library]를 사용하면, UI의 위젯에 모션을 추가하고 시각적 효과를 만들 수 있습니다. 
+라이브러리에 있는 하나의 위젯 세트가 애니메이션을 관리합니다. 
+이러한 위젯은 총칭하여 _암묵적 애니메이션(implicit animations)_ 또는 
+_암묵적으로 애니메이션이 적용된 위젯(implicitly animated widgets)_ 이라고 하며, 
+그들을 구현하는 [ImplicitlyAnimatedWidget][] 클래스에서 이름을 따왔습니다. 
+암묵적 애니메이션을 사용하면, 대상 값을 설정하여 위젯 속성을 애니메이션화할 수 있습니다. 
+대상 값이 변경될 때마다, 위젯은 속성을 이전 값에서 새 값으로 애니메이션화합니다. 
+이런 방식으로, 암묵적 애니메이션은 편의성을 위해 제어권(control)을 교환합니다. 
+&mdash; 즉, 사용자가 직접 애니메이션 효과를 관리할 필요가 없습니다.
 
-## Example: Fade-in text effect
+## 예제: 페이드인 텍스트 효과 (Example: Fade-in text effect)
 
-The following example shows how to add a fade-in effect to existing UI
-using an implicitly animated widget called [AnimatedOpacity][].
-**The example begins with no animation code**&mdash;it
-consists of a [Material App][] home screen containing:
+다음 예제는 [AnimatedOpacity][]라는 암묵적으로 애니메이션이 적용된 위젯을 사용하여, 
+기존 UI에 페이드인 효과를 추가하는 방법을 보여줍니다. 
+**예제는 애니메이션 코드 없이 시작합니다.**
+&mdash;다음을 포함하는 [Material App][] 홈 화면으로 구성됩니다.
 
-- A photograph of an owl.
-- One **Show details** button that does nothing when clicked.
-- Description text of the owl in the photograph.
+- 올빼미 사진.
+- 클릭해도 아무 작업도 수행되지 않는 **Show details** 버튼 하나.
+- 사진 속 올빼미의 설명 텍스트.
 
-### Fade-in (starter code)
+### 페이드인 (시작 코드) (Fade-in (starter code))
 
-To view the example, Click **Run**:
+예제를 보려면, **Run**을 클릭하세요.
 
 {% render docs/implicit-animations/fade-in-starter-code.md %}
 
-### Animate opacity with AnimatedOpacity widget
+### AnimatedOpacity 위젯으로 불투명도 애니메이션 적용 (Animate opacity with AnimatedOpacity widget)
 
-This section contains a list of steps you can use to add an
-implicit animation to the
-[fade-in starter code][]. After the steps, you can also run the
-[fade-in complete][] code with the changes already made.
-The steps outline how to use the `AnimatedOpacity`
-widget to add the following animation feature:
+이 섹션에는 [페이드인 시작 코드][fade-in starter code]에 암묵적 애니메이션을 추가하는 데 
+사용할 수 있는 단계 목록이 포함되어 있습니다. 
+단계가 끝나면, 이미 변경한 내용으로 [페이드인 완료][fade-in complete] 코드를 실행할 수도 있습니다. 
+이 단계에서는 `AnimatedOpacity` 위젯을 사용하여 다음 애니메이션 기능을 추가하는 방법을 설명합니다.
 
-- The owl's description text remains hidden until the user clicks
-  **Show details**.
-- When the user clicks **Show details**,
-  the owl's description text fades in.
+- 올빼미의 설명 텍스트는 사용자가 **Show details**를 클릭할 때까지 숨겨진 상태로 유지됩니다.
+- 사용자가 **Show details**를 클릭하면, 올빼미의 설명 텍스트가 페이드인됩니다.
 
-#### 1. Pick a widget property to animate
+#### 1. 애니메이션을 적용할 위젯 속성 선택 (1. Pick a widget property to animate)
 
-To create a fade-in effect, you can animate the
-`opacity` property using the`AnimatedOpacity` widget. 
-Wrap the `Column` widget in an `AnimatedOpacity` widget:
+페이드인 효과를 만들려면, `AnimatedOpacity` 위젯을 사용하여 `opacity` 속성을 애니메이션으로 적용할 수 있습니다. 
+`Column` 위젯을 `AnimatedOpacity` 위젯으로 래핑합니다.
 
 ```diff2html
 --- opacity1/lib/main.dart
@@ -110,14 +101,14 @@ Wrap the `Column` widget in an `AnimatedOpacity` widget:
 ```
 
 :::note
-You can reference the line numbers in the example code to help track where
-to make these changes in the [fade-in starter code][].
+[페이드인 시작 코드][fade-in starter code]에서 변경 사항을 어디에 적용해야 하는지
+추적하는 데 도움이 되도록 예제 코드의 줄 번호를 참조할 수 있습니다.
 :::
 
-#### 2. Initialize a state variable for the animated property
+#### 2. 애니메이션 속성에 대한 상태 변수 초기화 (2. Initialize a state variable for the animated property)
 
-To hide the text before the user clicks **Show details**, set
-the starting value for `opacity` to zero:
+사용자가 **Show details**를 클릭하기 전에 텍스트를 숨기려면, 
+`opacity`의 시작 값을 0으로 설정합니다.
 
 ```diff2html
 --- opacity2/lib/main.dart
@@ -141,11 +132,10 @@ the starting value for `opacity` to zero:
              Text('Type: Owl'),
 ```
 
-#### 3. Set the duration of the animation
+#### 3. 애니메이션 지속시간 설정 (3. Set the duration of the animation)
 
-In addition to an `opacity` parameter, `AnimatedOpacity` requires a
-[duration][] to use for its animation. For this example,
-you can start with 2 seconds:
+`opacity` 매개변수 외에도, `AnimatedOpacity`는 애니메이션에 사용할 [duration][]이 필요합니다. 
+이 예제에서는, 2초로 시작할 수 있습니다.
 
 ```diff2html
 --- opacity3/lib/main.dart
@@ -160,13 +150,12 @@ you can start with 2 seconds:
            children: [
 ```
 
-#### 4. Set up a trigger for animation and choose an end value
+#### 4. 애니메이션에 대한 트리거를 설정하고, 종료 값 선택 (4. Set up a trigger for animation and choose an end value)
 
-Configure the animation to trigger when the user clicks **Show details**.
-To do this, change `opacity` state using the `onPressed()` handler for
-`TextButton`. To make the `FadeInDemo` widget become fully visible when
-the user clicks **Show details**, use the `onPressed()` handler
-to set `opacity` to 1:
+사용자가 **Show details**를 클릭할 때 트리거되도록 애니메이션을 구성합니다. 
+이렇게 하려면, `TextButton`에 대한 `onPressed()` 핸들러를 사용하여 `opacity` 상태를 변경합니다. 
+사용자가 **Show details**를 클릭할 때 `FadeInDemo` 위젯이 완전히 표시되도록 하려면, 
+`onPressed()` 핸들러를 사용하여 `opacity`를 1로 설정합니다.
 
 ```diff2html
 --- opacity4/lib/main.dart
@@ -185,87 +174,66 @@ to set `opacity` to 1:
 ```
 
 :::note
-You only need to set the start and end values of `opacity`.
-The `AnimatedOpacity` widget manages everything in between.
+`opacity`의 시작 및 종료 값만 설정하면 됩니다.
+`AnimatedOpacity` 위젯은 그 사이의 모든 것을 관리합니다.
 :::
 
-### Fade-in (complete)
+### 페이드인(완료) (Fade-in (complete))
 
-Here's the example with the completed changes you've made.
-Run this example then click **Show details** to trigger the animation.
+변경이 완료된 예제는 다음과 같습니다.
+이 예제를 실행한 다음 **Show details**를 클릭하여 애니메이션을 트리거합니다.
 
 {% render docs/implicit-animations/fade-in-complete.md %}
 
-### Putting it all together
+### 모두 합치기 (Putting it all together)
 
-The [Fade-in text effect][] example demonstrates the following features
-of the `AnimatedOpacity` widget.
+[페이드인 텍스트 효과][Fade-in text effect] 예제는 `AnimatedOpacity` 위젯의 다음 기능을 보여줍니다.
 
-- It listens for state changes to its `opacity` property.
-- When the `opacity` property changes,
-  it animates the transition to the new value for `opacity`.
-- It requires a `duration` parameter to define how long
-  the transition between the values should take.
+- `opacity` 속성의 상태 변경을 수신합니다.
+- `opacity` 속성이 변경되면, `opacity`의 새 값으로 전환을 애니메이션화합니다.
+- 값 사이의 전환에 걸리는 시간을 정의하기 위해 `duration` 매개변수가 필요합니다.
 
 :::note
-- Implicit animations can only animate the
-  properties of a parent stateful widget.
-  The preceding example enables this with the
-  `FadeInDemo` widget that extends `StatefulWidget`.
+- 암묵적 애니메이션은 부모 stateful 위젯의 속성만 애니메이션화할 수 있습니다. 
+  앞의 예에서는 `StatefulWidget`을 확장하는 `FadeInDemo` 위젯을 사용하여 이를 활성화합니다.
 
-- The `AnimatedOpacity` widget only animates the `opacity` property.
-  Some implicitly animated widgets can animate many properties
-  at the same time. The following example showcases this.
+- `AnimatedOpacity` 위젯은 `opacity` 속성만 애니메이션화합니다. 
+  일부 암묵적 애니메이션 위젯은 동시에 여러 속성을 애니메이션화할 수 있습니다. 
+  다음 예제에서는 이를 보여줍니다.
 :::
 
-## Example: Shape-shifting effect
+## 예제: 모양 변환 효과 (Example: Shape-shifting effect)
 
-The following example shows how to use the [`AnimatedContainer`][] widget to
-animate multiple properties (`margin`, `borderRadius`, and `color`) with
-different types (`double` and `Color`).
-**The example begins with no animation code**.
-It starts with a [Material App][] home screen that contains:
+다음 예제는 [`AnimatedContainer`][] 위젯을 사용하여 서로 다른 타입(`double` 및 `Color`)의 여러 속성(`margin`, `borderRadius`, `color`)을 애니메이션화하는 방법을 보여줍니다. **예제는 애니메이션 코드 없이 시작합니다.** 다음을 포함하는 [Material App][] 홈 화면으로 시작합니다.
 
-- A `Container` widget configured with a
- `borderRadius`, `margin`, and `color`.
-  These properties are setup to be regenerated 
-  each time you run the example.
-- A **Change** button that does nothing when clicked.
+- `borderRadius`, `margin`, `color`로 구성된 `Container` 위젯. 
+  이러한 속성은 예제를 실행할 때마다 다시 생성되도록 설정됩니다.
+- 클릭해도 아무 작업도 수행하지 않는 **Change** 버튼.
 
-### Shape-shifting (starter code)
+### 모양 변환 (시작 코드) (Shape-shifting (starter code))
 
-To start the example, click **Run**.
+예제를 시작하려면, **Run**을 클릭하세요.
 
 {% render docs/implicit-animations/shape-shifting-starter-code.md %}
 
-### Animate color, borderRadius, and margin with AnimatedContainer
+### AnimatedContainer를 사용하여 색상, borderRadius 및 여백에 애니메이션 적용 (Animate color, borderRadius, and margin with AnimatedContainer)
 
-This section contains a list of steps you can use to add an
-implicit animation to the [shape-shifting starter code][].
-After completing each step, you can also run the
-[complete shape-shifting example][] with the changes already made.
+이 섹션에는 [모양 변환 시작 코드][shape-shifting starter code]에 암묵적 애니메이션을 추가하는 데 사용할 수 있는 단계 목록이 들어 있습니다. 각 단계를 완료한 후에는, 이미 변경한 내용으로 [모양 변환 예제 완료][complete shape-shifting example]를 실행할 수도 있습니다.
 
-The [shape-shifting starter code][] assigns
-each property in the `Container` widget a random value.
-Associated functions generate the relevant values:
+[모양 변환 시작 코드][shape-shifting starter code]는 `Container` 위젯의 각 속성에 임의의 값을 할당합니다. 연관된 함수는 관련 값을 생성합니다.
 
-- The `randomColor()` function generates a
-  `Color` for the `color` property
-- The `randomBorderRadius()` function generates a
-  `double` for the `borderRadius` property.
-- The `randomMargin()` function generates a
-  `double` for the `margin` property.
+- `randomColor()` 함수는 `color` 속성에 대해 `Color`를 생성합니다.
+- `randomBorderRadius()` 함수는 `borderRadius` 속성에 대해 `double`을 생성합니다.
+- `randomMargin()` 함수는 `margin` 속성에 대해 `double`을 생성합니다.
 
-The following steps use the `AnimatedContainer` widget to:
+다음 단계에서는 `AnimatedContainer` 위젯을 사용하여 다음을 수행합니다.
 
-- Transition to new values for `color`, `borderRadius`,
-  and `margin` whenever the user clicks **Change**.
-- Animate the transition to the new values for `color`,
-  `borderRadius`, and `margin` whenever they are set.
+- 사용자가 **Change**를 클릭할 때마다, `color`, `borderRadius` 및 `margin`에 대한 새 값으로 전환합니다.
+- `color`, `borderRadius`, `margin`의 새 값이 설정될 때마다 해당 값으로 전환을 애니메이션으로 적용합니다.
 
-#### 1. Add an implicit animation
+#### 1. 암묵적 애니메이션 추가 (1. Add an implicit animation)
 
-Change the `Container` widget to an `AnimatedContainer` widget:
+`Container` 위젯을 `AnimatedContainer` 위젯으로 변경합니다.
 
 ```diff2html
 --- container1/lib/main.dart
@@ -282,18 +250,16 @@ Change the `Container` widget to an `AnimatedContainer` widget:
 ```
 
 :::note
-You can reference the line numbers in the example code to help track where to
-make these changes in the [shape-shifting starter code][].
+[모양 변환 시작 코드][shape-shifting starter code]에서 변경 사항을 어디에 적용해야 하는지 
+추적하는 데 도움이 되도록 예제 코드의 줄 번호를 참조할 수 있습니다.
 :::
 
-#### 2. Set starting values for animated properties
+#### 2. 애니메이션 속성에 대한 시작 값 설정 (2. Set starting values for animated properties)
 
-The `AnimatedContainer` widget transitions between
-old and new values of its properties when they change.
-To contain the behavior triggered when the user clicks **Change**,
-create a `change()` method.
-The `change()` method can use the `setState()` method to set new values
-for the `color`, `borderRadius`, and `margin` state variables:
+`AnimatedContainer` 위젯은 속성이 변경될 때 이전 값과 새 값 사이를 전환합니다. 
+사용자가 **Change**를 클릭할 때 트리거되는 동작을 포함하려면, `change()` 메서드를 만듭니다. 
+`change()` 메서드는 `setState()` 메서드를 사용하여 
+`color`, `borderRadius` 및 `margin` 상태 변수에 대한 새 값을 설정할 수 있습니다.
 
 ```diff2html
 --- container2/lib/main.dart
@@ -315,10 +281,10 @@ for the `color`, `borderRadius`, and `margin` state variables:
      return Scaffold(
 ```
 
-#### 3. Set up a trigger for the animation
+#### 3. 애니메이션에 대한 트리거 설정 (3. Set up a trigger for the animation)
 
-To set the animation to trigger whenever the user presses **Change**,
-invoke the `change()` method in the `onPressed()` handler:
+사용자가 **Change**를 누를 때마다 애니메이션이 트리거되도록 설정하려면, 
+`onPressed()` 핸들러에서 `change()` 메서드를 호출합니다.
 
 ```diff2html
 --- container3/lib/main.dart
@@ -334,10 +300,9 @@ invoke the `change()` method in the `onPressed()` handler:
          ),
 ```
 
-#### 4. Set duration
+#### 4. 기간 설정 (4. Set duration)
 
-Set the `duration` of the animation that powers the transition
-between the old and new values:
+이전 값과 새 값 사이의 전환을 담당하는 애니메이션의 `duration`을 설정합니다.
 
 ```diff2html
 --- container4/lib/main.dart
@@ -361,38 +326,32 @@ between the old and new values:
              ElevatedButton(
 ```
 
-### Shape-shifting (complete)
+### 모양 변환 (완료) (Shape-shifting (complete))
 
-Here's the example with the completed changes you've made.
-Run the code and click **Change** to trigger the animation.
-Each time you click **Change**, the shape animates to its new values
-for `margin`, `borderRadius`, and `color`.
+변경 사항이 완료된 예제는 다음과 같습니다. 
+코드를 실행하고 **Change**를 클릭하여 애니메이션을 트리거합니다. 
+**Change**를 클릭할 때마다, 
+모양이 `margin`, `borderRadius` 및 `color`에 대한 새 값으로 애니메이션됩니다.
 
 {% render docs/implicit-animations/shape-shifting-complete.md %}
 
-### Using animation curves
+### 애니메이션 곡선 사용 (Using animation curves)
 
-The preceding examples show how:
+앞의 예제는 다음 방법을 보여줍니다.
 
-- Implicit animations allow you to animate the transition between
-  values for specific widget properties.
-- The `duration` parameter allows you to set how long the animation
-  takes to complete.
+- 암묵적 애니메이션을 사용하면 특정 위젯 속성의 값 간 전환을 애니메이션 할 수 있습니다.
+- `duration` 매개변수를 사용하면, 애니메이션이 완료되는 데 걸리는 시간을 설정할 수 있습니다.
 
-Implicit animations also allow you to control changes to **the rate**
-of an animation that occurs during the set `duration`.
-To define this change in rate,
-set the value of the `curve` parameter to
-a [`Curve`][], such as one declared in the [`Curves`][] class.
+암묵적 애니메이션을 사용하면, 설정된 `duration` 동안 발생하는 
+애니메이션의 **속도(the rate)**를 변경할 수도 있습니다. 
+이 속도 변경을 정의하려면, `curve` 매개변수의 값을 [`Curves`][] 클래스에 선언된 것과 같은 
+[`Curve`][]로 설정합니다.
 
-The preceding examples did not specify a value for the `curve` parameter.
-Without a specified curve value,
-the implicit animations apply a [linear animation curve][].
+앞의 예제에서는 `curve` 매개변수의 값을 지정하지 않았습니다. 
+지정된 곡선 값이 없으면, 암묵적 애니메이션은 [선형 애니메이션 곡선][linear animation curve]을 적용합니다.
 
-Specify a value for the `curve` parameter in
-the [complete shape-shifting example][].
-The animation changes when you pass the
-[`easeInOutBack`][] constant for `curve`,
+[완전한 모양 변환 예제][complete shape-shifting example]에서 `curve` 매개변수의 값을 지정합니다.
+`curve`에 [`easeInOutBack`][] 상수를 전달하면 애니메이션이 변경됩니다.
 
 ```diff2html
 --- container5/lib/main.dart
@@ -407,46 +366,38 @@ The animation changes when you pass the
              ElevatedButton(
 ```
 
-When you pass the `Curves.easeInOutBack` constant to the `curve` property
-of the `AnimatedContainer` widget, watch how
-the rates of change for `margin`, `borderRadius`, and `color`
-follow the curve that constant defined.
+`Curves.easeInOutBack` 상수를 `AnimatedContainer` 위젯의 `curve` 속성에 전달하여, 
+`margin`, `borderRadius` 및 `color`의 변경 비율이 
+해당 상수가 정의한 곡선을 어떻게 따르는지 살펴보세요.
 
 <video style="width:464px; height:192px;" loop="" autoplay disablepictureinpicture playsinline controls controlslist="nodownload noremoteplayback">
   <source src="{{site.flutter-assets}}/animation/curve_ease_in_out_back.mp4" type="video/mp4">
 </video>
 
-### Putting it all together
+### 모두 합치기 (Putting it all together)
 
-The [complete shape-shifting example][] animates transitions between
-values for `margin`, `borderRadius`, and `color` properties.
-The `AnimatedContainer` widget animates changes to any of its properties.
-These include those you didn't use such as `padding`, `transform`,
-and even `child` and `alignment`!
-By showing additional capabilities of implicit animations,
-the [complete shape-shifting example][] builds upon
-[fade-in complete][] example.
+[완전한 모양 변환 예제][complete shape-shifting example]는 `margin`, `borderRadius` 및 `color` 속성 값 간의 전환을 애니메이션화합니다. 
+`AnimatedContainer` 위젯은 모든 속성의 변경 사항을 애니메이션화합니다. 
+여기에는 `padding`, `transform` 및 심지어 `child`와 `alignment`와 같이 사용하지 않은 것도 포함됩니다!
+암묵적 애니메이션의 추가 기능을 보여줌으로써, [완전한 모양 변환 예제][complete shape-shifting example]는 [페이드인 완료][fade-in complete] 예제를 기반으로 합니다.
 
-To summarize implicit animations:
+암묵적 애니메이션을 요약하면 다음과 같습니다.
 
-- Some implicit animations, like the `AnimatedOpacity` widget,
-  only animate one property.
-  Others, like the `AnimatedContainer` widget, can animate many properties.
-- Implicit animations animate the transition between the
-  old and new value of a property when it
-  changes using the provided `curve` and `duration`.
-- If you do not specify a `curve`,
-  implicit animations default to a [linear curve][].
+- `AnimatedOpacity` 위젯과 같은 일부 암묵적 애니메이션은, 하나의 속성만 애니메이션화합니다.
+  `AnimatedContainer` 위젯과 같은 다른 것은, 여러 속성을 애니메이션화할 수 있습니다.
+- 암묵적 애니메이션은 제공된 `curve`와 `duration`을 사용하여 
+  속성의 이전 값과 새 값 사이의 전환을 애니메이션화합니다.
+- `curve`를 지정하지 않으면, 암묵적 애니메이션은 기본적으로 [선형 곡선][linear curve]으로 설정됩니다.
 
-## What's next?
+## 다음은 무엇인가요? (What's next?)
 
-Congratulations, you've finished the codelab!
-To learn more, check out these suggestions:
+축하합니다. 코드랩을 마쳤습니다!
+자세히 알아보려면 다음 제안을 확인하세요.
 
-- Try the [animations tutorial][].
-- Learn about [hero animations][] and [staggered animations][].
-- Checkout the [animation library][].
-- Try another [codelab][].
+- [애니메이션 튜토리얼][animations tutorial]을 시도해 보세요.
+- [히어로(hero) 애니메이션][hero animations]과 [단계적(staggered) 애니메이션][staggered animations]에 대해 알아보세요.
+- [애니메이션 라이브러리][animation library]를 확인하세요.
+- 다른 [코드랩][codelab]을 시도해 보세요.
 
 [`AnimatedContainer`]: {{site.api}}/flutter/widgets/AnimatedContainer-class.html
 [AnimatedOpacity]: {{site.api}}/flutter/widgets/AnimatedOpacity-class.html
