@@ -7,7 +7,7 @@ description: >-
 Flutter 코드랩은 가이드가 제공되는 핸즈온 코딩 경험을 제공합니다. 
 일부 코드랩은 DartPad에서 실행되므로, 다운로드가 필요 없습니다!
 
-## 초보자에게 좋음 (Good for beginners)
+## 초보자에게 좋음 {:#good-for-beginners}
 
 Flutter를 처음 사용하는 경우, 다음 코드랩 중 하나로 시작하는 것이 좋습니다.
 
@@ -32,7 +32,7 @@ Flutter를 처음 사용하는 경우, 다음 코드랩 중 하나로 시작하�
 [Your first Flutter app]: {{site.codelabs}}/codelabs/flutter-codelab-first
 [Write your first Flutter app on the web]: /get-started/codelab-web
 
-## 다음 스텝 (Next steps)
+## 다음 스텝 {:#next-steps}
 
 * [Dart 3의 레코드 및 패턴][Records and Patterns in Dart 3]<br>
   Dart 3의 새로운 레코드와 패턴 기능을 알아보세요. 
@@ -54,7 +54,7 @@ Flutter를 처음 사용하는 경우, 다음 코드랩 중 하나로 시작하�
 [inherited-widget-ws]: {{site.yt.watch}}?v=LFcGPS6cGrY
 [low-level state management]: /data-and-backend/state-mgmt/options#inheritedwidget-inheritedmodel
 
-## Flutter UI 디자인하기 (Designing a Flutter UI)
+## Flutter UI 디자인하기 {:#designing-a-flutter-ui}
 
 Material Design과 레이아웃, 애니메이션과 같은 기본 Flutter 개념에 대해 알아보세요.
 
@@ -62,9 +62,9 @@ Material Design과 레이아웃, 애니메이션과 같은 기본 Flutter 개념
   공식 코드랩은 아니지만, Flutter Inspector와 Layout Explorer를 사용하여 
   일반적인 레이아웃 문제를 디버깅하는 방법에 대한 단계별 지침입니다.
 
-* [암시적 애니메이션][Implicit animations]<br>
+* [암묵적 애니메이션][Implicit animations]<br>
   DartPad를 사용하면(다운로드가 필요 없음!) UI의 위젯에 동작을 추가하고 
-  시각적 효과를 만드는 데 암시적 애니메이션을 사용하는 방법을 배울 수 있습니다.
+  시각적 효과를 만드는 데 암묵적 애니메이션을 사용하는 방법을 배울 수 있습니다.
 
 * [Flutter를 위한 Material Motion으로 아름다운 전환(Transitions) 구축][Building Beautiful Transitions with Material Motion for Flutter]<br>
   Material [animations][animations] 패키지를 사용하여 
@@ -113,7 +113,7 @@ Material Design과 레이아웃, 애니메이션과 같은 기본 Flutter 개념
 [MDC-104 Flutter: Material Advanced Components]: {{site.codelabs}}/codelabs/mdc-104-flutter
 [Take your Flutter app from boring to beautiful]: {{site.codelabs}}/codelabs/flutter-boring-to-beautiful
 
-## ...와 함께 Flutter 사용하기 (Using Flutter with ...)
+## ...와 함께 Flutter 사용하기 {:#using-flutter-with}
 
 다른 기술과 함께 Flutter를 사용하는 방법을 알아보세요.
 
@@ -122,7 +122,7 @@ Material Design과 레이아웃, 애니메이션과 같은 기본 Flutter 개념
   add a subheader for that topic.
 {% endcomment %}
 
-### Flutter 수익화 (Monetizing Flutter)
+### Flutter 수익화 {:#monetizing-flutter}
 
 * [Flutter 앱에 AdMob 광고 추가][Adding AdMob Ads to a Flutter app]<br>
   플레이어가 그림의 이름을 추측하는 게임인 Awesome Drawing Quiz라는 앱에 
@@ -139,7 +139,7 @@ Material Design과 레이아웃, 애니메이션과 같은 기본 Flutter 개념
 [Adding an AdMob banner and native inline ads to a Flutter app]: {{site.codelabs}}/codelabs/admob-inline-ads-in-flutter
 [Adding in-app purchases to your Flutter app]: {{site.codelabs}}/codelabs/flutter-in-app-purchases
 
-### Flutter와 Firebase (Flutter and Firebase)
+### Flutter와 Firebase {:#flutter-and-firebase}
 
 * [FirebaseUI를 사용하여 Flutter 앱에 사용자 인증 흐름 추가][Add a user authentication flow to a Flutter app using FirebaseUI]<br>
   몇 줄의 코드만으로 Flutter 앱에 Firebase 인증을 추가하는 방법을 알아보세요.
@@ -166,7 +166,7 @@ Material Design과 레이아웃, 애니메이션과 같은 기본 Flutter 개념
 [Local development for your Flutter apps using the Firebase Emulator Suite]: {{site.firebase}}/codelabs/get-started-firebase-emulators-and-flutter
 [Send and receive notifications for a Flutter app using Firebase Cloud Messaging]: {{site.firebase}}/codelabs/firebase-fcm-flutter
 
-### Flutter로 게임 만들기 (Build games with Flutter)
+### Flutter로 게임 만들기 {:#build-games-with-flutter}
 
 * [SoLoud로 Flutter 게임에 사운드와 음악 추가][Add sound and music to your Flutter game with SoLoud]—**NEW**<br>
   무료 휴대형 엔진인 [SoLoud][SoLoud] 패키지는 많은 게임에 필수적인 저지연성과 고성능 사운드를 제공합니다. 
@@ -193,7 +193,7 @@ Material Design과 레이아웃, 애니메이션과 같은 기본 Flutter 개념
 [Introduction to Flame with Flutter]: {{site.codelabs}}/codelabs/flutter-flame-brick-breaker
 [SoLoud]: {{site.pub-pkg}}/flutter_soloud
 
-### Flutter와 TensorFlow (Flutter and TensorFlow)
+### Flutter와 TensorFlow {:#flutter-and-tensorflow}
 
 * [TensorFlow Lite Model Maker로 사용자 정의 텍스트 분류 모델 만들기][Create a custom text-classification model with TensorFlow Lite Model Maker]<br>
 
@@ -209,7 +209,7 @@ Material Design과 레이아웃, 애니메이션과 같은 기본 Flutter 개념
 [Create a Flutter app to classify texts with TensorFlow]: {{site.developers}}/codelabs/classify-texts-flutter-tensorflow-serving
 [Train a comment-spam detection model with TensorFlow Lite Model Maker]: {{site.developers}}/codelabs/classify-text-tensorflow-serving
 
-### Flutter와 기타 기술 (Flutter and other technologies)
+### Flutter와 기타 기술 {:#flutter-and-other-technologies}
 
 * [Flutter 앱에 Google Maps 추가][Adding Google Maps to a Flutter app]<br>
   앱에 Google 지도를 표시하고, 웹 서비스에서 데이터를 검색하고, 지도에 마커로 데이터를 표시합니다.
@@ -240,7 +240,7 @@ Material Design과 레이아웃, 애니메이션과 같은 기본 Flutter 개념
 [Create haikus about Google products with the PaLM API and Flutter]: {{site.codelabs}}/haiku-generator
 [Using FFI in a Flutter plugin]: {{site.codelabs}}/codelabs/flutter-ffigen
 
-## 테스트 (Testing)
+## 테스트 {:#testing}
 
 Flutter 애플리케이션을 테스트하는 방법을 알아보세요.
 
@@ -251,7 +251,7 @@ Flutter 애플리케이션을 테스트하는 방법을 알아보세요.
 
 [How to test a Flutter app]: {{site.codelabs}}/codelabs/flutter-app-testing/
 
-## 플랫폼 별 코드 작성 (Writing platform-specific code)
+## 플랫폼 별 코드 작성 {:#writing-platform-specific-code}
 
 iOS, Android, 데스크톱 또는 웹과 같은 특정 플랫폼을 대상으로 하는 코드를 작성하는 방법을 알아보세요.
 
