@@ -1,5 +1,6 @@
 ---
-title: Cookbook
+# title: Cookbook
+title: 쿡북
 description: >
   Flutter 쿡북은 흔히 수행되는 다양한 작업에 대한 레시피를 제공합니다.
 ---
