@@ -1,6 +1,8 @@
 ---
-title: Create gradient chat bubbles
-description: How to implement gradient chat bubbles.
+# title: Create gradient chat bubbles
+title: 그라데이션 채팅 버블 만들기
+# description: How to implement gradient chat bubbles.
+description: 그라데이션 채팅 버블을 구현하는 방법.
 js:
   - defer: true
     url: /assets/js/inject_dartpad.js
@@ -10,18 +12,15 @@ js:
 
 {% include docs/deprecated.md %}
 
-Traditional chat apps display messages in chat bubbles
-with solid color backgrounds. Modern chat apps display
-chat bubbles with gradients that are based 
-on the bubbles' position on the screen.
-In this recipe, you'll modernize the chat UI by implementing
-gradient backgrounds for the chat bubbles.
+기존 채팅 앱은 단색 배경의 채팅 거품에 메시지를 표시합니다. 
+최신 채팅 앱은 화면에서 거품의 위치를 ​​기반으로 하는 그라데이션으로 채팅 거품을 표시합니다. 
+이 레시피에서는, 채팅 거품에 그라데이션 배경을 구현하여 채팅 UI를 현대화합니다.
 
-The following animation shows the app's behavior:
+다음 애니메이션은 앱의 동작을 보여줍니다.
 
 ![Scrolling the gradient chat bubbles](/assets/images/docs/cookbook/effects/GradientBubbles.gif){:.site-mobile-screenshot}
 
-## Understand the challenge
+## 도전 이해하기 {:#understand-the-challenge}
 
 The traditional chat bubble solution probably uses a
 `DecoratedBox` or a similar widget to paint a rounded
@@ -55,7 +54,7 @@ painting, _and_ hit testing,
 consider defining a custom [`RenderBox`][].
 :::
 
-## Replace original background widget
+## 원본 배경 위젯 교체 {:#replace-original-background-widget}
 
 Replace the widget responsible for drawing the
 background with a new stateless widget called
@@ -85,7 +84,7 @@ BubbleBackground(
 );
 ```
 
-## Create a custom painter
+## 커스텀 페인터 만들기 {:#create-a-custom-painter}
 
 Next, introduce an implementation for `BubbleBackground`
 as a stateless widget. For now, define the `build()`
@@ -137,7 +136,7 @@ class BubblePainter extends CustomPainter {
 }
 ```
 
-## Provide access to scrolling information
+## 스크롤 정보에 대한 액세스 제공 {:#provide-access-to-scrolling-information}
 
 The `CustomPainter` requires the information necessary
 to determine where its bubble is within the `ListView`'s bounds,
@@ -179,7 +178,7 @@ class BubblePainter extends CustomPainter {
 }
 ```
 
-## Paint a full-screen bubble gradient
+## 전체 화면 버블 그라데이션 그리기 {:#paint-a-full-screen-bubble-gradient}
 
 The `CustomPainter` now has the desired gradient colors,
 a reference to the containing `ScrollableState`,
@@ -248,7 +247,7 @@ up or down. See the [`InheritedWidget`][] documentation
 for more information about these types of dependencies.
 :::
 
-## Interactive example
+## 대화형 예제 {:#interactive-example}
 
 Run the app:
 
@@ -507,7 +506,7 @@ class MessageGenerator {
 }
 ```
 
-## Recap
+## Recap {:#recap}
 
 The fundamental challenge when painting based on the
 scroll position, or the screen position in general,

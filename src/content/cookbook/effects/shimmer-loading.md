@@ -1,6 +1,8 @@
 ---
-title: Create a shimmer loading effect
-description: How to implement a shimmer loading effect.
+# title: Create a shimmer loading effect
+title: 반짝이는(shimmer) 로딩 효과 만들기
+# description: How to implement a shimmer loading effect.
+description: 반짝이는(shimmer) 로딩 효과를 구현하는 방법.
 js:
   - defer: true
     url: /assets/js/inject_dartpad.js
@@ -8,49 +10,37 @@ js:
 
 <?code-excerpt path-base="cookbook/effects/shimmer_loading"?>
 
-Loading times are unavoidable in application development.
-From a user experience (UX) perspective,
-the most important thing is to show your users 
-that loading is taking place. One popular approach
-to communicate to users that data is loading is to
-display a chrome color with a shimmer animation over 
-the shapes that approximate the type of content that is loading.
+로딩 시간은 애플리케이션 개발에서 피할 수 없습니다. 
+사용자 경험(UX) 관점에서, 가장 중요한 것은 사용자에게 로딩이 진행 중임을 보여주는 것입니다. 
+사용자에게 데이터가 로딩 중임을 알리는 인기 있는 방법 중 하나는 
+로딩 중인 콘텐츠 유형에 근접한 모양 위에 반짝이는(shimmer) 애니메이션이 있는 크롬 색상을 표시하는 것입니다.
 
-The following animation shows the app's behavior:
+다음 애니메이션은 앱의 동작을 보여줍니다.
 
 ![Gif showing the UI loading](/assets/images/docs/cookbook/effects/UILoadingAnimation.gif){:.site-mobile-screenshot}
 
-This recipe begins with the content widgets defined and positioned.
-There is also a Floating Action Button (FAB) in the bottom-right
-corner that toggles between a loading mode and a loaded mode
-so that you can easily validate your implementation.
+이 레시피는 콘텐츠 위젯을 정의하고 배치하는 것으로 시작합니다. 
+또한 오른쪽 하단 모서리에 로딩 모드와 로드 모드 사이를 전환하는 
+플로팅 작업 버튼(FAB, Floating Action Button)이 있어 구현을 쉽게 검증할 수 있습니다.
 
-## Draw the shimmer shapes
+## 반짝이는 모양 그리기 {:#draw-the-shimmer-shapes}
 
-The shapes that shimmer in this effect are independent
-from the actual content that eventually loads.
+이 효과에서 반짝이는 모양은 결국 로드되는 실제 콘텐츠와 무관합니다.
 
-Therefore, the goal is to display shapes that represent 
-the eventual content as accurately as possible. 
+따라서, 목표는 최종 콘텐츠를 가능한 한 정확하게 나타내는 모양을 표시하는 것입니다.
 
-Displaying accurate shapes is easy in situations where the
-content has a clear boundary. For example, in this recipe,
-there are some circular images and some rounded rectangle images.
-You can draw shapes that precisely match the outlines 
-of those images.
+콘텐츠에 명확한 경계가 있는 상황에서는 정확한 모양을 표시하는 것이 쉽습니다. 
+예를 들어, 이 레시피에는, 원형 이미지와 둥근 사각형 이미지가 있습니다. 
+해당 이미지의 윤곽선과 정확히 일치하는 모양을 그릴 수 있습니다.
 
-On the other hand, consider the text that appears beneath the
-rounded rectangle images. You won't know how many lines of
-text exist until the text loads. 
-Therefore, there is no point in trying to draw a rectangle
-for every line of text. Instead, while the data is loading,
-you draw a couple of very thin rounded rectangles that
-represent the text that will appear. The shape and size 
-doesn't quite match, but that is OK.
+반면에, 둥근 사각형 이미지 아래에 나타나는 텍스트를 고려해봅시다. 
+텍스트가 로드될 때까지, 텍스트 줄이 몇 개인지 알 수 없습니다. 
+따라서, 모든 텍스트 줄에 대해 사각형을 그리려고 하는 것은 의미가 없습니다. 
+대신, 데이터가 로드되는 동안, 나타날 텍스트를 나타내는 매우 얇은 둥근 사각형 몇 개를 그립니다. 
+모양과 크기가 정확히 일치하지는 않지만, 괜찮습니다.
 
-Start with the circular list items at the top of the screen.
-Ensure that each `CircleListItem` widget displays a circle
-with a color while the image is loading.
+화면 상단의 원형 목록 항목부터 시작합니다. 
+이미지가 로드되는 동안 각 `CircleListItem` 위젯에 색상이 있는 원이 표시되는지 확인합니다.
 
 <?code-excerpt "lib/main.dart (CircleListItem)"?>
 ```dart
@@ -81,15 +71,10 @@ class CircleListItem extends StatelessWidget {
 }
 ```
 
-As long as your widgets display some kind of shape,
-you can apply the shimmer effect in this recipe.
+위젯이 어떤 모양을 표시하는 한, 이 레시피에서 쉬머 효과를 적용할 수 있습니다.
 
-Similar to the `CircleListItem` widgets,
-ensure that the `CardListItem` widgets 
-display a color where the image will appear.
-Also, in the `CardListItem` widget, 
-switch between the display of the text and
-the rectangles based on the current loading status.
+`CircleListItem` 위젯과 마찬가지로, `CardListItem` 위젯이 이미지가 나타날 색상을 표시하는지 확인합니다.
+또한, `CardListItem` 위젯에서, 현재 로딩 상태에 따라 텍스트와 사각형 표시를 전환합니다.
 
 <?code-excerpt "lib/main.dart (CardListItem)"?>
 ```dart
@@ -174,28 +159,21 @@ class CardListItem extends StatelessWidget {
 }
 ```
 
-Your UI now renders itself differently depending on
-whether it's loading or loaded.
-By temporarily commenting out the image URLs,
-you can see the two ways your UI renders.
-
+이제 UI가 로딩 중이거나 로드 중인지에 따라 다르게 렌더링됩니다. 
+이미지 URL을 일시적으로 주석 처리하면, UI가 렌더링되는 두 가지 방식을 볼 수 있습니다.
 
 ![Gif showing the shimmer animation](/assets/images/docs/cookbook/effects/LoadingShimmer.gif){:.site-mobile-screenshot}
 
-The next goal is to paint all of the colored areas
-with a single gradient that looks like a shimmer.
+다음 목표는 모든 채색된 영역을 반짝임처럼 보이는 단일 그라데이션으로 칠하는 것입니다.
 
-## Paint the shimmer gradient
+## 쉬머 그라데이션 칠하기 {:#paint-the-shimmer-gradient}
 
-The key to the effect achieved in this recipe is to use a widget 
-called [`ShaderMask`][]. The `ShaderMask` widget, as the name suggests,
-applies a shader to its child, but only in the areas where
-the child already painted something. For example,
-you'll apply a shader to only the black shapes that you 
-configured earlier.
+이 레시피에서 달성한 효과의 핵심은 [`ShaderMask`][]라는 위젯을 사용하는 것입니다. 
+`ShaderMask` 위젯은, 이름에서 알 수 있듯이, 자식 위젯에 셰이더를 적용하지만, 
+자식 위젯이 이미 무언가를 그린 영역에만 적용됩니다. 
+예를 들어, 이전에 구성한 검은색 모양에만 셰이더를 적용합니다.
 
-Define a chrome-colored, linear gradient that gets applied to the 
-shimmer shapes.
+반짝이는 모양에 적용되는 크롬 색상의 선형 그라데이션을 정의합니다.
 
 <?code-excerpt "lib/main.dart (shimmerGradient)"?>
 ```dart
@@ -216,12 +194,9 @@ const _shimmerGradient = LinearGradient(
 );
 ```
 
-Define a new stateful widget called `ShimmerLoading`
-that wraps a given `child` widget with a `ShaderMask`.
-Configure the `ShaderMask` widget to apply the shimmer
-gradient as a shader with a `blendMode` of `srcATop`.
-The `srcATop` blend mode  replaces any color that your
-`child` widget painted with the shader color.
+`ShimmerLoading`이라는 새로운 stateful 위젯을 정의하여, 주어진 `child` 위젯을 `ShaderMask`로 래핑합니다. 
+`ShaderMask` 위젯을 구성하여 `blendMode`가 `srcATop`인 셰이더로 쉬머 그라데이션을 적용합니다. 
+`srcATop` 블렌드 모드는 `child` 위젯이 칠한 모든 색상을 셰이더 색상으로 대체합니다.
 
 <?code-excerpt "lib/main.dart (ShimmerLoading)"?>
 ```dart
@@ -257,7 +232,7 @@ class _ShimmerLoadingState extends State<ShimmerLoading> {
 }
 ```
 
-Wrap your `CircleListItem` widgets with a `ShimmerLoading` widget.
+`CircleListItem` 위젯을 `ShimmerLoading` 위젯으로 래핑합니다.
 
 <?code-excerpt "lib/shimmer_loading_items.dart (buildTopRowItem)"?>
 ```dart
@@ -269,7 +244,7 @@ Widget _buildTopRowItem() {
 }
 ```
 
-Wrap your `CardListItem` widgets with a `ShimmerLoading` widget.
+`CardListItem` 위젯을 `ShimmerLoading` 위젯으로 래핑합니다.
 
 <?code-excerpt "lib/shimmer_loading_items.dart (buildListItem)"?>
 ```dart
@@ -283,41 +258,26 @@ Widget _buildListItem() {
 }
 ```
 
-When your shapes are loading, they now display
-the shimmer gradient that is 
-returned from the `shaderCallback`.
+모양이 로딩되면, 이제 `shaderCallback`에서 반환된 반짝이는 그라데이션이 표시됩니다.
 
-This is a big step in the right direction,
-but there's a problem with this gradient display.
-Each `CircleListItem` widget and each `CardListItem` widget 
-displays a new version of the gradient.
-For this recipe, the entire screen should 
-look like one, big shimmering surface.
-You solve this problem in the next step.
+이것은 올바른 방향으로 나아가는 큰 진전이지만, 이 그라데이션 표시에는 문제가 있습니다. 
+각 `CircleListItem` 위젯과 각 `CardListItem` 위젯은 그라데이션의 새 버전을 표시합니다. 
+이 레시피의 경우, 전체 화면은 하나의 크고 반짝이는 표면처럼 보여야 합니다. 다음 단계에서 이 문제를 해결합니다.
 
-## Paint one big shimmer
+## 하나의 큰 쉬머 칠하기 {:#paint-one-big-shimmer}
 
-To paint one big shimmer across the screen,
-each `ShimmerLoading` widget needs 
-to paint the same full-screen gradient based
-on the position of that `ShimmerLoading`
-widget on the screen. 
+화면에 큰 쉬머를 하나 칠하려면, 각 `ShimmerLoading` 위젯은 
+화면에서 해당 `ShimmerLoading` 위젯의 위치에 따라 동일한 전체 화면 그라데이션을 칠해야 합니다.
 
-To be more precise, rather than assume that the shimmer
-should take up the entire screen,
-there should be some area that shares the shimmer.
-Maybe that area takes up the entire screen,
-or maybe it doesn't. The way to solve this 
-kind of problem in Flutter is to define another widget
-that sits above all of the `ShimmerLoading` widgets
-in the widget tree, and call it `Shimmer`. 
-Then, each `ShimmerLoading` widget gets a reference
-to the `Shimmer` ancestor
-and requests the desired size and gradient to display.
+더 정확하게 말해서, 쉬머가 전체 화면을 차지해야 한다고 가정하는 대신, 쉬머를 공유하는 영역이 있어야 합니다. 
+그 영역이 전체 화면을 차지할 수도 있고, 그렇지 않을 수도 있습니다. 
+Flutter에서 이런 종류의 문제를 해결하는 방법은 
+위젯 트리에서 모든 `ShimmerLoading` 위젯 위에 있는 다른 위젯을 정의하고 `Shimmer`라고 부르는 것입니다. 
+그런 다음, 각 `ShimmerLoading` 위젯은 `Shimmer` 상위 위젯에 대한 참조를 가져오고, 
+표시할 원하는 크기와 그라데이션을 요청합니다.
 
-Define a new stateful widget called `Shimmer` that
-takes in a [`LinearGradient`][] and provides descendants
-with access to its `State` object.
+`Shimmer`라는 새 stateful 위젯을 정의합니다. 
+이 위젯은 [`LinearGradient`][]를 가져오고, 하위 위젯에 `State` 객체에 대한 액세스를 제공합니다.
 
 <?code-excerpt "lib/main.dart (Shimmer)"?>
 ```dart
@@ -347,11 +307,9 @@ class ShimmerState extends State<Shimmer> {
 }
 ```
 
-Add methods to the `ShimmerState` class in order
-to provide access to the `linearGradient`,
-the size of the `ShimmerState`'s `RenderBox`,
-and look up the position of a descendant within the
-`ShimmerState`'s `RenderBox`.
+`ShimmerState` 클래스에 메서드를 추가하여, `linearGradient`에 접근할 수 있게 하고, 
+`ShimmerState`의 `RenderBox` 크기를 제공하며, 
+`ShimmerState`의 `RenderBox` 내에서 자손의 위치를 ​​조회합니다.
 
 <?code-excerpt "lib/shimmer_state.dart (ShimmerState)"?>
 ```dart
@@ -394,7 +352,7 @@ class _ExampleUiLoadingAnimationState extends State<ExampleUiLoadingAnimation> {
       body: Shimmer(
         linearGradient: _shimmerGradient,
         child: ListView(
-            // ListView Contents
+            // ListView 컨텐츠
             ),
       ),
     );
@@ -402,8 +360,7 @@ class _ExampleUiLoadingAnimationState extends State<ExampleUiLoadingAnimation> {
 }
 ```
 
-Use the `Shimmer` widget within your
-`ShimmerLoading` widget to paint the shared gradient.
+`ShimmerLoading` 위젯 내에서 `Shimmer` 위젯을 사용하여, 공유된 그래디언트를 칠합니다.
 
 <?code-excerpt "lib/shimmer_loading_state_pt2.dart (ShimmerLoadingStatePt2)"?>
 ```dart
@@ -414,11 +371,10 @@ class _ShimmerLoadingState extends State<ShimmerLoading> {
       return widget.child;
     }
 
-    // Collect ancestor shimmer information.
+    // 조상의 쉬머 정보를 수집합니다.
     final shimmer = Shimmer.of(context)!;
     if (!shimmer.isSized) {
-      // The ancestor Shimmer widget isn't laid
-      // out yet. Return an empty box.
+      // 조상 Shimmer 위젯은 아직 배치되지 않았습니다. 빈 상자를 반환합니다.
       return const SizedBox();
     }
     final shimmerSize = shimmer.size;
@@ -445,22 +401,16 @@ class _ShimmerLoadingState extends State<ShimmerLoading> {
 }
 ```
 
-Your `ShimmerLoading` widgets now display a shared
-gradient that takes up all of the space within the
-`Shimmer` widget.
+이제 `ShimmerLoading` 위젯은 `Shimmer` 위젯 내의 모든 공간을 차지하는 공유 그라데이션을 표시합니다.
 
-## Animate the shimmer
+## 쉬머 애니메이트 {:#animate-the-shimmer}
 
-The shimmer gradient needs to move in order to
-give the appearance of a shimmering shine.
+반짝이는 그라데이션은 반짝이는 광채를 나타내기 위해 움직여야 합니다.
 
-The `LinearGradient` has a property called `transform`
-that can be used to transform the appearance of the gradient,
-for example, to move it horizontally. 
-The `transform` property accepts a `GradientTransform` instance.
+`LinearGradient`에는 `transform`이라는 속성이 있는데, 이를 사용하여 그라디언트의 모양을 변형할 수 있습니다. 
+예를 들어, 수평으로 이동시키는 것입니다. `transform` 속성은 `GradientTransform` 인스턴스를 허용합니다.
 
-Define a class called `_SlidingGradientTransform` that implements 
-`GradientTransform` to achieve the appearance of horizontal sliding.
+`GradientTransform`을 구현하여 수평 슬라이딩의 모양을 구현하는 `_SlidingGradientTransform`이라는 클래스를 정의합니다.
 
 <?code-excerpt "lib/original_example.dart (sliding-gradient-transform)"?>
 ```dart
@@ -478,10 +428,8 @@ class _SlidingGradientTransform extends GradientTransform {
 }
 ```
 
-The gradient slide percentage changes over time
-in order to create the appearance of motion.
-To change the percentage, configure an
-[`AnimationController`][] in the `ShimmerState` class.
+그라데이션 슬라이드 백분율은 동작의 모양을 만들기 위해 시간이 지남에 따라 변경됩니다. 
+백분율을 변경하려면, `ShimmerState` 클래스에서 [`AnimationController`][]를 구성하세요.
 
 <?code-excerpt "lib/original_example.dart (shimmer-state-animation)" replace="/\/\/ code-excerpt-closing-bracket/}/g"?>
 ```dart
@@ -504,8 +452,9 @@ class ShimmerState extends State<Shimmer> with SingleTickerProviderStateMixin {
 }
 ```
 
-Apply the `_SlidingGradientTransform` to the `gradient`
-by using the `_shimmerController`'s `value` as the `slidePercent`.
+`_shimmerController`의 `value`를 `slidePercent`로 사용하여,
+`_SlidingGradientTransform`을 `gradient`에 적용합니다.
+
 
 <?code-excerpt "lib/original_example.dart (linear-gradient)"?>
 ```dart
@@ -519,22 +468,18 @@ LinearGradient get gradient => LinearGradient(
     );
 ```
 
-The gradient now animates, but your individual
-`ShimmerLoading` widgets don't repaint themselves
-as the gradient changes. Therefore, it looks like nothing 
-is happening.
+이제 그래디언트가 애니메이션화되지만, 개별 `ShimmerLoading` 위젯은 그래디언트가 변경될 때 스스로 다시 그려지지 않습니다. 
+따라서, 아무 일도 일어나지 않는 것처럼 보입니다.
 
-Expose the `_shimmerController` from `ShimmerState`
-as a [`Listenable`][].
+`ShimmerState`에서 `_shimmerController`를 [`Listenable`][]로 노출합니다.
 
 <?code-excerpt "lib/original_example.dart (shimmer-changes)"?>
 ```dart
 Listenable get shimmerChanges => _shimmerController;
 ```
 
-In `ShimmerLoading`, listen for changes to the ancestor
-`ShimmerState`'s `shimmerChanges` property,
-and repaint the shimmer gradient.
+`ShimmerLoading`에서, 조상 `ShimmerState`의 `shimmerChanges` 속성에 대한 변경 사항을 수신하고, 
+쉬머 그라데이션을 다시 칠합니다.
 
 <?code-excerpt "lib/original_example.dart (shimmer-loading-state)" replace="/\/\/ code-excerpt-closing-bracket/}/g"?>
 ```dart
@@ -562,19 +507,17 @@ class _ShimmerLoadingState extends State<ShimmerLoading> {
   void _onShimmerChange() {
     if (widget.isLoading) {
       setState(() {
-        // Update the shimmer painting.
+        // 쉬머 페인팅을 업데이트합니다.
       });
     }
   }
 }
 ```
 
-Congratulations!
-You now have a full-screen,
-animated shimmer effect that turns 
-on and off as the content loads.
+축하합니다!
+이제 콘텐츠가 로드될 때 켜지고 꺼지는 전체 화면 애니메이션 반짝임 효과가 있습니다.
 
-## Interactive example
+## 대화형 예제 {:#interactive-example}
 
 <?code-excerpt "lib/original_example.dart" remove="code-excerpt-closing-bracket"?>
 ```dartpad title="Flutter shimmer loading hands-on example in DartPad" run="true"
@@ -803,7 +746,7 @@ class _ShimmerLoadingState extends State<ShimmerLoading> {
   void _onShimmerChange() {
     if (widget.isLoading) {
       setState(() {
-        // Update the shimmer painting.
+        // 쉬머 페인팅을 업데이트합니다.
       });
     }
   }
@@ -814,11 +757,10 @@ class _ShimmerLoadingState extends State<ShimmerLoading> {
       return widget.child;
     }
 
-    // Collect ancestor shimmer info.
+    // 조상의 쉬머 정보를 수집합니요.
     final shimmer = Shimmer.of(context)!;
     if (!shimmer.isSized) {
-      // The ancestor Shimmer widget has not laid
-      // itself out yet. Return an empty box.
+      // 조상 Shimmer 위젯은 아직 레이아웃되지 않았습니다. 빈 상자를 반환합니다.
       return const SizedBox();
     }
     final shimmerSize = shimmer.size;

@@ -1,6 +1,8 @@
 ---
-title: Drag a UI element
-description: How to implement a draggable UI element.
+# title: Drag a UI element
+title: UI 요소 드래그
+# description: How to implement a draggable UI element.
+description: 드래그 가능한 UI 요소를 구현하는 방법.
 js:
   - defer: true
     url: /assets/js/inject_dartpad.js
@@ -8,38 +10,28 @@ js:
 
 <?code-excerpt path-base="cookbook/effects/drag_a_widget"?>
 
-Drag and drop is a common mobile app interaction.
-As the user long presses (sometimes called _touch & hold_)
-on a widget, another widget appears beneath the
-user's finger, and the user drags the widget to a
-final location and releases it.
-In this recipe, you'll build a drag-and-drop interaction
-where the user long presses on a choice of food,
-and then drags that food to the picture of the customer who
-is paying for it.
+드래그 앤 드롭은 일반적인 모바일 앱 상호작용입니다. 
+사용자가 위젯을 길게 누르면(때로는 _터치 & 홀드_ 라고도 함), 다른 위젯이 사용자 손가락 아래에 나타나고, 
+사용자는 위젯을 마지막 위치로 끌어서 놓습니다. 
+이 레시피에서는, 사용자가 음식 선택 항목을 길게 누른 다음, 
+해당 음식을 지불하는 고객의 사진으로 끌어서 놓는 드래그 앤 드롭 상호작용을 빌드합니다.
 
-The following animation shows the app's behavior:
+다음 애니메이션은 앱의 동작을 보여줍니다.
 
 ![Ordering the food by dragging it to the person](/assets/images/docs/cookbook/effects/DragAUIElement.gif){:.site-mobile-screenshot}
 
-This recipe begins with a prebuilt list of menu items and
-a row of customers.
-The first step is to recognize a long press
-and display a draggable photo of a menu item.
+이 레시피는 미리 작성된 메뉴 항목 목록과 고객 행으로 시작합니다. 
+첫 번째 단계는 길게 누름을 인식하고, 메뉴 항목의 드래그 가능한 사진을 표시하는 것입니다.
 
-## Press and drag
+## 누르고 드래그 {:#press-and-drag}
 
-Flutter provides a widget called [`LongPressDraggable`][]
-that provides the exact behavior that you need to begin
-a drag-and-drop interaction. A `LongPressDraggable`
-widget recognizes when a long press occurs and then 
-displays a new widget near the user's finger.
-As the user drags, the widget follows the user's finger.
-`LongPressDraggable` gives you full control over the 
-widget that the user drags.
+Flutter는 드래그 앤 드롭 상호작용을 시작하는 데 필요한 정확한 동작을 제공하는 
+[`LongPressDraggable`][]이라는 위젯을 제공합니다. 
+`LongPressDraggable` 위젯은 길게 누르는 경우를 인식한 다음, 사용자 손가락 근처에 새 위젯을 표시합니다. 
+사용자가 드래그하면, 위젯이 사용자 손가락을 따릅니다. 
+`LongPressDraggable`은 사용자가 드래그하는 위젯을 완벽하게 제어할 수 있게 해줍니다.
 
-Each menu list item is displayed with a custom
-`MenuListItem` widget.
+각 메뉴 목록 항목은 커스텀 `MenuListItem` 위젯과 함께 표시됩니다.
 
 <?code-excerpt "lib/main.dart (MenuListItem)" replace="/^child: //g;/^\),$/)/g"?>
 ```dart
@@ -50,7 +42,7 @@ MenuListItem(
 )
 ```
 
-Wrap the `MenuListItem` widget with a `LongPressDraggable` widget.
+`MenuListItem` 위젯을 `LongPressDraggable` 위젯으로 감싸세요.
 
 <?code-excerpt "lib/main.dart (LongPressDraggable)" replace="/^return //g;/^\),$/)/g"?>
 ```dart
@@ -69,42 +61,29 @@ LongPressDraggable<Item>(
 );
 ```
 
-In this case, when the user long presses on the
-`MenuListItem` widget, the `LongPressDraggable`
-widget displays a `DraggingListItem`.
-This `DraggingListItem` displays a photo of the
-selected food item, centered beneath 
-the user's finger.
+이 경우, 사용자가 `MenuListItem` 위젯을 길게 누르면, 
+`LongPressDraggable` 위젯이 `DraggingListItem`을 표시합니다. 
+이 `DraggingListItem`은 사용자의 손가락 아래 중앙에, 선택한 음식 항목의 사진을 표시합니다.
 
-The `dragAnchorStrategy` property is set to
-[`pointerDragAnchorStrategy`][].
-This property value instructs `LongPressDraggable`
-to base the `DraggableListItem`'s position on the 
-user's finger. As the user moves a finger,
-the `DraggableListItem` moves with it.
+`dragAnchorStrategy` 속성은 [`pointerDragAnchorStrategy`][]로 설정됩니다. 
+이 속성 값은 `LongPressDraggable`이 `DraggableListItem`의 위치를 ​​사용자의 손가락에 기반하도록 지시합니다. 
+사용자가 손가락을 움직이면, `DraggableListItem`도 함께 움직입니다.
 
-Dragging and dropping is of little use if no information
-is transmitted when the item is dropped.
-For this reason, `LongPressDraggable` takes a `data` parameter. 
-In this case, the type of `data` is `Item`,
-which holds information about the 
-food menu item that the user pressed on.
+항목을 놓을 때 정보가 전송되지 않으면 끌어서 놓는 것은 별로 소용이 없습니다. 
+이러한 이유로, `LongPressDraggable`은 `data` 매개변수를 사용합니다. 
+이 경우, `data`의 유형은 `Item`이며, 이는 사용자가 누른 음식 메뉴 항목에 대한 정보를 보유합니다.
 
-The `data` associated with a `LongPressDraggable`
-is sent to a special widget called `DragTarget`,
-where the user releases the drag gesture.
-You'll implement the drop behavior next.
+`LongPressDraggable`과 연관된 `data`는 `DragTarget`이라는 특수 위젯으로 전송되고, 
+여기서 사용자는 드래그 제스처를 해제합니다. 다음에 드롭 동작을 구현합니다.
 
-## Drop the draggable
+## 드래그 가능한 것을 드롭 {:#drop-the-draggable}
 
-The user can drop a `LongPressDraggable` wherever they choose,
-but dropping the draggable has no effect unless it's dropped
-on top of a `DragTarget`. When the user drops a draggable on
-top of a `DragTarget` widget, the `DragTarget` widget 
-can either accept or reject the data from the draggable.
+사용자는 `LongPressDraggable`을 원하는 곳에 놓을 수 있지만, 
+`DragTarget` 위에 놓지 않는 한 드래그 가능한 항목을 놓아도 효과가 없습니다. 
+사용자가 `DragTarget` 위젯 위에 드래그 가능한 항목을 놓으면,
+`DragTarget` 위젯은 드래그 가능한 항목의 데이터를 수락하거나 거부할 수 있습니다.
 
-In this recipe, the user should drop a menu item on a
-`CustomerCart` widget to add the menu item to the user's cart.
+이 레시피에서, 사용자는 `CustomerCart` 위젯에 메뉴 항목을 드롭해서, 메뉴 항목을 사용자의 카트에 추가해야 합니다.
 
 <?code-excerpt "lib/main.dart (CustomerCart)" replace="/^return //g;/^\),$/)/g"?>
 ```dart
@@ -115,7 +94,7 @@ CustomerCart(
 );
 ```
 
-Wrap the `CustomerCart` widget with a `DragTarget` widget.
+`CustomerCart` 위젯을 `DragTarget` 위젯으로 감싸세요.
 
 <?code-excerpt "lib/main.dart (DragTarget)" replace="/^child: //g;/^\),$/)/g"?>
 ```dart
@@ -136,43 +115,31 @@ DragTarget<Item>(
 )
 ```
 
-The `DragTarget` displays your existing widget and
-also coordinates with `LongPressDraggable` to recognize
-when the user drags a draggable on top of the `DragTarget`.
-The `DragTarget` also recognizes when the user drops
-a draggable on top of the `DragTarget` widget.
+`DragTarget`은 기존 위젯을 표시하고, `LongPressDraggable`과 조정(coordinates)하여, 
+사용자가 `DragTarget` 위로 드래그 가능한 항목을 드래그할 때를 인식합니다. 
+`DragTarget`은 또한 사용자가 `DragTarget` 위젯 위로 드래그 가능한 항목을 드롭할 때를 인식합니다.
 
-When the user drags a draggable on the `DragTarget` widget,
-`candidateItems` contains the data items that the user is dragging.
-This draggable allows you to change what your widget looks
-like when the user is dragging over it. In this case,
-the `Customer` widget turns red whenever any items are dragged above the 
-`DragTarget` widget. The red visual appearance is configured with the 
-`highlighted` property within the `CustomerCart` widget.
+사용자가 `DragTarget` 위젯 위로 드래그 가능한 항목을 드래그하면, 
+`candidateItems`에는 사용자가 드래그하는 데이터 항목이 포함됩니다. 
+이 드래그 가능한 항목을 사용하면 사용자가 위젯 위로 드래그할 때 위젯의 모양을 변경할 수 있습니다. 
+이 경우, `Customer` 위젯은 `DragTarget` 위젯 위로 항목을 드래그할 때마다 빨간색으로 바뀝니다. 
+빨간색 시각적 모양은 `CustomerCart` 위젯 내의 `highlighted` 속성으로 구성됩니다.
 
-When the user drops a draggable on the `DragTarget` widget,
-the `onAcceptWithDetails` callback is invoked. This is when you get
-to decide whether or not to accept the data that was dropped.
-In this case, the item is always accepted and processed. 
-You might choose to inspect the incoming item to make a
-different decision. 
+사용자가 `DragTarget` 위젯 위로 드래그 가능한 항목을 드롭하면, `onAcceptWithDetails` 콜백이 호출됩니다. 
+이때 드롭된 데이터를 수락할지 여부를 결정하게 됩니다. 이 경우, 항목은 항상 수락되고 처리됩니다. 
+들어오는 항목을 검사하여 다른 결정을 내릴 수 있습니다.
 
-Notice that the type of item dropped on `DragTarget`
-must match the type of the item dragged from `LongPressDraggable`.
-If the types are not compatible, then 
-the `onAcceptWithDetails` method isn't invoked.
+`DragTarget`에 드롭된 항목의 유형은 `LongPressDraggable`에서 드래그된 항목의 유형과 일치해야 합니다. 
+유형이 호환되지 않으면, `onAcceptWithDetails` 메서드가 호출되지 않습니다.
 
-With a `DragTarget` widget configured to accept your
-desired data, you can now transmit data from one part
-of your UI to another by dragging and dropping.
+원하는 데이터를 수락하도록 구성된 `DragTarget` 위젯을 사용하면, 
+이제 드래그 앤 드롭을 통해 UI의 한 부분에서 다른 부분으로 데이터를 전송할 수 있습니다.
 
-In the next step,
-you update the customer's cart with the dropped menu item.
+다음 단계에서는, 드롭된 메뉴 항목으로 고객의 카트를 업데이트합니다.
 
-## Add a menu item to a cart
+## 장바구니에 메뉴 항목 추가 {:#add-a-menu-item-to-a-cart}
 
-Each customer is represented by a `Customer` object,
-which maintains a cart of items and a price total.
+각 고객은 장바구니와 가격 총액을 관리하는, `Customer` 객체로 표현됩니다.
 
 <?code-excerpt "lib/main.dart (CustomerClass)"?>
 ```dart
@@ -195,11 +162,9 @@ class Customer {
 }
 ```
 
-The `CustomerCart` widget displays the customer's photo,
-name, total, and item count based on a `Customer` instance.
+`CustomerCart` 위젯은 `Customer` 인스턴스를 기반으로 고객의 사진, 이름, 총계 및 품목 수를 표시합니다.
 
-To update a customer's cart when a menu item is dropped,
-add the dropped item to the associated `Customer` object.
+메뉴 항목이 드롭될 때 고객의 카트를 업데이트하려면, 드롭된 품목을 연관된 `Customer` 객체에 추가합니다.
 
 <?code-excerpt "lib/main.dart (AddCart)"?>
 ```dart
@@ -213,32 +178,23 @@ void _itemDroppedOnCustomerCart({
 }
 ```
 
-The `_itemDroppedOnCustomerCart` method is invoked in
-`onAcceptWithDetails()` when the user drops a menu item on a
-`CustomerCart` widget. By adding the dropped item to the 
-`customer` object, and invoking `setState()` to cause a
-layout update, the UI refreshes with the new customer's
-price total and item count.
+`_itemDroppedOnCustomerCart` 메서드는 사용자가 `CustomerCart` 위젯에 메뉴 항목을 드롭할 때,
+`onAcceptWithDetails()`에서 호출됩니다. 
+드롭된 항목을 `customer` 객체에 추가하고, `setState()`를 호출하여 레이아웃을 업데이트하면, 
+UI가 새 고객의 가격 총계와 항목 수로 새로 고쳐집니다.
 
-Congratulations! You have a drag-and-drop interaction
-that adds food items to a customer's shopping cart.
+축하합니다! 고객의 쇼핑 카트에 음식 항목을 추가하는 드래그 앤 드롭 상호 작용이 있습니다.
 
-## Interactive example
+## 대화형 예제 {:#interactive-example}
 
-Run the app:
+앱 실행:
 
-* Scroll through the food items.
-* Press and hold on one with your
-  finger or click and hold with the
-  mouse.
-* While holding, the food item's image
-  will appear above the list.
-* Drag the image and drop it on one of the
-  people at the bottom of the screen.
-  The text under the image updates to
-  reflect the charge for that person.
-  You can continue to add food items
-  and watch the charges accumulate.
+* 음식 항목을 스크롤합니다.
+* 손가락으로 하나를 누르고 있거나 마우스로 클릭하고 유지합니다.
+* 누르고 있는 동안, 음식 항목의 이미지가 목록 위에 나타납니다.
+* 이미지를 끌어서 화면 하단에 있는 사람 중 한 명에게 드롭합니다. 
+  이미지 아래의 텍스트가 해당 사람의 요금을 반영하도록 업데이트됩니다. 
+  계속해서 음식 항목을 추가하고 요금이 누적되는 것을 볼 수 있습니다.
 
 <!-- Start DartPad -->
 

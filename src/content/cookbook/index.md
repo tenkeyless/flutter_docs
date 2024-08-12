@@ -9,16 +9,16 @@ description: >
 각 레시피는 독립적(self-contained)이고, 애플리케이션을 빌드하는 데 도움이 되는 참조로 사용할 수 있습니다.
 
 ## 애니메이션 {:#animation}
-- [페이지 route 전환 애니메이팅](/cookbook/animation/page-route-animation)
+- [페이지 경로(route) 전환 애니메이팅](/cookbook/animation/page-route-animation)
 - [물리 시뮬레이션을 사용하여 위젯 애니메이션 만들기](/cookbook/animation/physics-simulation)
 - [컨테이너의 속성에 애니메이팅](/cookbook/animation/animated-container)
 - [위젯을 페이드 인 및 페이드 아웃](/cookbook/animation/opacity-animation)
 
 
 ## 디자인 {:#design}
-- [화면에 drawer 추가](/cookbook/design/drawer)
-- [snackbar 표시](/cookbook/design/snackbars)
-- [패키지에서 글꼴 export](/cookbook/design/package-fonts)
+- [화면에 Drawer 추가](/cookbook/design/drawer)
+- [스낵바 표시](/cookbook/design/snackbars)
+- [패키지에서 글꼴 내보내기](/cookbook/design/package-fonts)
 - [방향(orientation)에 따라 UI 업데이트](/cookbook/design/orientation)
 - [커스텀 글꼴 사용](/cookbook/design/fonts)
 - [테마를 사용하여 색상 및 글꼴 스타일 공유](/cookbook/design/themes)
@@ -28,13 +28,13 @@ description: >
 ## 효과 {:#effects}
 - [다운로드 버튼 만들기](/cookbook/effects/download-button)
 - [중첩된 네비게이션 흐름 만들기](/cookbook/effects/nested-nav)
-- [사진 필터 carousel 만들기](/cookbook/effects/photo-filter-carousel)
-- [스크롤 패럴랙스 효과 만들기](/cookbook/effects/parallax-scrolling)
-- [shimmer 로딩 효과 만들기](/cookbook/effects/shimmer-loading)
-- [staggered 메뉴 애니메이션 만들기](/cookbook/effects/staggered-menu-animation)
-- [타이핑 표시기 만들기](/cookbook/effects/typing-indicator)
+- [사진 필터 carousel 만들기 (deprecated)](/cookbook/effects/photo-filter-carousel)
+- [스크롤링 패럴랙스 효과 만들기](/cookbook/effects/parallax-scrolling)
+- [반짝이는(shimmer) 로딩 효과 만들기](/cookbook/effects/shimmer-loading)
+- [단계적(staggered) 메뉴 애니메이션 만들기](/cookbook/effects/staggered-menu-animation)
+- [타이핑 표시기 만들기 (deprecated)](/cookbook/effects/typing-indicator)
 - [확장 가능한 FAB 만들기](/cookbook/effects/expandable-fab)
-- [그라디언트 채팅 버블 만들기](/cookbook/effects/gradient-bubbles)
+- [그라데이션 채팅 버블 만들기 (deprecated)](/cookbook/effects/gradient-bubbles)
 - [UI 요소 드래그](/cookbook/effects/drag-a-widget)
 
 

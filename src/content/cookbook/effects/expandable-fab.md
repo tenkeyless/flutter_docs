@@ -1,6 +1,8 @@
 ---
-title: Create an expandable FAB
-description: How to implement a FAB that expands to multiple buttons when tapped.
+# title: Create an expandable FAB
+title: 확장 가능한 FAB 만들기
+# description: How to implement a FAB that expands to multiple buttons when tapped.
+description: 탭하면 여러 개의 버튼으로 확장되는 FAB를 구현하는 방법.
 js:
   - defer: true
     url: /assets/js/inject_dartpad.js
@@ -8,29 +10,22 @@ js:
 
 <?code-excerpt path-base="cookbook/effects/expandable_fab"?>
 
-A Floating Action Button (FAB) is a round button that
-floats near the bottom right of a content area.
-This button represents the primary action for the
-corresponding content, but sometimes, there is no primary action.
-Instead, there are a few critical actions that the user might take.
-In this case, you could create an expandable FAB like the one shown
-in the following figure. When pressed, this expandable FAB spawns
-multiple, other action buttons. Each button corresponds to one of
-those critical actions.
+플로팅 액션 버튼(FAB, Floating Action Button)은 콘텐츠 영역의 오른쪽 하단에 떠 있는 둥근 버튼입니다. 
+이 버튼은 해당 콘텐츠의 기본 동작을 나타내지만, 기본 동작이 없는 경우도 있습니다. 
+대신, 사용자가 취할 수 있는 몇 가지 중요한 동작이 있습니다. 
+이 경우, 다음 그림과 같이 확장 가능한 FAB를 만들 수 있습니다. 
+이 확장 가능한 FAB를 누르면, 여러 개의 다른 동작 버튼이 생성됩니다. 각 버튼은 이러한 중요한 동작 중 하나에 해당합니다.
 
-The following animation shows the app's behavior:
+다음 애니메이션은 앱의 동작을 보여줍니다.
 
 ![Expanding and collapsing the FAB](/assets/images/docs/cookbook/effects/ExpandingFAB.gif){:.site-mobile-screenshot}
 
-## Create an ExpandableFab widget
+## ExpandableFab 위젯 만들기 {:#create-an-expandablefab-widget}
 
-Start by creating a new stateful widget called `ExpandableFab`.
-This widget displays the primary FAB and coordinates the expansion
-and collapse of the other action buttons. The widget takes
-in parameters for whether or not the `ExpandedFab` begins in
-the expanded position, what the maximum distance of each action button is,
-and a list of children. You'll use the list later to provide
-the other action buttons.
+`ExpandableFab`라는 새로운 stateful 위젯을 만드는 것으로 시작합니다. 
+이 위젯은 기본 FAB를 표시하고, 다른 작업 버튼의 확장 및 축소를 조정합니다. 
+위젯은 `ExpandedFab`가 확장된 위치에서 시작하는지 여부, 각 작업 버튼의 최대 거리 및 자식 목록에 대한 매개변수를 사용합니다. 
+나중에 목록을 사용하여 다른 작업 버튼을 제공합니다.
 
 <?code-excerpt "lib/excerpt1.dart (ExpandableFab)"?>
 ```dart
@@ -59,13 +54,12 @@ class _ExpandableFabState extends State<ExpandableFab> {
 }
 ```
 
-## FAB cross-fade
+## FAB 크로스 페이드 {:#fab-cross-fade}
 
-The `ExpandableFab` displays a blue edit button when collapsed
-and a white close button when expanded. When expanding and collapsing,
-these two buttons scale and fade between one another. 
+`ExpandableFab`은 축소 시 파란색 편집 버튼을 표시하고, 확장 시 흰색 닫기 버튼을 표시합니다. 
+확장 및 축소 시, 이 두 버튼은 서로 크기가 조정되고 페이드됩니다.
 
-Implement the expand and collapse cross-fade between the two different FABs.
+두 개의 다른 FAB 간에 확장 및 축소 크로스 페이드를 구현합니다. 
 
 <?code-excerpt "lib/excerpt2.dart (ExpandableFabState)"?>
 ```dart
@@ -149,31 +143,24 @@ class _ExpandableFabState extends State<ExpandableFab> {
 }
 ```
 
-The open button sits on top of the close button within a `Stack`,
-allowing for the visual appearance of a cross-fade as the top button
-appears and disappears.
+열기 버튼은 `Stack` 내의 닫기 버튼 위에 위치하여, 맨 위 버튼이 나타나고 사라질 때 크로스 페이드의 시각적 모양을 허용합니다.
 
-To achieve the cross-fade animation, the open button uses an
-`AnimatedContainer` with a scale transform and an `AnimatedOpacity`.
-The open button scales down and fades out when the `ExpandableFab`
-goes from collapsed to expanded. Then, the open button scales up
-and fades in when the `ExpandableFab` goes from expanded to collapsed.
+크로스 페이드 애니메이션을 구현하기 위해, 
+열기 버튼은 스케일 변환과 `AnimatedOpacity`를 사용하는 `AnimatedContainer`를 사용합니다. 
+`ExpandableFab`가 축소에서 확장으로 전환될 때, 열기 버튼은 축소되고 페이드 아웃됩니다. 
+그런 다음, `ExpandableFab`가 확장에서 축소로 전환될 때, 열기 버튼은 확대되고 페이드 인됩니다.
 
-You'll notice that the open button is wrapped with an
-`IgnorePointer` widget. This is because the open button always exists,
-even when it's transparent. Without the `IgnorePointer`,
-the open button always receives the tap event,
-even when the close button is visible.
+열기 버튼이 `IgnorePointer` 위젯으로 래핑되어 있는 것을 알 수 있습니다. 
+이는 열기 버튼이 투명할 때에도, 항상 존재하기 때문입니다. 
+`IgnorePointer`가 없으면, 닫기 버튼이 표시될 때에도, 열기 버튼은 항상 탭 이벤트를 받습니다.
 
-## Create an ActionButton widget
+## ActionButton 위젯 만들기 {:#create-an-actionbutton-widget}
 
-Each of the buttons that expand from the `ExpandableFab`
-have the same design. They're  blue circles with white icons.
-More precisely, the button background color is the `ColorScheme.secondary`
-color, and the icon color is `ColorScheme.onSecondary`.
+`ExpandableFab`에서 확장되는 각 버튼은 동일한 디자인을 가지고 있습니다. 
+흰색 아이콘이 있는 파란색 원입니다. 
+더 정확하게 말하면, 버튼 배경색은 `ColorScheme.secondary` 색상이고, 아이콘 색상은 `ColorScheme.onSecondary`입니다.
 
-Define a new stateless widget called `ActionButton` to display
-these round buttons.
+이러한 둥근 버튼을 표시하기 위해 `ActionButton`이라는 새 stateless 위젯을 정의합니다.
 
 <?code-excerpt "lib/main.dart (ActionButton)"?>
 ```dart
@@ -206,8 +193,7 @@ class ActionButton extends StatelessWidget {
 }
 ```
 
-Pass a few instances of this new `ActionButton` widget into your
-`ExpandableFab`.
+이 새로운 `ActionButton` 위젯의 몇 개 인스턴스를 `ExpandableFab`에 전달합니다.
 
 <?code-excerpt "lib/main.dart (FloatingActionButton)"?>
 ```dart
@@ -230,17 +216,14 @@ floatingActionButton: ExpandableFab(
 ),
 ```
 
-## Expand and collapse the action buttons
+## 작업 버튼들을 확장 및 축소 {:#expand-and-collapse-the-action-buttons}
 
-The child `ActionButton`s should fly out from under the open
-FAB when expanded. Then, the child `ActionButton`s should
-fly back under the open FAB when collapsed.
-This motion requires explicit (x,y) positioning of each
-`ActionButton` and an `Animation` to choreograph changes to
-those (x,y) positions over time.
+자식 `ActionButton`은 확장 시 열린 FAB 아래에서 날아가야 합니다. 
+그런 다음, 자식 `ActionButton`은 축소 시 열린 FAB 아래로 다시 날아가야 합니다. 
+이 동작에는 각 `ActionButton`의 명시적 (x,y) 위치 지정과 
+시간이 지남에 따라 해당 (x,y) 위치에 대한 변경을 안무(choreograph)하는 `Animation`이 필요합니다.
 
-Introduce an `AnimationController` and an `Animation` to
-control the rate at which the various `ActionButton`s expand and collapse.
+다양한 `ActionButton`이 확장되고 축소되는 속도를 제어하는 ​​`AnimationController`와 `Animation`을 도입합니다.
 
 <?code-excerpt "lib/excerpt3.dart (ExpandableFabState3)" replace="/\/\/ code-excerpt-closing-bracket/}/g"?>
 ```dart
@@ -285,8 +268,9 @@ class _ExpandableFabState extends State<ExpandableFab>
 }
 ```
 
-Next, introduce a new stateless widget called `_ExpandingActionButton`,
-and configure this widget to animate and position an individual `ActionButton`. The `ActionButton` is provided as a generic `Widget` called `child`.
+다음으로, `_ExpandingActionButton`이라는 새로운 stateless 위젯을 도입하고, 
+이 위젯을 구성하여 개별 `ActionButton`을 애니메이션화하고 배치합니다. 
+`ActionButton`은 `child`라는 제네릭 `Widget`으로 제공됩니다.
 
 <?code-excerpt "lib/excerpt3.dart (ExpandingActionButton)"?>
 ```dart
@@ -331,23 +315,18 @@ class _ExpandingActionButton extends StatelessWidget {
 }
 ```
 
-The most important part of `_ExpandingActionButton` is the
-`Positioned` widget, which positions the `child` at a specific (x,y)
-coordinate within the surrounding `Stack`.
-The `AnimatedBuilder` causes the `Positioned` widget to rebuild
-every time the animation changes. The `FadeTransition` widget
-orchestrates the appearance and disappearance of each
-`ActionButton` as they expand and collapse, respectively.
+`_ExpandingActionButton`의 가장 중요한 부분은 `Positioned` 위젯으로, 
+주변 `Stack` 내의 특정 (x,y) 좌표에 `child`를 배치합니다. 
+`AnimatedBuilder`는 애니메이션이 변경될 때마다 `Positioned` 위젯을 다시 빌드합니다. 
+`FadeTransition` 위젯은 각각 확장 및 축소될 때 각 `ActionButton`의 표시 및 사라짐을 조정합니다.
 
 :::note
-The use of a `Positioned` widget within `_ExpandingActionButton`
-implies that `_ExpandingActionButton` can only be used as a direct
-child of a `Stack`. This is due to the explicit relationship
-between `Positioned` and `Stack`.
+`_ExpandingActionButton` 내에서 `Positioned` 위젯을 사용하면,
+`_ExpandingActionButton`은 `Stack`의 직접적인 자식으로만 사용할 수 있습니다. 
+이는 `Positioned`와 `Stack` 간의 명시적 관계 때문입니다.
 :::
 
-Finally, use the new `_ExpandingActionButton` widget
-within the `ExpandableFab` to complete the exercise.
+마지막으로, `ExpandableFab` 내의 새로운 `_ExpandingActionButton` 위젯을 사용하여 연습을 완료합니다.
 
 <?code-excerpt "lib/excerpt4.dart (ExpandableFabState4)" replace="/\/\/ code-excerpt-closing-bracket/}/g"?>
 ```dart
@@ -389,22 +368,16 @@ class _ExpandableFabState extends State<ExpandableFab>
 }
 ```
 
-Congratulations! You now have an expandable FAB.
+축하합니다! 이제 확장 가능한 FAB가 생겼습니다.
 
-## Interactive example
+## 대화형 예제 {:#interactive-example}
 
-Run the app:
+앱 실행:
 
-* Click the FAB in the lower-right corner,
-  represented with an Edit icon.
-  It fans out to 3 buttons and is itself replaced by
-  a close button, represented by an **X**.
-* Click the close button to see the expanded
-  buttons fly back to the original FAB and
-  the **X** is replaced by the Edit icon.
-* Expand the FAB again, and click on any
-  of the 3 satellite buttons to see a dialog
-  representing that button's action.
+* 오른쪽 하단 모서리에 있는 편집 아이콘으로 표시된 FAB를 클릭합니다. 
+  3개의 버튼으로 펼쳐지고, 닫기 버튼으로 대체되며 **X**로 표시됩니다.
+* 닫기 버튼을 클릭하면 확장된 버튼이 원래 FAB로 돌아가고, **X**가 편집 아이콘으로 대체됩니다.
+* FAB를 다시 확장하고, 3개의 위성 버튼 중 하나를 클릭하면, 해당 버튼의 동작을 나타내는 대화 상자가 표시됩니다.
 
 
 <!-- start dartpad -->

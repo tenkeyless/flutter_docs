@@ -1,6 +1,8 @@
 ---
-title: Create a photo filter carousel
-description: How to implement a photo filter carousel in Flutter.
+# title: Create a photo filter carousel
+title: 사진 필터 carousel 만들기
+# description: How to implement a photo filter carousel in Flutter.
+description: Flutter에서 사진 필터 carousel를 구현하는 방법.
 js:
   - defer: true
     url: /assets/js/inject_dartpad.js
@@ -10,29 +12,21 @@ js:
 
 {% include docs/deprecated.md %}
 
-Everybody knows that a photo looks better with a filter.
-In this recipe, you build a scrollable,
-filter selection carousel.
+필터가 있는 사진이 더 보기 좋다는 건 누구나 알고 있습니다. 이 레시피에서는, 스크롤 가능한, 필터 선택 carousel를 만듭니다.
 
-The following animation shows the app's behavior:
+다음 애니메이션은 앱의 동작을 보여줍니다.
 
 ![Photo Filter Carousel](/assets/images/docs/cookbook/effects/PhotoFilterCarousel.gif){:.site-mobile-screenshot}
 
-This recipe begins with the photo and filters
-already in place. Filters are applied with the
-`color` and `colorBlendMode` properties of the
-[`Image`][] widget.
+이 레시피는 사진과 필터가 이미 있는 상태에서 시작합니다. 
+필터는 [`Image`][] 위젯의 `color` 및 `colorBlendMode` 속성으로 적용됩니다.
 
-## Add a selector ring and dark gradient
+## 선택기 링과 다크 그라디언트 추가 {:#add-a-selector-ring-and-dark-gradient}
 
-The selected filter circle is displayed within a
-selector ring. Additionally, a dark gradient is
-behind the available filters, which helps the contrast 
-between the filters and any photo that you choose.
+선택된 필터 원은 선택기 링 안에 표시됩니다. 
+또한, 사용 가능한 필터 뒤에 어두운 그라데이션이 있어 필터와 선택한 사진 간의 대비를 돕습니다.
 
-Create a new stateful widget called
-`FilterSelector` that you'll use to 
-implement the selector.
+선택기를 구현하는 데 사용할 `FilterSelector`라는 새 stateful 위젯을 만듭니다.
 
 <?code-excerpt "lib/excerpt1.dart (FilterSelector)"?>
 ```dart
@@ -54,9 +48,8 @@ class _FilterSelectorState extends State<FilterSelector> {
 }
 ```
 
-Add the `FilterSelector` widget to the existing
-widget tree. Position the `FilterSelector` widget
-on top of the photo, at the bottom and centered.
+기존 위젯 트리에 `FilterSelector` 위젯을 추가합니다. 
+`FilterSelector` 위젯을 사진 위, 아래, 중앙에 배치합니다.
 
 <?code-excerpt "lib/excerpt1.dart (Stack)" replace="/^child: //g"?>
 ```dart
@@ -75,9 +68,8 @@ Stack(
 ),
 ```
 
-Within the `FilterSelector` widget,
-display a selector ring on top of a 
-dark gradient by using a `Stack` widget.
+`FilterSelector` 위젯 내에서, 
+`Stack` 위젯을 사용하여 어두운 그라데이션 위에 선택기 링을 표시합니다.
 
 <?code-excerpt "lib/excerpt2.dart (FilterSelectorState2)"?>
 ```dart
@@ -143,26 +135,19 @@ class _FilterSelectorState extends State<FilterSelector> {
 }
 ```
 
-The size of the selector circle and the background gradient
-depends on the size of an individual filter in the carousel
-called `itemSize`. The `itemSize` depends on the available width.
-Therefore, a `LayoutBuilder` widget is used to determine the
-available space, and then you calculate the size of an 
-individual filter's `itemSize`.
+선택기 링과 배경 그래디언트의 크기는 `itemSize`라는 carousel의 개별 필터 크기에 따라 달라집니다. 
+`itemSize`는 사용 가능한 너비에 따라 달라집니다. 
+따라서, `LayoutBuilder` 위젯을 사용하여 사용 가능한 공간을 결정한 다음, 
+개별 필터의 `itemSize` 크기를 계산합니다.
 
-The selector ring includes an `IgnorePointer` widget
-because when carousel interactivity is added,
-the selector ring shouldn't interfere with 
-tap and drag events.
+선택기 링에는 `IgnorePointer` 위젯이 포함되어 있는데, 
+carousel 상호 작용이 추가되면 선택기 링이 탭 및 드래그 이벤트를 방해하지 않아야 하기 때문입니다.
 
-## Create a filter carousel item
+## 필터 carousel 항목 만들기 {:#create-a-filter-carousel-item}
 
-Each filter item in the carousel displays a
-circular image with a color applied to the image
-that corresponds to the associated filter color.
+carousel의 각 필터 항목은 연관된 필터 색상에 해당하는 색상이 적용된 원형 이미지를 표시합니다.
 
-Define a new stateless widget called `FilterItem`
-that displays a single list item.
+단일 목록 항목을 표시하는 `FilterItem`이라는 새 stateless 위젯을 정의합니다.
 
 <?code-excerpt "lib/original_example.dart (filter-item)"?>
 ```dart
@@ -200,34 +185,26 @@ class FilterItem extends StatelessWidget {
 }
 ```
 
-## Implement the filter carousel
+## 필터 carousel 구현 {:#implement-the-filter-carousel}
 
-Filter items scroll to the left and right as the user drags. Scrolling requires 
-some kind of `Scrollable` widget. 
+필터 항목은 사용자가 드래그할 때 좌우로 스크롤됩니다. 스크롤에는 일종의 `Scrollable` 위젯이 필요합니다.
 
-You might consider using a horizontal `ListView` widget,
-but a `ListView` widget positions the first element at the
-beginning of the available space, not at 
-the center, where your selector ring sits.
+horizontal `ListView` 위젯을 사용하는 것을 고려할 수 있지만, 
+`ListView` 위젯은 첫 번째 요소를 선택기 링이 있는 중앙이 아닌 사용 가능한 공간의 시작 부분에 배치합니다.
 
-A `PageView` widget is better suited for a carousel.
-A `PageView` widget lays out its children from the
-center of the available space and provides snapping physics.
-Snapping physics is what causes an item to snap to the center, 
-no matter where the user releases a drag.
+`PageView` 위젯이 회전형에 더 적합합니다. 
+`PageView` 위젯은 사용 가능한 공간의 중앙에서 자식을 배치하고, 스냅핑 물리(snapping physics)를 제공합니다. 
+스냅핑 물리(snapping physics)는 사용자가 드래그를 놓을 위치에 관계없이, 항목이 중앙으로 스냅되도록 하는 것입니다.
 
 :::note
-In cases where you need to customize the
-position of child widgets within a scrollable area,
-consider using a [`Scrollable`][] widget with a 
-[`viewportBuilder`][], and place a
-[`Flow`][] widget inside the `viewportBuilder`. 
-The `Flow` widget has a [delegate property][]
-that allows you to position child widgets wherever
-you want, based on the current `viewportOffset`.
+스크롤 가능 영역 내에서 자식 위젯의 위치를 커스터마이즈해야 하는 경우, 
+[`Scrollable`][] 위젯을 [`viewportBuilder`][]와 함께 사용하고, 
+[`Flow`][] 위젯을 `viewportBuilder` 내부에 배치하는 것을 고려하세요. 
+`Flow` 위젯에는, 현재 `viewportOffset`에 따라, 자식 위젯을 원하는 위치에 배치할 수 있는 
+[delegate 속성][delegate property]가 있습니다.
 :::
 
-Configure your widget tree to make space for the `PageView`.
+`PageView`를 위한 공간을 확보하기 위해 위젯 트리를 구성합니다.
 
 <?code-excerpt "lib/excerpt3.dart (page-view)"?>
 ```dart
@@ -261,8 +238,7 @@ Widget _buildCarousel(double itemSize) {
 }
 ```
 
-Build each `FilterItem` widget within the
-`PageView` widget based on the given `index`.
+주어진 `index`를 기반으로 `PageView` 위젯 내에서 각 `FilterItem` 위젯을 빌드합니다.
 
 <?code-excerpt "lib/excerpt4.dart (BuildFilterItem)"?>
 ```dart
@@ -287,27 +263,17 @@ Widget _buildCarousel(double itemSize) {
 }
 ```
 
-The `PageView` widget displays all of the `FilterItem`
-widgets, and you can drag to the left and right.
-However, right now each `FilterItem` widget takes 
-up the entire width of the screen,
-and each `FilterItem` widget is displayed 
-at the same size and opacity. There should be
-five `FilterItem` widgets on the screen,
-and the `FilterItem` widgets need to shrink and
-fade as they move farther from the center of the screen.
+`PageView` 위젯은 모든 `FilterItem` 위젯을 표시하며, 좌우로 드래그할 수 있습니다. 
+그러나, 지금은 각 `FilterItem` 위젯이 화면의 전체 너비를 차지하고, 
+각 `FilterItem` 위젯은 동일한 크기와 불투명도로 표시됩니다. 
+화면에는 5개의 `FilterItem` 위젯이 있어야 하며, 
+`FilterItem` 위젯은 화면 중앙에서 멀어질수록 줄어들고 희미해져야 합니다.
 
-The solution to both of these issues is to introduce
-a `PageViewController`. The `PageViewController`'s
-`viewportFraction` property is used to display 
-multiple `FilterItem` widgets on the screen at
-the same time. Rebuilding each `FilterItem` widget
-as the `PageViewController` changes allows you to 
-change each `FilterItem` widget's size and opacity
-as the user scrolls.
+이 두 가지 문제에 대한 해결책은 `PageViewController`를 도입하는 것입니다. 
+`PageViewController`의 `viewportFraction` 속성은 여러 `FilterItem` 위젯을 동시에 화면에 표시하는 데 사용됩니다.
+`PageViewController`가 변경될 때 각 `FilterItem` 위젯을 다시 빌드하면, 사용자가 스크롤할 때 각 `FilterItem` 위젯의 크기와 불투명도를 변경할 수 있습니다.
 
-Create a `PageViewController` and connect it to the
-`PageView` widget.
+`PageViewController`를 만들고, `PageView` 위젯에 연결합니다.
 
 <?code-excerpt "lib/excerpt5.dart (page-view-controller)" plaster="none"?>
 ```dart
@@ -396,14 +362,10 @@ Widget _buildCarousel(double itemSize) {
 }
 ```
 
-The `AnimatedBuilder` widget rebuilds every time the
-`_controller` changes its scroll position.
-These rebuilds allow you to change the `FilterItem`
-size and opacity as the user drags.
+`AnimatedBuilder` 위젯은 `_controller`가 스크롤 위치를 변경할 때마다 다시 빌드됩니다. 
+이러한 다시 빌드를 통해 사용자가 드래그할 때 `FilterItem` 크기와 불투명도를 변경할 수 있습니다.
 
-Calculate an appropriate scale and opacity for each
-`FilterItem` widget within the `AnimatedBuilder` and
-apply those values.
+`AnimatedBuilder` 내의 각 `FilterItem` 위젯에 적합한 스케일과 불투명도를 계산하고 해당 값을 적용합니다.
 
 <?code-excerpt "lib/original_example.dart (final-build-carousel)"?>
 ```dart
@@ -421,32 +383,26 @@ Widget _buildCarousel(double itemSize) {
             builder: (context, child) {
               if (!_controller.hasClients ||
                   !_controller.position.hasContentDimensions) {
-                // The PageViewController isn't connected to the
-                // PageView widget yet. Return an empty box.
+                // PageViewController는 아직 PageView 위젯에 연결되지 않았습니다. 
+                // 빈 상자를 반환합니다.
                 return const SizedBox();
               }
 
-              // The integer index of the current page,
-              // 0, 1, 2, 3, and so on
+              // 현재 페이지의 정수 인덱스는 0, 1, 2, 3 등입니다.
               final selectedIndex = _controller.page!.roundToDouble();
 
-              // The fractional amount that the current filter
-              // is dragged to the left or right, for example, 0.25 when
-              // the current filter is dragged 25% to the left.
+              // 현재 필터를 왼쪽이나 오른쪽으로 드래그하는 비율(fractional) 값입니다. 
+              // 예를 들어, 현재 필터를 왼쪽으로 25% 드래그하면 0.25가 됩니다.
               final pageScrollAmount = _controller.page! - selectedIndex;
 
-              // The page-distance of a filter just before it
-              // moves off-screen.
+              // 필터가 화면에서 사라지기 직전까지의 페이지 거리입니다.
               const maxScrollDistance = _filtersPerScreen / 2;
 
-              // The page-distance of this filter item from the
-              // currently selected filter item.
+              // 현재 선택된 필터 항목에서 이 필터 항목까지의 페이지 거리입니다.
               final pageDistanceFromSelected =
                   (selectedIndex - index + pageScrollAmount).abs();
 
-              // The distance of this filter item from the
-              // center of the carousel as a percentage, that is, where the selector
-              // ring sits.
+              // carousel 메뉴의 중심(선택기 링이 있는 위치)에서 필터 항목까지의 거리(백분율)입니다.
               final percentFromCenter =
                   1.0 - pageDistanceFromSelected / maxScrollDistance;
 
@@ -472,11 +428,9 @@ Widget _buildCarousel(double itemSize) {
 }
 ```
 
-Each `FilterItem` widget now shrinks and fades
-away as it moves farther from the center of the screen.
+각 `FilterItem` 위젯은 이제 화면 중앙에서 멀어질수록 줄어들고 사라집니다.
 
-Add a method to change the selected filter when a
-`FilterItem` widget is tapped.
+`FilterItem` 위젯을 탭하면 선택된 필터를 변경하는 메서드를 추가합니다.
 
 <?code-excerpt "lib/original_example.dart (FilterTapped)"?>
 ```dart
@@ -489,8 +443,7 @@ void _onFilterTapped(int index) {
 }
 ```
 
-Configure each `FilterItem` widget to invoke
-`_onFilterTapped` when tapped.
+각 `FilterItem` 위젯을 구성하여 탭하면 `_onFilterTapped`를 호출하도록 합니다.
 
 ```dart
 FilterItem(
@@ -499,10 +452,10 @@ FilterItem(
 ),
 ```
 
-Congratulations!
-You now have a draggable, tappable photo filter carousel.
+축하합니다!
+이제 드래그하고 탭할 수 있는 사진 필터 carousel가 생겼습니다.
 
-## Interactive example
+## 대화형 예제 {:#interactive-example}
 
 <?code-excerpt "lib/main.dart"?>
 ```dartpad title="Flutter photo filter carousel hands-on example in DartPad" run="true"
@@ -756,29 +709,26 @@ class CarouselFlowDelegate extends FlowDelegate {
   void paintChildren(FlowPaintingContext context) {
     final count = context.childCount;
 
-    // All available painting width
+    // 사용 가능한 모든 페인팅 폭
     final size = context.size.width;
 
-    // The distance that a single item "page" takes up from the perspective
-    // of the scroll paging system. We also use this size for the width and
-    // height of a single item.
+    // 스크롤 페이징 시스템의 관점에서 단일 항목 "페이지"가 ​​차지하는 거리입니다. 
+    // 또한 이 크기를 단일 항목의 너비와 높이에도 사용합니다.
     final itemExtent = size / filtersPerScreen;
 
-    // The current scroll position expressed as an item fraction, e.g., 0.0,
-    // or 1.0, or 1.3, or 2.9, etc. A value of 1.3 indicates that item at
-    // index 1 is active, and the user has scrolled 30% towards the item at
-    // index 2.
+    // 현재 스크롤 위치는 항목 비율(fraction)로 표현됩니다. (예: 0.0, 1.0, 1.3, 2.9 등). 
+    // 1.3의 값은 인덱스 1의 항목이 활성화되어 있고, 사용자가 인덱스 2의 항목 방향으로 30% 스크롤했음을 나타냅니다.
     final active = viewportOffset.pixels / itemExtent;
 
-    // Index of the first item we need to paint at this moment.
-    // At most, we paint 3 items to the left of the active item.
+    // 지금 당장 페인트해야 할 첫 번째 항목의 인덱스입니다.
+    // 최대 3개 항목을 활성 항목의 왼쪽에 페인트합니다.
     final min = math.max(0, active.floor() - 3).toInt();
 
-    // Index of the last item we need to paint at this moment.
-    // At most, we paint 3 items to the right of the active item.
+    // 지금 당장 페인트해야 할 마지막 항목의 인덱스입니다.
+    // 최대 3개의 항목을 활성 항목의 오른쪽에 페인트합니다.
     final max = math.min(count - 1, active.ceil() + 3).toInt();
 
-    // Generate transforms for the visible items and sort by distance.
+    // 표시된 항목에 대한 변환을 생성하고 거리별로 정렬합니다.
     for (var index = min; index <= max; index++) {
       final itemXFromCenter = itemExtent * index - viewportOffset.pixels;
       final percentFromCenter = 1.0 - (itemXFromCenter / (size / 2)).abs();

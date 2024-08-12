@@ -22,7 +22,7 @@ Material Design Drawer이 있는 레이아웃을 만듭니다.
 3. Drawer에 항목을 채웁니다.
 4. Drawer를 프로그래밍 방식으로 닫습니다.
 
-## 1. Create a `Scaffold` {:#1-create-a-scaffold}
+## 1. `Scaffold` 생성 {:#1-create-a-scaffold}
 
 앱에 Drawer를 추가하려면 [`Scaffold`][] 위젯으로 래핑합니다. 
 `Scaffold` 위젯은 Material Design 가이드라인을 따르는 앱에 일관된 시각적 구조를 제공합니다. 

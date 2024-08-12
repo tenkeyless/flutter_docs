@@ -1,6 +1,8 @@
 ---
-title: Create a scrolling parallax effect
-description: How to implement a scrolling parallax effect.
+# title: Create a scrolling parallax effect
+title: 스크롤링 패럴랙스 효과 만들기
+# description: How to implement a scrolling parallax effect.
+description: 스크롤링 패럴랙스 효과를 구현하는 방법.
 js:
   - defer: true
     url: /assets/js/inject_dartpad.js
@@ -8,33 +10,22 @@ js:
 
 <?code-excerpt path-base="cookbook/effects/parallax_scrolling"?>
 
-When you scroll a list of cards (containing images,
-for example) in an app, you might notice that those
-images appear to scroll more slowly than the rest of the
-screen. It almost looks as if the cards in the list
-are in the foreground, but the images themselves sit
-far off in the distant background. This effect is
-known as parallax.
+앱에서 카드 목록(예: 이미지 포함)을 스크롤하면, 해당 이미지가 화면의 나머지 부분보다 더 느리게 스크롤되는 것처럼 보일 수 있습니다. 
+목록의 카드가 전경에 있는 것처럼 보이지만, 이미지 자체는 멀리 떨어진 배경에 있습니다. 이 효과를 패럴랙스(parallax)라고 합니다.
 
-In this recipe, you create the parallax effect by building
-a list of cards (with rounded corners containing some text).
-Each card also contains an image.
-As the cards slide up the screen,
-the images within each card slide down.
+이 레시피에서는, 카드 목록(모서리가 둥글고 텍스트가 있는 목록)을 만들어 패럴랙스 효과를 만듭니다. 각 카드에는 이미지도 포함됩니다. 
+카드가 화면 위로 미끄러지면, 각 카드 내의 이미지가 아래로 미끄러집니다.
 
-The following animation shows the app's behavior:
+다음 애니메이션은 앱의 동작을 보여줍니다.
 
 ![Parallax scrolling](/assets/images/docs/cookbook/effects/ParallaxScrolling.gif){:.site-mobile-screenshot}
 
-## Create a list to hold the parallax items
+## 패럴랙스 항목을 보관할 리스트 생성 {:#create-a-list-to-hold-the-parallax-items}
 
-To display a list of parallax scrolling images,
-you must first display a list.
+패럴랙스 스크롤링 이미지 목록을 표시하려면, 먼저 목록을 표시해야 합니다.
 
-Create a new stateless widget called `ParallaxRecipe`.
-Within `ParallaxRecipe`, build a widget tree with a
-`SingleChildScrollView` and a `Column`, which forms
-a list.
+`ParallaxRecipe`라는 새 stateless 위젯을 만듭니다. 
+`ParallaxRecipe` 내에서, `SingleChildScrollView`와 `Column`을 사용하여 목록을 형성하는 위젯 트리를 빌드합니다.
 
 <?code-excerpt "lib/excerpt1.dart (ParallaxRecipe)"?>
 ```dart
@@ -52,21 +43,14 @@ class ParallaxRecipe extends StatelessWidget {
 }
 ```
 
-## Display items with text and a static image
+## 텍스트와 정적 이미지가 있는 항목 표시 {:#display-items-with-text-and-a-static-image}
 
-Each list item displays a rounded-rectangle background
-image, representing one of seven locations in the world.
-Stacked on top of that background image is the
-name of the location and its country,
-positioned in the lower left. Between the
-background image and the text is a dark gradient,
-which improves the legibility
-of the text against the background.
+각 목록 항목은 세계 7개 위치 중 하나를 나타내는, 둥근 사각형 배경 이미지를 표시합니다. 
+배경 이미지 위에 위치 이름과 국가 이름이 왼쪽 아래에 배치되어 있습니다. 
+배경 이미지와 텍스트 사이에는 어두운 그라데이션이 있어, 배경에 대한 텍스트의 가독성을 향상시킵니다.
 
-Implement a stateless widget called `LocationListItem`
-that consists of the previously mentioned visuals.
-For now, use a static `Image` widget for the background.
-Later, you'll replace that widget with a parallax version.
+이전에 언급한 비주얼로 구성된 `LocationListItem`이라는 stateless 위젯을 구현합니다. 
+지금은, 배경에 static `Image` 위젯을 사용합니다. 나중에, 해당 위젯을 패럴랙스 버전으로 대체합니다.
 
 <?code-excerpt "lib/excerpt2.dart (LocationListItem)"?>
 ```dart
@@ -157,7 +141,7 @@ class LocationListItem extends StatelessWidget {
 }
 ```
 
-Next, add the list items to your `ParallaxRecipe` widget.
+다음으로, `ParallaxRecipe` 위젯에 목록 항목을 추가합니다.
 
 <?code-excerpt "lib/excerpt3.dart (ParallaxRecipeItems)"?>
 ```dart
@@ -182,56 +166,39 @@ class ParallaxRecipe extends StatelessWidget {
 }
 ```
 
-You now have a typical, scrollable list of cards
-that displays seven unique locations in the world.
-In the next step, you add a parallax effect to the
-background image.
+이제 전 세계의 7개 고유한 위치를 표시하는 일반적인 스크롤 가능한 카드 목록이 있습니다. 
+다음 단계에서는, 배경 이미지에 패럴랙스 효과를 추가합니다.
 
-## Implement the parallax effect
+## 패럴랙스 효과 구현 {:#implement-the-parallax-effect}
 
-A parallax scrolling effect is achieved by slightly
-pushing the background image in the opposite direction
-of the rest of the list. As the list items slide up
-the screen, each background image slides slightly downward.
-Conversely, as the list items slide down the screen,
-each background image slides slightly upward.
-Visually, this results in parallax.
+패럴랙스 스크롤링 효과는 목록의 나머지 부분과 반대 방향으로 배경 이미지를 약간 미는 것으로 구현됩니다. 
+목록 항목이 화면을 위로 밀어 올리면(slide up), 각 배경 이미지가 약간 아래로 슬라이드합니다. (slides slightly downward) 
+반대로, 목록 항목이 화면을 아래로 밀어 올리면(slide down), 각 배경 이미지가 약간 위로 슬라이드합니다. (slides slightly upward)
+시각적으로, 패럴랙스가 발생합니다.
 
-The parallax effect depends on the list item's
-current position within its ancestor `Scrollable`.
-As the list item's scroll position changes, the position
-of the list item's background image must also change.
-This is an interesting problem to solve. The position
-of a list item within the `Scrollable` isn't
-available until Flutter's layout phase is complete.
-This means that the position of the background image
-must be determined in the paint phase, which comes after
-the layout phase. Fortunately, Flutter provides a widget
-called `Flow`, which is specifically designed to give you
-control over the transform of a child widget immediately
-before the widget is painted. In other words,
-you can intercept the painting phase and take control
-to reposition your child widgets however you want.
+패럴랙스 효과는 조상인 `Scrollable` 내에서 목록 항목의 현재 위치에 따라 달라집니다. 
+목록 항목의 스크롤 위치가 변경되면, 목록 항목의 배경 이미지 위치도 변경해야 합니다. 
+이는 해결하기 흥미로운 문제입니다. 
+`Scrollable` 내에서 목록 항목의 위치는 Flutter의 레이아웃 단계가 완료될 때까지 사용할 수 없습니다. 
+즉, 레이아웃 단계 다음에 오는, 페인트 단계에서 배경 이미지의 위치를 ​​결정해야 합니다. 
+다행히도, Flutter는 `Flow`라는 위젯을 제공하는데, 
+이 위젯은 위젯이 페인트되기 직전에 자식 위젯의 변형을 제어할 수 있도록 특별히 설계되었습니다. 
+즉, 페인팅 단계를 가로채서, 원하는 대로 자식 위젯의 위치를 ​​변경할 수 있습니다.
 
 :::note
-To learn more, check out this short
-Widget of the Week video on the `Flow` widget:
+자세한 내용을 알아보려면 `Flow` 위젯에 대한 이 짧은 주간 위젯 비디오를 확인하세요.
 
-{% ytEmbed 'NG6pvXpnIso', 'Flow | Flutter widget of the week' %}
+{% ytEmbed 'NG6pvXpnIso', 'Flow | 이번 주의 Flutter 위젯' %}
 :::
 
 :::note
-In cases where you need control over what a child paints,
-rather than where a child is painted,
-consider using a [`CustomPaint`][] widget.
+child가 어디에 그려지는지가 아니라, 무엇을 그리는지에 대한 제어가 필요한 경우, 
+[`CustomPaint`][] 위젯을 사용하는 것을 고려하세요.
 
-In cases where you need control over the layout,
-painting, and hit testing, consider defining a
-custom [`RenderBox`][].
+레이아웃, 페인팅 및 히트 테스트를 제어해야 하는 경우, 커스텀 [`RenderBox`][]를 정의하는 것을 고려하세요.
 :::
 
-Wrap your background `Image` widget with a
-[`Flow`][] widget.
+배경 `Image` 위젯을 [`Flow`][] 위젯으로 감싸세요.
 
 <?code-excerpt "lib/excerpt4.dart (BuildParallaxBackground)" replace="/\n    delegate: ParallaxFlowDelegate\(\),//g"?>
 ```dart
@@ -247,7 +214,7 @@ Widget _buildParallaxBackground(BuildContext context) {
 }
 ```
 
-Introduce a new `FlowDelegate` called `ParallaxFlowDelegate`.
+`ParallaxFlowDelegate`라는 새로운 `FlowDelegate`를 소개합니다.
 
 <?code-excerpt "lib/excerpt4.dart (BuildParallaxBackground)"?>
 ```dart
@@ -271,28 +238,27 @@ class ParallaxFlowDelegate extends FlowDelegate {
 
   @override
   BoxConstraints getConstraintsForChild(int i, BoxConstraints constraints) {
-    // TODO: We'll add more to this later.
+    // TODO: 나중에 더 많은 내용을 추가할 것입니다.
   }
 
   @override
   void paintChildren(FlowPaintingContext context) {
-    // TODO: We'll add more to this later.
+    // TODO: 나중에 더 많은 내용을 추가할 것입니다.
   }
 
   @override
   bool shouldRepaint(covariant FlowDelegate oldDelegate) {
-    // TODO: We'll add more to this later.
+    // TODO: 나중에 더 많은 내용을 추가할 것입니다.
     return true;
   }
 }
 ```
 
-A `FlowDelegate` controls how its children are sized
-and where those children are painted. In this case,
-your `Flow` widget has only one child: the background image.
-That image must be exactly as wide as the `Flow` widget.
+`FlowDelegate`는 children의 크기와 children이 그려지는 위치를 제어합니다. 
+이 경우, `Flow` 위젯에는 child가 하나뿐입니다. 배경 이미지입니다. 
+해당 이미지는 `Flow` 위젯과 정확히 같은 너비여야 합니다.
 
-Return tight width constraints for your background image child.
+배경 이미지 child에 대한 엄격한 너비 제약 조건을 반환합니다.
 
 <?code-excerpt "lib/main.dart (TightWidth)"?>
 ```dart
@@ -304,32 +270,23 @@ BoxConstraints getConstraintsForChild(int i, BoxConstraints constraints) {
 }
 ```
 
-Your background images are now sized appropriately,
-but you still need to calculate the vertical position
-of each background image based on its scroll
-position, and then paint it.
+배경 이미지의 크기가 이제 적절하게 조정되었지만, 
+여전히 스크롤 위치를 기준으로 각 배경 이미지의 수직 위치를 계산한 다음, 페인트해야 합니다.
 
-There are three critical pieces of information that
-you need to compute the desired position of a
-background image:
+배경 이미지의 원하는 위치를 계산하는 데 필요한 세 가지 중요한 정보가 있습니다.
 
-* The bounds of the ancestor `Scrollable`
-* The bounds of the individual list item
-* The size of the image after it's scaled down
-   to fit in the list item
+* 조상 `Scrollable`의 경계(bounds)
+* 개별 목록 항목의 경계
+* 목록 항목에 맞게 축소된 후의 이미지 크기
 
-To look up the bounds of the `Scrollable`,
-you pass a `ScrollableState` into your `FlowDelegate`.
+`Scrollable`의 경계를 찾으려면, `ScrollableState`를 `FlowDelegate`에 전달합니다.
 
-To look up the bounds of your individual list item,
-pass your list item's `BuildContext` into your `FlowDelegate`.
+개별 목록 항목의 경계를 찾으려면, 목록 항목의 `BuildContext`를 `FlowDelegate`에 전달합니다.
 
-To look up the final size of your background image,
-assign a `GlobalKey` to your `Image` widget,
-and then you pass that `GlobalKey` into your
-`FlowDelegate`.
+배경 이미지의 최종 크기를 찾으려면, `Image` 위젯에 `GlobalKey`를 할당한 다음, 
+해당 `GlobalKey`를 `FlowDelegate`에 전달합니다.
 
-Make this information available to `ParallaxFlowDelegate`.
+이 정보를 `ParallaxFlowDelegate`에서 사용할 수 있도록 합니다.
 
 <?code-excerpt "lib/excerpt5.dart (global-key)" plaster="none"?>
 ```dart
@@ -371,8 +328,7 @@ class ParallaxFlowDelegate extends FlowDelegate {
 }
 ```
 
-Having all the information needed to implement
-parallax scrolling, implement the `shouldRepaint()` method.
+패럴랙스 스크롤을 구현하는 데 필요한 모든 정보를 갖추고, `shouldRepaint()` 메서드를 구현합니다.
 
 <?code-excerpt "lib/main.dart (ShouldRepaint)"?>
 ```dart
@@ -384,16 +340,15 @@ bool shouldRepaint(ParallaxFlowDelegate oldDelegate) {
 }
 ```
 
-Now, implement the layout calculations for the parallax effect.
+이제, 패럴랙스 효과에 대한 레이아웃 계산을 구현합니다.
 
-First, calculate the pixel position of a list
-item within its ancestor `Scrollable`.
+먼저, 조상 `Scrollable` 내에서 목록 항목의 픽셀 위치를 계산합니다.
 
 <?code-excerpt "lib/excerpt5.dart (paint-children)" plaster="none"?>
 ```dart
 @override
 void paintChildren(FlowPaintingContext context) {
-  // Calculate the position of this list item within the viewport.
+  // 뷰포트 내에서 이 목록 항목의 위치를 ​​계산합니다.
   final scrollableBox = scrollable.context.findRenderObject() as RenderBox;
   final listItemBox = listItemContext.findRenderObject() as RenderBox;
   final listItemOffset = listItemBox.localToGlobal(
@@ -402,25 +357,21 @@ void paintChildren(FlowPaintingContext context) {
 }
 ```
 
-Use the pixel position of the list item to calculate its
-percentage from the top of the `Scrollable`.
-A list item at the top of the scrollable area should
-produce 0%, and a list item at the bottom of the
-scrollable area should produce 100%.
+목록 항목의 픽셀 위치를 사용하여 `Scrollable` 상단으로부터의 백분율을 계산합니다. 
+스크롤 가능 영역 상단에 있는 목록 항목은 0%를 생성해야 하고, 스크롤 가능 영역 하단에 있는 목록 항목은 100%를 생성해야 합니다.
 
 <?code-excerpt "lib/excerpt5.dart (paint-children-2)"?>
 ```dart
 @override
 void paintChildren(FlowPaintingContext context) {
-  // Calculate the position of this list item within the viewport.
+  // 뷰포트 내에서 이 목록 항목의 위치를 ​​계산합니다.
   final scrollableBox = scrollable.context.findRenderObject() as RenderBox;
   final listItemBox = listItemContext.findRenderObject() as RenderBox;
   final listItemOffset = listItemBox.localToGlobal(
       listItemBox.size.centerLeft(Offset.zero),
       ancestor: scrollableBox);
 
-  // Determine the percent position of this list item within the
-  // scrollable area.
+  // 스크롤 가능한 영역 내에서 이 목록 항목의 퍼센트 위치를 결정합니다.
   final viewportDimension = scrollable.position.viewportDimension;
   final scrollFraction =
       (listItemOffset.dy / viewportDimension).clamp(0.0, 1.0);
@@ -428,63 +379,55 @@ void paintChildren(FlowPaintingContext context) {
 }
 ```
 
-Use the scroll percentage to calculate an `Alignment`.
-At 0%, you want `Alignment(0.0, -1.0)`,
-and at 100%, you want `Alignment(0.0, 1.0)`.
-These coordinates correspond to top and bottom
-alignment, respectively.
+스크롤 백분율을 사용하여 `Alignment`를 계산합니다. 
+0%에서는, `Alignment(0.0, -1.0)`를 원하고, 
+100%에서는, `Alignment(0.0, 1.0)`를 원합니다. 
+이러한 좌표는 각각 위쪽과 아래쪽 정렬에 해당합니다.
 
 <?code-excerpt "lib/excerpt5.dart (paint-children-3)" plaster="none"?>
 ```dart
 @override
 void paintChildren(FlowPaintingContext context) {
-  // Calculate the position of this list item within the viewport.
+  // 뷰포트 내에서 이 목록 항목의 위치를 ​​계산합니다.
   final scrollableBox = scrollable.context.findRenderObject() as RenderBox;
   final listItemBox = listItemContext.findRenderObject() as RenderBox;
   final listItemOffset = listItemBox.localToGlobal(
       listItemBox.size.centerLeft(Offset.zero),
       ancestor: scrollableBox);
 
-  // Determine the percent position of this list item within the
-  // scrollable area.
+  // 스크롤 가능한 영역 내에서 이 목록 항목의 퍼센트 위치를 결정합니다.
   final viewportDimension = scrollable.position.viewportDimension;
   final scrollFraction =
       (listItemOffset.dy / viewportDimension).clamp(0.0, 1.0);
 
-  // Calculate the vertical alignment of the background
-  // based on the scroll percent.
+  // 스크롤 비율에 따라 배경의 vertical 정렬을 계산합니다.
   final verticalAlignment = Alignment(0.0, scrollFraction * 2 - 1);
 }
 ```
 
-Use `verticalAlignment`, along with the size of the
-list item and the size of the background image,
-to produce a `Rect` that determines where the
-background image should be positioned.
+`verticalAlignment`를, 목록 항목의 크기와 배경 이미지의 크기와 함께 사용하여, 
+배경 이미지가 배치될 위치를 결정하는 `Rect`를 생성합니다.
 
 <?code-excerpt "lib/excerpt5.dart (paint-children-4)" plaster="none"?>
 ```dart
 @override
 void paintChildren(FlowPaintingContext context) {
-  // Calculate the position of this list item within the viewport.
+  // 뷰포트 내에서 이 목록 항목의 위치를 ​​계산합니다.
   final scrollableBox = scrollable.context.findRenderObject() as RenderBox;
   final listItemBox = listItemContext.findRenderObject() as RenderBox;
   final listItemOffset = listItemBox.localToGlobal(
       listItemBox.size.centerLeft(Offset.zero),
       ancestor: scrollableBox);
 
-  // Determine the percent position of this list item within the
-  // scrollable area.
+  // 스크롤 가능한 영역 내에서 이 목록 항목의 퍼센트 위치를 결정합니다.
   final viewportDimension = scrollable.position.viewportDimension;
   final scrollFraction =
       (listItemOffset.dy / viewportDimension).clamp(0.0, 1.0);
 
-  // Calculate the vertical alignment of the background
-  // based on the scroll percent.
+  // 스크롤 비율에 따라 배경의 vertical 정렬을 계산합니다.
   final verticalAlignment = Alignment(0.0, scrollFraction * 2 - 1);
 
-  // Convert the background alignment into a pixel offset for
-  // painting purposes.
+  // 페인팅 목적으로 배경 정렬을 픽셀 오프셋으로 변환합니다.
   final backgroundSize =
       (backgroundImageKey.currentContext!.findRenderObject() as RenderBox)
           .size;
@@ -494,34 +437,29 @@ void paintChildren(FlowPaintingContext context) {
 }
 ```
 
-Using `childRect`, paint the background image with
-the desired translation transformation.
-It's this transformation over time that gives you the
-parallax effect.
+`childRect`를 사용하여 원하는 변환 변환으로 배경 이미지를 그립니다. 
+시간이 지남에 따라 이러한 변환이 패럴랙스 효과를 제공합니다.
 
 <?code-excerpt "lib/excerpt5.dart (paint-children-5)" plaster="none" ?>
 ```dart
 @override
 void paintChildren(FlowPaintingContext context) {
-  // Calculate the position of this list item within the viewport.
+  // 뷰포트 내에서 이 목록 항목의 위치를 ​​계산합니다.
   final scrollableBox = scrollable.context.findRenderObject() as RenderBox;
   final listItemBox = listItemContext.findRenderObject() as RenderBox;
   final listItemOffset = listItemBox.localToGlobal(
       listItemBox.size.centerLeft(Offset.zero),
       ancestor: scrollableBox);
 
-  // Determine the percent position of this list item within the
-  // scrollable area.
+  // 스크롤 가능한 영역 내에서 이 목록 항목의 퍼센트 위치를 결정합니다.
   final viewportDimension = scrollable.position.viewportDimension;
   final scrollFraction =
       (listItemOffset.dy / viewportDimension).clamp(0.0, 1.0);
 
-  // Calculate the vertical alignment of the background
-  // based on the scroll percent.
+  // 스크롤 비율에 따라 배경의 vertical 정렬을 계산합니다.
   final verticalAlignment = Alignment(0.0, scrollFraction * 2 - 1);
 
-  // Convert the background alignment into a pixel offset for
-  // painting purposes.
+  // 페인팅 목적으로 배경 정렬을 픽셀 오프셋으로 변환합니다.
   final backgroundSize =
       (backgroundImageKey.currentContext!.findRenderObject() as RenderBox)
           .size;
@@ -529,7 +467,7 @@ void paintChildren(FlowPaintingContext context) {
   final childRect =
       verticalAlignment.inscribe(backgroundSize, Offset.zero & listItemSize);
 
-  // Paint the background.
+  // 배경을 페인트합니다.
   context.paintChild(
     0,
     transform:
@@ -538,14 +476,12 @@ void paintChildren(FlowPaintingContext context) {
 }
 ```
 
-You need one final detail to achieve the parallax effect.
-The `ParallaxFlowDelegate` repaints when the inputs change,
-but the `ParallaxFlowDelegate` doesn't repaint every time
-the scroll position changes.
+패럴랙스 효과를 얻으려면 마지막 세부 사항이 필요합니다. 
+`ParallaxFlowDelegate`는 입력이 변경될 때 다시 그려지지만, 
+`ParallaxFlowDelegate`는 스크롤 위치가 변경될 때마다 다시 그려지지 않습니다.
 
-Pass the `ScrollableState`'s `ScrollPosition` to
-the `FlowDelegate` superclass so that the `FlowDelegate`
-repaints every time the `ScrollPosition` changes.
+`ScrollableState`의 `ScrollPosition`을 `FlowDelegate` 슈퍼클래스에 전달하여, 
+`ScrollPosition`이 변경될 때마다 `FlowDelegate`가 다시 그려지도록 합니다.
 
 <?code-excerpt "lib/main.dart (SuperScrollPosition)" replace="/;\n/;\n}/g"?>
 ```dart
@@ -558,15 +494,14 @@ class ParallaxFlowDelegate extends FlowDelegate {
 }
 ```
 
-Congratulations!
-You now have a list of cards with parallax,
-scrolling background images.
+축하합니다!
+이제 패럴랙스, 스크롤링 배경 이미지가 있는 카드 목록이 있습니다.
 
-## Interactive example
+## 대화형 예제 {:#interactive-example}
 
-Run the app:
+앱 실행:
 
-* Scroll up and down to observe the parallax effect.
+* 위아래로 스크롤하여 패럴랙스 효과를 관찰합니다.
 
 <?code-excerpt "lib/main.dart"?>
 ```dartpad title="Flutter parallax scrolling hands-on example in DartPad" run="true"
@@ -733,25 +668,22 @@ class ParallaxFlowDelegate extends FlowDelegate {
 
   @override
   void paintChildren(FlowPaintingContext context) {
-    // Calculate the position of this list item within the viewport.
+    // 뷰포트 내에서 이 목록 항목의 위치를 ​​계산합니다.
     final scrollableBox = scrollable.context.findRenderObject() as RenderBox;
     final listItemBox = listItemContext.findRenderObject() as RenderBox;
     final listItemOffset = listItemBox.localToGlobal(
         listItemBox.size.centerLeft(Offset.zero),
         ancestor: scrollableBox);
 
-    // Determine the percent position of this list item within the
-    // scrollable area.
+    // 스크롤 가능한 영역 내에서 이 목록 항목의 퍼센트 위치를 결정합니다.
     final viewportDimension = scrollable.position.viewportDimension;
     final scrollFraction =
         (listItemOffset.dy / viewportDimension).clamp(0.0, 1.0);
 
-    // Calculate the vertical alignment of the background
-    // based on the scroll percent.
+    // 스크롤 비율에 따라 배경의 vertical 정렬을 계산합니다.
     final verticalAlignment = Alignment(0.0, scrollFraction * 2 - 1);
 
-    // Convert the background alignment into a pixel offset for
-    // painting purposes.
+    // 페인팅 목적으로 배경 정렬을 픽셀 오프셋으로 변환합니다.
     final backgroundSize =
         (backgroundImageKey.currentContext!.findRenderObject() as RenderBox)
             .size;
@@ -759,7 +691,7 @@ class ParallaxFlowDelegate extends FlowDelegate {
     final childRect =
         verticalAlignment.inscribe(backgroundSize, Offset.zero & listItemSize);
 
-    // Paint the background.
+    // 배경을 페인트합니다.
     context.paintChild(
       0,
       transform:
@@ -840,45 +772,41 @@ class RenderParallax extends RenderBox
   void performLayout() {
     size = constraints.biggest;
 
-    // Force the background to take up all available width
-    // and then scale its height based on the image's aspect ratio.
+    // 배경이 사용 가능한 너비를 모두 차지하도록 한 다음 이미지의 종횡비에 따라 높이를 조절합니다.
     final background = child!;
     final backgroundImageConstraints =
         BoxConstraints.tightFor(width: size.width);
     background.layout(backgroundImageConstraints, parentUsesSize: true);
 
-    // Set the background's local offset, which is zero.
+    // 배경의 로컬 오프셋을 0으로 설정합니다.
     (background.parentData as ParallaxParentData).offset = Offset.zero;
   }
 
   @override
   void paint(PaintingContext context, Offset offset) {
-    // Get the size of the scrollable area.
+    // 스크롤 가능한 영역의 크기를 가져옵니다.
     final viewportDimension = scrollable.position.viewportDimension;
 
-    // Calculate the global position of this list item.
+    // 이 목록 항목의 글로벌 위치를 계산합니다.
     final scrollableBox = scrollable.context.findRenderObject() as RenderBox;
     final backgroundOffset =
         localToGlobal(size.centerLeft(Offset.zero), ancestor: scrollableBox);
 
-    // Determine the percent position of this list item within the
-    // scrollable area.
+    // 스크롤 가능한 영역 내에서 이 목록 항목의 퍼센트 위치를 결정합니다.
     final scrollFraction =
         (backgroundOffset.dy / viewportDimension).clamp(0.0, 1.0);
 
-    // Calculate the vertical alignment of the background
-    // based on the scroll percent.
+    // 스크롤 비율에 따라 배경의 vertical 정렬을 계산합니다.
     final verticalAlignment = Alignment(0.0, scrollFraction * 2 - 1);
 
-    // Convert the background alignment into a pixel offset for
-    // painting purposes.
+    // 페인팅 목적으로 배경 정렬을 픽셀 오프셋으로 변환합니다.
     final background = child!;
     final backgroundSize = background.size;
     final listItemSize = size;
     final childRect =
         verticalAlignment.inscribe(backgroundSize, Offset.zero & listItemSize);
 
-    // Paint the background.
+    // 배경을 페인트합니다.
     context.paintChild(
         background,
         (background.parentData as ParallaxParentData).offset +
