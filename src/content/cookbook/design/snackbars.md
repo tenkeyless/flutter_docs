@@ -1,6 +1,8 @@
 ---
-title: Display a snackbar
-description: How to implement a snackbar to display messages.
+# title: Display a snackbar
+title: 스낵바 표시
+# description: How to implement a snackbar to display messages.
+description: 메시지를 표시하기 위해 스낵바를 구현하는 방법.
 js:
   - defer: true
     url: /assets/js/inject_dartpad.js
@@ -8,29 +10,25 @@ js:
 
 <?code-excerpt path-base="cookbook/design/snackbars/"?>
 
-It can be useful to briefly inform your users when certain actions
-take place. For example, when a user swipes away a message in a list,
-you might want to inform them that the message has been deleted.
-You might even want to give them an option to undo the action.
+특정 작업이 수행될 때 사용자에게 간단히 알리는 것이 유용할 수 있습니다. 
+예를 들어, 사용자가 목록에서 메시지를 스와이프(swipes away)하면, 메시지가 삭제되었음을 알리고 싶을 수 있습니다. 
+작업을 취소하는 옵션을 제공하고 싶을 수도 있습니다.
 
-In Material Design, this is the job of a [`SnackBar`][].
-This recipe implements a snackbar using the following steps:
+Material Design에서, 이는 [`SnackBar`][]의 작업입니다. 
+이 레시피는 다음 단계를 사용하여 스낵바를 구현합니다.
 
-  1. Create a `Scaffold`.
-  2. Display a `SnackBar`.
-  3. Provide an optional action.
+  1. `Scaffold`를 만듭니다.
+  2. `SnackBar`를 표시합니다.
+  3. 선택적 작업을 제공합니다.
 
-## 1. Create a `Scaffold`
+## 1. `Scaffold` 만들기 {:#1-create-a-scaffold}
 
-When creating apps that follow the Material Design guidelines,
-give your apps a consistent visual structure.
-In this example, display the `SnackBar` at the bottom of the screen,
-without overlapping other important
-widgets, such as the `FloatingActionButton`.
+Material Design 가이드라인을 따르는 앱을 만들 때는, 앱에 일관된 시각적 구조를 제공하세요. 
+이 예제에서는, `SnackBar`를 화면 하단에 표시하고, 
+`FloatingActionButton`과 같은 다른 중요한 위젯을 겹치지 않게 하세요.
 
-The [`Scaffold`][] widget, from the [material library][],
-creates this visual structure and ensures that important
-widgets don't overlap.
+[material 라이브러리][material library]의 [`Scaffold`][] 위젯은, 
+이러한 시각적 구조를 만들고 중요한 위젯이 겹치지 않도록 합니다.
 
 <?code-excerpt "lib/partial.dart (Scaffold)"?>
 ```dart
@@ -45,10 +43,10 @@ return MaterialApp(
 );
 ```
 
-## 2. Display a `SnackBar`
+## 2. `SnackBar` 디스플레이 {:#2-display-a-snackbar}
 
-With the `Scaffold` in place, display a `SnackBar`.
-First, create a `SnackBar`, then display it using `ScaffoldMessenger`.
+`Scaffold`가 제자리에 있으면, `SnackBar`를 표시합니다. 
+먼저, `SnackBar`를 만든 다음, `ScaffoldMessenger`를 사용하여 표시합니다.
 
 <?code-excerpt "lib/partial.dart (DisplaySnackBar)"?>
 ```dart
@@ -56,28 +54,22 @@ const snackBar = SnackBar(
   content: Text('Yay! A SnackBar!'),
 );
 
-// Find the ScaffoldMessenger in the widget tree
-// and use it to show a SnackBar.
+// 위젯 트리에서 ScaffoldMessenger를 찾아 SnackBar를 표시합니다.
 ScaffoldMessenger.of(context).showSnackBar(snackBar);
 ```
 
 :::note
-To learn more, watch this short Widget of the Week video on
-the `ScaffoldMessenger` widget:
+자세한 내용을 알아보려면, `ScaffoldMessenger` 위젯에 대한 이 짧은 주간 위젯 비디오를 시청하세요.
 
-{% ytEmbed 'lytQi-slT5Y', 'ScaffoldMessenger | Flutter widget of the week' %}
+{% ytEmbed 'lytQi-slT5Y', 'ScaffoldMessenger | 이번 주의 Flutter 위젯' %}
 :::
 
-## 3. Provide an optional action
+## 3. Provide an optional action {:#3-provide-an-optional-action}
 
-You might want to provide an action to the user when
-the SnackBar is displayed.
-For example, if the user accidentally deletes a message,
-they might use an optional action in the SnackBar to recover
-the message.
+SnackBar가 표시될 때, 사용자에게 동작을 제공하고 싶을 수 있습니다. 
+예를 들어, 사용자가 실수로 메시지를 삭제한 경우, SnackBar에서 선택적 동작을 사용하여 메시지를 복구할 수 있습니다.
 
-Here's an example of providing
-an additional `action` to the `SnackBar` widget:
+다음은 `SnackBar` 위젯에 추가 `action`을 제공하는 예입니다.
 
 <?code-excerpt "lib/main.dart (SnackBarAction)"?>
 ```dart
@@ -86,18 +78,17 @@ final snackBar = SnackBar(
   action: SnackBarAction(
     label: 'Undo',
     onPressed: () {
-      // Some code to undo the change.
+      // 변경 사항을 취소하는 코드입니다.
     },
   ),
 );
 ```
 
-## Interactive example
+## 대화형 예제 {:#interactive-example}
 
 :::note
-In this example, the SnackBar displays when a user taps a button.
-For more information on working with user input,
-see the [Gestures][] section of the cookbook.
+이 예제에서는, SnackBar는 사용자가 버튼을 탭하면 표시됩니다.
+사용자 입력 작업에 대한 자세한 내용은, 쿡북의 [Gestures][] 섹션을 참조하세요.
 :::
 
 <?code-excerpt "lib/main.dart"?>
@@ -136,13 +127,12 @@ class SnackBarPage extends StatelessWidget {
             action: SnackBarAction(
               label: 'Undo',
               onPressed: () {
-                // Some code to undo the change.
+                // 변경 사항을 취소하는 코드입니다.
               },
             ),
           );
 
-          // Find the ScaffoldMessenger in the widget tree
-          // and use it to show a SnackBar.
+          // 위젯 트리에서 ScaffoldMessenger를 찾아 SnackBar를 표시합니다.
           ScaffoldMessenger.of(context).showSnackBar(snackBar);
         },
         child: const Text('Show SnackBar'),
