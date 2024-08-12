@@ -1,93 +1,84 @@
 ---
-title: Add ads to your mobile Flutter app or game
-short-title: Show ads
-description: How to use the google_mobile_ads package to show ads in Flutter.
+# title: Add ads to your mobile Flutter app or game
+title: 모바일 Flutter 앱이나 게임에 광고 추가
+# short-title: Show ads
+short-title: 광고 표시
+# description: How to use the google_mobile_ads package to show ads in Flutter.
+description: Flutter에서 google_mobile_ads 패키지를 사용하여 광고를 표시하는 방법.
 ---
 
 <?code-excerpt path-base="cookbook/plugins/google_mobile_ads"?>
 
 {% comment %}
-  This partly duplicates the AdMob documentation
-  here: https://developers.google.com/admob/flutter/quick-start
-  
-  The added value of this page is that it's more straightforward for
-  someone who just has a Flutter app or game and wants to add
-  monetization to it.
-  
-  In short, this is a friendlier --- though not as comprehensive ---
-  introduction to ads in Flutter.
+  이것은 여기의 AdMob 설명서를 부분적으로 복제한 것입니다: https://developers.google.com/admob/flutter/quick-start
+
+  이 페이지의 부가 가치는 Flutter 앱이나 게임만 있고 여기에 수익 창출을 추가하려는 사람에게 더 간단하다는 것입니다.
+
+  간단히 말해서, 이것은 Flutter에서 광고에 대한 더 친근한 --- 하지만 포괄적이지는 않은 --- 소개입니다.
 {% endcomment %}
 
 
-Many developers use advertising to monetize their mobile apps and games.
-This allows their app to be downloaded free of charge, 
-which improves the app's popularity.
+많은 개발자가 모바일 앱과 게임을 수익화하기 위해 광고를 사용합니다. 
+이를 통해 앱을 무료로 다운로드할 수 있어, 앱의 인기가 향상됩니다.
 
-![An illustration of a smartphone showing an ad](/assets/images/docs/cookbook/ads-device.jpg){:.site-illustration}
+![광고가 표시된 스마트폰의 일러스트레이션](/assets/images/docs/cookbook/ads-device.jpg){:.site-illustration}
 
-To add ads to your Flutter project, use
-[AdMob](https://admob.google.com/home/), 
-Google's mobile advertising platform.
-This recipe demonstrates how to use the
-[`google_mobile_ads`]({{site.pub-pkg}}/google_mobile_ads)
-package to add a banner ad to your app or game.
+Flutter 프로젝트에 광고를 추가하려면, 
+Google의 모바일 광고 플랫폼인 [AdMob](https://admob.google.com/home/)을 사용하세요. 
+이 레시피는 [`google_mobile_ads`]({{site.pub-pkg}}/google_mobile_ads) 패키지를 사용하여,
+앱이나 게임에 배너 광고를 추가하는 방법을 보여줍니다.
 
 :::note
-Apart from AdMob, the `google_mobile_ads` package also supports
-Ad Manager, a platform intended for large publishers. Integrating Ad
-Manager resembles integrating AdMob, but it won't be covered in this
-cookbook recipe. To use Ad Manager, follow the
-[Ad Manager documentation]({{site.developers}}/ad-manager/mobile-ads-sdk/flutter/quick-start).
+AdMob 외에도, `google_mobile_ads` 패키지는 대규모 퍼블리셔를 위한 플랫폼인 Ad Manager도 지원합니다.
+Ad Manager를 통합하는 것은 AdMob을 통합하는 것과 비슷하지만, 이 쿡북 레시피에서는 다루지 않습니다. 
+Ad Manager를 사용하려면, [Ad Manager 설명서]({{site.developers}}/ad-manager/mobile-ads-sdk/flutter/quick-start)를 따르세요.
 :::
 
-## 1. Get AdMob App IDs
+## 1. AdMob 앱 ID 받기 {:#1-get-admob-app-ids}
 
-1.  Go to [AdMob](https://admob.google.com/) and set up an
-    account. This could take some time because you need to provide
-    banking information, sign contracts, and so on.
+1. [AdMob](https://admob.google.com/)으로 이동하여 계정을 설정합니다. 
+   은행 정보를 제공하고, 계약서에 서명해야 하므로, 시간이 다소 걸릴 수 있습니다.
 
-2.  With the AdMob account ready, create two *Apps* in AdMob: one for
-    Android and one for iOS.
+2. AdMob 계정이 준비되면, AdMob에서 두 개의 *앱*을 만듭니다. 
+   하나는 Android용이고 다른 하나는 iOS용입니다.
 
-3.  Open the **App settings** section.
+3. **App settings** 섹션을 엽니다.
 
-4.  Get the AdMob *App IDs* for both the Android app and the iOS app.
-    They resemble `ca-app-pub-1234567890123456~1234567890`. Note the
-    tilde (`~`) between the two numbers.
-    {% comment %} https://support.google.com/admob/answer/7356431 for future reference {% endcomment %}
+4. Android 앱과 iOS 앱 모두에 대한 AdMob *앱 ID*를 가져옵니다.
+   `ca-app-pub-1234567890123456~1234567890`처럼 생겼습니다. 
+   두 숫자 사이에 틸드(`~`)가 있습니다. 
+   {% comment %} https://support.google.com/admob/answer/7356431 (나중에 참조) {% endcomment %}
 
     ![Screenshot from AdMob showing the location of the App ID](/assets/images/docs/cookbook/ads-app-id.png)
 
-## 2. Platform-specific setup
+## 2. 플랫폼별 설정 {:#2-platform-specific-setup}
 
-Update your Android and iOS configurations to include your App IDs.
+앱 ID를 포함하도록 Android 및 iOS 구성을 업데이트하세요.
 
 {% comment %}
-    Content below is more or less a copypaste from devsite: 
+    아래 내용은 devsite에서 복사해서 붙여넣은 것입니다.
     https://developers.google.com/admob/flutter/quick-start#platform_specific_setup
 {% endcomment %}
 
 ### Android
 
-Add your AdMob app ID to your Android app.
+Android 앱에 AdMob 앱 ID를 추가합니다.
 
-1.  Open the app's `android/app/src/main/AndroidManifest.xml` file.
+1. 앱의 `android/app/src/main/AndroidManifest.xml` 파일을 엽니다.
 
-2.  Add a new `<meta-data>` tag.
+2. 새 `<meta-data>` 태그를 추가합니다.
 
-3.  Set the `android:name` element with a value of
-    `com.google.android.gms.ads.APPLICATION_ID`.
+3. `android:name` 요소를 `com.google.android.gms.ads.APPLICATION_ID` 값으로 설정합니다.
 
-4.  Set the `android:value` element with the value to your own AdMob app
-    ID that you got in the previous step. 
-    Include them in quotes as shown:
+4. `android:value` 요소를 이전 단계에서 얻은 자체 AdMob 앱 ID 값으로 설정합니다. 
+   표시된 대로 따옴표로 묶습니다.
 
     ```xml
     <manifest>
         <application>
             ...
     
-            <!-- Sample AdMob app ID: ca-app-pub-3940256099942544~3347511713 -->
+            <!-- 샘플 AdMob 앱 ID: ca-app-pub-3940256099942544~3347511713 -->
             <meta-data
                 android:name="com.google.android.gms.ads.APPLICATION_ID"
                 android:value="ca-app-pub-xxxxxxxxxxxxxxxx~yyyyyyyyyy"/>
@@ -97,52 +88,47 @@ Add your AdMob app ID to your Android app.
 
 ### iOS
 
-Add your AdMob app ID to your iOS app.
+iOS 앱에 AdMob 앱 ID를 추가합니다.
 
-1.  Open your app's `ios/Runner/Info.plist` file.
+1. 앱의 `ios/Runner/Info.plist` 파일을 엽니다.
 
-2.  Enclose `GADApplicationIdentifier` with a `key` tag.
+2. `GADApplicationIdentifier`를 `key` 태그로 묶습니다.
 
-3.  Enclose your AdMob app ID with a `string` tag. You created this AdMob
-    App ID in [step 1](#1-get-admob-app-ids).
+3. AdMob 앱 ID를 `string` 태그로 묶습니다. 이 AdMob 앱 ID는 [1단계](#1-get-admob-app-ids)에서 생성했습니다.
 
     ```xml
     <key>GADApplicationIdentifier</key>
     <string>ca-app-pub-################~##########</string>
     ```
 
-## 3. Add the `google_mobile_ads` plugin
+## 3. `google_mobile_ads` 플러그인 추가 {:#3-add-the-google_mobile_ads-plugin}
 
-To add the `google_mobile_ads` plugin as a dependency, run
-`flutter pub add`:
+`google_mobile_ads` 플러그인을 종속성으로 추가하려면, `flutter pub add`를 실행하세요.
 
 ```console
 $ flutter pub add google_mobile_ads
 ```
 
 :::note
-Once you add the plugin, your Android app might fail to build with a
-`DexArchiveMergerException`:
+플러그인을 추가하면, Android 앱이 `DexArchiveMergerException`과 함께 빌드에 실패할 수 있습니다.
 
 ```plaintext
 Error while merging dex archives:
 The number of method references in a .dex file cannot exceed 64K.
 ```
 
-To resolve this, execute the `flutter run` command in the terminal, not
-through an IDE plugin. The `flutter` tool can detect the issue and ask
-whether it should try to solve it. Answer `y`, and the problem goes away.
-You can return to running your app from an IDE after that.
+이를 해결하려면, IDE 플러그인이 아닌 터미널에서 `flutter run` 명령을 실행하세요. 
+`flutter` 도구는 문제를 감지하고 해결을 시도할지 묻습니다. 
+`y`를 선택하면 문제가 사라집니다. 그 후 IDE에서 앱을 다시 실행할 수 있습니다.
 
 ![Screenshot of the `flutter` tool asking about multidex support](/assets/images/docs/cookbook/ads-multidex.png)
 :::
 
-## 4. Initialize the Mobile Ads SDK
+## 4. Mobile Ads SDK 초기화 {:#4-initialize-the-mobile-ads-sdk}
 
-You need to initialize the Mobile Ads SDK before loading ads.
+광고를 로드하기 전에 Mobile Ads SDK를 초기화해야 합니다.
 
-1.  Call `MobileAds.instance.initialize()` to initialize the Mobile Ads
-    SDK.
+1. `MobileAds.instance.initialize()`를 호출하여 Mobile Ads SDK를 초기화합니다.
 
     <?code-excerpt "lib/main.dart (main)"?>
     ```dart
@@ -154,40 +140,34 @@ You need to initialize the Mobile Ads SDK before loading ads.
     }
     ```
 
-Run the initialization step at startup, as shown above, 
-so that the AdMob SDK has enough time to initialize before it is needed.
+위에 표시된 대로 시작 시 초기화 단계를 실행하여, AdMob SDK가 필요하기 전에 초기화할 충분한 시간을 확보합니다.
 
 :::note
-`MobileAds.instance.initialize()` returns a `Future` but, the
-way the SDK is built, you don't need to `await` it.
-If you try to load an ad before that `Future` is completed, 
-the SDK will gracefully wait until the initialization, and _then_ load the ad.
-You can await the `Future`
-if you want to know the exact time when the AdMob SDK is ready.
+`MobileAds.instance.initialize()`는 `Future`를 반환하지만, SDK가 빌드된 방식에서는 `await`할 필요가 없습니다.
+`Future`가 완료되기 전에 광고를 로드하려고 하면, SDK는 초기화될 때까지 우아하게 기다렸다가 _그런 다음_ 광고를 로드합니다. AdMob SDK가 준비되는 정확한 시간을 알고 싶다면 `Future`를 await할 수 있습니다.
 :::
 
-## 5. Load a banner ad
+## 5. 배너 광고 로드 {:#5-load-a-banner-ad}
 
-To show an ad, you need to request it from AdMob.
+광고를 표시하려면, AdMob에 요청해야 합니다.
 
-To load a banner ad, construct a `BannerAd` instance, and
-call `load()` on it.
+배너 광고를 로드하려면, `BannerAd` 인스턴스를 생성하고, `load()`를 호출합니다.
 
 :::note
-The following code snippet refers to fields such a `adSize`, `adUnitId`
-and `_bannerAd`. This will all make more sense in a later step.
+다음 코드 조각은 `adSize`, `adUnitId` 및 `_bannerAd`와 같은 필드를 참조합니다. 
+이는 모두 나중 단계에서 더 의미가 있을 것입니다.
 :::
 
 <?code-excerpt "lib/my_banner_ad.dart (loadAd)"?>
 ```dart
-/// Loads a banner ad.
+/// 배너 광고를 로드합니다.
 void _loadAd() {
   final bannerAd = BannerAd(
     size: widget.adSize,
     adUnitId: widget.adUnitId,
     request: const AdRequest(),
     listener: BannerAdListener(
-      // Called when an ad is successfully received.
+      // 광고가 성공적으로 수신되면 호출됩니다.
       onAdLoaded: (ad) {
         if (!mounted) {
           ad.dispose();
@@ -197,7 +177,7 @@ void _loadAd() {
           _bannerAd = ad as BannerAd;
         });
       },
-      // Called when an ad request failed.
+      // 광고 요청이 실패하면 호출됩니다.
       onAdFailedToLoad: (ad, error) {
         debugPrint('BannerAd failed to load: $error');
         ad.dispose();
@@ -205,25 +185,24 @@ void _loadAd() {
     ),
   );
 
-  // Start loading.
+  // 로딩을 시작합니다.
   bannerAd.load();
 }
 ```
 
-To view a complete example, check out the last step of this recipe.
+전체 예를 보려면, 이 쿡북의 마지막 단계를 확인하세요.
 
 
-## 6. Show banner ad
+## 6. 배너 광고 보기 {:#6-show-banner-ad}
 
-Once you have a loaded instance of `BannerAd`, use `AdWidget` to show it.
+`BannerAd` 인스턴스를 로드하면, `AdWidget`을 사용하여 표시합니다.
 
 ```dart
 AdWidget(ad: _bannerAd)
 ```
 
-It's a good idea to wrap the widget in a `SafeArea` (so that no part of
-the ad is obstructed by device notches) and a `SizedBox` (so that it has
-its specified, constant size before and after loading).
+위젯을 `SafeArea`로 감싸서(광고의 어떤 부분도 기기 노치에 의해 가려지지 않도록)하고, 
+`SizedBox`로 감싸서(로딩 전후에 지정된 일정한 크기를 유지하도록)하는 것이 좋습니다.
 
 <?code-excerpt "lib/my_banner_ad.dart (build)"?>
 ```dart
@@ -234,19 +213,19 @@ Widget build(BuildContext context) {
       width: widget.adSize.width.toDouble(),
       height: widget.adSize.height.toDouble(),
       child: _bannerAd == null
-          // Nothing to render yet.
+          // 아직 렌더링할 것이 없습니다.
           ? SizedBox()
-          // The actual ad.
+          // 실제 광고
           : AdWidget(ad: _bannerAd!),
     ),
   );
 }
 ```
 
-You must dispose of an ad when you no longer need to access it. The best
-practice for when to call `dispose()` is either after the `AdWidget` is
-removed from the widget tree or in the
-`BannerAdListener.onAdFailedToLoad()` callback.
+더 이상 액세스할 필요가 없을 때 광고를 폐기해야 합니다. 
+`dispose()`를 호출하는 가장 좋은 방법은 
+위젯 트리에서 `AdWidget`을 제거한 후 또는 
+`BannerAdListener.onAdFailedToLoad()` 콜백에서 호출하는 것입니다.
 
 <?code-excerpt "lib/my_banner_ad.dart (dispose)"?>
 ```dart
@@ -254,72 +233,59 @@ _bannerAd?.dispose();
 ```
 
 
-## 7. Configure ads
+## 7. 광고 구성 {:#7-configure-ads}
 
-To show anything beyond test ads, you have to register ad units.
+테스트 광고 외에 무엇이든 표시하려면, 광고 단위(unit)를 등록해야 합니다.
 
-1.  Open [AdMob](https://admob.google.com/).
+1. [AdMob](https://admob.google.com/)을 엽니다.
 
-2.  Create an *Ad unit* for each of the AdMob apps.
+2. 각 AdMob 앱에 대한 *광고 단위*를 만듭니다.
 
-    ![Screenshot of the location of Ad Units in AdMob web UI](/assets/images/docs/cookbook/ads-ad-unit.png)
+    여기서는 광고 단위의 형식을 묻습니다. 
+    AdMob은 배너 광고 외에도 여러 형식을 제공합니다. (전면 광고, 보상형 광고, 앱 오픈 광고 등)
+    이러한 광고의 API는 비슷하며, [AdMob 문서]({{site.developers}}/admob/flutter/quick-start)와 [공식 샘플](https://github.com/googleads/googleads-mobile-flutter/tree/main/samples/admob)에 설명되어 있습니다.
 
-    This asks for the Ad unit's format. AdMob provides many formats
-    beyond banner ads --- interstitials, rewarded ads, app open ads, and
-    so on. 
-    The API for those is similar, and documented in the 
-    [AdMob documentation]({{site.developers}}/admob/flutter/quick-start)
-    and through 
-    [official samples](https://github.com/googleads/googleads-mobile-flutter/tree/main/samples/admob).
+3.  배너 광고를 선택하세요.
 
-3.  Choose banner ads.
-
-4.  Get the *Ad unit IDs* for both the Android app and the iOS app.
-    You can find these in the **Ad units** section. They look something
-    like `ca-app-pub-1234567890123456/1234567890`. The format resembles
-    the *App ID* but with a slash (`/`) between the two numbers. This
-    distinguishes an *Ad unit ID* from an *App ID*.
+4.  Android 앱과 iOS 앱 모두에 대한 *광고 단위 ID*를 가져옵니다. **Ad units** 섹션에서 찾을 수 있습니다. 
+    `ca-app-pub-1234567890123456/1234567890`처럼 생겼습니다. 
+    형식은 *앱 ID*와 비슷하지만, 두 숫자 사이에 슬래시(`/`)가 있습니다. 
+    이는 *광고 단위 ID*와 *앱 ID*를 구분합니다.
 
     ![Screenshot of an Ad Unit ID in AdMob web UI](/assets/images/docs/cookbook/ads-ad-unit-id.png)
 
-5.  Add these *Ad unit IDs* to the constructor of `BannerAd`,
-    depending on the target app platform.
+5.  대상 앱 플랫폼에 따라 `BannerAd` 생성자에 이러한 *광고 단위 ID*를 추가합니다.
 
     <?code-excerpt "lib/my_banner_ad.dart (adUnitId)"?>
     ```dart
     final String adUnitId = Platform.isAndroid
-        // Use this ad unit on Android...
+        // Android에서 이 광고 단위를 사용하세요...
         ? 'ca-app-pub-3940256099942544/6300978111'
-        // ... or this one on iOS.
+        // ... 또는 iOS에서 이 광고 단위를 사용하세요.
         : 'ca-app-pub-3940256099942544/2934735716';
     ```
 
-## 8. Final touches
+## 8. 마지막 마무리 {:#8-final-touches}
 
-To display the ads in a published app or game (as opposed to debug or
-testing scenarios), your app must meet additional requirements:
+게시된 앱이나 게임에 광고를 표시하려면(디버그 또는 테스트 시나리오와 대조적으로), 앱이 추가 요구 사항을 충족해야 합니다.
 
-1.  Your app must be reviewed and approved before it can fully serve
-    ads.
-    Follow AdMob's [app readiness guidelines](https://support.google.com/admob/answer/10564477).
-    For example, your app must be listed on at least one of the
-    supported stores such as Google Play Store or Apple App Store.
+1. 앱은 광고를 완전히 게재하기 전에 검토 및 승인을 받아야 합니다. 
+   AdMob의 [앱 준비 가이드라인](https://support.google.com/admob/answer/10564477)을 따르세요. 
+   예를 들어, 앱은 Google Play Store나 Apple App Store와 같이 지원되는 스토어 중 하나 이상에 등록되어야 합니다.
 
-2.  You must [create an `app-ads.txt`](https://support.google.com/admob/answer/9363762)
-    file and publish it on your developer website.
+2. [`app-ads.txt`](https://support.google.com/admob/answer/9363762) 파일을 만들어 
+   개발자 웹사이트에 게시해야 합니다.
 
 ![An illustration of a smartphone showing an ad](/assets/images/docs/cookbook/ads-device.jpg){:.site-illustration}
 
-To learn more about app and game monetization, 
-visit the official sites
-of [AdMob](https://admob.google.com/)
-and [Ad Manager](https://admanager.google.com/).
+앱 및 게임 수익 창출에 대해 자세히 알아보려면, 
+[AdMob](https://admob.google.com/) 및 
+[Ad Manager](https://admanager.google.com/)의 공식 사이트를 방문하세요.
 
 
-## 9. Complete example
+## 9. 예제 완성하기 {:#9-complete-example}
 
-The following code implements a simple stateful widget that loads a
-banner ad and shows it.
+다음 코드는 배너 광고를 로드하고 표시하는 간단한 stateful 위젯을 구현합니다.
 
 <?code-excerpt "lib/my_banner_ad.dart"?>
 ```dart
@@ -329,16 +295,16 @@ import 'package:flutter/widgets.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class MyBannerAdWidget extends StatefulWidget {
-  /// The requested size of the banner. Defaults to [AdSize.banner].
+  /// 요청된 배너 크기입니다. 기본값은 [AdSize.banner]입니다.
   final AdSize adSize;
 
-  /// The AdMob ad unit to show.
+  /// 표시할 AdMob 광고 단위입니다.
   ///
-  /// TODO: replace this test ad unit with your own ad unit
+  /// TODO: 이 테스트 광고 단위를 귀하의 광고 단위로 바꾸세요.
   final String adUnitId = Platform.isAndroid
-      // Use this ad unit on Android...
+      // Android에서 이 광고 단위를 사용하세요...
       ? 'ca-app-pub-3940256099942544/6300978111'
-      // ... or this one on iOS.
+      // ... 또는 iOS에서 이 광고 단위를 사용하세요.
       : 'ca-app-pub-3940256099942544/2934735716';
 
   MyBannerAdWidget({
@@ -351,7 +317,7 @@ class MyBannerAdWidget extends StatefulWidget {
 }
 
 class _MyBannerAdWidgetState extends State<MyBannerAdWidget> {
-  /// The banner ad to show. This is `null` until the ad is actually loaded.
+  /// 표시할 배너 광고입니다. 광고가 실제로 로드될 때까지는 `null`입니다.
   BannerAd? _bannerAd;
 
   @override
@@ -361,9 +327,9 @@ class _MyBannerAdWidgetState extends State<MyBannerAdWidget> {
         width: widget.adSize.width.toDouble(),
         height: widget.adSize.height.toDouble(),
         child: _bannerAd == null
-            // Nothing to render yet.
+            // 아직 렌더링할 것이 없습니다.
             ? SizedBox()
-            // The actual ad.
+            // 실제 광고입니다.
             : AdWidget(ad: _bannerAd!),
       ),
     );
@@ -381,14 +347,14 @@ class _MyBannerAdWidgetState extends State<MyBannerAdWidget> {
     super.dispose();
   }
 
-  /// Loads a banner ad.
+  /// 배너 광고를 로드합니다.
   void _loadAd() {
     final bannerAd = BannerAd(
       size: widget.adSize,
       adUnitId: widget.adUnitId,
       request: const AdRequest(),
       listener: BannerAdListener(
-        // Called when an ad is successfully received.
+        // 광고가 성공적으로 수신되면 호출됩니다.
         onAdLoaded: (ad) {
           if (!mounted) {
             ad.dispose();
@@ -398,7 +364,7 @@ class _MyBannerAdWidgetState extends State<MyBannerAdWidget> {
             _bannerAd = ad as BannerAd;
           });
         },
-        // Called when an ad request failed.
+        // 광고 요청이 실패하면 호출됩니다.
         onAdFailedToLoad: (ad, error) {
           debugPrint('BannerAd failed to load: $error');
           ad.dispose();
@@ -406,21 +372,17 @@ class _MyBannerAdWidgetState extends State<MyBannerAdWidget> {
       ),
     );
 
-    // Start loading.
+    // 로딩을 시작합니다.
     bannerAd.load();
   }
 }
 ```
 
 :::tip
-In many cases, you will want to load the ad _outside_ a widget.
+많은 경우, 위젯 _외부_ 에 광고를 로드하고 싶을 것입니다.
 
-For example, you can load it in a `ChangeNotifier`, a BLoC, a controller,
-or whatever else you are using for app-level state. This way, you can
-preload a banner ad in advance, and have it ready to show for when the
-user navigates to a new screen.
+예를 들어, `ChangeNotifier`, BLoC, 컨트롤러 또는 앱 레벨 상태에 사용하는 다른 것에 로드할 수 있습니다. 
+이렇게 하면, 배너 광고를 미리 로드하여, 사용자가 새 화면으로 네비게이션 할 때 표시할 준비를 할 수 있습니다.
 
-Verify that you have loaded the `BannerAd` instance before showing it with
-an `AdWidget`, and that you dispose of the instance when it is no longer
-needed.
+`AdWidget`으로 표시하기 전에 `BannerAd` 인스턴스를 로드했는지 확인하고, 더 이상 필요하지 않으면 인스턴스를 폐기합니다.
 :::

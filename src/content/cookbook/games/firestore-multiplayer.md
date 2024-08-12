@@ -1,56 +1,47 @@
 ---
-title: Add multiplayer support using Firestore
+# title: Add multiplayer support using Firestore
+title: Firestore를 통해 멀티플레이어 지원 추가
+# description: >
+#   How to use use Firebase Cloud Firestore to implement multiplayer
+#   in your game.
 description: >
-  How to use use Firebase Cloud Firestore to implement multiplayer
-  in your game.
+  Firebase Cloud Firestore를 사용하여 게임에서 멀티플레이어를 구현하는 방법입니다.
 ---
 
 <?code-excerpt path-base="cookbook/games/firestore_multiplayer"?>
 
-Multiplayer games need a way to synchronize game states between players.
-Broadly speaking, two types of multiplayer games exist:
+멀티플레이어 게임은 플레이어 간에 게임 상태를 동기화하는 방법이 필요합니다. 대체로, 두 가지 유형의 멀티플레이어 게임이 있습니다.
 
-1. **High tick rate**.
-   These games need to synchronize game states many times per second
-   with low latency.
-   These would include action games, sports games, fighting games.
+1. **높은 틱 비율**.
+  이러한 게임은 낮은 지연 시간으로 초당 여러 번 게임 상태를 동기화해야 합니다. 
+  여기에는 액션 게임, 스포츠 게임, 격투 게임이 포함됩니다.
 
-2. **Low tick rate**.
-   These games only need to synchronize game states occasionally
-   with latency having less impact.
-   These would include card games, strategy games, puzzle games.
+2. **낮은 틱 비율**.
+  이러한 게임은 지연 시간이 덜한 가끔만 게임 상태를 동기화하면 됩니다. 
+  여기에는 카드 게임, 전략 게임, 퍼즐 게임이 포함됩니다.
 
-This resembles the differentiation between real-time versus turn-based
-games, though the analogy falls short.
-For example, real-time strategy games run—as the name suggests—in
-real-time, but that doesn't correlate to a high tick rate.
-These games can simulate much of what happens
-in between player interactions on local machines.
-Therefore, they don't need to synchronize game states that often.
+이는 실시간 게임과 턴 기반 게임의 차이점과 비슷하지만 비유가 부족합니다. 
+예를 들어, 실시간 전략 게임은 이름에서 알 수 있듯이 실시간으로 실행되지만, 높은 틱 비율과 관련이 없습니다. 
+이러한 게임은 로컬 컴퓨터에서 플레이어 상호 작용 사이에 발생하는 대부분의 상황을 시뮬레이션할 수 있습니다. 
+따라서, 게임 상태를 그렇게 자주 동기화할 필요가 없습니다.
 
 ![An illustration of two mobile phones and a two-way arrow between them](/assets/images/docs/cookbook/multiplayer-two-mobiles.jpg){:.site-illustration}
 
-If you can choose low tick rates as a developer, you should.
-Low tick lowers latency requirements and server costs.
-Sometimes, a game requires high tick rates of synchronization.
-For those cases, solutions such as Firestore *don't make a good fit*.
-Pick a dedicated multiplayer server solution such as [Nakama][].
-Nakama has a [Dart package][].
+개발자로서 낮은 틱 비율을 선택할 수 있다면, 그렇게 해야 합니다. 낮은 틱 비율은 지연 요구 사항과 서버 비용을 낮춥니다. 
+때때로, 게임에서 높은 틱 비율의 동기화가 필요합니다. 이런 경우, Firestore와 같은 솔루션은 *적합하지 않습니다*. 
+[Nakama][]와 같은 전용 멀티플레이어 서버 솔루션을 선택하세요. Nakama에는 [Dart 패키지][Dart package]가 있습니다.
 
-If you expect that your game requires a low tick rate of synchronization,
-continue reading.
+게임에서 낮은 틱 비율의 동기화가 필요할 것으로 예상되면, 계속 읽어보세요.
 
-This recipe demonstrates how to use the
-[`cloud_firestore` package][]
-to implement multiplayer capabilities in your game.
-This recipe doesn't require a server.
-It uses two or more clients sharing game state using Cloud Firestore.
+이 레시피는 [`cloud_firestore` 패키지][`cloud_firestore` package]를 사용하여 게임에서 멀티플레이어 기능을 구현하는 방법을 보여줍니다. 
+이 레시피에는 서버가 필요하지 않습니다. 
+Cloud Firestore를 사용하여 게임 상태를 공유하는 두 개 이상의 클라이언트를 사용합니다.
 
 [`cloud_firestore` package]: {{site.pub-pkg}}/cloud_firestore
 [Dart package]: {{site.pub-pkg}}/nakama
 [Nakama]: https://heroiclabs.com/nakama/
 
-## 1. Prepare your game for multiplayer
+## 1. 멀티플레이어를 위한 게임 준비 {:#1-prepare-your-game-for-multiplayer}
 
 Write your game code to allow changing the game state
 in response to both local events and remote events.
@@ -83,7 +74,7 @@ project. Adapt the code at appropriate places.
 [`card`]: {{site.github}}/flutter/games/tree/main/templates/card#readme
 [`flutter/games` repository]: {{site.github}}/flutter/games
 
-## 2. Install Firestore
+## 2. Firestore 설치 {:#2-install-firestore}
 
 [Cloud Firestore][] is a horizontally scaling,
 NoSQL document database in the cloud.
@@ -126,7 +117,7 @@ Dart code in that guide, return to this recipe.
 [Get started with Cloud Firestore]: {{site.firebase}}/docs/firestore/quickstart
 [Set up your development environment]: {{site.firebase}}/docs/firestore/quickstart#set_up_your_development_environment
 
-## 3. Initialize Firestore
+## 3. Firestore 초기화 {:#3-initialize-firestore}
 
 1. Open `lib/main.dart` and import the plugins,
     as well as the `firebase_options.dart` file
@@ -186,7 +177,7 @@ Dart code in that guide, return to this recipe.
 
 [install the `provider` package]: {{site.pub-pkg}}/provider/install
 
-## 4. Create a Firestore controller class
+## 4. Firestore 컨트롤러 클래스 생성 {:#4-create-a-firestore-controller-class}
 
 Though you can talk to Firestore directly,
 you should write a dedicated controller class
@@ -372,7 +363,7 @@ Notice the following features of this code:
   The Firestore API lets us subscribe to these references
   with `.snapshots()`, and write to them with `.set()`.
 
-## 5. Use the Firestore controller
+## 5. Firestore 컨트롤러 사용 {:#5-use-the-firestore-controller}
 
 1. Open the file responsible for starting the play session:
     `lib/play_session/play_session_screen.dart` in the case of the
@@ -423,7 +414,7 @@ Notice the following features of this code:
     _firestoreController?.dispose();
     ```
 
-## 6. Test the game
+## 6. 게임 테스트 {:#6-test-the-game}
 
 1. Run the game on two separate devices
     or in 2 different windows on the same device.
@@ -446,7 +437,7 @@ Notice the following features of this code:
 
 [Firebase web console]: https://console.firebase.google.com/
 
-### Troubleshooting
+### 문제 해결 {:#troubleshooting}
 
 The most common issues you might encounter when testing
 Firebase integration include the following:
@@ -462,7 +453,7 @@ Firebase integration include the following:
 
 [internet entitlement]: /data-and-backend/networking#macos
 
-## 7. Next steps
+## 7. 다음 스텝 {:#7-next-steps}
 
 At this point, the game has near-instant and
 dependable synchronization of state across clients.

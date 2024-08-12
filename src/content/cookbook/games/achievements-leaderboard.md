@@ -1,34 +1,35 @@
 ---
-title: Add achievements and leaderboards to your mobile game
+# title: Add achievements and leaderboards to your mobile game
+title: 모바일 게임에 업적과 리더보드 추가
+# description: >
+  # How to use the games_services plugin to add functionality to your game.
 description: >
-  How to use the games_services plugin to add functionality to your game.
+  games_services 플러그인을 사용하여 게임에 기능을 추가하는 방법.
 ---
 
 <?code-excerpt path-base="cookbook/games/achievements_leaderboards"?>
 
-Gamers have various motivations for playing games.
-In broad strokes, there are four major motivations: 
-[immersion, achievement, cooperation, and competition][].
-No matter the game you build, some players want to *achieve* in it.
-This could be trophies won or secrets unlocked.
-Some players want to *compete* in it.
-This could be hitting high scores or accomplishing speedruns.
-These two ideas map to the concepts of *achievements* and *leaderboards*.
+게이머는 게임을 하는 데 다양한 동기를 가지고 있습니다. 대체로, 네 가지 주요 동기가 있습니다. 
+[몰입, 성취, 협력, 경쟁][immersion, achievement, cooperation, and competition] 입니다. 
+어떤 게임을 만들든 일부 플레이어는 게임에서 *성취(achieve)* 하고 싶어합니다. 
+이는 트로피 획득이나 비밀 잠금 해제일 수 있습니다. 
+일부 플레이어는 게임에서 *경쟁(compete)* 하고 싶어합니다. 
+이는 고득점 달성이나 스피드런 달성일 수 있습니다. 
+이 두 가지 아이디어는 *성취(achievements)* 와 *리더보드(leaderboards)* 의 개념에 해당합니다.
 
 ![A simple graphic representing the four types of motivation explained above](/assets/images/docs/cookbook/types-of-gamer-motivations.png){:.site-illustration}
 
-Ecosystems such as the App Store and Google Play provide
-centralized services for achievements and leaderboards.
-Players can view achievements from all their games in one place and
-developers don't need to re-implement them for every game.
+App Store 및 Google Play와 같은 생태계는 업적 및 리더보드에 대한 중앙 집중식 서비스를 제공합니다. 
+플레이어는 모든 게임의 업적을 한곳에서 볼 수 있으며, 
+개발자는 모든 게임에 대해 업적을 다시 구현할 필요가 없습니다.
 
-This recipe demonstrates how to use the [`games_services` package][] 
-to add achievements and leaderboard functionality to your mobile game.
+이 레시피는 [`games_services` 패키지][`games_services` package]를 사용하여 
+모바일 게임에 업적과 리더보드 기능을 추가하는 방법을 보여줍니다.
 
 [`games_services` package]: {{site.pub-pkg}}/games_services
 [immersion, achievement, cooperation, and competition]: https://meditations.metavert.io/p/game-player-motivations
 
-## 1. Enable platform services
+## 1. 플랫폼 서비스 활성화 {:#1-enable-platform-services}
 
 To enable games services, set up *Game Center* on iOS and
 *Google Play Games Services* on Android.
@@ -121,7 +122,7 @@ To enable *Play Games Services* on Android:
 [Google Play Console]: https://play.google.com/console/
 [Play Games Services guide]: {{site.developers}}/games/services/console/enabling
 
-## 2. Sign in to the game service
+## 2. 게임 서비스에 로그인 {:#2-sign-in-to-the-game-service}
 
 Now that you have set up *Game Center* and *Play Games Services*, and
 have your achievement & leaderboard IDs ready, it's finally Dart time.
@@ -160,7 +161,7 @@ the raw functionality of the `games_services` plugin.
 :::
 
 
-## 3. Unlock achievements
+## 3. 업적 잠금 해제 {:#3-unlock-achievements}
 
 1.  Register achievements in Google Play Console and App Store Connect,
     and take note of their IDs. Now you can award any of those
@@ -194,7 +195,7 @@ the raw functionality of the `games_services` plugin.
     
 [`GamesServices.loadAchievements()`]: {{site.pub-api}}/games_services/latest/games_services/GamesServices/loadAchievements.html
 
-## 4. Submit scores
+## 4. 스코어 제출 {:#4-submit-scores}
 
 When the player finishes a play-through, your game can submit the result
 of that play session into one or more leaderboards.
@@ -237,7 +238,7 @@ leaderboards.
     
 [`GamesServices.loadLeaderboardScores()`]: {{site.pub-api}}/games_services/latest/games_services/GamesServices/loadLeaderboardScores.html
 
-## 5. Next steps
+## 5. 다음 스텝 {:#5-next-steps}
 
 There's more to the `games_services` plugin. With this plugin, you can:
 
@@ -370,7 +371,7 @@ class GamesServicesController {
 }
 ```
 
-## More information
+## 더 많은 정보 {:#more-information}
 
 The Flutter Casual Games Toolkit includes the following templates:
 
