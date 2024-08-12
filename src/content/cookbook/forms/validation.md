@@ -1,6 +1,8 @@
 ---
-title: Build a form with validation
-description: How to build a form that validates input.
+# title: Build a form with validation
+title: 유효성 검증이 있는 양식 만들기
+# description: How to build a form that validates input.
+description: 입력 내용을 검증하는 양식을 만드는 방법.
 js:
   - defer: true
     url: /assets/js/inject_dartpad.js
@@ -8,46 +10,39 @@ js:
 
 <?code-excerpt path-base="cookbook/forms/validation"?>
 
-Apps often require users to enter information into a text field.
-For example, you might require users to log in with an email address
-and password combination.
+앱에서는 종종 사용자가 텍스트 필드에 정보를 입력하도록 요구합니다. 
+예를 들어, 사용자에게 이메일 주소와 비밀번호 조합으로 로그인하도록 요구할 수 있습니다.
 
-To make apps secure and easy to use, check whether the
-information the user has provided is valid. If the user has correctly filled
-out the form, process the information. If the user submits incorrect
-information, display a friendly error message letting them know what went
-wrong.
+앱을 안전하고 사용하기 쉽게 만들려면, 사용자가 제공한 정보가 유효한지 확인하세요. 
+사용자가 양식을 올바르게 작성했다면, 정보를 처리합니다. 
+사용자가 잘못된 정보를 제출하면, 친절한 오류 메시지를 표시하여 무엇이 잘못되었는지 알려줍니다.
 
-In this example, learn how to add validation to a form that has
-a single text field using the following steps:
+이 예에서는, 다음 단계를 사용하여 단일 텍스트 필드가 있는 양식에 유효성 검사를 추가하는 방법을 알아봅니다.
 
-  1. Create a `Form` with a `GlobalKey`.
-  2. Add a `TextFormField` with validation logic.
-  3. Create a button to validate and submit the form.
+  1. `GlobalKey`가 있는 `Form`을 만듭니다.
+  2. 유효성 검사 논리가 있는 `TextFormField`를 추가합니다.
+  3. 양식을 유효성 검사하고 제출하는 버튼을 만듭니다.
 
-## 1. Create a `Form` with a `GlobalKey`
+## 1. `GlobalKey`가 있는 `Form` 만들기 {:#1-create-a-form-with-a-globalkey}
 
-Create a [`Form`][].
-The `Form` widget acts as a container for grouping and
-validating multiple form fields.
+[`Form`][]을 만듭니다. `Form` 위젯은 여러 양식 필드를 그룹화하고 검증하기 위한 컨테이너 역할을 합니다.
 
-When creating the form, provide a [`GlobalKey`][].
-This assigns a unique identifier to your `Form`.
-It also allows you to validate the form later.
+양식을 만들 때 [`GlobalKey`][]를 제공합니다. 
+이렇게 하면 `Form`에 고유 식별자가 할당됩니다. 
+또한 나중에 양식을 검증할 수도 있습니다.
 
-Create the form as a `StatefulWidget`.
-This allows you to create a unique `GlobalKey<FormState>()` once.
-You can then store it as a variable and access it at different points.
+양식을 `StatefulWidget`으로 만듭니다. 
+이렇게 하면 고유한 `GlobalKey<FormState>()`를 한 번 만들 수 있습니다. 
+그런 다음 변수로 저장하고 다른 지점에서 액세스할 수 있습니다.
 
-If you made this a `StatelessWidget`, you'd need to store this key *somewhere*.
-As it is resource expensive, you wouldn't want to generate a new
-`GlobalKey` each time you run the `build` method.
+이것을 `StatelessWidget`으로 만든 경우, 이 키를 *어딘가에* 저장해야 합니다. 
+리소스가 많이 소모되므로, `build` 메서드를 실행할 때마다 새 `GlobalKey`를 생성하고 싶지 않을 것입니다.
 
 <?code-excerpt "lib/form.dart"?>
 ```dart
 import 'package:flutter/material.dart';
 
-// Define a custom Form widget.
+// 커스텀 Form 위젯을 정의합니다.
 class MyCustomForm extends StatefulWidget {
   const MyCustomForm({super.key});
 
@@ -57,24 +52,22 @@ class MyCustomForm extends StatefulWidget {
   }
 }
 
-// Define a corresponding State class.
-// This class holds data related to the form.
+// 해당 State 클래스를 정의합니다.
+// 이 클래스는 폼과 관련된 데이터를 보유합니다.
 class MyCustomFormState extends State<MyCustomForm> {
-  // Create a global key that uniquely identifies the Form widget
-  // and allows validation of the form.
+  // Form 위젯을 고유하게 식별하고, 양식의 유효성 검사를 허용하는 글로벌 키를 만듭니다.
   //
-  // Note: This is a `GlobalKey<FormState>`,
-  // not a GlobalKey<MyCustomFormState>.
+  // Note: 이것은 `GlobalKey<FormState>`이고 GlobalKey<MyCustomFormState>가 아닙니다.
   final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-    // Build a Form widget using the _formKey created above.
+    // 위에서 만든 _formKey를 사용하여 Form 위젯을 만들어보세요.
     return Form(
       key: _formKey,
       child: const Column(
         children: <Widget>[
-          // Add TextFormFields and ElevatedButton here.
+          // 여기에 TextFormFields와 ElevatedButton을 추가합니다.
         ],
       ),
     );
@@ -83,34 +76,26 @@ class MyCustomFormState extends State<MyCustomForm> {
 ```
 
 :::tip
-Using a `GlobalKey` is the recommended way to access a form.
-However, if you have a more complex widget tree,
-you can use the [`Form.of()`][] method to
-access the form within nested widgets.
+`GlobalKey`를 사용하는 것은 폼에 액세스하는 권장 방법입니다. 
+그러나, 더 복잡한 위젯 트리가 있는 경우, [`Form.of()`][] 메서드를 사용하여 중첩된 위젯 내에서 폼에 액세스할 수 있습니다.
 :::
 
-## 2. Add a `TextFormField` with validation logic
+## 2. 검증 로직을 사용하여 `TextFormField` 추가 {:#2-add-a-textformfield-with-validation-logic}
 
-Although the `Form` is in place,
-it doesn't have a way for users to enter text.
-That's the job of a [`TextFormField`][].
-The `TextFormField` widget renders a material design text field
-and can display validation errors when they occur.
+`Form`이 제자리에 있지만, 사용자가 텍스트를 입력할 방법이 없습니다. 이는 [`TextFormField`][]의 역할입니다.
+`TextFormField` 위젯은 머티리얼 디자인 텍스트 필드를 렌더링하고, 오류가 발생하면 유효성 검사 오류를 표시할 수 있습니다.
 
-Validate the input by providing a `validator()` function to the
-`TextFormField`. If the user's input isn't valid,
-the `validator` function returns a `String` containing
-an error message.
-If there are no errors, the validator must return null.
+`TextFormField`에 `validator()` 함수를 제공하여 입력을 검증합니다. 
+사용자 입력이 유효하지 않으면, `validator` 함수는 오류 메시지가 포함된 `String`을 반환합니다. 
+오류가 없으면, 유효성 검사기는 null을 반환해야 합니다.
 
-For this example, create a `validator` that ensures the
-`TextFormField` isn't empty. If it is empty,
-return a friendly error message.
+이 예에서는, `TextFormField`가 비어 있지 않은지 확인하는 `validator`를 만듭니다. 
+비어 있으면, 친절한 오류 메시지를 반환합니다.
 
 <?code-excerpt "lib/main.dart (TextFormField)"?>
 ```dart
 TextFormField(
-  // The validator receives the text that the user has entered.
+  // 검증기는 사용자가 입력한 텍스트를 받습니다.
   validator: (value) {
     if (value == null || value.isEmpty) {
       return 'Please enter some text';
@@ -120,23 +105,21 @@ TextFormField(
 ),
 ```
 
-## 3. Create a button to validate and submit the form
+## 3. 양식을 검증하고 제출하기 위한 버튼 만들기 {:#3-create-a-button-to-validate-and-submit-the-form}
 
-Now that you have a form with a text field,
-provide a button that the user can tap to submit the information.
+이제 텍스트 필드가 있는 양식이 있으므로, 사용자가 정보를 제출하기 위해 탭할 수 있는 버튼을 제공합니다.
 
-When the user attempts to submit the form, check if the form is valid.
-If it is, display a success message.
-If it isn't (the text field has no content) display the error message.
+사용자가 양식을 제출하려고 할 때, 양식이 유효한지 확인합니다. 유효한 경우, 성공 메시지를 표시합니다. 
+유효하지 않은 경우(텍스트 필드에 내용이 없는 경우), 오류 메시지를 표시합니다.
 
 <?code-excerpt "lib/main.dart (ElevatedButton)" replace="/^child\: //g"?>
 ```dart
 ElevatedButton(
   onPressed: () {
-    // Validate returns true if the form is valid, or false otherwise.
+    // Validate는 양식이 유효하면 true를 반환하고, 그렇지 않으면 false를 반환합니다.
     if (_formKey.currentState!.validate()) {
-      // If the form is valid, display a snackbar. In the real world,
-      // you'd often call a server or save the information in a database.
+      // 양식이 유효하면 스낵바를 표시합니다. 
+      // 현실 세계에서는, 종종 서버를 호출하거나 데이터베이스에 정보를 저장합니다.
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Processing Data')),
       );
@@ -146,21 +129,18 @@ ElevatedButton(
 ),
 ```
 
-### How does this work?
+### 어떻게 작동하나요? {:#how-does-this-work}
 
-To validate the form, use the `_formKey` created in
-step 1. You can use the `_formKey.currentState`
-accessor to access the [`FormState`][],
-which is automatically created by Flutter when building a `Form`.
+폼을 검증하려면, 1단계에서 만든 `_formKey`를 사용합니다. 
+`_formKey.currentState` 접근자를 사용하여, Flutter에서 `Form`을 빌드할 때 자동으로 만드는, 
+[`FormState`][]에 액세스할 수 있습니다.
 
-The `FormState` class contains the `validate()` method.
-When the `validate()` method is called, it runs the `validator()`
-function for each text field in the form.
-If everything looks good, the `validate()` method returns `true`.
-If any text field contains errors, the `validate()` method
-rebuilds the form to display any error messages and returns `false`.
+`FormState` 클래스에는 `validate()` 메서드가 포함되어 있습니다. 
+`validate()` 메서드가 호출되면, 폼의 각 텍스트 필드에 대해 `validator()` 함수를 실행합니다. 
+모든 것이 정상이면, `validate()` 메서드는 `true`를 반환합니다. 
+텍스트 필드에 오류가 있으면, `validate()` 메서드는 폼을 다시 빌드하여 오류 메시지를 표시하고 `false`를 반환합니다.
 
-## Interactive example
+## 대화형 예제 {:#interactive-example}
 
 <?code-excerpt "lib/main.dart"?>
 ```dartpad title="Flutter form validation hands-on example in DartPad" run="true"
@@ -187,7 +167,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
-// Create a Form widget.
+// 양식 위젯을 만듭니다.
 class MyCustomForm extends StatefulWidget {
   const MyCustomForm({super.key});
 
@@ -197,26 +177,24 @@ class MyCustomForm extends StatefulWidget {
   }
 }
 
-// Create a corresponding State class.
-// This class holds data related to the form.
+// 해당 State 클래스를 만듭니다.
+// 이 클래스는 폼과 관련된 데이터를 보관합니다.
 class MyCustomFormState extends State<MyCustomForm> {
-  // Create a global key that uniquely identifies the Form widget
-  // and allows validation of the form.
+  // 양식 위젯을 고유하게 식별하고 양식의 유효성 검사를 허용하는 글로벌 키를 만듭니다.
   //
-  // Note: This is a GlobalKey<FormState>,
-  // not a GlobalKey<MyCustomFormState>.
+  // Note: 이것은 GlobalKey<FormState>이고, GlobalKey<MyCustomFormState>가 아닙니다.
   final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-    // Build a Form widget using the _formKey created above.
+    // 위에서 만든 _formKey를 사용하여, Form 위젯을 만들어보세요.
     return Form(
       key: _formKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           TextFormField(
-            // The validator receives the text that the user has entered.
+            // 검증기는 사용자가 입력한 텍스트를 받습니다.
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'Please enter some text';
@@ -228,10 +206,10 @@ class MyCustomFormState extends State<MyCustomForm> {
             padding: const EdgeInsets.symmetric(vertical: 16),
             child: ElevatedButton(
               onPressed: () {
-                // Validate returns true if the form is valid, or false otherwise.
+                // Validate는 양식이 유효하면 true를 반환하고, 그렇지 않으면 false를 반환합니다.
                 if (_formKey.currentState!.validate()) {
-                  // If the form is valid, display a snackbar. In the real world,
-                  // you'd often call a server or save the information in a database.
+                  // 양식이 유효하면, 스낵바를 표시합니다. 
+                  // 현실 세계에서는, 종종 서버를 호출하거나 데이터베이스에 정보를 저장합니다.
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text('Processing Data')),
                   );
@@ -251,8 +229,7 @@ class MyCustomFormState extends State<MyCustomForm> {
   <img src="/assets/images/docs/cookbook/form-validation.gif" alt="Form Validation Demo" class="site-mobile-screenshot" />
 </noscript>
 
-To learn how to retrieve these values, check out the
-[Retrieve the value of a text field][] recipe.
+이러한 값을 검색하는 방법을 알아보려면, [텍스트 필드 값 검색][Retrieve the value of a text field] 레시피를 확인하세요.
 
 
 [Retrieve the value of a text field]: /cookbook/forms/retrieve-input
