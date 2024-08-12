@@ -54,7 +54,7 @@ description: >
 
 
 ## 제스쳐 {:#gestures}
-- [Material 터치 ripples 추가](/cookbook/gestures/ripples)
+- [Material 터치 리플(ripples) 추가](/cookbook/gestures/ripples)
 - [탭 다루기](/cookbook/gestures/handling-taps)
 - [스와이프하여 사라지기 구현](/cookbook/gestures/dismissible)
 
