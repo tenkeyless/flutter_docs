@@ -65,13 +65,13 @@ description: >
 
 
 ## 리스트 {:#lists}
-- [그리드 목록 만들기](/cookbook/lists/grid-lists)
-- [horizontal 목록 만들기](/cookbook/lists/horizontal-list)
-- [다양한 유형의 항목으로 목록 만들기](/cookbook/lists/mixed-list)
-- [목록 위에 떠 있는 앱 바 배치](/cookbook/lists/floating-app-bar)
-- [목록 사용](/cookbook/lists/basic-list)
-- [긴 목록으로 작업하기](/cookbook/lists/long-lists)
-- [간격을 둔 항목으로 목록 만들기](/cookbook/lists/spaced-items)
+- [그리드 리스트 만들기](/cookbook/lists/grid-lists)
+- [horizontal 리스트 만들기](/cookbook/lists/horizontal-list)
+- [다양한 타입의 아이템으로 리스트 만들기](/cookbook/lists/mixed-list)
+- [리스트 위에 떠 있는 앱 바 배치](/cookbook/lists/floating-app-bar)
+- [리스트 사용](/cookbook/lists/basic-list)
+- [긴 리스트로 작업하기](/cookbook/lists/long-lists)
+- [간격을 둔 아이템으로 리스트 만들기](/cookbook/lists/spaced-items)
 
 
 ## 유지 {:#maintenance}

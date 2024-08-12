@@ -11,7 +11,7 @@ js:
 <?code-excerpt path-base="cookbook/design/snackbars/"?>
 
 특정 작업이 수행될 때 사용자에게 간단히 알리는 것이 유용할 수 있습니다. 
-예를 들어, 사용자가 목록에서 메시지를 스와이프(swipes away)하면, 메시지가 삭제되었음을 알리고 싶을 수 있습니다. 
+예를 들어, 사용자가 리스트에서 메시지를 스와이프(swipes away)하면, 메시지가 삭제되었음을 알리고 싶을 수 있습니다. 
 작업을 취소하는 옵션을 제공하고 싶을 수도 있습니다.
 
 Material Design에서, 이는 [`SnackBar`][]의 작업입니다. 

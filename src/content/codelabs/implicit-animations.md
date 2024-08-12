@@ -62,7 +62,7 @@ _암묵적으로 애니메이션이 적용된 위젯(implicitly animated widgets
 ### AnimatedOpacity 위젯으로 불투명도 애니메이션 적용 {:#animate-opacity-with-animatedopacity-widget}
 
 이 섹션에는 [페이드인 시작 코드][fade-in starter code]에 암묵적 애니메이션을 추가하는 데 
-사용할 수 있는 단계 목록이 포함되어 있습니다. 
+사용할 수 있는 단계 리스트가 포함되어 있습니다. 
 단계가 끝나면, 이미 변경한 내용으로 [페이드인 완료][fade-in complete] 코드를 실행할 수도 있습니다. 
 이 단계에서는 `AnimatedOpacity` 위젯을 사용하여 다음 애니메이션 기능을 추가하는 방법을 설명합니다.
 
@@ -218,7 +218,7 @@ _암묵적으로 애니메이션이 적용된 위젯(implicitly animated widgets
 
 ### AnimatedContainer를 사용하여 색상, borderRadius 및 여백에 애니메이션 적용 {:#animate-color-borderradius-and-margin-with-animatedcontainer}
 
-이 섹션에는 [모양 변환 시작 코드][shape-shifting starter code]에 암묵적 애니메이션을 추가하는 데 사용할 수 있는 단계 목록이 들어 있습니다. 각 단계를 완료한 후에는, 이미 변경한 내용으로 [모양 변환 예제 완료][complete shape-shifting example]를 실행할 수도 있습니다.
+이 섹션에는 [모양 변환 시작 코드][shape-shifting starter code]에 암묵적 애니메이션을 추가하는 데 사용할 수 있는 단계 리스트가 들어 있습니다. 각 단계를 완료한 후에는, 이미 변경한 내용으로 [모양 변환 예제 완료][complete shape-shifting example]를 실행할 수도 있습니다.
 
 [모양 변환 시작 코드][shape-shifting starter code]는 `Container` 위젯의 각 속성에 임의의 값을 할당합니다. 연관된 함수는 관련 값을 생성합니다.
 

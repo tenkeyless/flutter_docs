@@ -14,7 +14,7 @@ js:
 일부 경로는 최상위(top-level, global) 경로(routes)로 의미가 있습니다. 
 예를 들어, "/", "profile", "contact", "social_feed"는 모두 앱 내에서 가능한 최상위 경로입니다. 
 하지만, 최상위 `Navigator` 위젯에서 가능한 모든 경로를 정의했다고 가정해 보겠습니다. 
-목록은 매우 길어질 것이고, 이러한 경로 중 다수는 다른 위젯 내에 중첩하여 처리하는 것이 더 좋습니다.
+리스트는 매우 길어질 것이고, 이러한 경로 중 다수는 다른 위젯 내에 중첩하여 처리하는 것이 더 좋습니다.
 
 앱으로 제어하는 ​​무선 전구에 대한 사물 인터넷(IoT) 설정 흐름을 생각해 보세요. 
 이 설정 흐름은 4개 페이지로 구성됩니다. 
@@ -304,7 +304,7 @@ Route<Widget> _onGenerateRoute(RouteSettings settings) {
 따라서, `_onDiscoveryComplete`에서, `_navigatorKey`는 중첩된 `Navigator`에게 
 `select_device` 페이지로 네비게이트하도록 지시합니다.
 
-`select_device` 페이지는 사용자에게 사용 가능한 장치 목록에서 장치를 선택하도록 요청합니다. 
+`select_device` 페이지는 사용자에게 사용 가능한 장치 리스트에서 장치를 선택하도록 요청합니다. 
 이 레시피에서는, 하나의 장치만 사용자에게 표시됩니다. 사용자가 기기를 탭하면, `onDeviceSelected` 콜백이 호출됩니다. 
 설정 흐름은 기기를 선택하면, 연결 페이지가 표시되어야 한다는 것을 인식합니다. 
 따라서, `_onDeviceSelected`에서, `_navigatorKey`는 중첩된 `Navigator`에게

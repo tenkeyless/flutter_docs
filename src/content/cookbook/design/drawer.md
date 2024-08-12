@@ -19,7 +19,7 @@ Material Design Drawer이 있는 레이아웃을 만듭니다.
 
 1. `Scaffold`를 만듭니다.
 2. Drawer를 추가합니다.
-3. Drawer에 항목을 채웁니다.
+3. Drawer에 아이템을 채웁니다.
 4. Drawer를 프로그래밍 방식으로 닫습니다.
 
 ## 1. `Scaffold` 생성 {:#1-create-a-scaffold}
@@ -136,7 +136,7 @@ Scaffold(
 
 ## 5. Drawer를 프로그래밍 방식으로 닫기 {:#5-close-the-drawer-programmatically}
 
-사용자가 항목을 탭한 후, 당신은 Drawer를 닫게 하고 싶을 수 있습니다. 
+사용자가 아이템을 탭한 후, 당신은 Drawer를 닫게 하고 싶을 수 있습니다. 
 [`Navigator`][]를 사용하여 이를 수행할 수 있습니다.
 
 사용자가 Drawer를 열면, Flutter는 Drawer를 네비게이션 스택에 추가합니다. 
@@ -158,8 +158,8 @@ ListTile(
 ## 대화형 예제 {:#interactive-example}
 
 이 예제에서는 [`Scaffold`][] 위젯 내에서 사용되는 [`Drawer`][]를 보여줍니다. 
-[`Drawer`][]에는 세 개의 [`ListTile`][] 항목이 있습니다. 
-`_onItemTapped` 함수는 선택한 항목의 인덱스를 변경하고, `Scaffold` 중앙에 해당 텍스트를 표시합니다.
+[`Drawer`][]에는 세 개의 [`ListTile`][] 아이템이 있습니다. 
+`_onItemTapped` 함수는 선택한 아이템의 인덱스를 변경하고, `Scaffold` 중앙에 해당 텍스트를 표시합니다.
 
 :::note
 네비게이션 구현에 대한 자세한 내용은

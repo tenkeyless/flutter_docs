@@ -11,7 +11,7 @@ js:
 <?code-excerpt path-base="cookbook/images/network_image"?>
 
 이미지 표시는 대부분의 모바일 앱에 기본입니다. 
-Flutter는 다양한 유형의 이미지를 표시하는 [`Image`][] 위젯을 제공합니다.
+Flutter는 다양한 타입의 이미지를 표시하는 [`Image`][] 위젯을 제공합니다.
 
 URL에서 이미지로 작업하려면, [`Image.network()`][] 생성자를 사용합니다.
 

@@ -143,11 +143,11 @@ class _FilterSelectorState extends State<FilterSelector> {
 선택기 링에는 `IgnorePointer` 위젯이 포함되어 있는데, 
 carousel 상호 작용이 추가되면 선택기 링이 탭 및 드래그 이벤트를 방해하지 않아야 하기 때문입니다.
 
-## 필터 carousel 항목 만들기 {:#create-a-filter-carousel-item}
+## 필터 carousel 아이템 만들기 {:#create-a-filter-carousel-item}
 
-carousel의 각 필터 항목은 연관된 필터 색상에 해당하는 색상이 적용된 원형 이미지를 표시합니다.
+carousel의 각 필터 아이템은 연관된 필터 색상에 해당하는 색상이 적용된 원형 이미지를 표시합니다.
 
-단일 목록 항목을 표시하는 `FilterItem`이라는 새 stateless 위젯을 정의합니다.
+단일 리스트 아이템을 표시하는 `FilterItem`이라는 새 stateless 위젯을 정의합니다.
 
 <?code-excerpt "lib/original_example.dart (filter-item)"?>
 ```dart
@@ -187,14 +187,14 @@ class FilterItem extends StatelessWidget {
 
 ## 필터 carousel 구현 {:#implement-the-filter-carousel}
 
-필터 항목은 사용자가 드래그할 때 좌우로 스크롤됩니다. 스크롤에는 일종의 `Scrollable` 위젯이 필요합니다.
+필터 아이템은 사용자가 드래그할 때 좌우로 스크롤됩니다. 스크롤에는 일종의 `Scrollable` 위젯이 필요합니다.
 
 horizontal `ListView` 위젯을 사용하는 것을 고려할 수 있지만, 
 `ListView` 위젯은 첫 번째 요소를 선택기 링이 있는 중앙이 아닌 사용 가능한 공간의 시작 부분에 배치합니다.
 
 `PageView` 위젯이 회전형에 더 적합합니다. 
 `PageView` 위젯은 사용 가능한 공간의 중앙에서 자식을 배치하고, 스냅핑 물리(snapping physics)를 제공합니다. 
-스냅핑 물리(snapping physics)는 사용자가 드래그를 놓을 위치에 관계없이, 항목이 중앙으로 스냅되도록 하는 것입니다.
+스냅핑 물리(snapping physics)는 사용자가 드래그를 놓을 위치에 관계없이, 아이템이 중앙으로 스냅되도록 하는 것입니다.
 
 :::note
 스크롤 가능 영역 내에서 자식 위젯의 위치를 커스터마이즈해야 하는 경우, 
@@ -398,11 +398,11 @@ Widget _buildCarousel(double itemSize) {
               // 필터가 화면에서 사라지기 직전까지의 페이지 거리입니다.
               const maxScrollDistance = _filtersPerScreen / 2;
 
-              // 현재 선택된 필터 항목에서 이 필터 항목까지의 페이지 거리입니다.
+              // 현재 선택된 필터 아이템에서 이 필터 아이템까지의 페이지 거리입니다.
               final pageDistanceFromSelected =
                   (selectedIndex - index + pageScrollAmount).abs();
 
-              // carousel 메뉴의 중심(선택기 링이 있는 위치)에서 필터 항목까지의 거리(백분율)입니다.
+              // carousel 메뉴의 중심(선택기 링이 있는 위치)에서 필터 아이템까지의 거리(백분율)입니다.
               final percentFromCenter =
                   1.0 - pageDistanceFromSelected / maxScrollDistance;
 
@@ -712,23 +712,23 @@ class CarouselFlowDelegate extends FlowDelegate {
     // 사용 가능한 모든 페인팅 폭
     final size = context.size.width;
 
-    // 스크롤 페이징 시스템의 관점에서 단일 항목 "페이지"가 ​​차지하는 거리입니다. 
-    // 또한 이 크기를 단일 항목의 너비와 높이에도 사용합니다.
+    // 스크롤 페이징 시스템의 관점에서 단일 아이템 "페이지"가 ​​차지하는 거리입니다. 
+    // 또한 이 크기를 단일 아이템의 너비와 높이에도 사용합니다.
     final itemExtent = size / filtersPerScreen;
 
-    // 현재 스크롤 위치는 항목 비율(fraction)로 표현됩니다. (예: 0.0, 1.0, 1.3, 2.9 등). 
-    // 1.3의 값은 인덱스 1의 항목이 활성화되어 있고, 사용자가 인덱스 2의 항목 방향으로 30% 스크롤했음을 나타냅니다.
+    // 현재 스크롤 위치는 아이템 비율(fraction)로 표현됩니다. (예: 0.0, 1.0, 1.3, 2.9 등). 
+    // 1.3의 값은 인덱스 1의 아이템이 활성화되어 있고, 사용자가 인덱스 2의 아이템 방향으로 30% 스크롤했음을 나타냅니다.
     final active = viewportOffset.pixels / itemExtent;
 
-    // 지금 당장 페인트해야 할 첫 번째 항목의 인덱스입니다.
-    // 최대 3개 항목을 활성 항목의 왼쪽에 페인트합니다.
+    // 지금 당장 페인트해야 할 첫 번째 아이템의 인덱스입니다.
+    // 최대 3개 아이템을 활성 아이템의 왼쪽에 페인트합니다.
     final min = math.max(0, active.floor() - 3).toInt();
 
-    // 지금 당장 페인트해야 할 마지막 항목의 인덱스입니다.
-    // 최대 3개의 항목을 활성 항목의 오른쪽에 페인트합니다.
+    // 지금 당장 페인트해야 할 마지막 아이템의 인덱스입니다.
+    // 최대 3개의 아이템을 활성 아이템의 오른쪽에 페인트합니다.
     final max = math.min(count - 1, active.ceil() + 3).toInt();
 
-    // 표시된 항목에 대한 변환을 생성하고 거리별로 정렬합니다.
+    // 표시된 아이템에 대한 변환을 생성하고 거리별로 정렬합니다.
     for (var index = min; index <= max; index++) {
       final itemXFromCenter = itemExtent * index - viewportOffset.pixels;
       final percentFromCenter = 1.0 - (itemXFromCenter / (size / 2)).abs();

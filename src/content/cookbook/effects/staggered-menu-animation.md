@@ -23,9 +23,9 @@ js:
 
 ## 애니메이션 없이 메뉴 만들기 {:#create-the-menu-without-animations}
 
-drawer 메뉴는 제목 목록을 표시한 다음, 메뉴 하단에 Get started 버튼이 표시됩니다.
+drawer 메뉴는 제목 리스트를 표시한 다음, 메뉴 하단에 Get started 버튼이 표시됩니다.
 
-`Menu`라는 stateful 위젯을 정의하여, static 위치에 목록과 버튼을 표시합니다.
+`Menu`라는 stateful 위젯을 정의하여, static 위치에 리스트와 버튼을 표시합니다.
 
 <?code-excerpt "lib/step1.dart (step1)"?>
 ```dart
@@ -168,10 +168,10 @@ class _MenuState extends State<Menu> with SingleTickerProviderStateMixin {
 }
 ```
 
-이 경우, 모든 애니메이션은 50ms 지연됩니다. 그 후, 목록 항목이 나타나기 시작합니다. 
-각 목록 항목의 출현은 이전 목록 항목이 슬라이드 인되기 시작한 후 50ms 지연됩니다. 
-각 목록 항목은 오른쪽에서 왼쪽으로 슬라이드하는 데 250ms가 걸립니다. 
-마지막 목록 항목이 슬라이드 인되기 시작한 후, 맨 아래의 버튼은 튀어나오기까지 150ms 더 기다립니다. 
+이 경우, 모든 애니메이션은 50ms 지연됩니다. 그 후, 리스트 아이템이 나타나기 시작합니다. 
+각 리스트 아이템의 출현은 이전 리스트 아이템이 슬라이드 인되기 시작한 후 50ms 지연됩니다. 
+각 리스트 아이템은 오른쪽에서 왼쪽으로 슬라이드하는 데 250ms가 걸립니다. 
+마지막 리스트 아이템이 슬라이드 인되기 시작한 후, 맨 아래의 버튼은 튀어나오기까지 150ms 더 기다립니다. 
 버튼 애니메이션은 500ms가 걸립니다. (50+250+150=500)
 
 각 지연 및 애니메이션 지속 시간을 정의하면, 총 지속 시간이 계산되어 개별 애니메이션 시간을 계산하는 데 사용할 수 있습니다.
@@ -186,7 +186,7 @@ class _MenuState extends State<Menu> with SingleTickerProviderStateMixin {
 시작 및 종료 시간 사이의 값을 애니메이션화할 수 있습니다. 
 예를 들어, 1초가 걸리는 애니메이션의 경우, 0.2에서 0.5까지의 간격은 200ms(20%)에서 시작하여 500ms(50%)에서 끝납니다.
 
-각 목록 항목의 `Interval`과 하단 버튼 `Interval`을 선언하고 계산합니다.
+각 리스트 아이템의 `Interval`과 하단 버튼 `Interval`을 선언하고 계산합니다.
 
 <?code-excerpt "lib/step3.dart (step3)" plaster="none"?>
 ```dart
@@ -229,7 +229,7 @@ class _MenuState extends State<Menu> with SingleTickerProviderStateMixin {
 }
 ```
 
-## 목록 항목과 버튼에 애니메이션 적용 {:#animate-the-list-items-and-button}
+## 리스트 아이템과 버튼에 애니메이션 적용 {:#animate-the-list-items-and-button}
 
 메뉴가 표시되자마자 계단형(staggered) 애니메이션이 재생됩니다.
 
@@ -249,9 +249,9 @@ void initState() {
   )..forward();
 }
 ```
-각 목록 항목은 오른쪽에서 왼쪽으로 슬라이드하고, 동시에 페이드 인합니다.
+각 리스트 아이템은 오른쪽에서 왼쪽으로 슬라이드하고, 동시에 페이드 인합니다.
 
-목록 항목의 `Interval`과 `easeOut` 곡선을 사용하여, 각 목록 항목의 불투명도와 변환 값을 애니메이션화합니다.
+리스트 아이템의 `Interval`과 `easeOut` 곡선을 사용하여, 각 리스트 아이템의 불투명도와 변환 값을 애니메이션화합니다.
 
 <?code-excerpt "lib/step4.dart (build-list-items)"?>
 ```dart
@@ -342,7 +342,7 @@ Widget _buildGetStartedButton() {
 ```
 
 축하합니다!
-각 목록 항목의 모양이 단계적(staggered)으로 배열되고, 
+각 리스트 아이템의 모양이 단계적(staggered)으로 배열되고, 
 그 뒤에 하단 버튼이 제자리로 튀어나오는 애니메이션 메뉴가 있습니다.
 
 ## 대화형 예제 {:#interactive-example}

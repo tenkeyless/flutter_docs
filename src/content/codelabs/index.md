@@ -134,7 +134,7 @@ Material Design과 레이아웃, 애니메이션과 같은 기본 Flutter 개념
 
 * [Flutter 앱에 앱 내 구매 추가][Adding in-app purchases to your Flutter app]<br>
   Dash 마스코트를 화폐로 사용하여 consumable, non-consumable, subscription의 
-  세 가지 유형의 앱 내 구매를 제공하는 간단한 게임 앱을 확장합니다.
+  세 가지 타입의 앱 내 구매를 제공하는 간단한 게임 앱을 확장합니다.
 
 [Adding AdMob Ads to a Flutter app]: {{site.codelabs}}/codelabs/admob-ads-in-flutter
 [Adding an AdMob banner and native inline ads to a Flutter app]: {{site.codelabs}}/codelabs/admob-inline-ads-in-flutter

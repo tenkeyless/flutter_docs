@@ -10,22 +10,22 @@ js:
 
 <?code-excerpt path-base="cookbook/effects/parallax_scrolling"?>
 
-앱에서 카드 목록(예: 이미지 포함)을 스크롤하면, 해당 이미지가 화면의 나머지 부분보다 더 느리게 스크롤되는 것처럼 보일 수 있습니다. 
-목록의 카드가 전경에 있는 것처럼 보이지만, 이미지 자체는 멀리 떨어진 배경에 있습니다. 이 효과를 패럴랙스(parallax)라고 합니다.
+앱에서 카드 리스트(예: 이미지 포함)를 스크롤하면, 해당 이미지가 화면의 나머지 부분보다 더 느리게 스크롤되는 것처럼 보일 수 있습니다. 
+리스트의 카드가 전경에 있는 것처럼 보이지만, 이미지 자체는 멀리 떨어진 배경에 있습니다. 이 효과를 패럴랙스(parallax)라고 합니다.
 
-이 레시피에서는, 카드 목록(모서리가 둥글고 텍스트가 있는 목록)을 만들어 패럴랙스 효과를 만듭니다. 각 카드에는 이미지도 포함됩니다. 
+이 레시피에서는, 카드 리스트(모서리가 둥글고 텍스트가 있는 리스트)를 만들어 패럴랙스 효과를 만듭니다. 각 카드에는 이미지도 포함됩니다. 
 카드가 화면 위로 미끄러지면, 각 카드 내의 이미지가 아래로 미끄러집니다.
 
 다음 애니메이션은 앱의 동작을 보여줍니다.
 
 ![Parallax scrolling](/assets/images/docs/cookbook/effects/ParallaxScrolling.gif){:.site-mobile-screenshot}
 
-## 패럴랙스 항목을 보관할 리스트 생성 {:#create-a-list-to-hold-the-parallax-items}
+## 패럴랙스 아이템을 보관할 리스트 생성 {:#create-a-list-to-hold-the-parallax-items}
 
-패럴랙스 스크롤링 이미지 목록을 표시하려면, 먼저 목록을 표시해야 합니다.
+패럴랙스 스크롤링 이미지 리스트를 표시하려면, 먼저 리스트를 표시해야 합니다.
 
 `ParallaxRecipe`라는 새 stateless 위젯을 만듭니다. 
-`ParallaxRecipe` 내에서, `SingleChildScrollView`와 `Column`을 사용하여 목록을 형성하는 위젯 트리를 빌드합니다.
+`ParallaxRecipe` 내에서, `SingleChildScrollView`와 `Column`을 사용하여 리스트를 형성하는 위젯 트리를 빌드합니다.
 
 <?code-excerpt "lib/excerpt1.dart (ParallaxRecipe)"?>
 ```dart
@@ -43,9 +43,9 @@ class ParallaxRecipe extends StatelessWidget {
 }
 ```
 
-## 텍스트와 정적 이미지가 있는 항목 표시 {:#display-items-with-text-and-a-static-image}
+## 텍스트와 정적 이미지가 있는 아이템 표시 {:#display-items-with-text-and-a-static-image}
 
-각 목록 항목은 세계 7개 위치 중 하나를 나타내는, 둥근 사각형 배경 이미지를 표시합니다. 
+각 리스트 아이템은 세계 7개 위치 중 하나를 나타내는, 둥근 사각형 배경 이미지를 표시합니다. 
 배경 이미지 위에 위치 이름과 국가 이름이 왼쪽 아래에 배치되어 있습니다. 
 배경 이미지와 텍스트 사이에는 어두운 그라데이션이 있어, 배경에 대한 텍스트의 가독성을 향상시킵니다.
 
@@ -141,7 +141,7 @@ class LocationListItem extends StatelessWidget {
 }
 ```
 
-다음으로, `ParallaxRecipe` 위젯에 목록 항목을 추가합니다.
+다음으로, `ParallaxRecipe` 위젯에 리스트 아이템을 추가합니다.
 
 <?code-excerpt "lib/excerpt3.dart (ParallaxRecipeItems)"?>
 ```dart
@@ -166,20 +166,20 @@ class ParallaxRecipe extends StatelessWidget {
 }
 ```
 
-이제 전 세계의 7개 고유한 위치를 표시하는 일반적인 스크롤 가능한 카드 목록이 있습니다. 
+이제 전 세계의 7개 고유한 위치를 표시하는 일반적인 스크롤 가능한 카드 리스트가 있습니다. 
 다음 단계에서는, 배경 이미지에 패럴랙스 효과를 추가합니다.
 
 ## 패럴랙스 효과 구현 {:#implement-the-parallax-effect}
 
-패럴랙스 스크롤링 효과는 목록의 나머지 부분과 반대 방향으로 배경 이미지를 약간 미는 것으로 구현됩니다. 
-목록 항목이 화면을 위로 밀어 올리면(slide up), 각 배경 이미지가 약간 아래로 슬라이드합니다. (slides slightly downward) 
-반대로, 목록 항목이 화면을 아래로 밀어 올리면(slide down), 각 배경 이미지가 약간 위로 슬라이드합니다. (slides slightly upward)
+패럴랙스 스크롤링 효과는 리스트의 나머지 부분과 반대 방향으로 배경 이미지를 약간 미는 것으로 구현됩니다. 
+리스트 아이템이 화면을 위로 밀어 올리면(slide up), 각 배경 이미지가 약간 아래로 슬라이드합니다. (slides slightly downward) 
+반대로, 리스트 아이템이 화면을 아래로 밀어 올리면(slide down), 각 배경 이미지가 약간 위로 슬라이드합니다. (slides slightly upward)
 시각적으로, 패럴랙스가 발생합니다.
 
-패럴랙스 효과는 조상인 `Scrollable` 내에서 목록 항목의 현재 위치에 따라 달라집니다. 
-목록 항목의 스크롤 위치가 변경되면, 목록 항목의 배경 이미지 위치도 변경해야 합니다. 
+패럴랙스 효과는 조상인 `Scrollable` 내에서 리스트 아이템의 현재 위치에 따라 달라집니다. 
+리스트 아이템의 스크롤 위치가 변경되면, 리스트 아이템의 배경 이미지 위치도 변경해야 합니다. 
 이는 해결하기 흥미로운 문제입니다. 
-`Scrollable` 내에서 목록 항목의 위치는 Flutter의 레이아웃 단계가 완료될 때까지 사용할 수 없습니다. 
+`Scrollable` 내에서 리스트 아이템의 위치는 Flutter의 레이아웃 단계가 완료될 때까지 사용할 수 없습니다. 
 즉, 레이아웃 단계 다음에 오는, 페인트 단계에서 배경 이미지의 위치를 ​​결정해야 합니다. 
 다행히도, Flutter는 `Flow`라는 위젯을 제공하는데, 
 이 위젯은 위젯이 페인트되기 직전에 자식 위젯의 변형을 제어할 수 있도록 특별히 설계되었습니다. 
@@ -276,12 +276,12 @@ BoxConstraints getConstraintsForChild(int i, BoxConstraints constraints) {
 배경 이미지의 원하는 위치를 계산하는 데 필요한 세 가지 중요한 정보가 있습니다.
 
 * 조상 `Scrollable`의 경계(bounds)
-* 개별 목록 항목의 경계
-* 목록 항목에 맞게 축소된 후의 이미지 크기
+* 개별 리스트 아이템의 경계
+* 리스트 아이템에 맞게 축소된 후의 이미지 크기
 
 `Scrollable`의 경계를 찾으려면, `ScrollableState`를 `FlowDelegate`에 전달합니다.
 
-개별 목록 항목의 경계를 찾으려면, 목록 항목의 `BuildContext`를 `FlowDelegate`에 전달합니다.
+개별 리스트 아이템의 경계를 찾으려면, 리스트 아이템의 `BuildContext`를 `FlowDelegate`에 전달합니다.
 
 배경 이미지의 최종 크기를 찾으려면, `Image` 위젯에 `GlobalKey`를 할당한 다음, 
 해당 `GlobalKey`를 `FlowDelegate`에 전달합니다.
@@ -342,13 +342,13 @@ bool shouldRepaint(ParallaxFlowDelegate oldDelegate) {
 
 이제, 패럴랙스 효과에 대한 레이아웃 계산을 구현합니다.
 
-먼저, 조상 `Scrollable` 내에서 목록 항목의 픽셀 위치를 계산합니다.
+먼저, 조상 `Scrollable` 내에서 리스트 아이템의 픽셀 위치를 계산합니다.
 
 <?code-excerpt "lib/excerpt5.dart (paint-children)" plaster="none"?>
 ```dart
 @override
 void paintChildren(FlowPaintingContext context) {
-  // 뷰포트 내에서 이 목록 항목의 위치를 ​​계산합니다.
+  // 뷰포트 내에서 이 리스트 아이템의 위치를 ​​계산합니다.
   final scrollableBox = scrollable.context.findRenderObject() as RenderBox;
   final listItemBox = listItemContext.findRenderObject() as RenderBox;
   final listItemOffset = listItemBox.localToGlobal(
@@ -357,21 +357,21 @@ void paintChildren(FlowPaintingContext context) {
 }
 ```
 
-목록 항목의 픽셀 위치를 사용하여 `Scrollable` 상단으로부터의 백분율을 계산합니다. 
-스크롤 가능 영역 상단에 있는 목록 항목은 0%를 생성해야 하고, 스크롤 가능 영역 하단에 있는 목록 항목은 100%를 생성해야 합니다.
+리스트 아이템의 픽셀 위치를 사용하여 `Scrollable` 상단으로부터의 백분율을 계산합니다. 
+스크롤 가능 영역 상단에 있는 리스트 아이템은 0%를 생성해야 하고, 스크롤 가능 영역 하단에 있는 리스트 아이템은 100%를 생성해야 합니다.
 
 <?code-excerpt "lib/excerpt5.dart (paint-children-2)"?>
 ```dart
 @override
 void paintChildren(FlowPaintingContext context) {
-  // 뷰포트 내에서 이 목록 항목의 위치를 ​​계산합니다.
+  // 뷰포트 내에서 이 리스트 아이템의 위치를 ​​계산합니다.
   final scrollableBox = scrollable.context.findRenderObject() as RenderBox;
   final listItemBox = listItemContext.findRenderObject() as RenderBox;
   final listItemOffset = listItemBox.localToGlobal(
       listItemBox.size.centerLeft(Offset.zero),
       ancestor: scrollableBox);
 
-  // 스크롤 가능한 영역 내에서 이 목록 항목의 퍼센트 위치를 결정합니다.
+  // 스크롤 가능한 영역 내에서 이 리스트 아이템의 퍼센트 위치를 결정합니다.
   final viewportDimension = scrollable.position.viewportDimension;
   final scrollFraction =
       (listItemOffset.dy / viewportDimension).clamp(0.0, 1.0);
@@ -388,14 +388,14 @@ void paintChildren(FlowPaintingContext context) {
 ```dart
 @override
 void paintChildren(FlowPaintingContext context) {
-  // 뷰포트 내에서 이 목록 항목의 위치를 ​​계산합니다.
+  // 뷰포트 내에서 이 리스트 아이템의 위치를 ​​계산합니다.
   final scrollableBox = scrollable.context.findRenderObject() as RenderBox;
   final listItemBox = listItemContext.findRenderObject() as RenderBox;
   final listItemOffset = listItemBox.localToGlobal(
       listItemBox.size.centerLeft(Offset.zero),
       ancestor: scrollableBox);
 
-  // 스크롤 가능한 영역 내에서 이 목록 항목의 퍼센트 위치를 결정합니다.
+  // 스크롤 가능한 영역 내에서 이 리스트 아이템의 퍼센트 위치를 결정합니다.
   final viewportDimension = scrollable.position.viewportDimension;
   final scrollFraction =
       (listItemOffset.dy / viewportDimension).clamp(0.0, 1.0);
@@ -405,21 +405,21 @@ void paintChildren(FlowPaintingContext context) {
 }
 ```
 
-`verticalAlignment`를, 목록 항목의 크기와 배경 이미지의 크기와 함께 사용하여, 
+`verticalAlignment`를, 리스트 아이템의 크기와 배경 이미지의 크기와 함께 사용하여, 
 배경 이미지가 배치될 위치를 결정하는 `Rect`를 생성합니다.
 
 <?code-excerpt "lib/excerpt5.dart (paint-children-4)" plaster="none"?>
 ```dart
 @override
 void paintChildren(FlowPaintingContext context) {
-  // 뷰포트 내에서 이 목록 항목의 위치를 ​​계산합니다.
+  // 뷰포트 내에서 이 리스트 아이템의 위치를 ​​계산합니다.
   final scrollableBox = scrollable.context.findRenderObject() as RenderBox;
   final listItemBox = listItemContext.findRenderObject() as RenderBox;
   final listItemOffset = listItemBox.localToGlobal(
       listItemBox.size.centerLeft(Offset.zero),
       ancestor: scrollableBox);
 
-  // 스크롤 가능한 영역 내에서 이 목록 항목의 퍼센트 위치를 결정합니다.
+  // 스크롤 가능한 영역 내에서 이 리스트 아이템의 퍼센트 위치를 결정합니다.
   final viewportDimension = scrollable.position.viewportDimension;
   final scrollFraction =
       (listItemOffset.dy / viewportDimension).clamp(0.0, 1.0);
@@ -444,14 +444,14 @@ void paintChildren(FlowPaintingContext context) {
 ```dart
 @override
 void paintChildren(FlowPaintingContext context) {
-  // 뷰포트 내에서 이 목록 항목의 위치를 ​​계산합니다.
+  // 뷰포트 내에서 이 리스트 아이템의 위치를 ​​계산합니다.
   final scrollableBox = scrollable.context.findRenderObject() as RenderBox;
   final listItemBox = listItemContext.findRenderObject() as RenderBox;
   final listItemOffset = listItemBox.localToGlobal(
       listItemBox.size.centerLeft(Offset.zero),
       ancestor: scrollableBox);
 
-  // 스크롤 가능한 영역 내에서 이 목록 항목의 퍼센트 위치를 결정합니다.
+  // 스크롤 가능한 영역 내에서 이 리스트 아이템의 퍼센트 위치를 결정합니다.
   final viewportDimension = scrollable.position.viewportDimension;
   final scrollFraction =
       (listItemOffset.dy / viewportDimension).clamp(0.0, 1.0);
@@ -495,7 +495,7 @@ class ParallaxFlowDelegate extends FlowDelegate {
 ```
 
 축하합니다!
-이제 패럴랙스, 스크롤링 배경 이미지가 있는 카드 목록이 있습니다.
+이제 패럴랙스, 스크롤링 배경 이미지가 있는 카드 리스트가 있습니다.
 
 ## 대화형 예제 {:#interactive-example}
 
@@ -668,14 +668,14 @@ class ParallaxFlowDelegate extends FlowDelegate {
 
   @override
   void paintChildren(FlowPaintingContext context) {
-    // 뷰포트 내에서 이 목록 항목의 위치를 ​​계산합니다.
+    // 뷰포트 내에서 이 리스트 아이템의 위치를 ​​계산합니다.
     final scrollableBox = scrollable.context.findRenderObject() as RenderBox;
     final listItemBox = listItemContext.findRenderObject() as RenderBox;
     final listItemOffset = listItemBox.localToGlobal(
         listItemBox.size.centerLeft(Offset.zero),
         ancestor: scrollableBox);
 
-    // 스크롤 가능한 영역 내에서 이 목록 항목의 퍼센트 위치를 결정합니다.
+    // 스크롤 가능한 영역 내에서 이 리스트 아이템의 퍼센트 위치를 결정합니다.
     final viewportDimension = scrollable.position.viewportDimension;
     final scrollFraction =
         (listItemOffset.dy / viewportDimension).clamp(0.0, 1.0);
@@ -787,12 +787,12 @@ class RenderParallax extends RenderBox
     // 스크롤 가능한 영역의 크기를 가져옵니다.
     final viewportDimension = scrollable.position.viewportDimension;
 
-    // 이 목록 항목의 글로벌 위치를 계산합니다.
+    // 이 리스트 아이템의 글로벌 위치를 계산합니다.
     final scrollableBox = scrollable.context.findRenderObject() as RenderBox;
     final backgroundOffset =
         localToGlobal(size.centerLeft(Offset.zero), ancestor: scrollableBox);
 
-    // 스크롤 가능한 영역 내에서 이 목록 항목의 퍼센트 위치를 결정합니다.
+    // 스크롤 가능한 영역 내에서 이 리스트 아이템의 퍼센트 위치를 결정합니다.
     final scrollFraction =
         (backgroundOffset.dy / viewportDimension).clamp(0.0, 1.0);
 
