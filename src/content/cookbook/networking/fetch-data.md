@@ -1,69 +1,64 @@
 ---
-title: Fetch data from the internet
-description: How to fetch data over the internet using the http package.
+# title: Fetch data from the internet
+title: 인터넷으로부터 데이터 가져오기
+# description: How to fetch data over the internet using the http package.
+description: http 패키지를 사용하여 인터넷에서 데이터를 가져오는 방법.
 ---
 
 <?code-excerpt path-base="cookbook/networking/fetch_data/"?>
 
-Fetching data from the internet is necessary for most apps.
-Luckily, Dart and Flutter provide tools, such as the
-`http` package, for this type of work.
+인터넷에서 데이터를 가져오는 것은 대부분 앱에 필요합니다. 
+다행히도, Dart와 Flutter는 이러한 유형의 작업을 위해, `http` 패키지와 같은, 도구를 제공합니다.
 
 :::note
-You should avoid directly using `dart:io` or `dart:html`
-to make HTTP requests.
-Those libraries are platform-dependent
-and tied to a single implementation.
+HTTP 요청을 하기 위해 `dart:io` 또는 `dart:html`을 직접 사용하는 것은 피해야 합니다. 
+이러한 라이브러리는 플랫폼에 따라 달라지며 단일 구현에 묶여 있습니다.
 :::
 
-This recipe uses the following steps:
+이 레시피는 다음 단계를 사용합니다.
 
-  1. Add the `http` package.
-  2. Make a network request using the `http` package.
-  3. Convert the response into a custom Dart object.
-  4. Fetch and display the data with Flutter.
+  1. `http` 패키지를 추가합니다.
+  2. `http` 패키지를 사용하여 네트워크 요청을 합니다.
+  3. 응답을 커스텀 Dart 객체로 변환합니다.
+  4. Flutter로 데이터를 가져와 표시합니다.
 
-## 1. Add the `http` package
+## 1. `http` 패키지를 추가 {:#1-add-the-http-package}
 
-The [`http`][] package provides the
-simplest way to fetch data from the internet.
+[`http`][] 패키지는 인터넷에서 데이터를 가져오는 가장 간단한 방법을 제공합니다.
 
-To add the `http` package as a dependency,
-run `flutter pub add`:
+`http` 패키지를 종속성으로 추가하려면, `flutter pub add`를 실행합니다.
 
 ```console
 $ flutter pub add http
 ```
 
-Import the http package.
+http 패키지를 가져옵니다.
 
 <?code-excerpt "lib/main.dart (Http)"?>
 ```dart
 import 'package:http/http.dart' as http;
 ```
 
-If you are deploying to Android, edit your `AndroidManifest.xml` file to 
-add the Internet permission.
+Android에 배포하는 경우, `AndroidManifest.xml` 파일을 편집하여 인터넷 권한을 추가합니다.
 
 ```xml
-<!-- Required to fetch data from the internet. -->
+<!-- 인터넷에서 데이터를 가져오는 데 필요합니다. -->
 <uses-permission android:name="android.permission.INTERNET" />
 ```
 
-Likewise, if you are deploying to macOS, edit your 
-`macos/Runner/DebugProfile.entitlements` and `macos/Runner/Release.entitlements`
-files to include the network client entitlement.
+마찬가지로, macOS에 배포하는 경우, 
+`macos/Runner/DebugProfile.entitlements` 및 `macos/Runner/Release.entitlements` 파일을 편집하여 
+네트워크 클라이언트 자격(network client entitlement)을 포함시킵니다.
 
 ```xml
-<!-- Required to fetch data from the internet. -->
+<!-- 인터넷에서 데이터를 가져오는 데 필요합니다. -->
 <key>com.apple.security.network.client</key>
 <true/>
 ```
 
-## 2. Make a network request
+## 2. 네트워크 요청하기 {:#2-make-a-network-request}
 
-This recipe covers how to fetch a sample album from the
-[JSONPlaceholder][] using the [`http.get()`][] method.
+이 레시피는 [`http.get()`][] 메서드를 사용하여 [JSONPlaceholder][]에서 샘플 앨범을 가져오는 방법을 다룹니다.
 
 <?code-excerpt "lib/main_step1.dart (fetchAlbum)"?>
 ```dart
@@ -72,30 +67,24 @@ Future<http.Response> fetchAlbum() {
 }
 ```
 
-The `http.get()` method returns a `Future` that contains a `Response`.
+`http.get()` 메서드는 `Response`를 포함하는 `Future`를 반환합니다.
 
-* [`Future`][] is a core Dart class for working with
-  async operations. A Future object represents a potential
-  value or error that will be available at some time in the future.
-* The `http.Response` class contains the data received from a successful
-  http call.
+* [`Future`][]는 async 작업을 처리하기 위한 핵심 Dart 클래스입니다. 
+  Future 객체는 미래의 어느 시점에 사용 가능할 수 있는 잠재적 값 또는 오류를 나타냅니다.
+* `http.Response` 클래스는 성공적인 http 호출에서 수신된 데이터를 포함합니다.
 
-## 3. Convert the response into a custom Dart object
+## 3. 응답을 커스텀 Dart 객체로 변환 {:#3-convert-the-response-into-a-custom-dart-object}
 
-While it's easy to make a network request, working with a raw
-`Future<http.Response>` isn't very convenient.
-To make your life easier,
-convert the `http.Response` into a Dart object.
+네트워크 요청을 하는 것은 쉽지만, raw `Future<http.Response>`로 작업하는 것은 그다지 편리하지 않습니다. 
+삶을 더 편리하게 하려면, `http.Response`를 Dart 객체로 변환하세요.
 
-### Create an `Album` class
+### `Album` 클래스 생성 {:#create-an-album-class}
 
-First, create an `Album` class that contains the data from the
-network request. It includes a factory constructor that
-creates an `Album` from JSON.
+먼저, 네트워크 요청의 데이터를 포함하는 `Album` 클래스를 만듭니다. 
+여기에는 JSON에서 `Album`을 만드는 팩토리 생성자가 포함됩니다.
 
-Converting JSON using [pattern matching][] is only one option.
-For more information, see the full article on
-[JSON and serialization][].
+[패턴 매칭][pattern matching]을 사용하여 JSON을 변환하는 것은 하나의 옵션일 뿐입니다. 
+자세한 내용은 [JSON 및 직렬화][JSON and serialization]에 대한 전체 문서를 참조하세요.
 
 <?code-excerpt "lib/main.dart (Album)"?>
 ```dart
@@ -128,22 +117,16 @@ class Album {
 }
 ```
 
-### Convert the `http.Response` to an `Album`
+### `http.Response`를 `Album`으로 변환 {:#convert-the-http-response-to-an-album}
 
-Now, use the following steps to update the `fetchAlbum()`
-function to return a `Future<Album>`:
+이제, 다음의 단계를 사용하여 `fetchAlbum()` 함수를 업데이트하여 `Future<Album>`을 반환합니다.
 
-  1. Convert the response body into a JSON `Map` with
-     the `dart:convert` package.
-  2. If the server does return an OK response with a status code of
-     200, then convert the JSON `Map` into an `Album`
-     using the `fromJson()` factory method.
-  3. If the server does not return an OK response with a status code of 200,
-     then throw an exception.
-     (Even in the case of a "404 Not Found" server response,
-     throw an exception. Do not return `null`.
-     This is important when examining
-     the data in `snapshot`, as shown below.)
+  1. `dart:convert` 패키지를 사용하여 응답 본문(response body)을 JSON `Map`으로 변환합니다.
+  2. 서버가 상태 코드 200과 함께 OK 응답을 반환하는 경우, 
+     `fromJson()` 팩토리 메서드를 사용하여 JSON `Map`을 `Album`으로 변환합니다.
+  3. 서버가 상태 코드 200과 함께 OK 응답을 반환하지 않는 경우, 예외를 throw합니다. 
+     ("404 Not Found" 서버 응답의 경우에도 예외를 throw합니다. `null`을 반환하지 마세요. 
+      아래에 표시된 대로, `snapshot`의 데이터를 검사할 때 중요합니다.)
 
 <?code-excerpt "lib/main.dart (fetchAlbum)"?>
 ```dart
@@ -152,31 +135,26 @@ Future<Album> fetchAlbum() async {
       .get(Uri.parse('https://jsonplaceholder.typicode.com/albums/1'));
 
   if (response.statusCode == 200) {
-    // If the server did return a 200 OK response,
-    // then parse the JSON.
+    // 서버가 200 OK 응답을 반환한 경우, JSON을 파싱합니다.
     return Album.fromJson(jsonDecode(response.body) as Map<String, dynamic>);
   } else {
-    // If the server did not return a 200 OK response,
-    // then throw an exception.
+    // 서버가 200 OK 응답을 반환하지 않으면, 예외를 발생시킵니다.
     throw Exception('Failed to load album');
   }
 }
 ```
 
-Hooray!
-Now you've got a function that fetches an album from the internet.
+만세!
+이제 인터넷에서 앨범을 가져오는 기능이 생겼습니다.
 
-## 4. Fetch the data
+## 4. 데이터 읽어오기 {:#4-fetch-the-data}
 
-Call the `fetchAlbum()` method in either the
-[`initState()`][] or [`didChangeDependencies()`][]
-methods.
+[`initState()`][] 또는 [`didChangeDependencies()`][] 메서드에서 `fetchAlbum()` 메서드를 호출합니다.
 
-The `initState()` method is called exactly once and then never again.
-If you want to have the option of reloading the API in response to an
-[`InheritedWidget`][] changing, put the call into the
-`didChangeDependencies()` method.
-See [`State`][] for more details.
+`initState()` 메서드는 정확히 한 번 호출되고, 그 이후로는 다시 호출되지 않습니다. 
+[`InheritedWidget`][] 변경에 대한 응답으로 API를 다시 로드하는 옵션을 원하면, 
+호출을 `didChangeDependencies()` 메서드에 넣습니다. 
+자세한 내용은 [`State`][]를 참조하세요.
 
 <?code-excerpt "lib/main.dart (State)"?>
 ```dart
@@ -192,34 +170,27 @@ class _MyAppState extends State<MyApp> {
 }
 ```
 
-This Future is used in the next step.
+이 Future는 다음 단계에서 사용됩니다.
 
-## 5. Display the data
+## 5. 데이터 표시하기 {:#5-display-the-data}
 
-To display the data on screen, use the
-[`FutureBuilder`][] widget.
-The `FutureBuilder` widget comes with Flutter and
-makes it easy to work with asynchronous data sources.
+데이터를 화면에 표시하려면, [`FutureBuilder`][] 위젯을 사용합니다. 
+`FutureBuilder` 위젯은 Flutter와 함께 제공되며 비동기 데이터 소스로 작업하기 쉽습니다.
 
-You must provide two parameters:
+두 개의 매개변수를 제공해야 합니다.
 
-  1. The `Future` you want to work with.
-     In this case, the future returned from
-     the `fetchAlbum()` function.
-  2. A `builder` function that tells Flutter
-     what to render, depending on the
-     state of the `Future`: loading, success, or error.
+  1. 작업하려는 `Future`. 
+     * 이 경우, `fetchAlbum()` 함수에서 반환된 future 입니다.
+  2. `builder` 함수.
+     * `Future`의 상태(loading, success 또는 error)에 따라, Flutter에 렌더링할 내용을 알려주는 함수입니다.
 
-Note that `snapshot.hasData` only returns `true`
-when the snapshot contains a non-null data value.
+`snapshot.hasData`는 스냅샷에 null이 아닌 데이터 값이 포함된 경우에만 `true`를 반환합니다.
 
-Because `fetchAlbum` can only return non-null values,
-the function should throw an exception
-even in the case of a "404 Not Found" server response.
-Throwing an exception sets the `snapshot.hasError` to `true`
-which can be used to display an error message.
+`fetchAlbum`은 null이 아닌 값만 반환할 수 있으므로, 
+"404 Not Found" 서버 응답의 경우에도 함수가 예외를 throw해야 합니다. 
+예외를 throw하면, `snapshot.hasError`가 `true`로 설정되어 오류 메시지를 표시하는 데 사용할 수 있습니다.
 
-Otherwise, the spinner will be displayed.
+그렇지 않으면, 스피너가 표시됩니다.
 
 <?code-excerpt "lib/main.dart (FutureBuilder)" replace="/^child: //g;/^\),$/)/g"?>
 ```dart
@@ -232,36 +203,28 @@ FutureBuilder<Album>(
       return Text('${snapshot.error}');
     }
 
-    // By default, show a loading spinner.
+    // 기본적으로, 로딩 스피너가 표시됩니다.
     return const CircularProgressIndicator();
   },
 )
 ```
 
-## Why is fetchAlbum() called in initState()?
+## initState()에서 fetchAlbum()이 호출되는 이유는 무엇입니까? {:#why-is-fetchalbum-called-in-initstate}
 
-Although it's convenient,
-it's not recommended to put an API call in a `build()` method.
+편리하기는 하지만, `build()` 메서드에 API 호출을 넣는 것은 권장하지 않습니다.
 
-Flutter calls the `build()` method every time it needs
-to change anything in the view,
-and this happens surprisingly often.
-The `fetchAlbum()` method, if placed inside `build()`, is repeatedly 
-called on each rebuild causing the app to slow down.
+Flutter는 뷰에서 무언가를 변경해야 할 때마다 `build()` 메서드를 호출하는데, 이는 놀라울 정도로 자주 발생합니다. `fetchAlbum()` 메서드는, `build()` 내부에 배치하면, 각 재빌드에서 반복적으로 호출되어 앱 속도가 느려집니다.
 
-Storing the `fetchAlbum()` result in a state variable ensures that
-the `Future` is executed only once and then cached for subsequent
-rebuilds.
+`fetchAlbum()` 결과를 상태 변수에 저장하면, `Future`가 한 번만 실행되고 이후 재빌드를 위해 캐시됩니다.
 
-## Testing
+## 테스트 {:#testing}
 
-For information on how to test this functionality,
-see the following recipes:
+이 기능을 테스트하는 방법에 대한 정보는, 다음 레시피를 참조하세요.
 
-  * [Introduction to unit testing][]
-  * [Mock dependencies using Mockito][]
+* [유닛 테스트 소개][Introduction to unit testing]
+* [Mockito를 사용하여 종속성 Mock][Mock dependencies using Mockito]
 
-## Complete example
+## 완성된 예제 {:#complete-example}
 
 <?code-excerpt "lib/main.dart"?>
 ```dart
@@ -276,12 +239,10 @@ Future<Album> fetchAlbum() async {
       .get(Uri.parse('https://jsonplaceholder.typicode.com/albums/1'));
 
   if (response.statusCode == 200) {
-    // If the server did return a 200 OK response,
-    // then parse the JSON.
+    // 서버가 200 OK 응답을 반환한 경우, JSON을 구문 분석합니다.
     return Album.fromJson(jsonDecode(response.body) as Map<String, dynamic>);
   } else {
-    // If the server did not return a 200 OK response,
-    // then throw an exception.
+    // 서버가 200 OK 응답을 반환하지 않으면, 예외를 발생시킵니다.
     throw Exception('Failed to load album');
   }
 }
@@ -353,7 +314,7 @@ class _MyAppState extends State<MyApp> {
                 return Text('${snapshot.error}');
               }
 
-              // By default, show a loading spinner.
+              // 기본적으로, 로딩 스피너가 표시됩니다.
               return const CircularProgressIndicator();
             },
           ),
