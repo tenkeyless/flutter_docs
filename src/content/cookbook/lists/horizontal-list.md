@@ -1,6 +1,8 @@
 ---
-title: Create a horizontal list
-description: How to implement a horizontal list.
+# title: Create a horizontal list
+title: horizontal 리스트 만들기
+# description: How to implement a horizontal list.
+description: horizontal 리스트를 구현하는 방법.
 js:
   - defer: true
     url: /assets/js/inject_dartpad.js
@@ -8,17 +10,15 @@ js:
 
 <?code-excerpt path-base="cookbook/lists/horizontal_list"?>
 
-You might want to create a list that scrolls
-horizontally rather than vertically.
-The [`ListView`][] widget supports horizontal lists.
+수직(vertically) 방향이 아닌 수평(horizontally) 방향으로 스크롤되는 리스트를 만들고 싶을 수도 있습니다. 
+[`ListView`][] 위젯은 수평(horizontal) 리스트를 지원합니다.
 
-Use the standard `ListView` constructor, passing in a horizontal
-`scrollDirection`, which overrides the default vertical direction.
+표준 `ListView` 생성자를 사용하여, horizontal `scrollDirection`을 전달하면, 기본 vertical 방향을 재정의합니다.
 
 <?code-excerpt "lib/main.dart (ListView)" replace="/^child\: //g"?>
 ```dart
 ListView(
-  // This next line does the trick.
+  // 다음 줄이 그 요령입니다.
   scrollDirection: Axis.horizontal,
   children: <Widget>[
     Container(
@@ -45,16 +45,14 @@ ListView(
 ),
 ```
 
-## Interactive example
+## 대화형 예제 {:#interactive-example}
 
-:::note Desktop and web note
-This example works in the browser and on the desktop.
-However, as this list scrolls on the horizontal axis
-(left to right or right to left),
-hold <kbd>Shift</kbd> while using the mouse scroll wheel to scroll the list.
+:::note 데스크탑 및 웹 노트
+이 예는 브라우저와 데스크톱에서 작동합니다. 
+그러나, 이 리스트가 수평 축(왼쪽에서 오른쪽 또는 오른쪽에서 왼쪽)으로 스크롤될 때, 
+<kbd>Shift</kbd>를 누른 채로 마우스 스크롤 휠을 사용하여 리스트를 스크롤합니다.
 
-To learn more, read the [breaking change][] page on the
-default drag for scrolling devices.
+자세한 내용은, 스크롤링 장치의 기본 드래그에 대한 [중요 변경 사항][breaking change] 페이지를 읽어보세요.
 :::
 
 <?code-excerpt "lib/main.dart"?>
@@ -80,7 +78,7 @@ class MyApp extends StatelessWidget {
           margin: const EdgeInsets.symmetric(vertical: 20),
           height: 200,
           child: ListView(
-            // This next line does the trick.
+            // 다음 줄이 그 요령입니다.
             scrollDirection: Axis.horizontal,
             children: <Widget>[
               Container(
