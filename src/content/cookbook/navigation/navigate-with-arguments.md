@@ -1,6 +1,8 @@
 ---
-title: Pass arguments to a named route
-description: How to pass arguments to a named route.
+# title: Pass arguments to a named route
+title: 이름이 있는 경로에 인수 전달
+# description: How to pass arguments to a named route.
+description: 이름이 지정된 경로에 인수를 전달하는 방법.
 js:
   - defer: true
     url: /assets/js/inject_dartpad.js
@@ -8,50 +10,44 @@ js:
 
 <?code-excerpt path-base="cookbook/navigation/navigate_with_arguments"?>
 
-The [`Navigator`][] provides the ability to navigate
-to a named route from any part of an app using
-a common identifier.
-In some cases, you might also need to pass arguments to a
-named route. For example, you might wish to navigate to the `/user` route and
-pass information about the user to that route.
+[`Navigator`][]는 공통 식별자(common identifier)를 사용하여 
+앱의 모든 부분에서 명명된 경로로 이동하는 기능을 제공합니다. 
+어떤 경우에는, 명명된 경로에 인수를 전달해야 할 수도 있습니다. 
+예를 들어, `/user` 경로로 이동하고 해당 경로에 사용자에 대한 정보를 전달하고 싶을 수 있습니다.
 
 :::note
-Named routes are no longer recommended for most
-applications. For more information, see
-[Limitations][] in the [navigation overview][] page.
+명명된 경로는 더 이상 대부분의 애플리케이션에 권장되지 않습니다. 
+자세한 내용은, [탐색 개요][navigation overview] 페이지의 [제한 사항][Limitations]을 참조하세요.
 :::
 
 [Limitations]: /ui/navigation#limitations
 [navigation overview]: /ui/navigation
 
-You can accomplish this task using the `arguments` parameter of the
-[`Navigator.pushNamed()`][] method. Extract the arguments using the
-[`ModalRoute.of()`][] method or inside an [`onGenerateRoute()`][]
-function provided to the [`MaterialApp`][] or [`CupertinoApp`][]
-constructor.
+[`Navigator.pushNamed()`][] 메서드의 `arguments` 매개변수를 사용하여 이 작업을 수행할 수 있습니다. 
+[`ModalRoute.of()`][] 메서드를 사용하거나
+[`MaterialApp`][] 또는 [`CupertinoApp`][] 생성자에 제공된 [`onGenerateRoute()`][] 함수 내부에서 
+인수를 추출합니다.
 
-This recipe demonstrates how to pass arguments to a named
-route and read the arguments using `ModalRoute.of()`
-and `onGenerateRoute()` using the following steps:
+이 레시피는 다음 단계를 사용하여 `ModalRoute.of()` 및 `onGenerateRoute()`를 사용하여 
+명명된 경로에 인수를 전달하고, 인수를 읽는 방법을 보여줍니다.
 
-  1. Define the arguments you need to pass.
-  2. Create a widget that extracts the arguments.
-  3. Register the widget in the `routes` table.
-  4. Navigate to the widget.
+  1. 전달해야 하는 인수를 정의합니다.
+  2. 인수를 추출하는 위젯을 만듭니다.
+  3. `routes` 테이블에 위젯을 등록합니다.
+  4. 위젯으로 이동합니다.
 
-## 1. Define the arguments you need to pass
+## 1. 전달해야 할 인수 정의 {:#1-define-the-arguments-you-need-to-pass}
 
-First, define the arguments you need to pass to the new route.
-In this example, pass two pieces of data:
-The `title` of the screen and a `message`.
+먼저, 새 경로에 전달해야 하는 인수를 정의합니다. 
+이 예에서는, 두 가지 데이터를 전달합니다. 
+화면의 `title`과 `message`입니다.
 
-To pass both pieces of data, create a class that stores this information.
+두 가지 데이터를 모두 전달하려면, 이 정보를 저장하는 클래스를 만듭니다.
 
 <?code-excerpt "lib/main.dart (ScreenArguments)"?>
 ```dart
-// You can pass any object to the arguments parameter.
-// In this example, create a class that contains both
-// a customizable title and message.
+// 인수 매개변수에 어떤 객체라도 전달할 수 있습니다.
+// 이 예에서는, 커스터마이즈 가능한 제목과 메시지를 모두 포함하는 클래스를 만듭니다.
 class ScreenArguments {
   final String title;
   final String message;
@@ -60,18 +56,15 @@ class ScreenArguments {
 }
 ```
 
-## 2. Create a widget that extracts the arguments
+## 2. 인수를 추출하는 위젯 만들기 {:#2-create-a-widget-that-extracts-the-arguments}
 
-Next, create a widget that extracts and displays the
-`title` and `message` from the `ScreenArguments`.
-To access the `ScreenArguments`,
-use the [`ModalRoute.of()`][] method.
-This method returns the current route with the arguments.
+다음으로, `ScreenArguments`에서 `title`과 `message`를 추출하여 표시하는 위젯을 만듭니다. 
+`ScreenArguments`에 액세스하려면, [`ModalRoute.of()`][] 메서드를 사용합니다. 
+이 메서드는 인수와 함께 현재 경로를 반환합니다.
 
 <?code-excerpt "lib/main.dart (ExtractArgumentsScreen)"?>
 ```dart
-// A Widget that extracts the necessary arguments from
-// the ModalRoute.
+// ModalRoute에서 필요한 인수를 추출하는 위젯입니다.
 class ExtractArgumentsScreen extends StatelessWidget {
   const ExtractArgumentsScreen({super.key});
 
@@ -79,8 +72,7 @@ class ExtractArgumentsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Extract the arguments from the current ModalRoute
-    // settings and cast them as ScreenArguments.
+    // 현재 ModalRoute 설정에서 인수를 추출하여, ScreenArguments로 캐스팅합니다.
     final args = ModalRoute.of(context)!.settings.arguments as ScreenArguments;
 
     return Scaffold(
@@ -95,10 +87,10 @@ class ExtractArgumentsScreen extends StatelessWidget {
 }
 ```
 
-## 3. Register the widget in the `routes` table
+## 3. 위젯을 `routes` 테이블에 등록 {:#3-register-the-widget-in-the-routes-table}
 
-Next, add an entry to the `routes` provided to the `MaterialApp` widget. The
-`routes` define which widget should be created based on the name of the route.
+다음으로, `MaterialApp` 위젯에 제공된 `routes`에 엔트리를 추가합니다. 
+`routes`는 경로의 이름에 따라 어떤 위젯을 만들어야 하는지 정의합니다.
 
 {% comment %}
 RegEx removes the return statement and adds the closing parenthesis at the end
@@ -114,25 +106,20 @@ MaterialApp(
 ```
 
 
-## 4. Navigate to the widget
+## 4. 위젯으로 이동 {:#4-navigate-to-the-widget}
 
-Finally, navigate to the `ExtractArgumentsScreen`
-when a user taps a button using [`Navigator.pushNamed()`][].
-Provide the arguments to the route via the `arguments` property. The
-`ExtractArgumentsScreen` extracts the `title` and `message` from these
-arguments.
+마지막으로, 사용자가 [`Navigator.pushNamed()`][]를 사용하여 버튼을 탭하면, 
+`ExtractArgumentsScreen`으로 이동합니다. 
+`arguments` 속성을 통해 경로에 인수를 제공합니다. 
+`ExtractArgumentsScreen`은 이러한 인수에서 `title`과 `message`를 추출합니다.
 
 <?code-excerpt "lib/main.dart (PushNamed)"?>
 ```dart
-// A button that navigates to a named route.
-// The named route extracts the arguments
-// by itself.
+// 명명된 경로로 이동하는 버튼.
+// 명명된 경로는 인수를 스스로 추출합니다.
 ElevatedButton(
   onPressed: () {
-    // When the user taps the button,
-    // navigate to a named route and
-    // provide the arguments as an optional
-    // parameter.
+    // 사용자가 버튼을 탭하면, 명명된 경로로 이동하고 인수를 선택적 매개변수로 제공합니다.
     Navigator.pushNamed(
       context,
       ExtractArgumentsScreen.routeName,
@@ -146,14 +133,12 @@ ElevatedButton(
 ),
 ```
 
-## Alternatively, extract the arguments using `onGenerateRoute`
+## 대안으로, `onGenerateRoute`를 사용하여 인수 추출 {:#alternatively-extract-the-arguments-using-ongenerateroute}
 
-Instead of extracting the arguments directly inside the widget, you can also
-extract the arguments inside an [`onGenerateRoute()`][]
-function and pass them to a widget.
+위젯 내부에서 직접 인수를 추출하는 대신, 
+[`onGenerateRoute()`][] 함수 내부에서 인수를 추출하여 위젯에 전달할 수도 있습니다.
 
-The `onGenerateRoute()` function creates the correct route based on the given
-[`RouteSettings`][].
+`onGenerateRoute()` 함수는 주어진 [`RouteSettings`][]에 따라 올바른 경로를 만듭니다.
 
 {% comment %}
 RegEx removes the return statement, removed "routes" property and adds the closing parenthesis at the end
@@ -161,20 +146,15 @@ RegEx removes the return statement, removed "routes" property and adds the closi
 
 ```dart
 MaterialApp(
-  // Provide a function to handle named routes.
-  // Use this function to identify the named
-  // route being pushed, and create the correct
-  // Screen.
+  // 명명된 경로를 처리하는 함수를 제공합니다. 
+  // 이 함수를 사용하여 푸시되는 명명된 경로를 식별하고, 올바른 화면을 만듭니다.
   onGenerateRoute: (settings) {
-    // If you push the PassArguments route
+    // PassArguments 경로를 푸시하는 경우
     if (settings.name == PassArgumentsScreen.routeName) {
-      // Cast the arguments to the correct
-      // type: ScreenArguments.
+      // 인수를 올바른 타입인 ScreenArguments로 캐스팅합니다.
       final args = settings.arguments as ScreenArguments;
 
-      // Then, extract the required data from
-      // the arguments and pass the data to the
-      // correct screen.
+      // 그런 다음, 인수에서 필요한 데이터를 추출하여, 올바른 화면에 데이터를 전달합니다.
       return MaterialPageRoute(
         builder: (context) {
           return PassArgumentsScreen(
@@ -184,20 +164,17 @@ MaterialApp(
         },
       );
     }
-    // The code only supports
-    // PassArgumentsScreen.routeName right now.
-    // Other values need to be implemented if we
-    // add them. The assertion here will help remind
-    // us of that higher up in the call stack, since
-    // this assertion would otherwise fire somewhere
-    // in the framework.
+    // 이 코드는 지금 PassArgumentsScreen.routeName만 지원합니다. 
+    // 다른 값을 추가하면 구현해야 합니다. 
+    // 여기의 assertion은 호출 스택에서 더 높은 것을 상기시키는 데 도움이 될 것입니다. 
+    // 그렇지 않으면 이 assertion은 프레임워크 어딘가에서 실행될 것이기 때문입니다.
     assert(false, 'Need to implement ${settings.name}');
     return null;
   },
 )
 ```
 
-## Interactive example
+## 대화형 예제 {:#interactive-example}
 
 <?code-excerpt "lib/main.dart"?>
 ```dartpad title="Flutter complete navigation hands-on example in DartPad" run="true"
@@ -215,20 +192,15 @@ class MyApp extends StatelessWidget {
         ExtractArgumentsScreen.routeName: (context) =>
             const ExtractArgumentsScreen(),
       },
-      // Provide a function to handle named routes.
-      // Use this function to identify the named
-      // route being pushed, and create the correct
-      // Screen.
+      // 명명된 경로를 처리하는 함수를 제공합니다. 
+      // 이 함수를 사용하여 푸시되는 명명된 경로를 식별하고, 올바른 화면을 만듭니다.
       onGenerateRoute: (settings) {
-        // If you push the PassArguments route
+        // PassArguments 경로를 푸시하는 경우
         if (settings.name == PassArgumentsScreen.routeName) {
-          // Cast the arguments to the correct
-          // type: ScreenArguments.
+          // 인수를 올바른 타입인 ScreenArguments로 캐스팅합니다.
           final args = settings.arguments as ScreenArguments;
 
-          // Then, extract the required data from
-          // the arguments and pass the data to the
-          // correct screen.
+          // 그런 다음, 인수에서 필요한 데이터를 추출하여, 올바른 화면에 데이터를 전달합니다.
           return MaterialPageRoute(
             builder: (context) {
               return PassArgumentsScreen(
@@ -238,13 +210,10 @@ class MyApp extends StatelessWidget {
             },
           );
         }
-        // The code only supports
-        // PassArgumentsScreen.routeName right now.
-        // Other values need to be implemented if we
-        // add them. The assertion here will help remind
-        // us of that higher up in the call stack, since
-        // this assertion would otherwise fire somewhere
-        // in the framework.
+        // 이 코드는 지금 PassArgumentsScreen.routeName만 지원합니다. 
+        // 다른 값을 추가하면 구현해야 합니다. 
+        // 여기의 assertion은 호출 스택에서 더 높은 것을 상기시키는 데 도움이 될 것입니다. 
+        // 그렇지 않으면 이 assertion은 프레임워크 어딘가에서 실행될 것이기 때문입니다.
         assert(false, 'Need to implement ${settings.name}');
         return null;
       },
@@ -267,15 +236,13 @@ class HomeScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // A button that navigates to a named route.
-            // The named route extracts the arguments
-            // by itself.
+            // 명명된 경로로 이동하는 버튼. 
+            // 명명된 경로는 인수를 스스로 추출합니다.
             ElevatedButton(
               onPressed: () {
-                // When the user taps the button,
-                // navigate to a named route and
-                // provide the arguments as an optional
-                // parameter.
+                // 사용자가 버튼을 탭하면, 
+                // 명명된 경로로 이동하고 
+                // 인수를 선택적 매개변수로서 제공합니다.
                 Navigator.pushNamed(
                   context,
                   ExtractArgumentsScreen.routeName,
@@ -287,15 +254,13 @@ class HomeScreen extends StatelessWidget {
               },
               child: const Text('Navigate to screen that extracts arguments'),
             ),
-            // A button that navigates to a named route.
-            // For this route, extract the arguments in
-            // the onGenerateRoute function and pass them
-            // to the screen.
+            // 명명된 경로로 이동하는 버튼. 
+            // 이 경로의 경우, onGenerateRoute 함수에서 
+            // 인수를 추출하여 화면에 전달합니다.
             ElevatedButton(
               onPressed: () {
-                // When the user taps the button, navigate
-                // to a named route and provide the arguments
-                // as an optional parameter.
+                // 사용자가 버튼을 탭하면, 
+                // 명명된 경로로 이동하고 인수를 선택적 매개변수로 제공합니다.
                 Navigator.pushNamed(
                   context,
                   PassArgumentsScreen.routeName,
@@ -315,8 +280,7 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-// A Widget that extracts the necessary arguments from
-// the ModalRoute.
+// ModalRoute에서 필요한 인수를 추출하는 위젯입니다.
 class ExtractArgumentsScreen extends StatelessWidget {
   const ExtractArgumentsScreen({super.key});
 
@@ -324,8 +288,7 @@ class ExtractArgumentsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Extract the arguments from the current ModalRoute
-    // settings and cast them as ScreenArguments.
+    // 현재 ModalRoute 설정에서 인수를 추출하여, ScreenArguments로 캐스팅합니다.
     final args = ModalRoute.of(context)!.settings.arguments as ScreenArguments;
 
     return Scaffold(
@@ -339,20 +302,17 @@ class ExtractArgumentsScreen extends StatelessWidget {
   }
 }
 
-// A Widget that accepts the necessary arguments via the
-// constructor.
+// 생성자를 통해 필요한 인수를 받는 위젯입니다.
 class PassArgumentsScreen extends StatelessWidget {
   static const routeName = '/passArguments';
 
   final String title;
   final String message;
 
-  // This Widget accepts the arguments as constructor
-  // parameters. It does not extract the arguments from
-  // the ModalRoute.
-  //
-  // The arguments are extracted by the onGenerateRoute
-  // function provided to the MaterialApp widget.
+  // 이 위젯은 생성자 매개변수로 인수를 받습니다. 
+  // ModalRoute에서 인수를 추출하지 않습니다. 
+  // 
+  // 인수는 MaterialApp 위젯에 제공된 onGenerateRoute 함수에 의해 추출됩니다.
   const PassArgumentsScreen({
     super.key,
     required this.title,
@@ -372,9 +332,9 @@ class PassArgumentsScreen extends StatelessWidget {
   }
 }
 
-// You can pass any object to the arguments parameter.
-// In this example, create a class that contains both
-// a customizable title and message.
+// 인수 매개변수에 모든 객체를 전달할 수 있습니다. 
+// 이 예에서, 커스터마이즈 가능한 제목과 메시지를 모두 포함하는 클래스를 만듭니다.
+//
 class ScreenArguments {
   final String title;
   final String message;

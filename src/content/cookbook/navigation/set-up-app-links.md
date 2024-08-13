@@ -1,6 +1,8 @@
 ---
-title: Set up app links for Android
-description: How set up universal links for an iOS application built with Flutter
+# title: Set up app links for Android
+title: Android 용 앱 링크 설정
+# description: How set up universal links for an iOS application built with Flutter
+description: Flutter로 구축된 iOS 애플리케이션에 대한 유니버설 링크를 설정하는 방법
 js:
   - defer: true
     url: /assets/js/inject_dartpad.js
@@ -8,51 +10,45 @@ js:
 
 <?code-excerpt path-base="codelabs/deeplink_cookbook"?>
 
-Deep linking is a mechanism for launching an app with a URI.
-This URI contains scheme, host, and path,
-and opens the app to a specific screen.
+딥 링크는 URI로 앱을 시작하는 메커니즘입니다. 
+이 URI는 스킴(scheme), 호스트(host), 경로(path)를 포함하고, 앱을 특정 화면으로 엽니다.
 
 :::note
-Did you know that Flutter DevTools provides a
-deep link validation tool for Android?
-An iOS version of the tool is in the works.
-Learn more and see a demo at [Validate deep links][].
+Flutter DevTools가 Android용 딥 링크 검증 도구를 제공한다는 걸 알고 계셨나요? 
+이 도구의 iOS 버전이 개발 중입니다. 
+[딥 링크 검증][Validate deep links]에서 자세한 내용을 알아보고 데모를 확인하세요.
 :::
 
 [Validate deep links]: /tools/devtools/deep-links
 
-A _app link_ is a type of deep link that uses
-`http` or `https` and is exclusive to Android devices.
+_앱 링크(app link)_ 는 `http` 또는 `https`를 사용하는 딥 링크 타입이며, Android 기기에만 적용됩니다.
 
-Setting up app links requires one to own a web domain.
-Otherwise, consider using [Firebase Hosting][]
-or [GitHub Pages][] as a temporary solution.
+앱 링크를 설정하려면 웹 도메인을 소유해야 합니다. 
+그렇지 않으면, [Firebase 호스팅][Firebase Hosting] 또는 [GitHub 페이지][GitHub Pages]를 
+임시 솔루션으로 사용하는 것을 고려하세요.
 
-## 1. Customize a Flutter application
+## 1. Flutter 애플리케이션 커스터마이즈 {:#1-customize-a-flutter-application}
 
-Write a Flutter app that can handle an incoming URL.
-This example uses the [go_router][] package to handle the routing.
-The Flutter team maintains the `go_router` package.
-It provides a simple API to handle complex routing scenarios.
+들어오는 URL을 처리할 수 있는 Flutter 앱을 작성하세요. 
+이 예제에서는 [go_router][] 패키지를 사용하여 라우팅을 처리합니다. 
+Flutter 팀은 `go_router` 패키지를 유지 관리합니다. 
+이 패키지는 복잡한 라우팅 시나리오를 처리하기 위한 간단한 API를 제공합니다.
 
-1. To create a new application, type `flutter create <app-name>`:
+1. 새로운 애플리케이션을 만들려면 `flutter create <앱 이름>`을 입력하세요.
 
     ```shell
     $ flutter create deeplink_cookbook
     ```
 
-2. To include `go_router` package in your app,
-   add a dependency for `go_router` to the project:
+2. 앱에 `go_router` 패키지를 포함하려면, 프로젝트에 `go_router`에 대한 종속성을 추가합니다.
 
-    To add the `go_router` package as a dependency,
-    run `flutter pub add`:
+   `go_router` 패키지를 종속성으로 추가하려면, `flutter pub add`를 실행합니다.
 
     ```console
     $ flutter pub add go_router
     ```
 
-3. To handle the routing,
-   create a `GoRouter` object in the `main.dart` file:
+3. 라우팅을 처리하려면, `main.dart` 파일에 `GoRouter` 객체를 만듭니다.
 
     <?code-excerpt "lib/main.dart"?>
     ```dartpad title="Flutter GoRouter hands-on example in DartPad" run="true"
@@ -61,7 +57,7 @@ It provides a simple API to handle complex routing scenarios.
     
     void main() => runApp(MaterialApp.router(routerConfig: router));
     
-    /// This handles '/' and '/details'.
+    /// 여기서는 '/'와 '/details'를 처리합니다.
     final router = GoRouter(
       routes: [
         GoRoute(
@@ -82,14 +78,14 @@ It provides a simple API to handle complex routing scenarios.
     );
     ```
 
-## 2. Modify AndroidManifest.xml
+## 2. AndroidManifest.xml 수정 {:#2-modify-androidmanifest-xml}
 
-1. Open the Flutter project with VS Code or Android Studio. 
-2. Navigate to `android/app/src/main/AndroidManifest.xml` file.
-3. Add the following metadata tag and intent filter inside the
-   `<activity>` tag with `.MainActivity`.
+1. VS Code 또는 Android Studio로 Flutter 프로젝트를 엽니다.
+2. `android/app/src/main/AndroidManifest.xml` 파일로 이동합니다.
+3. `<activity>` 태그 안에 다음 메타데이터 태그(metadata tag)와 
+   인텐트 필터(intent filter)를 `.MainActivity`로 추가합니다.
 
-    Replace `example.com` with your own web domain.
+   `example.com`을 자신의 웹 도메인으로 변경하세요.
 
     ```xml
     <meta-data android:name="flutter_deeplinking_enabled" android:value="true" />
@@ -103,54 +99,45 @@ It provides a simple API to handle complex routing scenarios.
     ```
    
    :::note
-   The metadata tag flutter_deeplinking_enabled opts
-   into Flutter's default deeplink handler.
-   If you are using the third-party plugins,
-   such as [uni_links][], setting this metadata tag will
-   break these plugins. Omit this metadata tag
-   if you prefer to use third-party plugins.
+   메타데이터 태그 flutter_deeplinking_enabled opts는 Flutter의 기본 딥링크 핸들러를 선택합니다. 
+   [uni_links][]와 같은, 타사 플러그인을 사용하는 경우, 이 메타데이터 태그를 설정하면 이러한 플러그인이 중단됩니다. 
+   타사 플러그인을 사용하려는 경우, 이 메타데이터 태그를 생략합니다.
    :::
 
-## 3. Hosting assetlinks.json file
+## 3. assetlinks.json 파일 호스팅 {:#3-hosting-assetlinks-json-file}
 
-Host an `assetlinks.json` file in using a web server
-with a domain that you own. This file tells the
-mobile browser which Android application to open instead
-of the browser. To create the file,
-get the package name of the Flutter app you created in
-the previous step and the sha256 fingerprint of the
-signing key you will be using to build the APK.
+자신이 소유한 도메인이 있는 웹 서버를 사용하여 `assetlinks.json` 파일을 호스팅합니다. 
+이 파일은 모바일 브라우저에 브라우저 대신 어떤 Android 애플리케이션을 열 것인지 알려줍니다. 
+파일을 만들려면, 이전 단계에서 만든 Flutter 앱의 패키지 이름과 APK를 빌드하는 데 사용할 서명 키의 sha256 지문을 가져옵니다.
 
-### Package name
+### 패키지 이름 {:#package-name}
 
-Locate the package name in `AndroidManifest.xml`,
-the `package` property under `<manifest>` tag.
-Package names are usually in the format of `com.example.*`.
+`AndroidManifest.xml`에서 패키지 이름을 찾고, 
+`<manifest>` 태그 아래의 `package` 속성을 찾습니다. 
+패키지 이름은 일반적으로 `com.example.*` 형식입니다.
 
-### sha256 fingerprint
+### sha256 지문 {:#sha256-fingerprint}
 
-The process might differ depending on how the apk is signed.
+apk가 어떻게 서명되었는지에 따라 프로세스가 다를 수 있습니다.
 
-#### Using google play app signing
+#### Google Play 앱 서명 사용 {:#using-google-play-app-signing}
 
-You can find the sha256 fingerprint directly from play
-developer console. Open your app in the play console,
-under **Release> Setup > App Integrity> App Signing tab**:
+sha256 지문은 Play Developer Console에서 직접 찾을 수 있습니다. 
+Play Console에서, **Release> Setup > App Integrity> App Signing tab**에서 앱을 엽니다.
 
 <img src="/assets/images/docs/cookbook/set-up-app-links-pdc-signing-key.png" alt="Screenshot of sha256 fingerprint in play developer console" width="50%" />
 
-#### Using local keystore
+#### 로컬 키스토어 사용 {:#using-local-keystore}
 
-If you are storing the key locally,
-you can generate sha256 using the following command:
+키를 로컬에 저장하는 경우, 다음 명령을 사용하여 sha256을 생성할 수 있습니다.
 
 ```console
 keytool -list -v -keystore <path-to-keystore>
 ```
 
-### assetlinks.json
+### assetlinks.json {:#assetlinks-json}
 
-The hosted file should look similar to this:
+호스팅된 파일은 다음과 유사해야 합니다.
 
 ```json
 [{
@@ -164,31 +151,30 @@ The hosted file should look similar to this:
 }]
 ```
 
-1. Set the `package_name` value to your Android application ID.
+1. `package_name` 값을 Android 애플리케이션 ID로 설정합니다.
 
-2. Set sha256_cert_fingerprints to the value you got
-   from the previous step.
+2. sha256_cert_fingerprints를 이전 단계에서 얻은 값으로 설정합니다.
 
-3. Host the file at a URL that resembles the following:
+3. 다음과 유사한 URL에서 파일을 호스팅합니다.
    `<webdomain>/.well-known/assetlinks.json`
 
-4. Verify that your browser can access this file.
+4. 브라우저가 이 파일에 액세스할 수 있는지 확인합니다.
 
 :::note
-If you have multiple flavors, you can have many sha256_cert_fingerprint 
-values in thesha256_cert_fingerprints field. 
-Just add it to the sha256_cert_fingerprints list
+여러 가지 플레이버가 있는 경우, 
+sha256_cert_fingerprints 필드에 여러 sha256_cert_fingerprint 값을 가질 수 있습니다. 
+sha256_cert_fingerprints 리스트에 추가하기만 하면 됩니다.
 :::
 
-## Testing
+## 테스트 {:#testing}
 
-You can use a real device or the Emulator to test an app link,
-but first make sure you have executed `flutter run` at least once on
-the devices. This ensures that the Flutter application is installed.
+실제 기기나 에뮬레이터를 사용하여 앱 링크를 테스트할 수 있지만, 
+먼저 기기에서 `flutter run`을 최소한 한 번 실행했는지 확인하세요. 
+이렇게 하면 Flutter 애플리케이션이 설치되었는지 확인할 수 있습니다.
 
 <img src="/assets/images/docs/cookbook/set-up-app-links-emulator-installed.png" alt="Emulator screenshot" width="50%" />
 
-To test **only** the app setup, use the adb command:
+**앱 설정만** 테스트하려면, adb 명령을 사용하세요.
 
 ```console
 adb shell 'am start -a android.intent.action.VIEW \
@@ -198,24 +184,19 @@ adb shell 'am start -a android.intent.action.VIEW \
 ```
 
 :::note
-This doesn't test whether the web files are
-hosted correctly,
-the command launches the app even
-if web files are not presented.
+이 명령은 웹 파일이 올바르게 호스팅되는지 여부를 테스트하지 않으며, 웹 파일이 표시되지 않더라도 앱을 실행합니다.
 :::
 
-To test **both** web and app setup, you must click a link
-directly through web browser or another app.
-One way is to create a Google Doc, add the link, and tap on it.
+**웹과 앱 설정을 모두** 테스트하려면, 웹 브라우저나 다른 앱을 통해 직접 링크를 클릭해야 합니다. 
+한 가지 방법은 Google Doc을 만들고, 링크를 추가한 다음 탭하는 것입니다.
 
-If everything is set up correctly, the Flutter application
-launches and displays the details screen:
+모든 것이 올바르게 설정되면, Flutter 애플리케이션이 시작되고 세부 정보 화면이 표시됩니다.
 
 <img src="/assets/images/docs/cookbook/set-up-app-links-emulator-deeplinked.png" alt="Deeplinked Emulator screenshot" width="50%" />
 
-## Appendix
+## 부록 {:#appendix}
 
-Source code: [deeplink_cookbook][]
+소스코드: [deeplink_cookbook][]
 
 [deeplink_cookbook]: {{site.github}}/flutter/codelabs/tree/main/deeplink_cookbook
 [Firebase Hosting]: {{site.firebase}}/docs/hosting

@@ -34,7 +34,7 @@ js:
 `ListView`로 생각할 수 있습니다.
 
 `CustomScrollView`에 제공된 스크롤 가능한 리스트와 위젯을 _슬리버(slivers)_ 라고 합니다. 
-`SliverList`, `SliverGrid`, `SliverAppBar` 등 여러 유형의 슬리버(slivers)가 있습니다. 
+`SliverList`, `SliverGrid`, `SliverAppBar` 등 여러 타입의 슬리버(slivers)가 있습니다. 
 사실, `ListView`와 `GridView` 위젯은 `SliverList`와 `SliverGrid` 위젯을 사용하여 스크롤을 구현합니다.
 
 이 예에서는, `SliverAppBar`와 `SliverList`를 포함하는 `CustomScrollView`를 만듭니다. 

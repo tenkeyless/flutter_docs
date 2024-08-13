@@ -84,7 +84,7 @@ description: >
 - [이름이 있는 routes로 이동](/cookbook/navigation/named-routes)
 - [이름이 있는 routes에 인수 전달](/cookbook/navigation/navigate-with-arguments)
 - [Android 용 앱 링크 설정](/cookbook/navigation/set-up-app-links)
-- [iOS 용 universal 링크 설정](/cookbook/navigation/set-up-universal-links)
+- [iOS 용 유니버설 링크 설정](/cookbook/navigation/set-up-universal-links)
 - [화면으로부터 ​​데이터 반환](/cookbook/navigation/returning-data)
 - [새 화면으로 데이터 보내기](/cookbook/navigation/passing-data)
 

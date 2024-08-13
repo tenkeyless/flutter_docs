@@ -1,6 +1,8 @@
 ---
-title: Navigate with named routes
-description: How to implement named routes for navigating between screens.
+# title: Navigate with named routes
+title: 이름이 있는 경로로 이동
+# description: How to implement named routes for navigating between screens.
+description: 화면 간 이동을 위해 명명된 경로를 구현하는 방법.
 js:
   - defer: true
     url: /assets/js/inject_dartpad.js
@@ -9,38 +11,32 @@ js:
 <?code-excerpt path-base="cookbook/navigation/named_routes"?>
 
 :::note
-Named routes are no longer recommended for most
-applications. For more information, see
-[Limitations][] in the [navigation overview][] page.
+명명된 경로는 더 이상 대부분의 애플리케이션에 권장되지 않습니다. 
+자세한 내용은 [네비게이션 개요][navigation overview] 페이지의 [제한 사항][Limitations]을 참조하세요.
 :::
 
 [Limitations]: /ui/navigation#limitations
 [navigation overview]: /ui/navigation
 
-In the [Navigate to a new screen and back][] recipe,
-you learned how to navigate to a new screen by creating a new route and
-pushing it to the [`Navigator`][].
+[새 화면으로 이동하고 돌아가기][Navigate to a new screen and back] 레시피에서, 
+새 경로를 만들고 [`Navigator`][]에 푸시하여 새 화면으로 이동하는 방법을 알아보았습니다.
 
-However, if you need to navigate to the same screen in many parts
-of your app, this approach can result in code duplication.
-The solution is to define a _named route_,
-and use the named route for navigation.
+그러나, 앱의 여러 부분에서 동일한 화면으로 이동해야 하는 경우, 이 방법을 사용하면 코드 중복이 발생할 수 있습니다. 
+해결책은 _명명된 경로(named route)_ 를 정의하고, 명명된 경로를 탐색에 사용하는 것입니다.
 
-To work with named routes,
-use the [`Navigator.pushNamed()`][] function.
-This example replicates the functionality from the original recipe,
-demonstrating how to use named routes using the following steps:
+명명된 경로로 작업하려면, [`Navigator.pushNamed()`][] 함수를 사용합니다. 
+이 예제는 원래 레시피의 기능을 복제하여, 다음 단계를 사용하여 명명된 경로를 사용하는 방법을 보여줍니다.
 
-  1. Create two screens.
-  2. Define the routes.
-  3. Navigate to the second screen using `Navigator.pushNamed()`.
-  4. Return to the first screen using `Navigator.pop()`.
+  1. 두 개의 화면을 만듭니다.
+  2. 경로를 정의합니다.
+  3. `Navigator.pushNamed()`를 사용하여 두 번째 화면으로 이동합니다.
+  4. `Navigator.pop()`를 사용하여 첫 번째 화면으로 돌아갑니다.
 
-## 1. Create two screens
+## 1. 두 개의 화면 만들기 {:#1-create-two-screens}
 
-First, create two screens to work with. The first screen contains a
-button that navigates to the second screen. The second screen contains a
-button that navigates back to the first.
+먼저, 작업할 두 개의 화면을 만듭니다. 
+첫 번째 화면에는 두 번째 화면으로 이동하는 버튼이 있습니다. 
+두 번째 화면에는 첫 번째 화면으로 돌아가는 버튼이 있습니다.
 
 <?code-excerpt "lib/main_original.dart"?>
 ```dart
@@ -58,7 +54,7 @@ class FirstScreen extends StatelessWidget {
       body: Center(
         child: ElevatedButton(
           onPressed: () {
-            // Navigate to the second screen when tapped.
+            // 탭하면 두 번째 화면으로 이동합니다.
           },
           child: const Text('Launch screen'),
         ),
@@ -79,7 +75,7 @@ class SecondScreen extends StatelessWidget {
       body: Center(
         child: ElevatedButton(
           onPressed: () {
-            // Navigate back to first screen when tapped.
+            // 탭하면 첫 번째 화면으로 돌아갑니다.
           },
           child: const Text('Go back!'),
         ),
@@ -89,15 +85,12 @@ class SecondScreen extends StatelessWidget {
 }
 ```
 
-## 2. Define the routes
+## 2. 경로 정의 {:#2-define-the-routes}
 
-Next, define the routes by providing additional properties
-to the [`MaterialApp`][] constructor: the `initialRoute`
-and the `routes` themselves.
+다음으로, [`MaterialApp`][] 생성자에 추가 속성인 `initialRoute`와 `routes` 자체를 제공하여 경로를 정의합니다.
 
-The `initialRoute` property defines which route the app should start with.
-The `routes` property defines the available named routes and the widgets
-to build when navigating to those routes.
+`initialRoute` 속성은 앱이 시작해야 하는 경로를 정의합니다. 
+`routes` 속성은 사용 가능한 명명된 경로와 해당 경로로 이동할 때 빌드할 위젯을 정의합니다.
 
 {% comment %}
 RegEx removes the trailing comma
@@ -106,63 +99,58 @@ RegEx removes the trailing comma
 ```dart
 MaterialApp(
   title: 'Named Routes Demo',
-  // Start the app with the "/" named route. In this case, the app starts
-  // on the FirstScreen widget.
+  // "/"라는 이름의 경로로 앱을 시작합니다. 
+  // 이 경우, 앱은 FirstScreen 위젯에서 시작합니다.
   initialRoute: '/',
   routes: {
-    // When navigating to the "/" route, build the FirstScreen widget.
+    // "/" 경로로 이동할 때, FirstScreen 위젯을 빌드합니다.
     '/': (context) => const FirstScreen(),
-    // When navigating to the "/second" route, build the SecondScreen widget.
+    // "/second" 경로로 이동할 때, SecondScreen 위젯을 빌드합니다.
     '/second': (context) => const SecondScreen(),
   },
 )
 ```
 
 :::warning
-When using `initialRoute`, **don't** define a `home` property.
+`initialRoute`를 사용할 때, `home` 속성을 정의하지 마세요.
 :::
 
-## 3. Navigate to the second screen
+## 3. 두 번째 화면으로 이동 {:#3-navigate-to-the-second-screen}
 
-With the widgets and routes in place, trigger navigation by using the
-[`Navigator.pushNamed()`][] method.
-This tells Flutter to build the widget defined in the
-`routes` table and launch the screen.
+위젯과 경로가 제자리에 있으면, [`Navigator.pushNamed()`][] 메서드를 사용하여 탐색을 트리거합니다. 
+이렇게 하면, Flutter가 `routes` 테이블에 정의된 위젯을 빌드하고 화면을 시작하도록 합니다.
 
-In the `build()` method of the `FirstScreen` widget, update the `onPressed()`
-callback:
+`FirstScreen` 위젯의 `build()` 메서드에서, `onPressed()` 콜백을 업데이트합니다.
 
 {% comment %}
 RegEx removes the trailing comma
 {% endcomment %}
 <?code-excerpt "lib/main.dart (PushNamed)" replace="/,$//g"?>
 ```dart
-// Within the `FirstScreen` widget
+// `FirstScreen` 위젯 내에서
 onPressed: () {
-  // Navigate to the second screen using a named route.
+  // 명명된 경로를 사용하여 두 번째 화면으로 이동합니다.
   Navigator.pushNamed(context, '/second');
 }
 ```
 
-## 4. Return to the first screen
+## 4. 첫 번째 화면으로 돌아가기 {:#4-return-to-the-first-screen}
 
-To navigate back to the first screen, use the
-[`Navigator.pop()`][] function.
+첫 번째 화면으로 돌아가려면, [`Navigator.pop()`][] 함수를 사용하세요.
 
 {% comment %}
 RegEx removes the trailing comma
 {% endcomment %}
 <?code-excerpt "lib/main.dart (Pop)" replace="/,$//g"?>
 ```dart
-// Within the SecondScreen widget
+// SecondScreen 위젯 내부
 onPressed: () {
-  // Navigate back to the first screen by popping the current route
-  // off the stack.
+  // 스택에서 현재 경로를 pop하여, 첫 번째 화면으로 돌아갑니다.
   Navigator.pop(context);
 }
 ```
 
-## Interactive example
+## 대화형 예제 {:#interactive-example}
 
 <?code-excerpt "lib/main.dart"?>
 ```dartpad title="Flutter Named Routes hands-on example in DartPad" run="true"
@@ -172,13 +160,13 @@ void main() {
   runApp(
     MaterialApp(
       title: 'Named Routes Demo',
-      // Start the app with the "/" named route. In this case, the app starts
-      // on the FirstScreen widget.
+      // "/"라는 이름의 경로로 앱을 시작합니다. 
+      // 이 경우, 앱은 FirstScreen 위젯에서 시작합니다.
       initialRoute: '/',
       routes: {
-        // When navigating to the "/" route, build the FirstScreen widget.
+        // "/" 경로로 이동할 때, FirstScreen 위젯을 빌드합니다.
         '/': (context) => const FirstScreen(),
-        // When navigating to the "/second" route, build the SecondScreen widget.
+        // "/second" 경로로 이동할 때, SecondScreen 위젯을 빌드합니다.
         '/second': (context) => const SecondScreen(),
       },
     ),
@@ -196,9 +184,9 @@ class FirstScreen extends StatelessWidget {
       ),
       body: Center(
         child: ElevatedButton(
-          // Within the `FirstScreen` widget
+          // `FirstScreen` 위젯 내에서
           onPressed: () {
-            // Navigate to the second screen using a named route.
+            // 명명된 경로를 사용하여 두 번째 화면으로 이동합니다.
             Navigator.pushNamed(context, '/second');
           },
           child: const Text('Launch screen'),
@@ -219,10 +207,9 @@ class SecondScreen extends StatelessWidget {
       ),
       body: Center(
         child: ElevatedButton(
-          // Within the SecondScreen widget
+          // SecondScreen 위젯 내부
           onPressed: () {
-            // Navigate back to the first screen by popping the current route
-            // off the stack.
+            // 스택에서 현재 경로를 pop하여, 첫 번째 화면으로 돌아갑니다.
             Navigator.pop(context);
           },
           child: const Text('Go back!'),
