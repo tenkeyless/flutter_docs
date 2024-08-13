@@ -56,7 +56,7 @@ Future<http.Response> fetchPhotos(http.Client client) async {
 ## 3. JSON을 구문 분석하여 사진 리스트로 변환하기 {:#3-parse-and-convert-the-json-into-a-list-of-photos}
 
 다음으로, [인터넷에서 데이터 가져오기][Fetch data from the internet] 레시피의 안내에 따라, 
-`http.Response`를 Dart 객체 목록으로 변환합니다. 이렇게 하면 데이터 작업이 더 쉬워집니다.
+`http.Response`를 Dart 객체 리스트로 변환합니다. 이렇게 하면 데이터 작업이 더 쉬워집니다.
 
 ### `Photo` 클래스 생성 {:#create-a-photo-class}
 

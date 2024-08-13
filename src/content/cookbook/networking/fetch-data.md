@@ -8,7 +8,7 @@ description: http 패키지를 사용하여 인터넷에서 데이터를 가져�
 <?code-excerpt path-base="cookbook/networking/fetch_data/"?>
 
 인터넷에서 데이터를 가져오는 것은 대부분 앱에 필요합니다. 
-다행히도, Dart와 Flutter는 이러한 유형의 작업을 위해, `http` 패키지와 같은, 도구를 제공합니다.
+다행히도, Dart와 Flutter는 이러한 타입의 작업을 위해, `http` 패키지와 같은, 도구를 제공합니다.
 
 :::note
 HTTP 요청을 하기 위해 `dart:io` 또는 `dart:html`을 직접 사용하는 것은 피해야 합니다. 
