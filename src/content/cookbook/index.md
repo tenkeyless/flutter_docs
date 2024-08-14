@@ -120,7 +120,7 @@ description: >
 - [성능 프로파일링](/cookbook/testing/integration/profiling)
 
 ### 유닛 {:#unit}
-- [단위 테스트 소개](/cookbook/testing/unit/introduction)
+- [유닛 테스트 소개](/cookbook/testing/unit/introduction)
 - [Mockito를 사용하여 종속성 Mock](/cookbook/testing/unit/mocking)
 
 

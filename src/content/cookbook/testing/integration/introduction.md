@@ -9,7 +9,7 @@ short-title: 소개
 
 <?code-excerpt path-base="cookbook/testing/integration/introduction/"?>
 
-단위 테스트와 위젯 테스트는 개별 클래스, 함수 또는 위젯을 검증합니다. 
+유닛 테스트와 위젯 테스트는 개별 클래스, 함수 또는 위젯을 검증합니다. 
 개별 조각이 전체적으로 어떻게 함께 작동하는지 검증하거나, 실제 장치에서 실행되는 앱의 성능을 포착하지 않습니다. 
 이러한 작업을 수행하려면, *통합 테스트(integration tests)* 를 사용하세요.
 

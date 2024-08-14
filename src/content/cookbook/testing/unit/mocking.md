@@ -1,75 +1,70 @@
 ---
-title: Mock dependencies using Mockito
+# title: Mock dependencies using Mockito
+title: Mockito를 사용하여 종속성 Mock
+# description: >
+#   Use the Mockito package to mimic the behavior of services for testing.
 description: >
-  Use the Mockito package to mimic the behavior of services for testing.
+  테스트를 위해 서비스의 동작을 모방(mimic)하려면 Mockito 패키지를 사용합니다.
+# short-title: Mocking
 short-title: Mocking
 ---
 
 <?code-excerpt path-base="cookbook/testing/unit/mocking"?>
 
-Sometimes, unit tests might depend on classes that fetch data from live
-web services or databases. This is inconvenient for a few reasons:
+때때로, 유닛 테스트는 라이브 웹 서비스나 데이터베이스에서 데이터를 가져오는 클래스에 의존할 수 있습니다. 
+이는 몇 가지 이유로 불편합니다.
 
-  * Calling live services or databases slows down test execution.
-  * A passing test might start failing if a web service or database returns
-    unexpected results. This is known as a "flaky test."
-  * It is difficult to test all possible success and failure scenarios
-    by using a live web service or database.
+  * 라이브 서비스나 데이터베이스를 호출하면 테스트 실행이 느려집니다.
+  * 웹 서비스나 데이터베이스가 예상치 못한 결과를 반환하면, 통과 테스트가 실패하기 시작할 수 있습니다. 
+    이를 "불안정한 테스트(flaky test)"라고 합니다.
+  * 라이브 웹 서비스나 데이터베이스를 사용하여, 모든 가능한 성공 및 실패 시나리오를 테스트하는 것은 어렵습니다.
 
-Therefore, rather than relying on a live web service or database,
-you can "mock" these dependencies. Mocks allow emulating a live
-web service or database and return specific results depending
-on the situation.
+따라서, 라이브 웹 서비스나 데이터베이스에 의존하는 대신 이러한 종속성을 "mock(모의)"할 수 있습니다. 
+mock을 사용하면 라이브 웹 서비스나 데이터베이스를 에뮬레이션하고, 상황에 따라 특정 결과를 반환할 수 있습니다.
 
-Generally speaking, you can mock dependencies by creating an alternative
-implementation of a class. Write these alternative implementations by
-hand or make use of the [Mockito package][] as a shortcut.
+일반적으로, 클래스의 대체 구현을 만들어 종속성을 mock 할 수 있습니다. 
+이러한 대체 구현을 직접 작성하거나, [Mockito 패키지][Mockito package]를 단축키로 사용하세요.
 
-This recipe demonstrates the basics of mocking with the
-Mockito package using the following steps:
+이 레시피는 다음 단계를 사용하여 Mockito 패키지로 mock 하는 기본 사항을 보여줍니다.
 
-  1. Add the package dependencies.
-  2. Create a function to test.
-  3. Create a test file with a mock `http.Client`.
-  4. Write a test for each condition.
-  5. Run the tests.
+  1. 패키지 종속성을 추가합니다.
+  2. 테스트할 함수를 만듭니다.
+  3. mock `http.Client`를 사용하여 테스트 파일을 만듭니다.
+  4. 각 조건에 대한 테스트를 작성합니다.
+  5. 테스트를 실행합니다.
 
-For more information, see the [Mockito package][] documentation.
+자세한 내용은 [Mockito 패키지][Mockito package] 문서를 참조하세요.
 
-## 1. Add the package dependencies
+## 1. 패키지 종속성 추가 {:#1-add-the-package-dependencies}
 
-To use the `mockito` package, add it to the
-`pubspec.yaml` file along with the `flutter_test` dependency in the
-`dev_dependencies` section.
+`mockito` 패키지를 사용하려면, 
+`dev_dependencies` 섹션에 `flutter_test` 종속성과 함께 `pubspec.yaml` 파일에 추가하세요.
 
-This example also uses the `http` package,
-so define that dependency in the `dependencies` section.
+이 예제에서는 `http` 패키지도 사용하므로, `dependencies` 섹션에서 해당 종속성을 정의하세요.
 
-`mockito: 5.0.0` supports Dart's null safety thanks to code generation.
-To run the required code generation, add the `build_runner` dependency
-in the `dev_dependencies` section.
+`mockito: 5.0.0`은 코드 생성 덕분에 Dart의 null 안전성을 지원합니다. 
+필요한 코드 생성을 실행하려면, `dev_dependencies` 섹션에 `build_runner` 종속성을 추가하세요.
 
-To add the dependencies, run `flutter pub add`:
+종속성을 추가하려면, `flutter pub add`를 실행하세요.
 
 ```console
 $ flutter pub add http dev:mockito dev:build_runner
 ```
 
-## 2. Create a function to test
+## 2. 테스트할 함수 만들기 {:#2-create-a-function-to-test}
 
-In this example, unit test the `fetchAlbum` function from the
-[Fetch data from the internet][] recipe.
-To test this function, make two changes:
+이 예에서는, [인터넷에서 데이터 가져오기][Fetch data from the internet] 레시피의 
+`fetchAlbum` 함수를 유닛 테스트합니다. 
+이 함수를 테스트하려면, 두 가지 변경을 합니다.
 
-  1. Provide an `http.Client` to the function. This allows providing the
-     correct `http.Client` depending on the situation.
-     For Flutter and server-side projects, provide an `http.IOClient`.
-     For Browser apps, provide an `http.BrowserClient`.
-     For tests, provide a mock `http.Client`.
-  2. Use the provided `client` to fetch data from the internet,
-     rather than the static `http.get()` method, which is difficult to mock.
+  1. 함수에 `http.Client`를 제공합니다. 
+     * 이렇게 하면 상황에 따라 올바른 `http.Client`를 제공할 수 있습니다. 
+       * Flutter 및 서버 사이드 프로젝트의 경우, `http.IOClient`를 제공합니다. 
+       * 브라우저 앱의 경우, `http.BrowserClient`를 제공합니다. 
+       * 테스트의 경우, mock `http.Client`를 제공합니다.
+  2. mock하기 어려운 static `http.get()` 메서드 대신, 제공된 `client`를 사용하여 인터넷에서 데이터를 가져옵니다.
 
-The function should now look like this:
+이제 함수는 다음과 같아야 합니다.
 
 <?code-excerpt "lib/main.dart (fetchAlbum)"?>
 ```dart
@@ -78,37 +73,34 @@ Future<Album> fetchAlbum(http.Client client) async {
       .get(Uri.parse('https://jsonplaceholder.typicode.com/albums/1'));
 
   if (response.statusCode == 200) {
-    // If the server did return a 200 OK response,
-    // then parse the JSON.
+    // 서버가 200 OK 응답을 반환한 경우, JSON을 구문 분석합니다.
     return Album.fromJson(jsonDecode(response.body) as Map<String, dynamic>);
   } else {
-    // If the server did not return a 200 OK response,
-    // then throw an exception.
+    // 서버가 200 OK 응답을 반환하지 않으면, 예외를 발생시킵니다.
     throw Exception('Failed to load album');
   }
 }
 ```
 
-In your app code, you can provide an `http.Client` to the `fetchAlbum` method 
-directly with `fetchAlbum(http.Client())`. `http.Client()` creates a default
-`http.Client`.
+앱 코드에서, `fetchAlbum(http.Client())`를 사용하여 
+`fetchAlbum` 메서드에 `http.Client`를 직접 제공할 수 있습니다. 
+`http.Client()`는 기본 `http.Client`를 생성합니다.
 
-## 3. Create a test file with a mock `http.Client`
+## 3. mock `http.Client`를 사용하여 테스트 파일 만들기 {:#3-create-a-test-file-with-a-mock-http-client}
 
-Next, create a test file.
+다음으로, 테스트 파일을 만듭니다.
 
-Following the advice in the [Introduction to unit testing][] recipe,
-create a file called `fetch_album_test.dart` in the root `test` folder.
+[유닛 테스트 소개][Introduction to unit testing] 레시피의 조언을 따라, 
+루트 `test` 폴더에 `fetch_album_test.dart`라는 파일을 만듭니다.
 
-Add the annotation `@GenerateMocks([http.Client])` to the main
-function to generate a `MockClient` class with `mockito`.
+`mockito`를 사용하여 `MockClient` 클래스를 생성하기 위해, 
+메인 함수에 어노테이션 `@GenerateMocks([http.Client])`를 추가합니다.
 
-The generated `MockClient` class implements the `http.Client` class.
-This allows you to pass the `MockClient` to the `fetchAlbum` function,
-and return different http responses in each test.
+생성된 `MockClient` 클래스는 `http.Client` 클래스를 구현합니다. 
+이를 통해 `MockClient`를 `fetchAlbum` 함수에 전달하고, 각 테스트에서 다른 http 응답을 반환할 수 있습니다.
 
-The generated mocks will be located in `fetch_album_test.mocks.dart`.
-Import this file to use them.
+생성된 mock은 `fetch_album_test.mocks.dart`에 위치합니다. 
+이 파일을 import해서 사용합니다.
 
 <?code-excerpt "test/fetch_album_test.dart (mockClient)" plaster="none"?>
 ```dart
@@ -116,31 +108,29 @@ import 'package:http/http.dart' as http;
 import 'package:mocking/main.dart';
 import 'package:mockito/annotations.dart';
 
-// Generate a MockClient using the Mockito package.
-// Create new instances of this class in each test.
+// Mockito 패키지를 사용하여 MockClient를 생성합니다.
+// 각 테스트에서 이 클래스의 새 인스턴스를 만듭니다.
 @GenerateMocks([http.Client])
 void main() {
 }
 ```
 
-Next, generate the mocks running the following command:
+다음으로, 다음 명령을 실행하여 mock을 생성합니다.
 
 ```console
 $ dart run build_runner build
 ```
 
-## 4. Write a test for each condition
+## 4. 각 조건에 대한 테스트 작성 {:#4-write-a-test-for-each-condition}
 
-The `fetchAlbum()` function does one of two things:
+`fetchAlbum()` 함수는 두 가지 중 하나를 수행합니다.
 
-  1. Returns an `Album` if the http call succeeds
-  2. Throws an `Exception` if the http call fails
+  1. http 호출이 성공하면 `Album`을 반환합니다.
+  2. http 호출이 실패하면 `Exception`을 throw합니다.
 
-Therefore, you want to test these two conditions.
-Use the `MockClient` class to return an "Ok" response
-for the success test, and an error response for the unsuccessful test.
-Test these conditions using the `when()` function provided by
-Mockito:
+따라서, 이 두 가지 조건을 테스트하고 싶습니다. 
+`MockClient` 클래스를 사용하여 성공 테스트에 대한 "Ok" 응답과 실패 테스트에 대한 오류 응답을 반환합니다. 
+Mockito에서 제공하는 `when()` 함수를 사용하여 이러한 조건을 테스트합니다.
 
 <?code-excerpt "test/fetch_album_test.dart"?>
 ```dart
@@ -152,16 +142,15 @@ import 'package:mockito/mockito.dart';
 
 import 'fetch_album_test.mocks.dart';
 
-// Generate a MockClient using the Mockito package.
-// Create new instances of this class in each test.
+// Mockito 패키지를 사용하여 MockClient를 생성합니다.
+// 각 테스트에서 이 클래스의 새 인스턴스를 만듭니다.
 @GenerateMocks([http.Client])
 void main() {
   group('fetchAlbum', () {
     test('returns an Album if the http call completes successfully', () async {
       final client = MockClient();
 
-      // Use Mockito to return a successful response when it calls the
-      // provided http.Client.
+      // 제공된 http.Client를 호출할 때, 성공적인 응답을 반환하려면 Mockito를 사용합니다.
       when(client
               .get(Uri.parse('https://jsonplaceholder.typicode.com/albums/1')))
           .thenAnswer((_) async =>
@@ -173,8 +162,7 @@ void main() {
     test('throws an exception if the http call completes with an error', () {
       final client = MockClient();
 
-      // Use Mockito to return an unsuccessful response when it calls the
-      // provided http.Client.
+      // 제공된 http.Client를 호출할 때, 실패한 응답을 반환하려면 Mockito를 사용합니다.
       when(client
               .get(Uri.parse('https://jsonplaceholder.typicode.com/albums/1')))
           .thenAnswer((_) async => http.Response('Not Found', 404));
@@ -185,19 +173,18 @@ void main() {
 }
 ```
 
-## 5. Run the tests
+## 5. 테스트 실행 {:#5-run-the-tests}
 
-Now that you have a `fetchAlbum()` function with tests in place,
-run the tests.
+이제 테스트를 포함한 `fetchAlbum()` 함수가 준비되었으므로, 테스트를 실행합니다.
 
 ```console
 $ flutter test test/fetch_album_test.dart
 ```
 
-You can also run tests inside your favorite editor by following the
-instructions in the [Introduction to unit testing][] recipe.
+[유닛 테스트 소개][Introduction to unit testing] 레시피의 지침에 따라, 
+원하는 편집기 내에서 테스트를 실행할 수도 있습니다.
 
-## Complete example
+## 완성된 예제 {:#complete-example}
 
 ##### lib/main.dart
 
@@ -214,12 +201,10 @@ Future<Album> fetchAlbum(http.Client client) async {
       .get(Uri.parse('https://jsonplaceholder.typicode.com/albums/1'));
 
   if (response.statusCode == 200) {
-    // If the server did return a 200 OK response,
-    // then parse the JSON.
+    // 서버가 200 OK 응답을 반환한 경우, JSON을 구문 분석합니다.
     return Album.fromJson(jsonDecode(response.body) as Map<String, dynamic>);
   } else {
-    // If the server did not return a 200 OK response,
-    // then throw an exception.
+    // 서버가 200 OK 응답을 반환하지 않으면, 예외를 발생시킵니다.
     throw Exception('Failed to load album');
   }
 }
@@ -279,7 +264,7 @@ class _MyAppState extends State<MyApp> {
                 return Text('${snapshot.error}');
               }
 
-              // By default, show a loading spinner.
+              // 기본적으로, 로딩 스피너가 표시됩니다.
               return const CircularProgressIndicator();
             },
           ),
@@ -302,16 +287,15 @@ import 'package:mockito/mockito.dart';
 
 import 'fetch_album_test.mocks.dart';
 
-// Generate a MockClient using the Mockito package.
-// Create new instances of this class in each test.
+// Mockito 패키지를 사용하여 MockClient를 생성합니다.
+// 각 테스트에서 이 클래스의 새 인스턴스를 만듭니다.
 @GenerateMocks([http.Client])
 void main() {
   group('fetchAlbum', () {
     test('returns an Album if the http call completes successfully', () async {
       final client = MockClient();
 
-      // Use Mockito to return a successful response when it calls the
-      // provided http.Client.
+      // 제공된 http.Client를 호출할 때, 성공적인 응답을 반환하려면 Mockito를 사용합니다.
       when(client
               .get(Uri.parse('https://jsonplaceholder.typicode.com/albums/1')))
           .thenAnswer((_) async =>
@@ -323,8 +307,7 @@ void main() {
     test('throws an exception if the http call completes with an error', () {
       final client = MockClient();
 
-      // Use Mockito to return an unsuccessful response when it calls the
-      // provided http.Client.
+      // 제공된 http.Client를 호출할 때, 실패한 응답을 반환하려면 Mockito를 사용합니다.
       when(client
               .get(Uri.parse('https://jsonplaceholder.typicode.com/albums/1')))
           .thenAnswer((_) async => http.Response('Not Found', 404));
@@ -335,13 +318,11 @@ void main() {
 }
 ```
 
-## Summary
+## 요약 {:#summary}
 
-In this example, you've learned how to use Mockito to test functions or classes
-that depend on web services or databases. This is only a short introduction to
-the Mockito library and the concept of mocking. For more information,
-see the documentation provided by the [Mockito package][].
-
+이 예제에서는, Mockito를 사용하여 웹 서비스나 데이터베이스에 의존하는 함수나 클래스를 테스트하는 방법을 배웠습니다. 
+이는 Mockito 라이브러리와 mock 개념에 대한 간단한 소개일 뿐입니다. 
+자세한 내용은 [Mockito 패키지][Mockito package]에서 제공하는 문서를 참조하세요.
 
 [Fetch data from the internet]: /cookbook/networking/fetch-data
 [Introduction to unit testing]: /cookbook/testing/unit/introduction
