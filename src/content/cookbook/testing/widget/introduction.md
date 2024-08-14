@@ -1,48 +1,47 @@
 ---
-title: An introduction to widget testing
-description: Learn more about widget testing in Flutter.
-short-title: Introduction
+# title: An introduction to widget testing
+title: 위젯 테스트 소개
+# description: Learn more about widget testing in Flutter.
+description: Flutter에서 위젯 테스트에 대해 자세히 알아보세요.
+# short-title: Introduction
+short-title: 소개
 ---
 
 <?code-excerpt path-base="cookbook/testing/widget/introduction/"?>
 
 {% assign api = site.api | append: '/flutter' -%}
 
-In the [introduction to unit testing][] recipe,
-you learned how to test Dart classes using the `test` package.
-To test widget classes, you need a few additional tools provided by the
-[`flutter_test`][] package, which ships with the Flutter SDK.
+[유닛 테스트 소개][introduction to unit testing] 레시피에서 `test` 패키지를 사용하여 
+Dart 클래스를 테스트하는 방법을 알아보았습니다. 
+위젯 클래스를 테스트하려면, Flutter SDK와 함께 제공되는, 
+[`flutter_test`][] 패키지에서 제공하는 몇 가지 추가 도구가 필요합니다.
 
-The `flutter_test` package provides the following tools for
-testing widgets:
+`flutter_test` 패키지는 위젯 테스트를 위한 다음 도구를 제공합니다.
 
-  * The [`WidgetTester`][] allows building and interacting
-    with widgets in a test environment.
-  * The [`testWidgets()`][] function automatically
-    creates a new `WidgetTester` for each test case,
-    and is used in place of the normal `test()` function.
-  * The [`Finder`][] classes allow searching for widgets
-    in the test environment.
-  * Widget-specific [`Matcher`][] constants help verify
-   whether a `Finder` locates a widget or
-    multiple widgets in the test environment.
+  * [`WidgetTester`][]를 사용하면, 
+    * 테스트 환경에서 위젯을 빌드하고 위젯과 상호 작용할 수 있습니다.
+  * [`testWidgets()`][] 함수는 
+    * 각 테스트 케이스에 대해 자동으로 새 `WidgetTester`를 생성하며, 
+    * 일반적인 `test()` 함수 대신 사용됩니다.
+  * [`Finder`][] 클래스를 사용하면, 
+    * 테스트 환경에서 위젯을 검색할 수 있습니다.
+  * 위젯별 [`Matcher`][] 상수는 
+    * `Finder`가 테스트 환경에서 위젯을 하나 또는 여러 개 찾는지 확인하는 데 도움이 됩니다.
 
-If this sounds overwhelming, don't worry. Learn how all of these pieces fit
-together throughout this recipe, which uses the following steps:
+이것이 어렵게 들리더라도 걱정하지 마세요. 
+이 레시피에서 이러한 모든 부분이 어떻게 함께 맞춰지는지 알아보기 위해, 다음 단계를 따르세요.
 
-  1. Add the `flutter_test` dependency.
-  2. Create a widget to test.
-  3. Create a `testWidgets` test.
-  4. Build the widget using the `WidgetTester`.
-  5. Search for the widget using a `Finder`.
-  6. Verify the widget using a `Matcher`.
+  1. `flutter_test` 종속성을 추가합니다.
+  2. 테스트할 위젯을 만듭니다.
+  3. `testWidgets` 테스트를 만듭니다.
+  4. `WidgetTester`를 사용하여 위젯을 빌드합니다.
+  5. `Finder`를 사용하여 위젯을 검색합니다.
+  6. `Matcher`를 사용하여 위젯을 검증합니다.
 
-## 1. Add the `flutter_test` dependency
+## 1. `flutter_test` 종속성 추가 {:#1-add-the-flutter_test-dependency}
 
-Before writing tests, include the `flutter_test`
-dependency in the `dev_dependencies` section of the `pubspec.yaml` file.
-If creating a new Flutter project with the command line tools or
-a code editor, this dependency should already be in place.
+테스트를 작성하기 전에, `pubspec.yaml` 파일의 `dev_dependencies` 섹션에 `flutter_test` 종속성을 포함합니다. 
+명령줄 도구나 코드 편집기로 새 Flutter 프로젝트를 만드는 경우, 이 종속성은 이미 있어야 합니다.
 
 ```yaml
 dev_dependencies:
@@ -50,10 +49,10 @@ dev_dependencies:
     sdk: flutter
 ```
 
-## 2. Create a widget to test
+## 2. 테스트할 위젯 만들기 {:#2-create-a-widget-to-test}
 
-Next, create a widget for testing. For this recipe,
-create a widget that displays a `title` and `message`.
+다음으로, 테스트를 위한 위젯을 만듭니다. 
+이 레시피의 경우, `title`과 `message`를 표시하는 위젯을 만듭니다.
 
 <?code-excerpt "test/main_test.dart (widget)"?>
 ```dart
@@ -84,93 +83,77 @@ class MyWidget extends StatelessWidget {
 }
 ```
 
-## 3. Create a `testWidgets` test
+## 3. `testWidgets` 테스트 만들기 {:#3-create-a-testwidgets-test}
 
-With a widget to test, begin by writing your first test.
-Use the [`testWidgets()`][] function provided by the
-`flutter_test` package to define a test.
-The `testWidgets` function allows you to define a
-widget test and creates a `WidgetTester` to work with.
+테스트할 위젯이 있으면, 첫 번째 테스트를 작성하여 시작합니다. 
+`flutter_test` 패키지에서 제공하는 [`testWidgets()`][] 함수를 사용하여 테스트를 정의합니다. 
+`testWidgets` 함수를 사용하면 위젯 테스트를 정의하고, 작업할 `WidgetTester`를 만들 수 있습니다.
 
-This test verifies that `MyWidget` displays a given title and message.
-It is titled accordingly, and it will be populated in the next section.
+이 테스트는 `MyWidget`이 주어진 제목과 메시지를 표시하는지 확인합니다. 
+그에 따라 제목이 지정되고, 다음 섹션에서 채워집니다.
 
 <?code-excerpt "test/main_step3_test.dart (main)"?>
 ```dart
 void main() {
-  // Define a test. The TestWidgets function also provides a WidgetTester
-  // to work with. The WidgetTester allows you to build and interact
-  // with widgets in the test environment.
+  // 테스트를 정의합니다. 
+  // TestWidgets 함수는 또한 작업할 WidgetTester를 제공합니다. 
+  // WidgetTester를 사용하면 테스트 환경에서 위젯을 빌드하고 상호 작용할 수 있습니다.
   testWidgets('MyWidget has a title and message', (tester) async {
-    // Test code goes here.
+    // 테스트 코드는 여기에 있습니다.
   });
 }
 ```
 
-## 4. Build the widget using the `WidgetTester`
+## 4. `WidgetTester`를 사용하여 위젯을 빌드 {:#4-build-the-widget-using-the-widgettester}
 
-Next, build `MyWidget` inside the test environment by using the
-[`pumpWidget()`][] method provided by `WidgetTester`.
-The `pumpWidget` method builds and renders the provided widget.
+다음으로, `WidgetTester`에서 제공하는 [`pumpWidget()`][] 메서드를 사용하여 
+테스트 환경 내에서 `MyWidget`을 빌드합니다. 
+`pumpWidget` 메서드는 제공된 위젯을 빌드하고 렌더링합니다.
 
-Create a `MyWidget` instance that displays "T" as the title
-and "M" as the message.
+제목으로 "T"를 표시하고, 메시지로 "M"을 표시하는, `MyWidget` 인스턴스를 만듭니다.
 
 <?code-excerpt "test/main_step4_test.dart (main)"?>
 ```dart
 void main() {
   testWidgets('MyWidget has a title and message', (tester) async {
-    // Create the widget by telling the tester to build it.
+    // 테스터에게 위젯을 만들라고 말해 위젯을 만듭니다.
     await tester.pumpWidget(const MyWidget(title: 'T', message: 'M'));
   });
 }
 ```
 
-### Notes about the pump() methods
+### pump() 메서드에 대한 참고 사항 {:#notes-about-the-pump-methods}
 
-After the initial call to `pumpWidget()`, the `WidgetTester` provides
-additional ways to rebuild the same widget. This is useful if you're
-working with a `StatefulWidget` or animations.
+`pumpWidget()`에 대한 초기 호출 후, `WidgetTester`는 동일한 위젯을 다시 빌드하는 추가적인 방법을 제공합니다. `StatefulWidget` 또는 애니메이션으로 작업하는 경우 유용합니다.
 
-For example, tapping a button calls `setState()`, but Flutter won't
-automatically rebuild your widget in the test environment.
-Use one of the following methods to ask Flutter to rebuild the widget.
+예를 들어, 버튼을 탭하면 `setState()`가 호출되지만, Flutter는 테스트 환경에서 위젯을 자동으로 다시 빌드하지 않습니다. 
+다음 방법 중 하나를 사용하여 Flutter에 위젯을 다시 빌드하도록 요청합니다.
 
 [`tester.pump(Duration duration)`][]
-: Schedules a frame and triggers a rebuild of the widget.
-  If a `Duration` is specified, it advances the clock by
-  that amount and schedules a frame. It does not schedule
-  multiple frames even if the duration is longer than a
-  single frame.
+: 프레임을 스케쥴링하고, 위젯의 재구축을 트리거합니다. 
+  `Duration`이 지정되면, 해당 양만큼 클록을 진행하고, 프레임을 예약합니다. 
+  duration이 단일 프레임보다 길더라도, 여러 프레임을 예약하지 않습니다.
 
 :::note
-To kick off the animation, you need to call `pump()`
-once (with no duration specified) to start the ticker.
-Without it, the animation does not start.
+애니메이션을 시작하려면, `pump()`를 한 번 호출해야 합니다. (duration을 지정하지 않고) 
+그것이 없이는, 애니메이션이 시작되지 않습니다.
 :::
 
 [`tester.pumpAndSettle()`][]
-: Repeatedly calls `pump()` with the given duration until
-  there are no longer any frames scheduled.
-  This, essentially, waits for all animations to complete.
+: 더 이상 예약된 프레임이 없을 때까지 주어진 duration으로 `pump()`를 반복적으로 호출합니다. 
+  이는, 기본적으로, 모든 애니메이션이 완료될 때까지 기다립니다.
 
-These methods provide fine-grained control over the build lifecycle,
-which is particularly useful while testing.
+이러한 방법은 빌드 수명 주기를 세부적으로 제어할 수 있는 기능을 제공하며, 특히 테스트 중에 유용합니다.
 
-## 5. Search for our widget using a `Finder`
+## 5. `Finder`를 사용하여 위젯을 검색 {:#5-search-for-our-widget-using-a-finder}
 
-With a widget in the test environment, search
-through the widget tree for the `title` and `message`
-Text widgets using a `Finder`. This allows verification that
-the widgets are being displayed correctly.
+테스트 환경에 위젯이 있는 경우, `Finder`를 사용하여 위젯 트리에서 `title` 및 `message` 텍스트 위젯을 검색합니다. 
+이를 통해 위젯이 올바르게 표시되는지 확인할 수 있습니다.
 
-For this purpose, use the top-level [`find()`][]
-method provided by the `flutter_test` package to create the `Finders`.
-Since you know you're looking for `Text` widgets, use the
-[`find.text()`][] method.
+이를 위해, `flutter_test` 패키지에서 제공하는 최상위 레벨 [`find()`][] 메서드를 사용하여 `Finders`를 만듭니다.
+당신이 `Text` 위젯을 찾고 있다는 것을 알고 있으므로, [`find.text()`][] 메서드를 사용합니다.
 
-For more information about `Finder` classes, see the
-[Finding widgets in a widget test][] recipe.
+`Finder` 클래스에 대한 자세한 내용은, [위젯 테스트에서 위젯 찾기][Finding widgets in a widget test] 레시피를 참조하세요.
 
 <?code-excerpt "test/main_step5_test.dart (main)"?>
 ```dart
@@ -178,23 +161,21 @@ void main() {
   testWidgets('MyWidget has a title and message', (tester) async {
     await tester.pumpWidget(const MyWidget(title: 'T', message: 'M'));
 
-    // Create the Finders.
+    // Finders를 만듭니다.
     final titleFinder = find.text('T');
     final messageFinder = find.text('M');
   });
 }
 ```
 
-## 6. Verify the widget using a `Matcher`
+## 6. `Matcher`를 사용하여 위젯을 검증 {:#6-verify-the-widget-using-a-matcher}
 
-Finally, verify the title and message `Text` widgets appear on screen
-using the `Matcher` constants provided by `flutter_test`.
-`Matcher` classes are a core part of the `test` package,
-and provide a common way to verify a given
-value meets expectations.
+마지막으로, `flutter_test`에서 제공하는 `Matcher` 상수를 사용하여 
+제목과 메시지 `Text` 위젯이 화면에 나타나는지 확인합니다. 
+`Matcher` 클래스는 `test` 패키지의 핵심 부분이며, 주어진 값이 기대치를 충족하는지 확인하는 일반적인 방법을 제공합니다.
 
-Ensure that the widgets appear on screen exactly one time.
-For this purpose, use the [`findsOneWidget`][] `Matcher`.
+위젯이 화면에 정확히 한 번만 나타나는지 확인합니다. 
+이를 위해, [`findsOneWidget`][] `Matcher`를 사용합니다.
 
 <?code-excerpt "test/main_step6_test.dart (main)"?>
 ```dart
@@ -204,32 +185,31 @@ void main() {
     final titleFinder = find.text('T');
     final messageFinder = find.text('M');
 
-    // Use the `findsOneWidget` matcher provided by flutter_test to verify
-    // that the Text widgets appear exactly once in the widget tree.
+    // flutter_test가 제공하는 `findsOneWidget` matcher를 사용하여 
+    // 텍스트 위젯이 위젯 트리에 정확히 한 번 나타나는지 확인합니다.
     expect(titleFinder, findsOneWidget);
     expect(messageFinder, findsOneWidget);
   });
 }
 ```
 
-### Additional Matchers
+### 추가적인 Matchers {:#additional-matchers}
 
-In addition to `findsOneWidget`, `flutter_test` provides additional
-matchers for common cases.
+`findsOneWidget` 외에도, `flutter_test`는 일반적인 경우에 대한 추가 매처를 제공합니다.
 
 [`findsNothing`][]
-: Verifies that no widgets are found.
+: 위젯이 발견되지 않았는지 확인합니다.
 
 [`findsWidgets`][]
-: Verifies that one or more widgets are found.
+: 하나 이상의 위젯이 발견되었는지 확인합니다.
 
 [`findsNWidgets`][]
-: Verifies that a specific number of widgets are found.
+: 특정 수의 위젯이 발견되었는지 확인합니다.
 
 [`matchesGoldenFile`][]
-: Verifies that a widget's rendering matches a particular bitmap image ("golden file" testing).
+: 위젯의 렌더링이 특정 비트맵 이미지와 일치하는지 확인합니다. ("골든 파일(golden file)" 테스트)
 
-## Complete example
+## 완성된 예제 {:#complete-example}
 
 <?code-excerpt "test/main_test.dart"?>
 ```dart
@@ -237,19 +217,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  // Define a test. The TestWidgets function also provides a WidgetTester
-  // to work with. The WidgetTester allows building and interacting
-  // with widgets in the test environment.
+  // 테스트를 정의합니다. 
+  // TestWidgets 함수는 또한 작업할 WidgetTester를 제공합니다. 
+  // WidgetTester를 사용하면 테스트 환경에서 위젯을 빌드하고 상호 작용할 수 있습니다.
   testWidgets('MyWidget has a title and message', (tester) async {
-    // Create the widget by telling the tester to build it.
+    // tester에게 위젯을 만들라고 말해 위젯을 만듭니다.
     await tester.pumpWidget(const MyWidget(title: 'T', message: 'M'));
 
-    // Create the Finders.
+    // Finders를 만듭니다.
     final titleFinder = find.text('T');
     final messageFinder = find.text('M');
 
-    // Use the `findsOneWidget` matcher provided by flutter_test to
-    // verify that the Text widgets appear exactly once in the widget tree.
+    // flutter_test가 제공하는 `findsOneWidget` matcher를 사용하여 
+    // 텍스트 위젯이 위젯 트리에 정확히 한 번 나타나는지 확인합니다.
     expect(titleFinder, findsOneWidget);
     expect(messageFinder, findsOneWidget);
   });

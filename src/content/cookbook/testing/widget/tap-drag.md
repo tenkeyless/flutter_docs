@@ -1,57 +1,52 @@
 ---
-title: Tap, drag, and enter text
-description: How to test widgets for user interaction.
+# title: Tap, drag, and enter text
+title: 탭, 드래그, 텍스트 입력
+# description: How to test widgets for user interaction.
+description: 위젯의 사용자 상호작용을 테스트하는 방법.
 ---
 
 <?code-excerpt path-base="cookbook/testing/widget/tap_drag/"?>
 
 {% assign api = site.api | append: '/flutter' -%}
 
-Many widgets not only display information, but also respond
-to user interaction. This includes buttons that can be tapped,
-and [`TextField`][] for entering text.
+많은 위젯은 정보를 표시할 뿐만 아니라, 사용자 상호작용에 응답합니다. 
+여기에는 탭할 수 있는 버튼과 텍스트를 입력하기 위한 [`TextField`][]가 포함됩니다.
 
-To test these interactions, you need a way to simulate them
-in the test environment. For this purpose, use the
-[`WidgetTester`][] library.
+이러한 상호작용을 테스트하려면, 테스트 환경에서 이를 시뮬레이션할 방법이 필요합니다. 
+이를 위해, [`WidgetTester`][] 라이브러리를 사용하세요.
 
-The `WidgetTester` provides methods for entering text,
-tapping, and dragging.
+`WidgetTester`는 텍스트 입력, 탭, 드래그를 위한 메서드를 제공합니다.
 
 * [`enterText()`][]
 * [`tap()`][]
 * [`drag()`][]
 
-In many cases, user interactions update the state of the app. In the test
-environment, Flutter doesn't automatically rebuild widgets when the state
-changes. To ensure that the widget tree is rebuilt after simulating a user
-interaction, call the [`pump()`][] or [`pumpAndSettle()`][]
-methods provided by the `WidgetTester`.
-This recipe uses the following steps:
+대부분의 경우, 사용자 상호작용은 앱의 상태를 업데이트합니다. 
+테스트 환경에서, Flutter는 상태가 변경될 때 위젯을 자동으로 다시 빌드하지 않습니다. 
+사용자 상호작용을 시뮬레이션한 후 위젯 트리가 다시 빌드되도록 하려면,
+`WidgetTester`에서 제공하는 [`pump()`][] 또는 [`pumpAndSettle()`][] 메서드를 호출하세요. 
+이 레시피는 다음 단계를 사용합니다.
 
-  1. Create a widget to test.
-  2. Enter text in the text field.
-  3. Ensure tapping a button adds the todo.
-  4. Ensure swipe-to-dismiss removes the todo.
+  1. 테스트할 위젯을 만듭니다.
+  2. 텍스트 필드에 텍스트를 입력합니다.
+  3. 버튼을 탭하면 todo가 추가되는지 확인합니다.
+  4. 스와이프하여 해제하면(swipe-to-dismiss) todo가 제거되는지 확인합니다.
 
-## 1. Create a widget to test
+## 1. 테스트할 위젯 만들기 {:#1-create-a-widget-to-test}
 
-For this example,
-create a basic todo app that tests three features:
+이 예제에서는, 세 가지 기능을 테스트하는 기본 todo 앱을 만듭니다.
 
-  1. Entering text into a `TextField`.
-  2. Tapping a `FloatingActionButton` to add the text to a list of todos.
-  3. Swiping-to-dismiss to remove the item from the list.
+  1. `TextField`에 텍스트 입력.
+  2. `FloatingActionButton`을 탭하여 텍스트를 todo 리스트에 추가.
+  3. 스와이프하여(Swiping-to-dismiss) 리스트에서 아이템 제거.
 
-To keep the focus on testing,
-this recipe won't provide a detailed guide on how to build the todo app.
-To learn more about how this app is built,
-see the relevant recipes:
+테스트에 집중하기 위해, 이 레시피에서는 todo 앱을 빌드하는 방법에 대한 자세한 가이드를 제공하지 않습니다. 
+이 앱이 어떻게 빌드되는지 자세히 알아보려면 관련 레시피를 참조하세요.
 
-* [Create and style a text field][]
-* [Handle taps][]
-* [Create a basic list][]
-* [Implement swipe to dismiss][]
+* [텍스트 필드 만들기 및 스타일 지정][Create and style a text field]
+* [탭 처리][Handle taps]
+* [기본 리스트 만들기][Create a basic list]
+* [스와이프하여 닫기 구현][Implement swipe to dismiss]
 
 <?code-excerpt "test/main_test.dart (TodoList)"?>
 ```dart
@@ -112,94 +107,88 @@ class _TodoListState extends State<TodoList> {
 }
 ```
 
-## 2. Enter text in the text field
+## 2. 텍스트 필드에 텍스트를 입력 {:#2-enter-text-in-the-text-field}
 
-Now that you have a todo app, begin writing the test.
-Start by entering text into the `TextField`.
+이제 todo 앱이 있으니 테스트를 작성하기 시작합니다. 
+`TextField`에 텍스트를 입력하여 시작합니다.
 
-Accomplish this task by:
+다음을 통해 이 작업을 수행합니다.
 
-  1. Building the widget in the test environment.
-  2. Using the [`enterText()`][]
-     method from the `WidgetTester`.
+  1. 테스트 환경에서 위젯을 빌드합니다.
+  2. `WidgetTester`에서 [`enterText()`][] 메서드를 사용합니다.
 
 <?code-excerpt "test/main_steps.dart (TestWidgetStep2)"?>
 ```dart
 testWidgets('Add and remove a todo', (tester) async {
-  // Build the widget
+  // 위젯을 빌드하세요.
   await tester.pumpWidget(const TodoList());
 
-  // Enter 'hi' into the TextField.
+  // TextField에 'hi'를 입력하세요.
   await tester.enterText(find.byType(TextField), 'hi');
 });
 ```
 
 :::note
-This recipe builds upon previous widget testing recipes.
-To learn the core concepts of widget testing,
-see the following recipes:
+이 레시피는 이전 위젯 테스트 레시피를 기반으로 합니다. 
+위젯 테스트의 핵심 개념을 알아보려면, 다음 레시피를 참조하세요.
 
-* [Introduction to widget testing][]
-* [Finding widgets in a widget test][]
+* [위젯 테스트 소개][Introduction to widget testing]
+* [위젯 테스트에서 위젯 찾기][Finding widgets in a widget test]
 :::
 
-## 3. Ensure tapping a button adds the todo
+## 3. 버튼을 탭하면 todo가 추가되는지 확인 {:#3-ensure-tapping-a-button-adds-the-todo}
 
-After entering text into the `TextField`, ensure that tapping
-the `FloatingActionButton` adds the item to the list.
+`TextField`에 텍스트를 입력한 후, `FloatingActionButton`을 탭하면 아이템이 리스트에 추가되는지 확인합니다.
 
-This involves three steps:
+여기에는 세 단계가 포함됩니다.
 
- 1. Tap the add button using the [`tap()`][] method.
- 2. Rebuild the widget after the state has changed using the
-    [`pump()`][] method.
- 3. Ensure that the list item appears on screen.
+  1. [`tap()`][] 메서드를 사용하여 추가 버튼을 탭합니다.
+  2. [`pump()`][] 메서드를 사용하여 상태가 변경된 후 위젯을 다시 빌드합니다.
+  3. 리스트 아이템이 화면에 나타나는지 확인합니다.
 
 <?code-excerpt "test/main_steps.dart (TestWidgetStep3)"?>
 ```dart
 testWidgets('Add and remove a todo', (tester) async {
-  // Enter text code...
+  // 텍스트 코드를 입력하세요...
 
-  // Tap the add button.
+  // 추가 버튼을 탭하세요.
   await tester.tap(find.byType(FloatingActionButton));
 
-  // Rebuild the widget after the state has changed.
+  // 상태가 변경된 후 위젯을 다시 빌드합니다.
   await tester.pump();
 
-  // Expect to find the item on screen.
+  // 해당 항목이 화면에 표시될 것으로 예상하세요.
   expect(find.text('hi'), findsOneWidget);
 });
 ```
 
-## 4. Ensure swipe-to-dismiss removes the todo
+## 4. 스와이프하여 해제하면(swipe-to-dismiss) todo가 제거되는지 확인 {:#4-ensure-swipe-to-dismiss-removes-the-todo}
 
-Finally, ensure that performing a swipe-to-dismiss action on the todo
-item removes it from the list. This involves three steps:
+마지막으로, todo 아이템에서 스와이프하여 닫기(swipe-to-dismiss) 동작을 수행하면, 리스트에서 제거되는지 확인합니다. 
+여기에는 세 단계가 포함됩니다.
 
-  1. Use the [`drag()`][]
-     method to perform a swipe-to-dismiss action.
-  2. Use the [`pumpAndSettle()`][]
-     method to continually rebuild the widget tree until the dismiss
-     animation is complete.
-  3. Ensure that the item no longer appears on screen.
+  1. [`drag()`][] 메서드를 사용하여, 스와이프하여 닫기(swipe-to-dismiss) 동작을 수행합니다.
+  2. [`pumpAndSettle()`][] 메서드를 사용하여 닫기(dismiss) 애니메이션이 완료될 때까지 
+     위젯 트리를 지속적으로 재구성합니다.
+  3. 아이템이 더 이상 화면에 나타나지 않는지 확인합니다.
 
 <?code-excerpt "test/main_steps.dart (TestWidgetStep4)"?>
 ```dart
 testWidgets('Add and remove a todo', (tester) async {
-  // Enter text and add the item...
+  // 텍스트를 입력하고 아이템을 추가하세요...
 
-  // Swipe the item to dismiss it.
+  // 해당 아이템을 스와이프해서 dismiss 하세요.
   await tester.drag(find.byType(Dismissible), const Offset(500, 0));
 
-  // Build the widget until the dismiss animation ends.
+  // 위젯을 dismiss 하는 애니메이션이 끝날 때까지 빌드합니다.
   await tester.pumpAndSettle();
 
-  // Ensure that the item is no longer on screen.
+  // 해당 아이템이 더 이상 화면에 없는지 확인하세요.
   expect(find.text('hi'), findsNothing);
 });
 ```
 
-## Complete example
+## 완성된 예제 {:#complete-example}
 
 <?code-excerpt "test/main_test.dart"?>
 ```dart
@@ -208,28 +197,28 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   testWidgets('Add and remove a todo', (tester) async {
-    // Build the widget.
+    // 위젯을 빌드합니다.
     await tester.pumpWidget(const TodoList());
 
-    // Enter 'hi' into the TextField.
+    // TextField에 'hi'를 입력하세요.
     await tester.enterText(find.byType(TextField), 'hi');
 
-    // Tap the add button.
+    // 추가 버튼을 탭하세요.
     await tester.tap(find.byType(FloatingActionButton));
 
-    // Rebuild the widget with the new item.
+    // 새 아이템과 함께 위젯을 다시 빌드합니다.
     await tester.pump();
 
-    // Expect to find the item on screen.
+    // 해당 아이템이 화면에 표시될 것으로 예상하세요.
     expect(find.text('hi'), findsOneWidget);
 
-    // Swipe the item to dismiss it.
+    // 해당 항목을 스와이프해서 dismiss 하세요.
     await tester.drag(find.byType(Dismissible), const Offset(500, 0));
 
-    // Build the widget until the dismiss animation ends.
+    // 위젯을 dismiss 하는 애니메이션이 끝날 때까지 빌드합니다.
     await tester.pumpAndSettle();
 
-    // Ensure that the item is no longer on screen.
+    // 해당 아이템이 더 이상 화면에 없는지 확인하세요.
     expect(find.text('hi'), findsNothing);
   });
 }
