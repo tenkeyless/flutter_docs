@@ -1,70 +1,64 @@
 ---
-title: Measure performance with an integration test
-description: How to profile performance for a Flutter app.
+# title: Measure performance with an integration test
+title: 통합 테스트로 성능 측정
+# description: How to profile performance for a Flutter app.
+description: Flutter 앱의 성능을 프로파일링하는 방법.
 ---
 
 <?code-excerpt path-base="cookbook/testing/integration/profiling/"?>
 
-When it comes to mobile apps, performance is critical to user experience.
-Users expect apps to have smooth scrolling and meaningful animations free of
-stuttering or skipped frames, known as "jank." How to ensure that your app
-is free of jank on a wide variety of devices?
+모바일 앱의 경우, 성능은 사용자 경험에 매우 중요합니다. 
+사용자는 앱이 매끄러운 스크롤링과 ("jank"라고 알려진, 끊기거나 건너뛰는 프레임이 없는) 의미 있는 애니메이션을 기대합니다. 
+다양한 기기에서 앱이 jank 없이 작동하는지 확인하는 방법은 무엇일까요?
 
-There are two options: first, manually test the app on different devices.
-While that approach might work for a smaller app, it becomes more
-cumbersome as an app grows in size. Alternatively, run an integration
-test that performs a specific task and records a performance timeline.
-Then, examine the results to determine whether a specific section of
-the app needs to be improved.
+두 가지 옵션이 있습니다. 
+1. 첫째, 다른 기기에서 앱을 수동으로 테스트합니다. 
+   * 이 방법은 작은 앱에는 효과적일 수 있지만, 앱의 크기가 커질수록 더 번거로워집니다. 
+2. 대안으로, 특정 작업을 수행하고 성능 타임라인을 기록하는 통합 테스트를 실행합니다. 
+   * 그런 다음, 결과를 검토하여 앱의 특정 섹션을 개선해야 하는지 확인합니다.
 
-In this recipe, learn how to write a test that records a performance
-timeline while performing a specific task and saves a summary of the
-results to a local file.
+이 레시피에서는, 특정 작업을 수행하는 동안 성능 타임라인을 기록하고 
+결과 요약을 로컬 파일에 저장하는 테스트를 작성하는 방법을 알아봅니다.
 
 :::note
-Recording performance timelines isn't supported on web.
-For performance profiling on web, see
-[Debugging performance for web apps][]
+성능 타임라인 기록은 웹에서 지원되지 않습니다. 
+웹에서 성능 프로파일링은, [웹 앱의 성능 디버깅][Debugging performance for web apps]을 참조하세요.
 :::
 
-This recipe uses the following steps:
+이 레시피는 다음 단계를 사용합니다.
 
-  1. Write a test that scrolls through a list of items.
-  2. Record the performance of the app.
-  3. Save the results to disk.
-  4. Run the test.
-  5. Review the results.
+1. 아이템 리스트를 스크롤하는 테스트를 작성합니다.
+2. 앱의 성능을 기록합니다.
+3. 결과를 디스크에 저장합니다.
+4. 테스트를 실행합니다.
+5. 결과를 검토합니다.
 
-## 1. Write a test that scrolls through a list of items
+## 1. 아이템 리스트를 스크롤하는 테스트 작성 {:#1-write-a-test-that-scrolls-through-a-list-of-items}
 
-In this recipe, record the performance of an app as it scrolls through a
-list of items. To focus on performance profiling, this recipe builds
-on the [Scrolling][] recipe in widget tests.
+이 레시피에서는, 앱이 아이템 리스트를 스크롤할 때 앱의 성능을 기록합니다. 
+성능 프로파일링에 집중하기 위해, 이 레시피는 위젯 테스트에서 [스크롤링][Scrolling] 레시피를 기반으로 합니다.
 
-Follow the instructions in that recipe to create an app and write a test to
-verify that everything works as expected.
+해당 레시피의 지침에 따라 앱을 만들고, 모든 것이 예상대로 작동하는지 확인하는 테스트를 작성합니다.
 
-## 2. Record the performance of the app
+## 2. 앱의 성능 기록 {:#2-record-the-performance-of-the-app}
 
-Next, record the performance of the app as it scrolls through the
-list. Perform this task using the [`traceAction()`][]
-method provided by the [`IntegrationTestWidgetsFlutterBinding`][] class.
+다음으로, 리스트를 스크롤할 때 앱의 성능을 기록합니다. 
+[`IntegrationTestWidgetsFlutterBinding`][] 클래스에서 제공하는 
+[`traceAction()`][] 메서드를 사용하여 이 작업을 수행합니다.
 
-This method runs the provided function and records a [`Timeline`][]
-with detailed information about the performance of the app. This example
-provides a function that scrolls through the list of items,
-ensuring that a specific item is displayed. When the function completes,
-the `traceAction()` creates a report data `Map` that contains the `Timeline`.
+이 메서드는 제공된 함수를 실행하고 앱 성능에 대한 자세한 정보가 포함된 [`Timeline`][]을 기록합니다. 
+이 예제는 아이템 리스트를 스크롤하여 특정 아이템이 표시되도록 하는 함수를 제공합니다. 
+함수가 완료되면, `traceAction()`은 `Timeline`을 포함하는 보고서 데이터 `Map`을 만듭니다.
 
-Specify the `reportKey` when running more than one `traceAction`.
-By default all `Timelines` are stored with the key `timeline`,
-in this example the `reportKey` is changed to `scrolling_timeline`.
+두 개 이상의 `traceAction`을 실행할 때 `reportKey`를 지정합니다. 
+기본적으로 모든 `Timeline`은 `timeline` 키와 함께 저장되며, 
+이 예제에서 `reportKey`는 `scrolling_timeline`으로 변경됩니다.
 
 <?code-excerpt "integration_test/scrolling_test.dart (traceAction)"?>
 ```dart
 await binding.traceAction(
   () async {
-    // Scroll until the item to be found appears.
+    // 찾으려는 항목이 나타날 때까지 스크롤하세요.
     await tester.scrollUntilVisible(
       itemFinder,
       500.0,
@@ -75,25 +69,20 @@ await binding.traceAction(
 );
 ```
 
-## 3. Save the results to disk
+## 3. 결과를 디스크에 저장 {:#3-save-the-results-to-disk}
 
-Now that you've captured a performance timeline, you need a way to review it.
-The `Timeline` object provides detailed information about all of the events
-that took place, but it doesn't provide a convenient way to review the results.
+이제 성능 타임라인을 캡처했으니, 이를 검토할 방법이 필요합니다. 
+`Timeline` 객체는 발생한 모든 이벤트에 대한 자세한 정보를 제공하지만, 결과를 검토하는 편리한 방법은 제공하지 않습니다.
 
-Therefore, convert the `Timeline` into a [`TimelineSummary`][].
-The `TimelineSummary` can perform two tasks that make it easier
-to review the results:
+따라서, `Timeline`을 [`TimelineSummary`][]로 변환합니다. 
+`TimelineSummary`는 결과를 검토하기 쉽게 만드는 두 가지 작업을 수행할 수 있습니다.
 
-  1. Writing a json document on disk that summarizes the data contained
-     within the `Timeline`. This summary includes information about the
-     number of skipped frames, slowest build times, and more.
-  2. Saving the complete `Timeline` as a json file on disk.
-     This file can be opened with the Chrome browser's
-     tracing tools found at `chrome://tracing`.
+   1. `Timeline`에 포함된 데이터를 요약하는 디스크에 JSON 문서를 작성합니다. 
+      * 이 요약에는 건너뛴 프레임 수, 가장 느린 빌드 시간 등에 대한 정보가 포함됩니다.
+   2. 전체 `Timeline`을 디스크에 JSON 파일로 저장합니다. 
+      * 이 파일은 `chrome://tracing`에서 찾을 수 있는 Chrome 브라우저의 추적 도구로 열 수 있습니다.
 
-To capture the results, create a file named `perf_driver.dart`
-in the `test_driver` folder and add the following code:
+결과를 캡처하려면, `test_driver` 폴더에 `perf_driver.dart`라는 파일을 만들고 다음 코드를 추가합니다.
 
 <?code-excerpt "test_driver/perf_driver.dart"?>
 ```dart
@@ -108,15 +97,12 @@ Future<void> main() {
           data['scrolling_timeline'] as Map<String, dynamic>,
         );
 
-        // Convert the Timeline into a TimelineSummary that's easier to
-        // read and understand.
+        // Timeline을 읽고 이해하기 쉬운 TimelineSummary으로 변환하세요.
         final summary = driver.TimelineSummary.summarize(timeline);
 
-        // Then, write the entire timeline to disk in a json format.
-        // This file can be opened in the Chrome browser's tracing tools
-        // found by navigating to chrome://tracing.
-        // Optionally, save the summary to disk by setting includeSummary
-        // to true
+        // 그런 다음, 전체 타임라인을 json 형식으로 디스크에 씁니다. 
+        // 이 파일은 chrome://tracing으로 이동하여 찾을 수 있는 Chrome 브라우저의 추적 도구에서 열 수 있습니다. 
+        // 선택적으로, includeSummary를 true로 설정하여, 요약을 디스크에 저장합니다.
         await summary.writeTimelineToFile(
           'scrolling_timeline',
           pretty: true,
@@ -128,15 +114,14 @@ Future<void> main() {
 }
 ```
 
-The `integrationDriver` function has a `responseDataCallback` 
-which you can customize. 
-By default, it writes the results to the `integration_response_data.json` file,
-but you can customize it to generate a summary like in this example.
+`integrationDriver` 함수에는 커스터마이즈 할 수 있는 `responseDataCallback`이 있습니다. 
+기본적으로, 결과를 `integration_response_data.json` 파일에 기록하지만, 
+이 예와 같이 요약을 생성하도록 커스터마이즈 할 수 있습니다.
 
-## 4. Run the test
+## 4. 테스트 실행 {:#4-run-the-test}
 
-After configuring the test to capture a performance `Timeline` and save a
-summary of the results to disk, run the test with the following command:
+성능 `Timeline`을 캡처하고 결과 요약을 디스크에 저장하도록 테스트를 구성한 후, 
+다음 명령으로 테스트를 실행합니다.
 
 ```console
 flutter drive \
@@ -145,32 +130,26 @@ flutter drive \
   --profile
 ```
 
-The `--profile` option means to compile the app for the "profile mode" 
-rather than the "debug mode", so that the benchmark result is closer to 
-what will be experienced by end users. 
+`--profile` 옵션은 "디버그 모드"가 아닌 "프로필 모드"로 앱을 컴파일하여, 
+벤치마크 결과가 최종 사용자가 경험하는 것에 더 가까워지도록 하는 것을 의미합니다.
 
 :::note
-Run the command with `--no-dds` when running on a mobile device or emulator.
-This option disables the Dart Development Service (DDS), which won't
-be accessible from your computer.
+모바일 기기나 에뮬레이터에서 실행할 때는 `--no-dds`로 명령을 실행하세요. 
+이 옵션은 컴퓨터에서 액세스할 수 없는 Dart Development Service(DDS)를 비활성화합니다.
 :::
 
-## 5. Review the results
+## 5. 결과 검토 {:#5-review-the-results}
 
-After the test completes successfully, the `build` directory at the root of
-the project contains two files:
+테스트가 성공적으로 완료되면, 프로젝트 루트에 있는 `build` 디렉토리에 두 개의 파일이 포함됩니다.
 
-  1. `scrolling_summary.timeline_summary.json` contains the summary. Open
-     the file with any text editor to review the information contained
-     within.  With a more advanced setup, you could save a summary every
-     time the test runs and create a graph of the results.
-  2. `scrolling_timeline.timeline.json` contains the complete timeline data.
-     Open the file using the Chrome browser's tracing tools found at
-     `chrome://tracing`. The tracing tools provide a
-     convenient interface for inspecting the timeline data to discover
-     the source of a performance issue.
+1. `scrolling_summary.timeline_summary.json`에는 요약이 포함됩니다. 
+   * 텍스트 편집기로 파일을 열어 포함된 정보를 검토합니다. 
+   * 고급 설정을 사용하면, 테스트를 실행할 때마다 요약을 저장하고 결과 그래프를 만들 수 있습니다.
+2. `scrolling_timeline.timeline.json`에는 전체 타임라인 데이터가 포함됩니다. 
+   * `chrome://tracing`에서 찾을 수 있는 Chrome 브라우저의 추적 도구를 사용하여 파일을 엽니다. 
+   * 추적 도구는 타임라인 데이터를 검사하여 성능 문제의 원인을 발견하기 위한 편리한 인터페이스를 제공합니다.
 
-### Summary example
+### 요약 예 {:#summary-example}
 
 ```json
 {
@@ -194,7 +173,7 @@ the project contains two files:
 }
 ```
 
-## Complete example
+## 완성된 예제 {:#complete-example}
 
 **integration_test/scrolling_test.dart**
 
@@ -210,7 +189,7 @@ void main() {
   final binding = IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   testWidgets('Counter increments smoke test', (tester) async {
-    // Build our app and trigger a frame.
+    // 앱을 빌드하고 프레임을 트리거합니다.
     await tester.pumpWidget(MyApp(
       items: List<String>.generate(10000, (i) => 'Item $i'),
     ));
@@ -220,7 +199,7 @@ void main() {
 
     await binding.traceAction(
       () async {
-        // Scroll until the item to be found appears.
+        // 찾으려는 항목이 나타날 때까지 스크롤하세요.
         await tester.scrollUntilVisible(
           itemFinder,
           500.0,
@@ -248,15 +227,12 @@ Future<void> main() {
           data['scrolling_timeline'] as Map<String, dynamic>,
         );
 
-        // Convert the Timeline into a TimelineSummary that's easier to
-        // read and understand.
+        // Timeline을 읽고 이해하기 쉬운 TimelineSummary으로 변환하세요.
         final summary = driver.TimelineSummary.summarize(timeline);
 
-        // Then, write the entire timeline to disk in a json format.
-        // This file can be opened in the Chrome browser's tracing tools
-        // found by navigating to chrome://tracing.
-        // Optionally, save the summary to disk by setting includeSummary
-        // to true
+        // 그런 다음, 전체 타임라인을 json 형식으로 디스크에 씁니다. 
+        // 이 파일은 chrome://tracing으로 이동하여 찾을 수 있는 Chrome 브라우저의 추적 도구에서 열 수 있습니다. 
+        // 선택적으로, includeSummary를 true로 설정하여 요약을 디스크에 저장합니다.
         await summary.writeTimelineToFile(
           'scrolling_timeline',
           pretty: true,
