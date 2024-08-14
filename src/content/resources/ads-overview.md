@@ -1,30 +1,29 @@
 ---
-title: Ads overview
+# title: Ads overview
+title: 광고 개요
+# description: >
+#   Learn about the resources available for adding
+#   ads to your Flutter app.
 description: >
-  Learn about the resources available for adding
-  ads to your Flutter app.
+  Flutter 앱에 광고를 추가하는 데 사용할 수 있는 리소스에 대해 알아보세요.
 ---
 
 ![adding ads](/assets/images/docs/add-ads.png)
 
-The Google Mobile Ads SDK for Flutter works with
-both AdMob and Ad Manager. It supports a variety
-of ads formats such as app open, banner, interstitial,
-native, rewarded, and rewarded interstitial formats,
-and features like mediation.
+Flutter 앱에 Google AdMob과 Ad Manager 광고를 쉽게 직접 통합
 
-Easily integrate Google AdMob and Ad Manager ads
-directly in your Flutter App
+Flutter용 Google Mobile Ads SDK는 AdMob과 Ad Manager 모두와 호환됩니다. 
+앱 오픈, 배너, 삽입형, 네이티브, 보상형 및 보상형 삽입형 형식과 같은 다양한 광고 형식과 
+중재(mediation)와 같은 기능을 지원합니다.
 
-The the following resources can help get you started:
+다음 리소스를 참고하면 시작하는 데 도움이 될 수 있습니다.
 
-* [Add ads to your mobile Flutter app or game][] (cookbook recipe)
-* [Adding AdMob ads to a Flutter app][] (codelab)
-* [Adding an AdMob banner and native inline ads to a Flutter app][] (codelab)
-* [How to support Google Mobile Ads (AdMob) mediation][mediation] (guide)
+* [모바일 Flutter 앱 또는 게임에 광고 추가][Add ads to your mobile Flutter app or game] (쿡북 레시피)
+* [Flutter 앱에 AdMob 광고 추가][Adding AdMob ads to a Flutter app] (코드랩)
+* [Flutter 앱에 AdMob 배너 및 네이티브 인라인 광고 추가][Adding an AdMob banner and native inline ads to a Flutter app] (코드랩)
+* [Google Mobile Ads(AdMob) 중재(mediation) 지원 방법][mediation] (가이드)
 
-Listed in alphabetical order,
-the following packages support AdMob mediation:
+알파벳순으로 나열된 다음 패키지는 AdMob 중재(mediation)를 지원합니다.
 
 * AppLovin ([gma_mediation_applovin][])
 * DT Exchange ([gma_mediation_dtexchange][])
