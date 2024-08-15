@@ -1,18 +1,20 @@
 ---
-title: Flutter 3.24.0 release notes
-short-title: 3.24.0 release notes
-description: Release notes for Flutter 3.24.0.
+# title: Flutter 3.24.0 release notes
+title: Flutter 3.24.0 릴리즈 노트
+# short-title: 3.24.0 release notes
+short-title: 3.24.0 릴리즈 노트
+# description: Release notes for Flutter 3.24.0.
+description: Flutter 3.24.0 릴리스 노트.
 ---
 
-This page has release notes for 3.24.0.
-For information about subsequent bug-fix releases,
-check out the Flutter [CHANGELOG][].
+이 페이지에는 3.24.0에 대한 릴리스 노트가 있습니다.
+후속 버그 수정 릴리스에 대한 정보는, Flutter [CHANGELOG][]를 확인하세요.
 
 [CHANGELOG]: {{site.repo.flutter}}/blob/master/CHANGELOG.md
 
-## Flutter framework
+## Flutter 프레임워크 {:#flutter-framework}
 
-### Framework
+### Framework {:#framework}
 
 * `RenderFlex` baseline intrinsics by @LongCatIsLooong in [145483](https://github.com/flutter/flutter/pull/145483)
 * Upgrade leak_tracker. by @polina-c in [145940](https://github.com/flutter/flutter/pull/145940)
@@ -337,7 +339,7 @@ check out the Flutter [CHANGELOG][].
 * Fix result propagation in RenderSliverEdgeInsetsPadding.hitTestChildren by @knopp in [149825](https://github.com/flutter/flutter/pull/149825)
 * Fix scheduler event loop being stuck due to task with Priority.idle by @lauweijie in [151168](https://github.com/flutter/flutter/pull/151168)
 
-### Material
+### Material {:#material}
 
 * Update tokens to v2.3.5 by @QuncCccccc in [145356](https://github.com/flutter/flutter/pull/145356)
 * InputDecorator M3 tests migration - Step7 - container by @bleroux in [145583](https://github.com/flutter/flutter/pull/145583)
@@ -538,7 +540,7 @@ check out the Flutter [CHANGELOG][].
 * Fix missing `[` in docs by @Pante in [151091](https://github.com/flutter/flutter/pull/151091)
 * Implementing a few switch statements by @nate-thegrate in [150946](https://github.com/flutter/flutter/pull/150946)
 
-### iOS
+### iOS {:#ios}
 
 * Implementing switch expressions in `flutter_tools/` by @nate-thegrate in [145632](https://github.com/flutter/flutter/pull/145632)
 * Remove dead `compareIosVersions` function by @jmagman in [146298](https://github.com/flutter/flutter/pull/146298)
@@ -548,11 +550,11 @@ check out the Flutter [CHANGELOG][].
 * Switch to more reliable flutter.dev link destinations in the tool by @parlough in [150587](https://github.com/flutter/flutter/pull/150587)
 * [tool] when writing to openssl as a part of macOS/iOS code-signing, flush the stdin stream before closing it by @andrewkolos in [150120](https://github.com/flutter/flutter/pull/150120)
 
-### Android
+### Android {:#android}
 
 * [wiki migration] Android team pages by @Piinks in [148585](https://github.com/flutter/flutter/pull/148585)
 
-### Tooling
+### Tooling {:#tooling}
 
 * Point kotlin message in `gradle_errors.dart` towards new place where templates define the kotlin version by @gmackall in [145936](https://github.com/flutter/flutter/pull/145936)
 * Remove trailing commas in android dependency version checking gradle plugin by @gmackall in [145718](https://github.com/flutter/flutter/pull/145718)
@@ -679,7 +681,7 @@ check out the Flutter [CHANGELOG][].
 * [tool] Fix `stdin.flush` calls on processes started by `FakeProcessManager` by @andrewkolos in [151183](https://github.com/flutter/flutter/pull/151183)
 * [flutter_tools] Update the mapping for the Dart SDK internal URI by @DanTup in [151170](https://github.com/flutter/flutter/pull/151170)
 
-### Other changes
+### 기타 변경 사항 {:#other-changes}
 
 * Use reporter extended consistently. by @godofredoc in [145617](https://github.com/flutter/flutter/pull/145617)
 * Refactor flutter_plugins by @sealesj in [145870](https://github.com/flutter/flutter/pull/145870)
@@ -829,7 +831,7 @@ check out the Flutter [CHANGELOG][].
 * Bump dartdoc to 8.0.10 by @goderbauer in [151107](https://github.com/flutter/flutter/pull/151107)
 * Roll pub packages by @flutter-pub-roller-bot in [151129](https://github.com/flutter/flutter/pull/151129)
 
-## New contributors
+## New contributors {:#new-contributors}
 
 * @Dimilkalathiya made their first contribution in [146072](https://github.com/flutter/flutter/pull/146072)
 * @leoafarias made their first contribution in [145666](https://github.com/flutter/flutter/pull/145666)
@@ -876,9 +878,9 @@ check out the Flutter [CHANGELOG][].
 
 **Full Changelog**: https://github.com/flutter/flutter/compare/3.22.0...3.24.0-0.0.pre
 
-## Flutter engine
+## Flutter engine {:#flutter-engine}
 
-### Impeller
+### Impeller {:#impeller}
 
 * [Impeller] Optimize away intersect clips that cover the entire pass target. by @bdero in [51736](https://github.com/flutter/engine/pull/51736)
 * Reland: [Impeller] adds a plus advanced blend for f16 pixel formats by @gaaclarke in [51756](https://github.com/flutter/engine/pull/51756)
@@ -1092,7 +1094,7 @@ check out the Flutter [CHANGELOG][].
 * [Impeller] fix typo in setup for fast elliptical rrect blurs by @flar in [53673](https://github.com/flutter/engine/pull/53673)
 * Revert "Reland [DisplayList] Add support for clipOval to leverage Impeller optimization" by @jiahaog in [53705](https://github.com/flutter/engine/pull/53705)
 
-### Android
+### Android {:#android-1}
 
 * Use the stripped Vulkan validation library in Android engine builds by default by @jason-simmons in [51628](https://github.com/flutter/engine/pull/51628)
 * Add an engine switch that controls whether the platform isolate API is available. by @jason-simmons in [51784](https://github.com/flutter/engine/pull/51784)
@@ -1137,7 +1139,7 @@ check out the Flutter [CHANGELOG][].
 * Fix AccessibilityFeatures.disableAnimations flag on Android 12+ by @hakonber in [53428](https://github.com/flutter/engine/pull/53428)
 * Re-re-re-land "Upgrade all[most] androidx dependencies to latest" by @gmackall in [53592](https://github.com/flutter/engine/pull/53592)
 
-### iOS
+### iOS {:#ios-1}
 
 * Remove _dartobservatory._tcp legacy DNS registration type by @jmagman in [51635](https://github.com/flutter/engine/pull/51635)
 * [Impeller] Enable logging a warning when the user opts out of using Impeller. by @chinmaygarde in [51849](https://github.com/flutter/engine/pull/51849)
@@ -1179,7 +1181,7 @@ check out the Flutter [CHANGELOG][].
 * Remove FlutterUndoManagerPlugin handlers from undo manager on dealloc by @jmagman in [53553](https://github.com/flutter/engine/pull/53553)
 * [deep link][ios] Update openURL method to reflect the result from framework  by @hangyujin in [52643](https://github.com/flutter/engine/pull/52643)
 
-### Web
+### Web {:#web}
 
 * [skwasm] Fix `toString` methods on Paint and ImageFilter/ColorFilter by @eyebrowsoffire in [51766](https://github.com/flutter/engine/pull/51766)
 * [web] Use viewId for text editing by @mdebbar in [51099](https://github.com/flutter/engine/pull/51099)
@@ -1254,7 +1256,7 @@ check out the Flutter [CHANGELOG][].
 * Reland "Output .js files as ES6 modules. (#52023)" by @eyebrowsoffire in [53688](https://github.com/flutter/engine/pull/53688)
 * Reverts "Reland "Output .js files as ES6 modules. (#52023)" (#53688)" by @auto-submit in [53709](https://github.com/flutter/engine/pull/53709)
 
-### Desktop
+### Desktop {:#desktop}
 
 * [macOS] Group per-view information in `FlutterCompositor` into a class by @dkwingsmt in [51738](https://github.com/flutter/engine/pull/51738)
 * [Windows] Don't always stop engine on view destruction by @loic-sharma in [51681](https://github.com/flutter/engine/pull/51681)
@@ -1281,7 +1283,7 @@ check out the Flutter [CHANGELOG][].
 * Replace several NSAssert with FML_CHECK/DCHECK to unblock the build by @bc-lee in [53048](https://github.com/flutter/engine/pull/53048)
 * [macOS] Fix FlutterView cursor hit testing by @bufffun in [53171](https://github.com/flutter/engine/pull/53171)
 
-### Other changes
+### Other changes {:#other-changes-1}
 
 * Remove Android API v33 tests from CI. by @matanlurey in [51751](https://github.com/flutter/engine/pull/51751)
 * Remove `--verbose` from clang_tidy execution on CI. by @matanlurey in [51760](https://github.com/flutter/engine/pull/51760)
@@ -1488,7 +1490,7 @@ check out the Flutter [CHANGELOG][].
 * Restore creation of engine before Linux widget is realized. by @robert-ancell in [53604](https://github.com/flutter/engine/pull/53604)
 * [skia] Use more GNI file lists by @kjlubick in [53685](https://github.com/flutter/engine/pull/53685)
 
-## New contributors
+## New contributors {:#new-contributors-1}
 
 * @brianquinlan made their first contribution in [52239](https://github.com/flutter/engine/pull/52239)
 * @PurplePolyhedron made their first contribution in [52156](https://github.com/flutter/engine/pull/52156)
