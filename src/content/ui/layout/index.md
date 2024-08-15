@@ -1,6 +1,7 @@
 ---
 title: Layouts in Flutter
-short-title: Layout
+# short-title: Layout
+short-title: 레이아웃
 description: Learn how Flutter's layout mechanism works and how to build a layout.
 diff2html: true
 ---
