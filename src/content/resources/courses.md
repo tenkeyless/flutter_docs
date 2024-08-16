@@ -1,13 +1,14 @@
 ---
-title: Online courses
-description: An index of online courses teaching Flutter development.
+# title: Online courses
+title: 온라인 강좌
+# description: An index of online courses teaching Flutter development.
+description: Flutter 개발을 가르치는 온라인 강좌 인덱스입니다.
 ---
 
-Learn how to build Flutter apps with these video courses.
-Before signing up for a course, verify that it includes
-up-to-date information, such as null-safe Dart code.
-These courses are listed alphabetically.
-To include your course, [submit a PR][]:
+이 비디오 코스로 Flutter 앱을 만드는 방법을 알아보세요. 
+코스에 등록하기 전에 null-safe Dart 코드와 같은 최신 정보가 포함되어 있는지 확인하세요. 
+이 코스는 알파벳순으로 나열되어 있습니다. 
+코스를 포함하려면, [PR을 제출하세요.][submit a PR]:
 
 * [Flutter Foundations][] by Andrea Bizzotto
 * [Flutter & Firebase Masterclass][] by Andrea Bizzotto
