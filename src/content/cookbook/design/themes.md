@@ -176,7 +176,7 @@ Theme(
 
 {% ytEmbed 'oTvQDJOBXmM', 'Theme | 이번 주의 Flutter 위젯' %}
 
-## 대화형 예제 시도 {:#try-an-interactive-example}
+## 상호 작용 예제 시도 {:#try-an-interactive-example}
 
 <?code-excerpt "lib/main.dart (FullApp)"?>
 ```dartpad title="Flutter themes hands-on example in DartPad" run="true"

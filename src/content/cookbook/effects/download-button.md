@@ -418,7 +418,7 @@ class DownloadButton extends StatelessWidget {
 디스플레이가 변경되는 버튼이 있습니다. 이제, 사용자는 탭하여 다운로드를 시작하고, 탭하여 진행 중인 다운로드를 취소하고, 
 탭하여 완료된 다운로드를 열 수 있습니다.
 
-## 대화형 예제 {:#interactive-example}
+## 상호 작용 예제 {:#interactive-example}
 
 앱 실행:
 

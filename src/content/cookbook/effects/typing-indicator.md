@@ -655,7 +655,7 @@ Congratulations! You now have a typing indicator that lets users
 know when someone else is typing. The indicator animates in and out,
 and displays a repeating animation while the other user is typing.
 
-## 대화형 예제 {:#interactive-example}
+## 상호 작용 예제 {:#interactive-example}
 
 Run the app:
 

@@ -1742,7 +1742,7 @@
     alt: TODO
 - name: ReorderableListView
   description: >-
-    사용자가 드래그하여 아이템을 대화형으로(interactively) 재정렬할 수 있는 리스트입니다.
+    사용자가 드래그하여 아이템을 상호 작용으로(interactively) 재정렬할 수 있는 리스트입니다.
   categories:
     - 'Scrolling'
   subcategories: []

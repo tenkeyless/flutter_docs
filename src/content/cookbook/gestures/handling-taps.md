@@ -54,7 +54,7 @@ GestureDetector(
      Flutter에는 [`ElevatedButton`][], [`TextButton`][], [`CupertinoButton`][]과 같은 
      몇 가지 버튼 구현이 포함되어 있습니다.
 
-## 대화형 예제 {:#interactive-example}
+## 상호 작용 예제 {:#interactive-example}
 
 <?code-excerpt "lib/main.dart"?>
 ```dartpad title="Flutter tap handling hands-on example in DartPad" run="true"

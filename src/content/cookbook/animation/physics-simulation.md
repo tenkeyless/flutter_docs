@@ -11,7 +11,7 @@ js:
 
 <?code-excerpt path-base="cookbook/animation/physics_simulation/"?>
 
-물리 시뮬레이션을 통해 앱 상호작용이 현실적이고 대화형으로 느껴지도록 할 수 있습니다. 
+물리 시뮬레이션을 통해 앱 상호작용이 현실적이고 상호 작용으로 느껴지도록 할 수 있습니다. 
 예를 들어, 위젯을 스프링에 부착된 것처럼 또는 중력에 의해 떨어지는 것처럼 
 애니메이션화하고 싶을 수 있습니다.
 
@@ -322,7 +322,7 @@ onPanEnd: (details) {
 이제 애니메이션 컨트롤러가 시뮬레이션을 사용하므로, `duration` 인수는 더 이상 필요하지 않습니다.
 :::
 
-## 대화형 예제 {:#interactive-example}
+## 상호 작용 예제 {:#interactive-example}
 
 <?code-excerpt "lib/main.dart"?>
 ```dartpad title="Flutter physics simulation hands-on example in DartPad" run="true"

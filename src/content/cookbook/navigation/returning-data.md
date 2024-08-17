@@ -193,7 +193,7 @@ Future<void> _navigateAndDisplaySelection(BuildContext context) async {
 }
 ```
 
-## 대화형 예제 {:#interactive-example}
+## 상호 작용 예제 {:#interactive-example}
 
 <?code-excerpt "lib/main.dart"?>
 ```dartpad title="Flutter Return from Data hands-on example in DartPad" run="true"

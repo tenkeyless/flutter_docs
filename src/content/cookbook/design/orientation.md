@@ -64,7 +64,7 @@ body: OrientationBuilder(
 `OrientationBuilder` 위젯 대신 `MediaQuery.of(context).orientation`을 사용하세요.
 :::
 
-## 대화형 예제 {:#interactive-example}
+## 상호 작용 예제 {:#interactive-example}
 
 <?code-excerpt "lib/main.dart"?>
 ```dartpad title="Flutter app orientation hands-on example in DartPad" run="true"

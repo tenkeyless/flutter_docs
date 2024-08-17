@@ -155,7 +155,7 @@ ListTile(
 ),
 ```
 
-## 대화형 예제 {:#interactive-example}
+## 상호 작용 예제 {:#interactive-example}
 
 이 예제에서는 [`Scaffold`][] 위젯 내에서 사용되는 [`Drawer`][]를 보여줍니다. 
 [`Drawer`][]에는 세 개의 [`ListTile`][] 아이템이 있습니다. 

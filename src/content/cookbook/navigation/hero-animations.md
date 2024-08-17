@@ -130,7 +130,7 @@ Hero(
 이 예에서는 단순성을 위해, 두 위젯에 동일한 코드를 사용합니다.
 :::
 
-## 대화형 예제 {:#interactive-example}
+## 상호 작용 예제 {:#interactive-example}
 
 <?code-excerpt "lib/main.dart"?>
 ```dartpad title="Flutter Hero animation hands-on example in DartPad" run="true"

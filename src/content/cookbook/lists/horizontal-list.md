@@ -45,7 +45,7 @@ ListView(
 ),
 ```
 
-## 대화형 예제 {:#interactive-example}
+## 상호 작용 예제 {:#interactive-example}
 
 :::note 데스크탑 및 웹 노트
 이 예는 브라우저와 데스크톱에서 작동합니다. 

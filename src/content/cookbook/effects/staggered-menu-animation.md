@@ -345,7 +345,7 @@ Widget _buildGetStartedButton() {
 각 리스트 아이템의 모양이 단계적(staggered)으로 배열되고, 
 그 뒤에 하단 버튼이 제자리로 튀어나오는 애니메이션 메뉴가 있습니다.
 
-## 대화형 예제 {:#interactive-example}
+## 상호 작용 예제 {:#interactive-example}
 
 <?code-excerpt "lib/main.dart"?>
 ```dartpad title="Flutter staggered menu animation hands-on example in DartPad" run="true"

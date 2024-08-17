@@ -37,7 +37,7 @@ Image.network(
 
 * [플레이스홀더로 이미지 페이드 인][Fade in images with a placeholder]
 
-## 대화형 예제 {:#interactive-example}
+## 상호 작용 예제 {:#interactive-example}
 
 <?code-excerpt "lib/main.dart"?>
 ```dartpad title="Flutter network images hands-on example in DartPad" run="true"

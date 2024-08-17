@@ -497,7 +497,7 @@ class ParallaxFlowDelegate extends FlowDelegate {
 축하합니다!
 이제 패럴랙스, 스크롤링 배경 이미지가 있는 카드 리스트가 있습니다.
 
-## 대화형 예제 {:#interactive-example}
+## 상호 작용 예제 {:#interactive-example}
 
 앱 실행:
 

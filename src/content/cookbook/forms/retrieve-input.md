@@ -94,7 +94,7 @@ FloatingActionButton(
 ),
 ```
 
-## 대화형 예제 {:#interactive-example}
+## 상호 작용 예제 {:#interactive-example}
 
 <?code-excerpt "lib/main.dart"?>
 ```dartpad title="Flutter retrieve input hands-on example in DartPad" run="true"

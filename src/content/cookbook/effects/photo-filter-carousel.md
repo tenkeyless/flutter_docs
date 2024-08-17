@@ -455,7 +455,7 @@ FilterItem(
 축하합니다!
 이제 드래그하고 탭할 수 있는 사진 필터 carousel가 생겼습니다.
 
-## 대화형 예제 {:#interactive-example}
+## 상호 작용 예제 {:#interactive-example}
 
 <?code-excerpt "lib/main.dart"?>
 ```dartpad title="Flutter photo filter carousel hands-on example in DartPad" run="true"

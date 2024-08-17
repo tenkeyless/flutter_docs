@@ -323,7 +323,7 @@ Route<Widget> _onGenerateRoute(RouteSettings settings) {
 축하합니다!
 네 개의 하위 경로로 중첩된 네비게이션을 구현했습니다.
 
-## 대화형 예제 {:#interactive-example}
+## 상호 작용 예제 {:#interactive-example}
 
 앱 실행:
 

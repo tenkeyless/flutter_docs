@@ -247,7 +247,7 @@ up or down. See the [`InheritedWidget`][] documentation
 for more information about these types of dependencies.
 :::
 
-## 대화형 예제 {:#interactive-example}
+## 상호 작용 예제 {:#interactive-example}
 
 Run the app:
 

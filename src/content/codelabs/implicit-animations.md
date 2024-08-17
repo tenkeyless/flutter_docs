@@ -1,7 +1,7 @@
 ---
 title: "암묵적 애니메이션 (Implicit animations)"
 description: >
-  대화형 예제와 연습을 통해 Flutter의 암묵적 애니메이션 위젯을 사용하는 방법을 알아보세요.
+  상호 작용 예제와 연습을 통해 Flutter의 암묵적 애니메이션 위젯을 사용하는 방법을 알아보세요.
 toc: true
 diff2html: true
 js:

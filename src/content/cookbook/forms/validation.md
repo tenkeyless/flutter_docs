@@ -140,7 +140,7 @@ ElevatedButton(
 모든 것이 정상이면, `validate()` 메서드는 `true`를 반환합니다. 
 텍스트 필드에 오류가 있으면, `validate()` 메서드는 폼을 다시 빌드하여 오류 메시지를 표시하고 `false`를 반환합니다.
 
-## 대화형 예제 {:#interactive-example}
+## 상호 작용 예제 {:#interactive-example}
 
 <?code-excerpt "lib/main.dart"?>
 ```dartpad title="Flutter form validation hands-on example in DartPad" run="true"

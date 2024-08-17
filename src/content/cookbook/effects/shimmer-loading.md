@@ -517,7 +517,7 @@ class _ShimmerLoadingState extends State<ShimmerLoading> {
 축하합니다!
 이제 콘텐츠가 로드될 때 켜지고 꺼지는 전체 화면 애니메이션 반짝임 효과가 있습니다.
 
-## 대화형 예제 {:#interactive-example}
+## 상호 작용 예제 {:#interactive-example}
 
 <?code-excerpt "lib/original_example.dart" remove="code-excerpt-closing-bracket"?>
 ```dartpad title="Flutter shimmer loading hands-on example in DartPad" run="true"

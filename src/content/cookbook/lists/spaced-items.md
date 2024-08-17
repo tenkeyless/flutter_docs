@@ -141,7 +141,7 @@ LayoutBuilder(builder: (context, constraints) {
 아이템 리스트가 사용 가능한 공간에 어떻게 조절되는지 살펴보세요.
 :::
 
-## 대화형 예제 {:#interactive-example}
+## 상호 작용 예제 {:#interactive-example}
 
 이 예는 열 내에 균일하게 간격을 둔 아이템 리스트를 보여줍니다. 
 아이템이 화면에 맞지 않을 때, 리스트를 위아래로 스크롤할 수 있습니다. 

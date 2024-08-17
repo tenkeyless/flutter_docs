@@ -370,7 +370,7 @@ class _ExpandableFabState extends State<ExpandableFab>
 
 축하합니다! 이제 확장 가능한 FAB가 생겼습니다.
 
-## 대화형 예제 {:#interactive-example}
+## 상호 작용 예제 {:#interactive-example}
 
 앱 실행:
 

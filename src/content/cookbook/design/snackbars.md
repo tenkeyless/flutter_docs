@@ -84,7 +84,7 @@ final snackBar = SnackBar(
 );
 ```
 
-## 대화형 예제 {:#interactive-example}
+## 상호 작용 예제 {:#interactive-example}
 
 :::note
 이 예제에서는, SnackBar는 사용자가 버튼을 탭하면 표시됩니다.
