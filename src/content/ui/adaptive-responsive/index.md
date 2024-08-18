@@ -1,62 +1,54 @@
 ---
-title: Adaptive and responsive design in Flutter
+# title: Adaptive and responsive design in Flutter
+title: Flutter의 적응형 및 반응형 디자인
+# description: >-
+#   It's important to create an app,
+#   whether for mobile or web,
+#   that responds to size and orientation changes
+#   and maximizes the use of each platform.
 description: >-
-  It's important to create an app,
-  whether for mobile or web,
-  that responds to size and orientation changes
-  and maximizes the use of each platform.
-short-title: Adaptive design
+  모바일이든 웹이든, 크기와 방향(orientation)의 변화에 ​​대응하고, 각 플랫폼의 활용을 극대화하는 앱을 만드는 것이 중요합니다.
+# short-title: Adaptive design
+short-title: 적응형 디자인
 ---
 
 ![List of supported platforms](/assets/images/docs/ui/adaptive-responsive/platforms.png)
 
-One of Flutter's primary goals is to create a framework
-that allows you to develop apps from a single codebase
-that look and feel great on any platform.
+Flutter의 주요 목표 중 하나는 어떤 플랫폼에서든 멋지게 보이고 느껴지는, 
+단일 코드베이스에서 앱을 개발할 수 있는 프레임워크를 만드는 것입니다.
 
-This means that your app might appear on screens of
-many different sizes, from a watch, to a foldable
-phone with two screens, to a high definition monitor.
-And your input device might be a physical or
-virtual keyboard, a mouse, a touchscreen, or
-any number of other devices.
+즉, 앱은 (스마트 워치에서 시작해, 두 개의 화면이 있는 폴더블 폰, 고화질 모니터에 이르기까지) 
+다양한 크기의 화면에 표시될 수 있다는 것을 의미합니다.
+그리고 입력 장치는 물리적 또는 가상 키보드, 마우스, 터치스크린 또는 기타 여러 장치가 될 수 있습니다.
 
-Two terms that describe these design concepts
-are _adaptive_ and _responsive_. Ideally,
-you'd want your app to be _both_ but what,
-exactly, does this mean?
+이러한 디자인 개념을 설명하는 두 가지 용어는 _적응형(adaptive)_ 과 _반응형(responsive)_ 입니다. 
+이상적으로는 앱이 _둘 다_ 되기를 원하지만, 정확히 이것이 무엇을 의미할까요?
 
-## What is responsive vs adaptive?
+## 반응형과 적응형의 차이점은 무엇인가요? {:#what-is-responsive-vs-adaptive}
 
-An easy way to think about it is that responsive design
-is about fitting the UI _into_ the space and
-adaptive design is about the UI being _usable_ in
-the space.
+쉽게 생각해 보면, 
 
-So, a responsive app adjusts the placement of design
-elements to _fit_ the available space. And an
-adaptive app selects the appropriate layout and
-input devices to be usable _in_ the available space.
-For example, should a tablet UI use bottom navigation or
-side-panel navigation?
+* 반응형 디자인은 UI를 공간에 _맞추는(fit into)_ 것이고, 
+* 적응형 디자인은 UI를 공간에서 _사용할 수 있도록(usable)_ 하는 것입니다.
+
+따라서, 반응형 앱은 사용 가능한 공간에 _맞추기(fit)_ 위해 디자인 요소의 배치를 조정합니다. 
+그리고, 적응형 앱은 사용 가능한 공간에서 _사용할 수 있는_ 적절한 레이아웃과 입력 장치를 선택합니다. 
+예를 들어, 태블릿 UI는 하단 네비게이션을 사용해야 할까요, 아니면 측면 패널 네비게이션을 사용해야 할까요?
 
 :::note
-Often adaptive and responsive concepts are
-collapsed into a single term. Most often,
-_adaptive design_ is used to refer to both
-adaptive and responsive.
+적응형과 반응형 개념은 종종 단일 용어로 축소됩니다. 
+대부분 _적응형 디자인(adaptive design)_ 은 적응형과 반응형을 모두 지칭하는 데 사용됩니다.
 :::
 
-This section covers various aspects of adaptive and
-responsive design:
+이 섹션에서는 적응형 및 반응형 디자인의 다양한 측면을 다룹니다.
 
-* [General approach][]
-* [SafeArea & MediaQuery][]
-* [Large screens & foldables][]
-* [User input & accessibility][]
-* [Capabilities & policies][]
-* [Best practices for adaptive apps][]
-* [Additional resources][]
+* [일반적인 접근 방식][General approach]
+* [SafeArea 및 MediaQuery][SafeArea & MediaQuery]
+* [대형 화면 및 폴더블][Large screens & foldables]
+* [사용자 입력 및 접근성][User input & accessibility]
+* [기능 및 정책][Capabilities & policies]
+* [적응형 앱에 대한 모범 사례][Best practices for adaptive apps]
+* [추가 리소스][Additional resources]
 
 [Additional resources]: /ui/adaptive-responsive/more-info
 [Best practices for adaptive apps]: /ui/adaptive-responsive/best-practices
@@ -67,8 +59,7 @@ responsive design:
 [User input & accessibility]: /ui/adaptive-responsive/input
 
 :::note
-You might also check out the Google I/O 2024 talk about
-this subject.
+또한 이 주제에 대한 Google I/O 2024 토크도 확인해 보세요.
 
-{% ytEmbed 'LeKLGzpsz9I', 'How to build adaptive UI with Flutter' %}
+{% ytEmbed 'LeKLGzpsz9I', 'Flutter로 적응형 UI를 구축하는 방법' %}
 :::

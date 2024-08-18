@@ -1,84 +1,72 @@
 ---
-title: Capabilities & policies
+# title: Capabilities & policies
+title: 기능(Capabilities) 및 정책
+# description: >-
+#   Learn how to adapt your app to the
+#   capabilities and policies required
+#   by the platform, app store, your company,
+#   and so on.
 description: >-
-  Learn how to adapt your app to the
-  capabilities and policies required
-  by the platform, app store, your company,
-  and so on.
+  플랫폼, 앱 스토어, 회사 등에서 요구하는 기능과 정책에 맞게 앱을 조정하는 방법을 알아보세요.
 ---
 
-Most real-world apps have the need to adapt to the
-capabilities and policies of different devices and platforms.
-This page contains advice for how to
-handle these scenarios in your code.
+대부분의 실제 앱은 다양한 기기와 플랫폼의 기능과 정책에 적응해야 합니다. 
+이 페이지에는 코드에서 이러한 시나리오를 처리하는 방법에 대한 조언이 포함되어 있습니다.
 
-## Design to the strengths of each device type
+## 각 장치 타입의 장점에 맞춰 설계 {:#design-to-the-strengths-of-each-device-type}
 
-Consider the unique strengths and weaknesses of different devices.
-Beyond their screen size and inputs, such as touch, mouse, keyboard,
-what other unique capabilities can you leverage?
-Flutter enables your code to _run_ on different devices,
-but strong design is more than just running code.
-Think about what each platform does best and
-see if there are unique capabilities to leverage.
+다양한 기기의 고유한 강점과 약점을 고려하세요. 
+화면 크기와 (터치, 마우스, 키보드와 같은) 입력을 넘어 어떤 고유한 기능을 활용할 수 있을까요? 
+Flutter를 사용하면 다양한 기기에서 코드를 _실행_ 할 수 있지만, 강력한 디자인은 단순히 코드를 실행하는 것 이상입니다. 
+각 플랫폼이 가장 잘하는 것이 무엇인지 생각해보고 활용할 수 있는 고유한 기능이 있는지 확인하세요.
 
-For example: Apple's App Store and Google's Play Store
-have different rules that apps need to abide by.
-Different host operating systems have differing
-capabilities across time as well as each other. 
+예를 들어, Apple의 App Store와 Google의 Play Store는 앱이 따라야 하는 규칙이 다릅니다. 
+호스트 운영 체제마다 시간이 지남에 따라 서로 다른 기능이 있습니다.
 
-Another example is leveraging the web's extremely
-low barrier for sharing. If you're deploying a web app,
-decide what deep links to support,
-and design the navigation routes with those in mind.
+또 다른 예로는 공유를 위한 웹의 극히 낮은 장벽을 활용하는 것입니다. 
+웹 앱을 배포하는 경우, 지원할 딥 링크를 결정하고, 이를 염두에 두고 탐색 경로를 설계하세요.
 
-Flutter's recommended pattern for handling different
-behavior based on these unique capabilities is to create
-a set of `Capability` and `Policy` classes for your app.
+Flutter에서 이러한 고유한 기능에 따라 다양한 동작을 처리하기 위해 권장하는 패턴은 
+앱에 대한 `Capability` 및 `Policy` 클래스 세트를 만드는 것입니다.
 
-### Capabilities
+### 기능 {:#capabilities}
 
-A _capability_ defines what the code or device _can_ do.
-Examples of capabilities include:
+_기능_ 은 코드나 기기가 _할 수 있는_ 일을 정의합니다. 
 
-* The existence of an API
-* OS-enforced restrictions
-* Physical hardware requirements (like a camera) 
+기능의 예는 다음과 같습니다.
 
-### Policies
+* API의 존재
+* OS에서 강제하는 제한
+* 물리적 하드웨어 요구 사항(예: 카메라)
 
-A _policy_ defines what the code _should_ do.
+### 정책 {:#policies}
 
-Examples of policies include:
+_정책_ 은 코드가 _해야만 하는_ 일을 정의합니다.
 
-* App store guidelines
-* Design preferences
-* Assets or copy that refers to the host device
-* Features enabled on the server side 
+정책의 예는 다음과 같습니다.
 
-### How to structure policy code 
+* 앱 스토어 가이드라인
+* 디자인 선호도
+* Assets 또는 호스트 기기를 참조하는 사본
+* 서버 측에서 활성화된 기능
 
-The simplest mechanical way is `Platform.isAndroid`,
-`Platform.isIOS`, and `kIsWeb`. These APIs mechanically
-let you know where the code is running but have some
-problems as the app expands where it can run, and
-as host platforms add functionality. 
+### 정책 코드를 구성하는 방법 {:#how-to-structure-policy-code}
 
-The following guidelines explain best practices
-when developing the capabilities and policies for your app:
+가장 간단한 기계적 방법은 `Platform.isAndroid`, `Platform.isIOS`, `kIsWeb`입니다. 
+이러한 API는 코드가 실행되는 위치를 기계적으로 알려주지만, 
+앱이 실행될 수 있는 위치를 확장하고 호스트 플랫폼에서 기능을 추가함에 따라 몇 가지 문제가 있습니다.
 
-**Avoid using `Platform.isAndroid` and similar functions
-to make layout decisions or assumptions about what a device can do.**
+다음 가이드라인은 앱의 기능과 정책을 개발할 때의 모범 사례를 설명합니다.
 
-Instead, describe what you want to branch on in a method. 
+**레이아웃 결정이나 기기가 할 수 있는 일에 대한 가정을 하기 위해, `Platform.isAndroid` 및 유사한 함수를 사용하지 마십시오.**
 
-Example: Your app has a link to buy something in a
-website, but you don't want to show that link on iOS
-devices for policy reasons. 
+대신, 메서드에서 분기하려는 내용을 설명합니다.
+
+예: 앱에 웹사이트에서 무언가를 구매할 수 있는 링크가 있지만, 정책상의 이유로 iOS 기기에 해당 링크를 표시하고 싶지 않습니다.
 
 ```dart
 bool shouldAllowPurchaseClick() {
-  // Banned by Apple App Store guidelines. 
+  // Apple 앱 스토어 지침에 따라 금지됨.
   return !Platform.isIOS;
 }
 
@@ -91,104 +79,68 @@ TextSpan(
   } : null,
 ```
 
-What did you get by adding an additional layer of indirection?
-The code makes it more clear why the branched path exists.
-This method can exist directly in the class but it's likely
-that other parts of the code might need this same check.
-If so, put the code in a class. 
+간접적인 레이어를 추가해서 무엇을 얻었나요? 
+코드는 분기 경로가 존재하는 이유를 더 명확하게 보여줍니다. 
+이 메서드는 클래스에 직접 존재할 수 있지만 코드의 다른 부분에도 이와 동일한 검사가 필요할 가능성이 있습니다. 
+그렇다면, 코드를 클래스에 넣으세요.
 
 ```dart title="policy.dart"
 
 class Policy {
 
   bool shouldAllowPurchaseClick() {
-    // Banned by Apple App Store guidelines. 
+    // Apple 앱 스토어 지침에 따라 금지됨.
     return !Platform.isIOS;
   }
 }
 ```
 
-With this code in a class, any widget test can mock
-`Policy().shouldAllowPurchaseClick` and verify the behavior
-independently of where the device runs. 
-It also means that later, if you decide that
-buying on the web isn't the right flow for
-Android users, you can change the implementation
-and the tests for clickable text won't need to change. 
+이 코드를 클래스에 넣으면, 어떠한 위젯 테스트에서라도 `Policy().shouldAllowPurchaseClick`을 mock하고, 
+기기가 실행되는 위치와 관계없이 동작을 확인할 수 있습니다. 
+또한 나중에, 웹에서 구매하는 것이 Android 사용자에게 적합한 흐름이 아니라고 판단하면, 
+구현을 변경할 수 있고 클릭 가능한 텍스트에 대한 테스트를 변경할 필요가 없습니다.
 
-## Capabilities 
+## 기능 {:#capabilities-1}
 
-Sometimes you want your code to do something but the
-API doesn't exist, or maybe you depend on a plugin feature
-that isn't yet implemented on all of the platforms you support.
-This is a limitation of what the device _can_ do. 
+때로는 코드에서 무언가를 하길 원하지만 API가 없거나, 지원하는 모든 플랫폼에서 아직 구현되지 않은 플러그인 기능에 의존할 수도 있습니다. 이는 기기에서 _할 수 있는_ 일의 제한입니다.
 
-Those situations are similar to the policy decisions
-described above, but these are referred to as _capabilities_.
-Why separate policy classes from capabilities
-when the structure of the classes is similar?
-The Flutter team has found with productionized apps that making
-a logical distinction between what apps _can_ do and
-what they _should_ do helps larger products respond to
-changes in what platforms can do or require
-in addition to your own preferences after
-the initial code is written. 
+이러한 상황은 위에서 설명한 정책 결정과 유사하지만, 이를 _기능_ 이라고 합니다. 
+클래스 구조가 비슷한데 왜 정책 클래스를 기능에서 분리해야 할까요? 
+Flutter 팀은 프로덕션화된 앱에서 앱이 _할 수 있는_ 일과 _해야 하는 일_ 을 논리적으로 구분하면, 
+초기 코드가 작성된 후 플랫폼에서 할 수 있거나 요구하는 일의 변경에 더 큰 제품이 대응하는 데 도움이 된다는 것을 발견했습니다.
 
-For example, consider the case where one platform adds
-a new permission that requires users to interact with
-a system dialog before your code calls a sensitive API.
-Your team does the work for platform 1 and creates a
-capability named `requirePermissionDialogFlow`.
-Then, if and when platform 2 adds a similar requirement
-but only for new API versions,
-then the implementation of `requirePermissionDialogFlow`
-can now check the API level and return true for platform 2.
-You've leveraged the work you already did.
+예를 들어, 한 플랫폼에서 코드에서 민감한 API를 호출하기 전에, 
+사용자가 시스템 대화 상자와 상호 작용해야 하는 새 권한을 추가하는 경우를 생각해 보세요. 
+당신의 팀에서 플랫폼 1에 대한 작업을 수행하고, `requirePermissionDialogFlow`라는 기능을 만듭니다. 
+그런 다음, 플랫폼 2에서 새로운 API 버전에만 유사한 요구 사항을 추가하는 경우, 
+`requirePermissionDialogFlow` 구현은 이제 API 레벨을 확인하고 플랫폼 2에 대해 true를 반환할 수 있습니다. 
+당신은 이미 수행한 작업을 활용했습니다.
 
-## Policies 
+## 정책 {:#policies-1}
 
-We encourage starting with a `Policy` class initially
-even if it seems like you won't make many policy based decisions.
-As the complexity of the class grows or the number of inputs expands,
-you might decide to break up the policy class by feature
-or some other criteria.  
+정책 기반 결정을 많이 내리지 않을 것 같더라도 처음에는 `Policy` 클래스로 시작하는 것이 좋습니다. 
+클래스의 복잡성이 커지거나 입력 수가 늘어나면, 기능이나 다른 기준으로 정책 클래스를 분할하기로 결정할 수 있습니다.
 
-For policy implementation, you can use compile time,
-run time, or Remote Procedure Call (RPC) backed implementations.
+정책 구현의 경우, 컴파일 타임, 런타임 또는 원격 프로시저 호출(RPC, Remote Procedure Call) 지원 구현을 사용할 수 있습니다.
 
-Compile-time policy checks are good for platforms
-where the preference is unlikely to change and where
-accidentally changing the value might have large consequences.
-For example, if a platform requires that you not
-link to the Play store, or requires that you use
-a specific payment provider given the content of your app.
+* 컴파일 타임 정책 검사는 기본 설정이 변경될 가능성이 낮고 실수로 값을 변경하면 큰 결과가 발생할 수 있는 플랫폼에 적합합니다. 
+  * 예를 들어, 플랫폼에서 Play 스토어에 연결하지 않도록 요구하거나, 앱의 콘텐츠를 고려하여 특정 결제 제공자를 사용해야 하는 경우입니다.
 
-Runtime checks can be good for determining if there
-is a touch screen the user can use. Android has a feature
-you can check and your web implementation could
-check for max touch points. 
+* 런타임 검사는 사용자가 사용할 수 있는 터치 스크린이 있는지 확인하는 데 유용할 수 있습니다. 
+  * Android에는 확인할 수 있는 기능이 있으며, 웹 구현에서 최대 터치 포인트를 확인할 수 있습니다.
 
-RPC-backed policy changes are good for incremental
-feature rollout or for decisions that might change later. 
+* RPC 지원 정책 변경은 증가 기능 출시 또는 나중에 변경될 수 있는 결정에 적합합니다.
 
-## Summary 
+## 요약 {:#summary}
 
-Use a `Capability` class to define what the code *can* do.
-You might check against the existence of an API,
-OS-enforced restrictions,
-and physical hardware requirements (like a camera).
-A capability usually involves compile or runtime checks.
+`Capability` 클래스를 사용하여 코드가 *할 수 있는* 작업을 정의합니다. 
+API, OS에서 강제하는 제한 및 물리적 하드웨어 요구 사항(예: 카메라)의 존재 여부를 확인할 수 있습니다. 
+기능에는 일반적으로 컴파일 또는 런타임 검사가 포함됩니다.
 
-Use a `Policy` class (or classes depending on complexity)
-to define what the code _should_ do to comply with
-App store guidelines, design preferences,
-and assets or copy that need to refer to the host device.
-Policies can be a mix of compile, runtime, or RPC checks. 
+`Policy` 클래스(또는 복잡도에 따라 여러 클래스)를 사용하여 코드가, 
+앱 스토어 지침, 디자인 선호도 및 호스트 장치를 참조해야 하는 자산 또는 복사본을 준수하기 위해 _수행해야만 하는_ 작업을 정의합니다. 
+정책은 컴파일, 런타임 또는 RPC 검사를 혼합할 수 있습니다.
 
-Test the branching code by mocking capabilities and
-policies so the widget tests don't need to change
-when capabilities or policies change.
+기능과 정책을 mock하여 분기 코드를 테스트하면, 기능이나 정책이 변경될 때 위젯 테스트가 변경될 필요가 없습니다.
 
-Name the methods in your capabilities and policies classes
-based on what they are trying to branch, rather than on device type.
-
+기능 및 정책 클래스의 메서드 이름을 장치 타입이 아닌 분기하려는 내용에 따라 지정합니다.
