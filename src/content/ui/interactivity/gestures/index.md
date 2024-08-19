@@ -1,51 +1,43 @@
 ---
-title: Taps, drags, and other gestures
-short-title: Gestures
-description: How gestures, such as taps and drags, work in Flutter.
+# title: Taps, drags, and other gestures
+title: 탭, 드래그 및 기타 제스처
+# short-title: Gestures
+short-title: 제스처
+# description: How gestures, such as taps and drags, work in Flutter.
+description: 탭, 드래그 등의 제스처가 Flutter에서 작동하는 방식.
 ---
 
-This document explains how to listen for, and respond to,
-_gestures_ in Flutter.
-Examples of gestures include taps, drags, and scaling.
+이 문서에서는 Flutter에서 _제스처_ 를 수신하고 응답하는 방법을 설명합니다. 
+제스처의 예로는 탭, 드래그, 크기 조정이 있습니다.
 
-The gesture system in Flutter has two separate layers.
-The first layer has raw pointer events that describe
-the location and movement of pointers (for example,
-touches, mice, and styli) across the screen.
-The second layer has _gestures_ that describe semantic
-actions that consist of one or more pointer movements.
+Flutter의 제스처 시스템에는 두 개의 별도 레이어가 있습니다. 
+1. 첫 번째 레이어에는 화면에서 포인터(예: 터치, 마우스, 스타일러스)의 위치와 움직임을 설명하는 raw 포인터 이벤트가 있습니다. 
+2. 두 번째 레이어에는 하나 이상의 포인터 움직임으로 구성된 의미적 동작(semantic actions)을 설명하는 _제스처_ 가 있습니다.
 
-## Pointers
+## 포인터 {:#pointers}
 
-Pointers represent raw data about the user's interaction
-with the device's screen.
-There are four types of pointer events:
+포인터는 사용자가 기기 화면과 상호작용하는 것에 대한 raw 데이터를 나타냅니다.
+포인터 이벤트에는 네 가지 타입이 있습니다.
 
 [`PointerDownEvent`][]
-: The pointer has contacted the screen at a particular location.
+: 포인터가 특정 위치에서 화면에 접촉했습니다.
 
 [`PointerMoveEvent`][]
-: The pointer has moved from one location on the screen to another.
+: 포인터가 화면의 한 위치에서 다른 위치로 이동했습니다.
 
 [`PointerUpEvent`][]
-: The pointer has stopped contacting the screen.
+: 포인터가 화면에 접촉하는 것을 멈췄습니다.
 
 [`PointerCancelEvent`][]
-: Input from this pointer is no longer directed towards this app.
+: 이 포인터의 입력은 더 이상 이 앱으로 전달되지 않습니다.
 
-On pointer down, the framework does a _hit test_ on your app
-to determine which widget exists at the location where the
-pointer contacted the screen. The pointer down event
-(and subsequent events for that pointer) are then dispatched
-to the innermost widget found by the hit test.
-From there, the events bubble up the tree and are dispatched
-to all the widgets on the path from the innermost
-widget to the root of the tree. There is no mechanism for
-canceling or stopping pointer events from being dispatched further.
+포인터가 down 되면, 프레임워크는 앱에서 _히트 테스트_ 를 수행하여 포인터가 화면에 접촉한 위치에 어떤 위젯이 있는지 확인합니다. 
+포인터 down 이벤트(및 해당 포인터에 대한 후속 이벤트)는 그런 다음 히트 테스트에서 찾은 가장 안쪽 위젯으로 전송됩니다. 
+거기에서, 이벤트는 트리 위로 버블링(bubble up)되어, 가장 안쪽 위젯에서 트리 루트까지의 경로에 있는 모든 위젯으로 전송됩니다. 
+포인터 이벤트가 더 이상 전송되는 것을 취소하거나 중지하는 메커니즘은 없습니다.
 
-To listen to pointer events directly from the widgets layer, use a
-[`Listener`][] widget. However, generally,
-consider using gestures (as discussed below) instead.
+위젯 레이어에서 직접 포인터 이벤트를 수신하려면, [`Listener`][] 위젯을 사용합니다. 
+그러나, 일반적으로 제스처(아래에서 설명)를 대신 사용하는 것을 고려합니다.
 
 [`Listener`]: {{site.api}}/flutter/widgets/Listener-class.html
 [`PointerCancelEvent`]: {{site.api}}/flutter/gestures/PointerCancelEvent-class.html
@@ -53,116 +45,87 @@ consider using gestures (as discussed below) instead.
 [`PointerMoveEvent`]: {{site.api}}/flutter/gestures/PointerMoveEvent-class.html
 [`PointerUpEvent`]: {{site.api}}/flutter/gestures/PointerUpEvent-class.html
 
-## Gestures
+## 제스쳐 {:#gestures}
 
-Gestures represent semantic actions (for example, tap, drag,
-and scale) that are recognized from multiple individual pointer
-events, potentially even multiple individual pointers.
-Gestures can dispatch multiple events, corresponding to the
-lifecycle of the gesture (for example, drag start,
-drag update, and drag end):
+제스처는 (여러 개별 포인터 이벤트, 심지어 여러 개별 포인터에서 인식되는) 의미적 동작(예: 탭, 드래그, 크기 조절)을 나타냅니다. 
+제스처는 제스처의 수명 주기(예: 드래그 시작, 드래그 업데이트, 드래그 종료)에 해당하는 여러 이벤트를 전달할 수 있습니다.
 
-**Tap**
+**탭**
 
 `onTapDown`
-: A pointer that might cause a tap has contacted
-  the screen at a particular location.
+: 탭을 유발할 수 있는 포인터가 특정 위치에서 화면에 접촉했습니다.
 
 `onTapUp`
-: A pointer that triggers a tap has stopped contacting
-  the screen at a particular location.
+: 탭을 트리거하는 포인터가 특정 위치에서 화면에 접촉하는 것을 멈췄습니다.
 
 `onTap`
-: The pointer that previously triggered the `onTapDown`
-  has also triggered `onTapUp` which ends up causing a tap.
+: 이전에 `onTapDown`을 트리거한 포인터가,  `onTapUp`도 트리거하여 결국 탭을 발생시킵니다.
 
 `onTapCancel`
-: The pointer that previously triggered the `onTapDown`
-  won't end up causing a tap.
+: 이전에 `onTapDown`을 트리거한 포인터가 결국 탭을 발생시키지 않습니다.
 
-**Double tap**
+**더블 탭**
 
 `onDoubleTap`
-: The user has tapped the screen at the same location twice in
-  quick succession.
+: 사용자가 화면을 같은 위치에서 빠르게 두 번 탭했습니다.
 
-**Long press**
+**길게 누르기**
 
 `onLongPress`
-: A pointer has remained in contact with the
-  screen at the same location for a long period of time.
+: 포인터가 장시간 동안 화면의 같은 위치에 접촉해 있었습니다.
 
-**Vertical drag**
+**수직 드래그**
 
 `onVerticalDragStart`
-: A pointer has contacted the screen and might begin to
-  move vertically.
+: 포인터가 화면에 접촉하여 수직으로 움직이기 시작할 수 있습니다.
 
 `onVerticalDragUpdate`
-: A pointer that is in contact with the screen and
-    moving vertically has moved in the vertical direction.
+: 화면과 접촉하여 수직으로 움직이는 포인터가 수직 방향으로 움직였습니다.
 
 `onVerticalDragEnd`
-: A pointer that was previously in contact with the screen
-    and moving vertically is no longer in contact with the
-    screen and was moving at a specific velocity when it
-    stopped contacting the screen.
+: 이전에 화면과 접촉하여 수직으로 움직이는 포인터가 더 이상 화면과 접촉하지 않고, 
+  특정 속도로 움직이다가 화면과의 접촉을 멈췄습니다.
 
-**Horizontal drag**
+**수평 드래그**
 
 `onHorizontalDragStart`
-: A pointer has contacted the screen and might begin to
-  move horizontally.
+: 포인터가 화면에 접촉하여 수평으로 움직이기 시작할 수 있습니다.
 
 `onHorizontalDragUpdate`
-: A pointer that is in contact with the screen and
-  moving horizontally has moved in the horizontal direction.
+: 화면과 접촉하여 수평으로 움직이는 포인터가 수평 방향으로 움직였습니다.
 
 `onHorizontalDragEnd`
-: A pointer that was previously in contact with the
-  screen and moving horizontally is no longer in contact
-  with the screen and was moving at a specific velocity
-  when it stopped contacting the screen.
+: 이전에 화면과 접촉하여 수평으로 움직이는 포인터가 더 이상 화면과 접촉하지 않고, 
+  특정 속도로 움직이다가 화면과 접촉을 멈췄습니다.
 
 **Pan**
 
 `onPanStart`
-: A pointer has contacted the screen and might begin to move
-  horizontally or vertically. This callback crashes if
-  `onHorizontalDragStart` or `onVerticalDragStart` is set.
+: 포인터가 화면에 접촉하여 수평 또는 수직으로 움직이기 시작할 수 있습니다. 
+  `onHorizontalDragStart` 또는 `onVerticalDragStart`가 설정된 경우, 이 콜백은 충돌합니다.
 
 `onPanUpdate`
-: A pointer that is in contact with the screen and is moving
-  in the vertical or horizontal direction. This callback
-  crashes if `onHorizontalDragUpdate` or `onVerticalDragUpdate`
-  is set.
+: 화면과 접촉하여 수직 또는 수평 방향으로 움직이는 포인터입니다. 
+  `onHorizontalDragUpdate` 또는 `onVerticalDragUpdate`가 설정된 경우, 이 콜백은 충돌합니다.
 
 `onPanEnd`
-: A pointer that was previously in contact with screen
-  is no longer in contact with the screen and is moving
-  at a specific velocity when it stopped contacting the screen.
-  This callback crashes if `onHorizontalDragEnd` or
-  `onVerticalDragEnd` is set.
+: 이전에 화면과 접촉했던 포인터가 더 이상 화면과 접촉하지 않고, 화면과의 접촉을 멈췄을 때 특정 속도로 움직입니다.
+  `onHorizontalDragEnd` 또는 `onVerticalDragEnd`가 설정된 경우, 이 콜백은 충돌합니다.
 
-### Adding gesture detection to widgets
+### 위젯에 제스처 감지 추가 {:#adding-gesture-detection-to-widgets}
 
-To listen to gestures from the widgets layer,
-use a [`GestureDetector`][].
+위젯 레이어에서 제스처를 수신하려면, [`GestureDetector`][]를 사용하세요.
 
 :::note
-To learn more, watch this short
-Widget of the Week video on the `GestureDetector` widget:
+자세한 내용을 알아보려면, `GestureDetector` 위젯에 대한 이 짧은 주간 위젯 비디오를 시청하세요.
 
 {% ytEmbed 'WhVXkCFPmK4', 'GestureDetector - Flutter widget of the week' %}
 :::
 
-If you're using Material Components,
-many of those widgets already respond to taps or gestures.
-For example, [`IconButton`][] and [`TextButton`][]
-respond to presses (taps), and [`ListView`][]
-responds to swipes to trigger scrolling.
-If you aren't using those widgets, but you want the
-"ink splash" effect on a tap, you can use [`InkWell`][].
+Material Components를 사용하는 경우, 이러한 위젯 중 다수는 이미 탭이나 제스처에 반응합니다. 
+예를 들어, [`IconButton`][] 및 [`TextButton`][]은 누르기 (탭)에 반응하고, 
+[`ListView`][]는 스크롤을 트리거하기 위한 스와이프에 반응합니다. 
+이러한 위젯을 사용하지 않지만, 탭에 "잉크 튀김" 효과를 원하는 경우, [`InkWell`][]을 사용할 수 있습니다.
 
 [`GestureDetector`]: {{site.api}}/flutter/widgets/GestureDetector-class.html
 [`IconButton`]: {{site.api}}/flutter/material/IconButton-class.html
@@ -170,60 +133,37 @@ If you aren't using those widgets, but you want the
 [`ListView`]: {{site.api}}/flutter/widgets/ListView-class.html
 [`TextButton`]: {{site.api}}/flutter/material/TextButton-class.html
 
-### Gesture disambiguation
+### 제스처 모호성 해소 {:#gesture-disambiguation}
 
-At a given location on screen,
-there might be multiple gesture detectors.
-For example:
+화면의 주어진 위치에, 여러 제스처 감지기가 있을 수 있습니다. 예를 들어:
 
-* A `ListTile` has a tap recognizer that responds
-  to the entire `ListTile`, and a nested one around
-  a trailing icon button. The screen rect of the
-  trailing icon is now covered by two gesture
-  recognizers that need to negotiate for who handles
-  the gesture if it turns out to be a tap.
-* A single `GestureDetector` covers a screen area
-  configured to handle multiple gestures,
-  such as a long press and a tap.
-  The `tap` recognizer must now negotiate
-  with the `long press` recognizer when
-  the user touches that part of the screen.
-  Depending on what happens next with that pointer,
-  one of the two recognizers receives the gesture,
-  or neither receives the gesture if the user
-  performs something that's neither a tap nor a long press.
+* `ListTile`에는 
+  * (1) 전체 `ListTile`에 응답하는 탭 인식기와, (2) trailing 아이콘 버튼 주위에 중첩된 인식기가 있습니다. 
+  * trailing 아이콘의 화면 사각형은 이제, 
+    탭으로 판명될 경우 제스처를 처리할 것이 누구인지를 협상해야 하는, 
+    두 개의 제스처 인식기로 덮여 있습니다.
+* 단일 `GestureDetector`는 (길게 누르기 및 탭과 같은) 여러 제스처를 처리하도록 구성된 화면 영역을 덮습니다. 
+  * `tap` 인식기는 이제 사용자가 화면의 해당 부분을 터치할 때 `long press` 인식기와 협상해야만 합니다. 
+  * 해당 포인터에서 다음에 무슨 일이 일어나는지에 따라, 
+    * 두 인식기 중 하나가 제스처를 수신하거나, 
+    * 사용자가 탭도 길게 누르기도 아닌 작업을 수행하면 어느 것도 제스처를 수신하지 않습니다.
 
-All of these gesture detectors listen to the stream
-of pointer events as they flow past and attempt to recognize
-specific gestures. The [`GestureDetector`] widget decides
-which gestures to attempt to recognize based on which of its
-callbacks are non-null.
+이러한 모든 제스처 감지기는, 포인터 이벤트 스트림이 지나갈 때 이를 듣고, 특정 제스처를 인식하려고 시도합니다. [`GestureDetector`] 위젯은 null이 아닌 콜백에 따라 인식을 시도할 제스처를 결정합니다.
 
-When there is more than one gesture recognizer for a given
-pointer on the screen, the framework disambiguates which
-gesture the user intends by having each recognizer join
-the _gesture arena_. The gesture arena determines which
-gesture wins using the following rules:
+화면에 주어진 포인터에 대한 제스처 인식기가 두 개 이상 있는 경우, 
+프레임워크는 각 인식기를 _제스처 경기장_ 에 참여시켜, 사용자가 의도하는 제스처의 모호성을 해소합니다. 
+제스처 경기장은 다음 규칙을 사용하여 어떤 제스처가 승리하는지 결정합니다.
 
-* At any time, a recognizer can eliminate itself and leave the
-  arena. If there's only one recognizer left in the arena,
-  that recognizer wins.
+* 언제든지, 인식기는 자신을 제거하고 경기장을 떠날 수 있습니다. 
+  경기장에 인식기가 하나만 남아 있는 경우, 해당 인식기가 승리합니다. <기권. 하나만 남으면 그것이 승리.>
 
-* At any time, a recognizer can declare itself the winner,
-  causing all of the remaining recognizers to lose.
+* 언제든지, 인식기는 자신을 승자로 선언하여, 나머지 모든 인식기가 패배하게 할 수 있습니다. <승리선언. 승리선언하면 그것이 승리.>
 
-For example, when disambiguating horizontal and vertical dragging,
-both recognizers enter the arena when they receive the pointer
-down event. The recognizers observe the pointer move events.
-If the user moves the pointer more than a certain number of
-logical pixels horizontally, the horizontal recognizer declares
-the win and the gesture is interpreted as a horizontal drag.
-Similarly, if the user moves more than a certain number of logical
-pixels vertically, the vertical recognizer declares itself the winner.
+예를 들어, 수평 및 수직 드래그를 모호하게 구분할 때, 두 인식기는 포인터 down 이벤트를 수신하면 경기장에 들어갑니다. 
+인식기는 포인터 이동 이벤트를 관찰합니다. 
+사용자가 포인터를 수평으로 특정 수의 논리적 픽셀 이상 이동하면, 수평 인식기는 승리를 선언하고 제스처는 수평 드래그로 해석됩니다. 
+마찬가지로, 사용자가 수직으로 특정 수의 논리적 픽셀 이상 이동하면, 수직 인식기는 자신을 승자로 선언합니다.
 
-The gesture arena is beneficial when there is only a horizontal
-(or vertical) drag recognizer. In that case, there is only one
-recognizer in the arena and the horizontal drag is recognized
-immediately, which means the first pixel of horizontal movement
-can be treated as a drag and the user won't need to wait for
-further gesture disambiguation.
+제스처 경기장은 수평(또는 수직) 드래그 인식기만 있을 때 유용합니다. 
+이 경우, 경기장에 인식기가 하나뿐이고 수평 드래그가 즉시 인식되므로, 
+수평 이동의 첫 번째 픽셀을 드래그로 처리할 수 있으며, 사용자는 추가 제스처 모호성 해결을 기다릴 필요가 없습니다.
