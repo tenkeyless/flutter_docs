@@ -359,7 +359,7 @@
           permalink: /data-and-backend/state-mgmt/intro
         - title: 선언적으로 생각하기
           permalink: /data-and-backend/state-mgmt/declarative
-        - title: Ephemeral vs. app 상태
+        - title: Ephemeral vs 앱 상태
           permalink: /data-and-backend/state-mgmt/ephemeral-vs-app
         - title: 간단한 앱 상태 관리
           permalink: /data-and-backend/state-mgmt/simple

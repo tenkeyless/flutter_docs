@@ -1,47 +1,44 @@
 ---
-title: Simple app state management
-description: A simple form of state management.
+# title: Simple app state management
+title: 간단한 앱 상태 관리
+# description: A simple form of state management.
+description: 간단한 형태의 상태 관리.
 prev:
-  title: Ephemeral versus app state
+  # title: Ephemeral versus app state
+  title: 일시적(ephemeral) 상태 vs 앱 상태
   path: /development/data-and-backend/state-mgmt/ephemeral-vs-app
 next:
-  title: List of approaches
+  # title: List of approaches
+  title: 접근법 리스트
   path: /development/data-and-backend/state-mgmt/options
 ---
 
 <?code-excerpt path-base="state_mgmt/simple/"?>
 
-Now that you know about [declarative UI programming][]
-and the difference between [ephemeral and app state][],
-you are ready to learn about simple app state management.
+이제 [선언적 UI 프로그래밍][declarative UI programming]과 [일시적 상태 및 앱 상태][ephemeral and app state]의 차이점에 대해 알았으니, 간단한 앱 상태 관리에 대해 알아볼 준비가 되었습니다.
 
-On this page, we are going to be using the `provider` package.
-If you are new to Flutter and you don't have a strong reason to choose
-another approach (Redux, Rx, hooks, etc.), this is probably the approach
-you should start with. The `provider` package is easy to understand
-and it doesn't use much code.
-It also uses concepts that are applicable in every other approach.
+이 페이지에서는, `provider` 패키지를 사용할 것입니다. 
+Flutter를 처음 사용하고 다른 접근 방식(Redux, Rx, hooks 등)을 선택할 만한 강력한 이유가 없다면, 
+이 접근 방식부터 시작해야 할 것입니다. 
+`provider` 패키지는 이해하기 쉽고 코드를 많이 사용하지 않습니다. 
+또한 다른 모든 접근 방식에 적용할 수 있는 개념을 사용합니다.
 
-That said, if you have a strong background in
-state management from other reactive frameworks,
-you can find packages and tutorials listed on the [options page][].
+즉, 다른 reactive 프레임워크에서 상태 관리에 대한 강력한 배경이 있다면, 
+[옵션 페이지][options page]에 나열된 패키지와 튜토리얼을 찾을 수 있습니다.
 
-## Our example 
+## 우리의 예제 {:#our-example}
 
 <img src='/assets/images/docs/development/data-and-backend/state-mgmt/model-shopper-screencast.gif' alt='An animated gif showing a Flutter app in use. It starts with the user on a login screen. They log in and are taken to the catalog screen, with a list of items. The click on several items, and as they do so, the items are marked as "added". The user clicks on a button and gets taken to the cart view. They see the items there. They go back to the catalog, and the items they bought still show "added". End of animation.' class='site-image-right'>
 
-For illustration, consider the following simple app.
+예를 들어, 다음의 간단한 앱을 생각해 보세요.
 
-The app has two separate screens: a catalog,
-and a cart (represented by the `MyCatalog`,
-and `MyCart` widgets, respectively). It could be a shopping app,
-but you can imagine the same structure in a simple social networking
-app (replace catalog for "wall" and cart for "favorites").
+앱에는 카탈로그와 카트(각각 `MyCatalog` 및 `MyCart` 위젯으로 표현됨)라는 두 개의 별도 화면이 있습니다. 
+쇼핑 앱일 수도 있지만, 간단한 소셜 네트워킹 앱에서도 동일한 구조를 상상할 수 있습니다.
+(카탈로그를 "wall"로, 카트를 "favorites"로 대체)
 
-The catalog screen includes a custom app bar (`MyAppBar`)
-and a scrolling view of many list items (`MyListItems`).
+카탈로그 화면에는 커스텀 앱 바(`MyAppBar`)와 여러 리스트 아이템의 스크롤 뷰(`MyListItems`)가 포함되어 있습니다.
 
-Here's the app visualized as a widget tree.
+위젯 트리로 시각화된 앱은 다음과 같습니다.
 
 <img src='/assets/images/docs/development/data-and-backend/state-mgmt/simple-widget-tree.png' width="100%" alt="A widget tree with MyApp at the top, and  MyCatalog and MyCart below it. MyCart area leaf nodes, but MyCatalog have two children: MyAppBar and a list of MyListItems.">
 
@@ -49,91 +46,78 @@ Here's the app visualized as a widget tree.
   Source drawing for the png above: https://docs.google.com/drawings/d/1KXxAl_Ctxc-avhR4uE58BXBM6Tyhy0pQMCsSMFHVL_0/edit?zx=y4m1lzbhsrvx
 {% endcomment %}
 
-So we have at least 5 subclasses of `Widget`. Many of them need
-access to state that "belongs" elsewhere. For example, each
-`MyListItem` needs to be able to add itself to the cart.
-It might also want to see whether the currently displayed item
-is already in the cart.
+따라서 `Widget`의 하위 클래스가 최소 5개 있습니다. 
+그 중 다수는 다른 곳에 "속하는" 상태에 대한 액세스가 필요합니다. 
+예를 들어, 각 `MyListItem`은 카트에 자신을 추가할 수 있어야 합니다. 
+또한 현재 표시된 아이템이 이미 카트에 있는지 확인하고 싶을 수도 있습니다.
 
-This takes us to our first question: where should we put the current
-state of the cart?
+여기서 첫 번째 질문으로 넘어갑니다. 카트의 현재 상태를 어디에 두어야 할까요?
 
+## 상태 들어올리기 {:#lifting-state-up}
 
-## Lifting state up
+Flutter에서는, 상태를 사용하는 위젯 위에 두는 것이 합리적입니다.
 
-In Flutter,
-it makes sense to keep the state above the widgets that use it.
-
-Why? In declarative frameworks like Flutter, if you want to change the UI,
-you have to rebuild it. There is no easy way to have
-`MyCart.updateWith(somethingNew)`. In other words, it's hard to
-imperatively change a widget from outside, by calling a method on it.
-And even if you could make this work, you would be fighting the
-framework instead of letting it help you.
+왜? Flutter와 같은 선언적 프레임워크에서, UI를 변경하려면, 다시 빌드해야 합니다. 
+`MyCart.updateWith(somethingNew)`를 갖는 쉬운 방법은 없습니다. 
+즉, 외부에서 위젯을 강제로 변경하기는 어렵고, 메서드를 호출하여 변경하는 것도 어렵습니다. 
+그리고 이것을 작동시킬 수 있다 하더라도, 프레임워크가 여러분을 돕게 하는 대신, 프레임워크와 싸우게 될 것입니다.
 
 ```dart
-// BAD: DO NOT DO THIS
+// 나쁨: 이렇게 하지 마세요
 void myTapHandler() {
   var cartWidget = somehowGetMyCartWidget();
   cartWidget.updateWith(item);
 }
 ```
 
-Even if you get the above code to work,
-you would then have to deal
-with the following in the `MyCart` widget:
+위의 코드를 작동시키더라도, `MyCart` 위젯에서 다음 문제를 처리해야 합니다.
 
 ```dart
-// BAD: DO NOT DO THIS
+// 나쁨: 이렇게 하지 마세요
 Widget build(BuildContext context) {
   return SomeWidget(
-    // The initial state of the cart.
+    // 카트의 초기 상태.
   );
 }
 
 void updateWith(Item item) {
-  // Somehow you need to change the UI from here.
+  // 어떻게든 여기에서 UI를 바꿔야 할 필요가 있습니다.
 }
 ```
 
-You would need to take into consideration the current state of the UI
-and apply the new data to it. It's hard to avoid bugs this way.
+UI의 현재 상태를 고려하고 새 데이터를 적용해야 합니다. 이런 식으로는 버그를 피하기 어렵습니다.
 
-In Flutter, you construct a new widget every time its contents change.
-Instead of `MyCart.updateWith(somethingNew)` (a method call)
-you use `MyCart(contents)` (a constructor). Because you can only
-construct new widgets in the build methods of their parents,
-if you want to change `contents`, it needs to live in `MyCart`'s
-parent or above.
+Flutter에서는, 내용이 변경될 때마다 새 위젯을 구성합니다. 
+`MyCart.updateWith(somethingNew)`(메서드 호출) 대신 `MyCart(contents)`(생성자)를 사용합니다. 
+부모의 빌드 메서드에서만 새 위젯을 구성할 수 있으므로, `contents`를 변경하려면, `MyCart`의 부모나 그 이상에 있어야 합니다.
 
 <?code-excerpt "lib/src/provider.dart (my-tap-handler)"?>
 ```dart
-// GOOD
+// 좋음
 void myTapHandler(BuildContext context) {
   var cartModel = somehowGetMyCartModel(context);
   cartModel.add(item);
 }
 ```
 
-Now `MyCart` has only one code path for building any version of the UI.
+이제 `MyCart`에는 모든 버전의 UI를 빌드하기 위한 코드 경로가 하나뿐입니다.
 
 <?code-excerpt "lib/src/provider.dart (build)"?>
 ```dart
-// GOOD
+// 좋음
 Widget build(BuildContext context) {
   var cartModel = somehowGetMyCartModel(context);
   return SomeWidget(
-    // Just construct the UI once, using the current state of the cart.
+    // 카트의 현재 상태를 사용하여, UI를 한 번만 구성하면 됩니다.
     // ···
   );
 }
 ```
 
-In our example, `contents` needs to live in `MyApp`. Whenever it changes,
-it rebuilds `MyCart` from above (more on that later). Because of this,
-`MyCart` doesn't need to worry about lifecycle&mdash;it just declares
-what to show for any given `contents`. When that changes, the old
-`MyCart` widget disappears and is completely replaced by the new one.
+우리의 예에서, `contents`는 `MyApp`에 있어야 합니다. 
+변경될 때마다, 위에서 `MyCart`를 다시 빌드합니다. (나중에 자세히 설명) 
+이 때문에, `MyCart`는 라이프사이클에 대해 걱정할 필요가 없습니다. - 주어진 `contents`에 대해 무엇을 보여줄지 선언하기만 하면 됩니다. 
+변경되면, 이전 `MyCart` 위젯이 사라지고, 새 위젯으로 완전히 대체됩니다.
 
 <img src='/assets/images/docs/development/data-and-backend/state-mgmt/simple-widget-tree-with-cart.png' width="100%" alt="Same widget tree as above, but now we show a small 'cart' badge next to MyApp, and there are two arrows here. One comes from one of the MyListItems to the 'cart', and another one goes from the 'cart' to the MyCart widget.">
 
@@ -141,29 +125,25 @@ what to show for any given `contents`. When that changes, the old
   Source drawing for the png above: https://docs.google.com/drawings/d/1ErMyaX4fwfbIW9ABuPAlHELLGMsU6cdxPDFz_elsS9k/edit?zx=j42inp8903pt
 {% endcomment %}
 
-This is what we mean when we say that widgets are immutable.
-They don't change&mdash;they get replaced.
+위젯이 불변(immutable)이라고 말할 때, 우리가 의미하는 바는 바로 이것입니다. 위젯은 변하지 않고 대체됩니다.
 
-Now that we know where to put the state of the cart, let's see how
-to access it.
+이제 카트 상태를 어디에 두어야 할지 알았으니, 액세스하는 방법을 살펴보겠습니다.
 
-## Accessing the state
+## 상태에 접근하기 {:#accessing-the-state}
 
-When a user clicks on one of the items in the catalog,
-it's added to the cart. But since the cart lives above `MyListItem`,
-how do we do that?
+사용자가 카탈로그의 아이템 중 하나를 클릭하면, 카트에 추가됩니다. 
+하지만, 카트가 `MyListItem` 위에 있으므로 어떻게 해야 할까요?
 
-A simple option is to provide a callback that `MyListItem` can call
-when it is clicked. Dart's functions are first class objects,
-so you can pass them around any way you want. So, inside
-`MyCatalog` you can define the following:
+간단한 옵션은 `MyListItem`이 클릭될 때, 호출할 수 있는 콜백을 제공하는 것입니다. 
+Dart의 함수는 일급 객체이므로, 원하는 대로 전달할 수 있습니다. 
+따라서, `MyCatalog` 내부에서 다음을 정의할 수 있습니다.
 
 <?code-excerpt "lib/src/passing_callbacks.dart (methods)"?>
 ```dart
 @override
 Widget build(BuildContext context) {
   return SomeWidget(
-    // Construct the widget, passing it a reference to the method above.
+    // 위 메서드에 대한 참조를 전달하여, 위젯을 구성합니다.
     MyListItem(myTapCallback),
   );
 }
@@ -173,95 +153,81 @@ void myTapCallback(Item item) {
 }
 ```
 
-This works okay, but for an app state that you need to modify from
-many different places, you'd have to pass around a lot of
-callbacks&mdash;which gets old pretty quickly.
+이 방법은 잘 작동하지만, 여러 다른 위치에서 수정해야 하는 앱 상태의 경우, 
+많은 콜백을 전달해야 하며, 이는 금세 오래됩니다. (which gets old pretty quickly.)
 
-Fortunately, Flutter has mechanisms for widgets to provide data and
-services to their descendants (in other words, not just their children,
-but any widgets below them). As you would expect from Flutter,
-where _Everything is a Widget™_, these mechanisms are just special
-kinds of widgets&mdash;`InheritedWidget`, `InheritedNotifier`,
-`InheritedModel`, and more. We won't be covering those here,
-because they are a bit low-level for what we're trying to do.
+다행히도, Flutter에는 위젯이 하위 위젯(즉, 단순히 자식만이 아닌, 그 밑의 어떤 하위 위젯이라도)에 데이터와 서비스를 제공하는 메커니즘이 있습니다. 
+_모든 것이 위젯™_ 인 Flutter에서 예상했듯이, 이러한 메커니즘은 특별한 종류의 위젯(`InheritedWidget`, `InheritedNotifier`, `InheritedModel` 등)일 뿐입니다. 
+여기서는 다루지 않을 것입니다. 우리가 하려는 일에 비해 낮은 레벨이기 때문입니다.
 
-Instead, we are going to use a package that works with the low-level
-widgets but is simple to use. It's called `provider`.
+대신, 낮은 레벨 위젯과 함께 작동하지만, 사용하기 쉬운 패키지를 사용할 것입니다. `provider`라고 합니다.
 
-Before working with `provider`,
-don't forget to add the dependency on it to your `pubspec.yaml`.
+`provider`를 사용하기 전에, `pubspec.yaml`에 종속성을 추가하는 것을 잊지 마세요.
 
-To add the `provider` package as a dependency, run `flutter pub add`:
+`provider` 패키지를 종속성으로 추가하려면, `flutter pub add`를 실행하세요.
 
 ```console
 $ flutter pub add provider
 ```
 
-Now you can `import 'package:provider/provider.dart';`
-and start building.
+이제 `import 'package:provider/provider.dart';`를 사용하여 빌드를 시작할 수 있습니다.
 
-With `provider`, you don't need to worry about callbacks or
-`InheritedWidgets`. But you do need to understand 3 concepts:
+`provider`를 사용하면, 콜백이나 `InheritedWidgets`에 대해 걱정할 필요가 없습니다. 하지만 3가지 개념을 이해해야 합니다.
 
 * ChangeNotifier
 * ChangeNotifierProvider
 * Consumer
 
+## ChangeNotifier {:#changenotifier}
 
-## ChangeNotifier
+`ChangeNotifier`는 리스너에 변경 알림을 제공하는 Flutter SDK에 포함된 간단한 클래스입니다. 
+즉, 무언가가 `ChangeNotifier`인 경우, 해당 변경 사항을 구독할 수 있습니다. 
+(이 용어에 익숙한 사람들을 위해 설명하자면, Observable의 한 형태입니다.)
 
-`ChangeNotifier` is a simple class included in the Flutter SDK which provides
-change notification to its listeners. In other words, if something is
-a `ChangeNotifier`, you can subscribe to its changes. (It is a form of
-Observable, for those familiar with the term.)
+`provider`에서, `ChangeNotifier`는 애플리케이션 상태를 캡슐화하는 한 가지 방법입니다. 
+매우 간단한 앱의 경우, 단일 `ChangeNotifier`로 충분합니다. 
+복잡한 앱의 경우, 여러 모델이 있으므로, 여러 `ChangeNotifier`가 있습니다. 
+(`ChangeNotifier`를 `provider`와 함께 사용할 필요는 없지만, 사용하기 쉬운 클래스입니다.)
 
-In `provider`, `ChangeNotifier` is one way to encapsulate your application
-state. For very simple apps, you get by with a single `ChangeNotifier`.
-In complex ones, you'll have several models, and therefore several
-`ChangeNotifiers`. (You don't need to use `ChangeNotifier` with `provider`
-at all, but it's an easy class to work with.)
-
-In our shopping app example, we want to manage the state of the cart in a
-`ChangeNotifier`. We create a new class that extends it, like so:
+우리의 쇼핑 앱 예제에서, `ChangeNotifier`에서 카트 상태를 관리하려고 합니다. 
+다음과 같이 이를 확장하는 새 클래스를 만듭니다.
 
 <?code-excerpt "lib/src/provider.dart (model)" replace="/ChangeNotifier/[!$&!]/g;/notifyListeners/[!$&!]/g"?>
 ```dart
 class CartModel extends [!ChangeNotifier!] {
-  /// Internal, private state of the cart.
+  /// 카트의 internal, private 상태입니다.
   final List<Item> _items = [];
 
-  /// An unmodifiable view of the items in the cart.
+  /// 카트에 있는 아이템의 변경 불가능한(unmodifiable) 뷰입니다.
   UnmodifiableListView<Item> get items => UnmodifiableListView(_items);
 
-  /// The current total price of all items (assuming all items cost $42).
+  /// 모든 품목의 현재 총 가격입니다. (모든 품목의 가격이 $42라고 가정)
   int get totalPrice => _items.length * 42;
 
-  /// Adds [item] to cart. This and [removeAll] are the only ways to modify the
-  /// cart from the outside.
+  /// 카트에 [item]을 추가합니다. 
+  /// 이것과 [removeAll]은 외부에서 카트를 수정하는 유일한 방법입니다.
   void add(Item item) {
     _items.add(item);
-    // This call tells the widgets that are listening to this model to rebuild.
+    // 이 호출은, 이 모델을 수신하고 있는 위젯에, 다시 빌드하라고 알려줍니다.
     [!notifyListeners!]();
   }
 
-  /// Removes all items from the cart.
+  /// 카트에서 모든 항목을 제거합니다.
   void removeAll() {
     _items.clear();
-    // This call tells the widgets that are listening to this model to rebuild.
+    // 이 호출은 이 모델을 수신하고 있는 위젯에 다시 빌드하라고 알려줍니다.
     [!notifyListeners!]();
   }
 }
 ```
 
-The only code that is specific to `ChangeNotifier` is the call
-to `notifyListeners()`. Call this method any time the model changes in a way
-that might change your app's UI. Everything else in `CartModel` is the
-model itself and its business logic.
+`ChangeNotifier`에 특정한 유일한 코드는 `notifyListeners()`에 대한 호출입니다. 
+앱의 UI를 변경할 수 있는 방식으로, 모델이 변경될 때마다 이 메서드를 호출합니다. 
+`CartModel`의 다른 모든 것은 모델 자체와 비즈니스 로직입니다.
 
-`ChangeNotifier` is part of `flutter:foundation` and doesn't depend on
-any higher-level classes in Flutter. It's easily testable (you don't even need
-to use [widget testing][] for it). For example,
-here's a simple unit test of `CartModel`:
+`ChangeNotifier`는 `flutter:foundation`의 일부이며, Flutter의 더 높은 레벨 클래스에 의존하지 않습니다. 
+쉽게 테스트할 수 있습니다. ([위젯 테스트][widget testing]를 사용할 필요조차 없습니다)
+예를 들어, `CartModel`의 간단한 유닛 테스트는 다음과 같습니다.
 
 <?code-excerpt "test/model_test.dart (test)"?>
 ```dart
@@ -278,19 +244,16 @@ test('adding item increases total cost', () {
 });
 ```
 
+## ChangeNotifierProvider {:#changenotifierprovider}
 
-## ChangeNotifierProvider
+`ChangeNotifierProvider`는 `ChangeNotifier`의 인스턴스를 하위 위젯에 제공하는 위젯입니다. 
+`provider` 패키지에서 제공됩니다.
 
-`ChangeNotifierProvider` is the widget that provides an instance of
-a `ChangeNotifier` to its descendants. It comes from the `provider` package.
+우리는 `ChangeNotifierProvider`를 어디에 두어야 할지 이미 알고 있습니다. 액세스해야 하는 위젯 위에 두는 것입니다. 
+`CartModel`의 경우, `MyCart`와 `MyCatalog` 둘 다 위 어딘가를 의미합니다.
 
-We already know where to put `ChangeNotifierProvider`: above the widgets that
-need to access it. In the case of `CartModel`, that means somewhere
-above both `MyCart` and `MyCatalog`.
-
-You don't want to place `ChangeNotifierProvider` higher than necessary
-(because you don't want to pollute the scope). But in our case,
-the only widget that is on top of both `MyCart` and `MyCatalog` is `MyApp`.
+`ChangeNotifierProvider`를 필요 이상으로 위에 두지 않아야 합니다. (범위를 오염시키고 싶지 않기 때문입니다) 
+하지만, 우리의 경우 `MyCart`와 `MyCatalog` 둘 다 위에 있는 유일한 위젯은 `MyApp`입니다.
 
 <?code-excerpt "lib/main.dart (main)" replace="/ChangeNotifierProvider/[!$&!]/g"?>
 ```dart
@@ -304,12 +267,11 @@ void main() {
 }
 ```
 
-Note that we're defining a builder that creates a new instance
-of `CartModel`. `ChangeNotifierProvider` is smart enough _not_ to rebuild
-`CartModel` unless absolutely necessary. It also automatically calls
-`dispose()` on `CartModel` when the instance is no longer needed.
+`CartModel`의 새 인스턴스를 만드는 빌더를 정의하고 있다는 점에 유의하세요. 
+`ChangeNotifierProvider`는 절대적으로 필요하지 않는 한, `CartModel`을 다시 빌드하지 _않을 만큼_ 똑똑합니다. 
+또한 인스턴스가 더 이상 필요하지 않으면, `CartModel`에서 `dispose()`를 자동으로 호출합니다.
 
-If you want to provide more than one class, you can use `MultiProvider`:
+두 개 이상의 클래스를 제공하려면, `MultiProvider`를 사용할 수 있습니다.
 
 <?code-excerpt "lib/main.dart (multi-provider-main)" replace="/multiProviderMain/main/g;/MultiProvider/[!$&!]/g"?>
 ```dart
@@ -326,12 +288,11 @@ void main() {
 }
 ```
 
-## Consumer
+## Consumer {:#consumer}
 
-Now that `CartModel` is provided to widgets in our app through the
-`ChangeNotifierProvider` declaration at the top, we can start using it.
+이제 `CartModel`이 상단의 `ChangeNotifierProvider` 선언을 통해 앱의 위젯에 제공되므로, 사용을 시작할 수 있습니다.
 
-This is done through the `Consumer` widget.
+이는 `Consumer` 위젯을 통해 수행됩니다.
 
 <?code-excerpt "lib/src/provider.dart (descendant)" replace="/Consumer/[!$&!]/g"?>
 ```dart
@@ -342,53 +303,49 @@ return [!Consumer!]<CartModel>(
 );
 ```
 
-We must specify the type of the model that we want to access.
-In this case, we want `CartModel`, so we write
-`Consumer<CartModel>`. If you don't specify the generic (`<CartModel>`),
-the `provider` package won't be able to help you. `provider` is based on types,
-and without the type, it doesn't know what you want.
+액세스하려는 모델의 타입을 지정해야 합니다. 
+이 경우, `CartModel`을 원하므로, `Consumer<CartModel>`을 작성합니다. 
+제네릭(`<CartModel>`)을 지정하지 않으면, `provider` 패키지에서 도움을 받을 수 없습니다. 
+`provider`는 타입에 기반하며, 타입이 없으면 원하는 것을 알 수 없습니다.
 
-The only required argument of the `Consumer` widget
-is the builder. Builder is a function that is called whenever the
-`ChangeNotifier` changes. (In other words, when you call `notifyListeners()`
-in your model, all the builder methods of all the corresponding
-`Consumer` widgets are called.)
+`Consumer` 위젯의 유일한 필수 인수는 빌더입니다. 
+빌더는 `ChangeNotifier`가 변경될 때마다 호출되는 함수입니다. 
+(즉, 모델에서 `notifyListeners()`를 호출하면, 해당 `Consumer` 위젯의 모든 빌더 메서드가 호출됩니다.)
 
-The builder is called with three arguments. The first one is `context`,
-which you also get in every build method.
+빌더는 세 개의 인수로 호출됩니다. 
 
-The second argument of the builder function is the instance of
-the `ChangeNotifier`. It's what we were asking for in the first place.
-You can use the data in the model to define what the UI should look like
-at any given point.
+1. 첫 번째는 `context`로, 
+   * 모든 빌드 메서드에서도 가져옵니다.
 
-The third argument is `child`, which is there for optimization.
-If you have a large widget subtree under your `Consumer`
-that _doesn't_ change when the model changes, you can construct it
-once and get it through the builder.
+2. 빌더 함수의 두 번째 인수는 `ChangeNotifier`의 인스턴스입니다. 
+   * 처음에 요청했던 것입니다. (asking for in the first place.)
+   * 모델의 데이터를 사용하여, UI가 주어진 지점에서 어떻게 보여야 하는지 정의할 수 있습니다.
+
+3. 세 번째 인수는 최적화를 위해 있는 `child`입니다. 
+   * 모델이 변경될 때, _변경되지 않는_ `Consumer` 아래에 큰 위젯 하위 트리가 있는 경우, 
+     한 번 구성하여 빌더를 통해 가져올 수 있습니다.
 
 <?code-excerpt "lib/src/performance.dart (child)" replace="/\bchild\b/[!$&!]/g"?>
 ```dart
 return Consumer<CartModel>(
   builder: (context, cart, [!child!]) => Stack(
     children: [
-      // Use SomeExpensiveWidget here, without rebuilding every time.
+      // 매번 다시 빌드하지 않고도, SomeExpensiveWidget을 사용할 수 있습니다.
       if ([!child!] != null) [!child!],
       Text('Total price: ${cart.totalPrice}'),
     ],
   ),
-  // Build the expensive widget here.
+  // 여기서 값비싼 위젯을 만들어 보세요.
   [!child!]: const SomeExpensiveWidget(),
 );
 ```
 
-It is best practice to put your `Consumer` widgets as deep in the tree
-as possible. You don't want to rebuild large portions of the UI
-just because some detail somewhere changed.
+`Consumer` 위젯을 가능한 한 트리의 깊은 곳에 두는 것이 가장 좋습니다. 
+어딘가의 세부 사항이 변경되었다고 해서, UI의 큰 부분을 다시 빌드하고 싶지는 않을 것입니다.
 
 <?code-excerpt "lib/src/performance.dart (non-leaf-descendant)"?>
 ```dart
-// DON'T DO THIS
+// 이렇게 하지 마세요.
 return Consumer<CartModel>(
   builder: (context, cart, child) {
     return HumongousWidget(
@@ -402,11 +359,11 @@ return Consumer<CartModel>(
 );
 ```
 
-Instead:
+대신에:
 
 <?code-excerpt "lib/src/performance.dart (leaf-descendant)"?>
 ```dart
-// DO THIS
+// 이렇게 하세요
 return HumongousWidget(
   // ...
   child: AnotherMonstrousWidget(
@@ -420,41 +377,31 @@ return HumongousWidget(
 );
 ```
 
-### Provider.of
+### Provider.of {:#provider-of}
 
-Sometimes, you don't really need the _data_ in the model to change the
-UI but you still need to access it. For example, a `ClearCart`
-button wants to allow the user to remove everything from the cart.
-It doesn't need to display the contents of the cart,
-it just needs to call the `clear()` method.
+때로는, UI를 변경하기 위해 모델의 _데이터_ 가 실제로 필요하지 않지만, 여전히 액세스해야 합니다. 
+예를 들어, `ClearCart` 버튼은 사용자가 카트에서 모든 것을 제거할 수 있도록 허용하려고 합니다. 
+카트의 내용을 표시할 필요는 없으며, `clear()` 메서드만 호출하면 됩니다.
 
-We could use `Consumer<CartModel>` for this,
-but that would be wasteful. We'd be asking the framework to
-rebuild a widget that doesn't need to be rebuilt.
+이를 위해 `Consumer<CartModel>`을 사용할 수 있지만, 낭비일 것입니다. 
+다시 빌드할 필요가 없는 위젯을 다시 빌드하도록 프레임워크에 요청하게 됩니다.
 
-For this use case, we can use `Provider.of`,
-with the `listen` parameter set to `false`.
+이 사용 사례의 경우, `Provider.of`를 사용할 수 있으며, `listen` 매개변수는 `false`로 설정됩니다.
 
 <?code-excerpt "lib/src/performance.dart (non-rebuilding)" replace="/listen: false/[!$&!]/g"?>
 ```dart
 Provider.of<CartModel>(context, [!listen: false!]).removeAll();
 ```
 
-Using the above line in a build method won't cause this widget to
-rebuild when `notifyListeners` is called.
+빌드 메서드에서 위 줄을 사용하면, `notifyListeners`가 호출될 때 위젯이 다시 빌드되지 않습니다.
 
+## 모두 합치기 {:#putting-it-all-together}
 
-## Putting it all together
+이 글에서 다룬 [예제를 확인][check out the example]할 수 있습니다.
+더 간단한 것을 원하시면, [`provider`로 빌드][built with `provider`]했을 때 간단한 Counter 앱이 어떻게 보이는지 확인하세요.
 
-You can [check out the example][] covered in this article.
-If you want something simpler,
-see what the simple Counter app looks like when
-[built with `provider`][].
-
-By following along with these articles, you've greatly 
-improved your ability to create state-based applications. 
-Try building an application with `provider` yourself to 
-master these skills. 
+이 글을 따라하면, 상태 기반 애플리케이션을 만드는 능력이 크게 향상됩니다. 
+`provider`로 애플리케이션을 직접 빌드하여, 이러한 기술을 마스터해 보세요.
 
 [built with `provider`]: {{site.repo.samples}}/tree/main/provider_counter
 [check out the example]: {{site.repo.samples}}/tree/main/provider_shopper
