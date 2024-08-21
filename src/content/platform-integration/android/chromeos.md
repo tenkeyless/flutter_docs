@@ -1,12 +1,13 @@
 ---
-title: Targeting ChromeOS with Android
-description: Platform-specific considerations for building for ChromeOS with Flutter.
+# title: Targeting ChromeOS with Android
+title: Android로 ChromeOS 타겟팅
+# description: Platform-specific considerations for building for ChromeOS with Flutter.
+description: Flutter로 ChromeOS를 위해 빌드하기 위한 플랫폼별 고려 사항.
 ---
 
-This page discusses considerations unique to building
-Android apps that support ChromeOS with Flutter.
+이 페이지에서는 Flutter를 사용하여 ChromeOS를 지원하는 Android 앱을 빌드하는 데 고유한 고려 사항에 대해 설명합니다.
 
-## Flutter & ChromeOS tips & tricks
+## Flutter & ChromeOS tips & tricks {:#flutter-chromeos-tips-tricks}
 
 For the current versions of ChromeOS, only certain ports from
 Linux are exposed to the rest of the environment.

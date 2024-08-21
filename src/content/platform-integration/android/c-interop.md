@@ -1,15 +1,15 @@
 ---
-title: "Binding to native Android code using dart:ffi"
-description: "To use C code in your Flutter program, use the dart:ffi library."
+# title: "Binding to native Android code using dart:ffi"
+title: "dart:ffi를 사용하여 네이티브 Android 코드에 바인딩"
+# description: "To use C code in your Flutter program, use the dart:ffi library."
+description: "Flutter 프로그램에서 C 코드를 사용하려면, dart:ffi 라이브러리를 사용하세요."
 ---
 
 <?code-excerpt path-base="platform_integration"?>
 
-Flutter mobile and desktop apps can use the
-[dart:ffi][] library to call native C APIs.
-_FFI_ stands for [_foreign function interface._][FFI]
-Other terms for similar functionality include
-_native interface_ and _language bindings._
+Flutter 모바일 및 데스크톱 앱은 [dart:ffi][] 라이브러리를 사용하여, 네이티브 C API를 호출할 수 있습니다. 
+_FFI_ 는 [_외부 함수 인터페이스 (foreign function interface)_][FFI]의 약자입니다. 
+유사한 기능에 대한 다른 용어로는 _네이티브 인터페이스(native interface)_ 및 _언어 바인딩(language bindings)_ 이 있습니다.
 
 :::note
 This page describes using the `dart:ffi` library
@@ -39,7 +39,7 @@ In this walkthrough, you'll create a C function
 that implements 32-bit addition and then
 exposes it through a Dart plugin named "native_add".
 
-## Dynamic vs static linking
+## Dynamic vs static linking {:#dynamic-vs-static-linking}
 
 A native library can be linked into an app either
 dynamically or statically. A statically linked library
@@ -72,7 +72,7 @@ which we don't link to statically).
 [`DynamicLibrary.open`]: {{site.dart.api}}/dev/dart-ffi/DynamicLibrary/DynamicLibrary.open.html
 [`DynamicLibrary.process`]: {{site.dart.api}}/dev/dart-ffi/DynamicLibrary/DynamicLibrary.process.html
 
-## Create an FFI plugin
+## Create an FFI plugin {:#create-an-ffi-plugin}
 
 To create an FFI plugin called "native_add",
 do the following:
@@ -107,9 +107,9 @@ The native code is invoked from dart in `lib/native_add_bindings_generated.dart`
 
 The bindings are generated with [package:ffigen]({{site.pub-pkg}}/ffigen).
 
-## Other use cases
+## Other use cases {:#other-use-cases}
 
-### Platform library
+### Platform library {:#platform-library}
 
 To link against a platform library,
 use the following instructions:
@@ -161,7 +161,7 @@ in binary form, use the following instructions:
    JCenter.
 
 
-## Android APK size (shared object compression)
+## Android APK size (shared object compression) {:#android-apk-size-shared-object-compression}
 
 [Android guidelines][] in general recommend
 distributing native shared objects uncompressed

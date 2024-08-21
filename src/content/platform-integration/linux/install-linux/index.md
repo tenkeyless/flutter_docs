@@ -1,13 +1,14 @@
 ---
-title: Add Linux as a target platform for Flutter
-description: Configure your system to develop Flutter for Linux.
-short-title: Set up Linux development
+# title: Add Linux as a target platform for Flutter
+title: Flutter의 대상 플랫폼으로 Linux 추가
+# description: Configure your system to develop Flutter for Linux.
+description: Linux용 Flutter를 개발하기 위해 시스템을 구성하세요.
+# short-title: Set up Linux development
+short-title: Linux 개발 설정
 target-list: [Android, web]
 ---
 
-To set up your development environment for targeting Linux,
-choose the guide that corresponds to the [Getting Started path][] you followed,
-or the platform you already have set up.
+Linux를 대상으로 개발 환경을 설정하려면, [시작하기 path][Getting Started path]에 해당하는 가이드나 이미 설정한 플랫폼을 선택하세요.
 
 <div class="card-grid">
 {% for target in target-list %}
@@ -25,7 +26,7 @@ or the platform you already have set up.
           {% endcase -%}
         </span>
         <span class="text-muted d-block">
-        Make {{ target }} and Linux desktop apps
+        {{ target }} 및 Linux 데스크톱 앱 만들기
         </span>
       </header>
     </div>

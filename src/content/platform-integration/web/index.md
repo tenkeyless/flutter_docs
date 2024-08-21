@@ -1,7 +1,10 @@
 ---
-title: Web support for Flutter
-short-title: Web
-description: Details of how Flutter supports the creation of web experiences.
+# title: Web support for Flutter
+title: Flutter에 대한 웹 지원
+# short-title: Web
+short-title: 웹
+# description: Details of how Flutter supports the creation of web experiences.
+description: Flutter가 웹 경험 생성을 지원하는 방법에 대한 자세한 내용입니다.
 ---
 
 Flutter's web support delivers the same experiences on the web as on mobile.

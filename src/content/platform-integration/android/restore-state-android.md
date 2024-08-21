@@ -1,13 +1,12 @@
 --- 
-title: "Restore state on Android"
-description: "How to restore the state of your Android app after it's been killed by the OS."
+# title: "Restore state on Android"
+title: "Android에서 상태 복원"
+# description: "How to restore the state of your Android app after it's been killed by the OS."
+description: "OS에 의해 Android 앱이 종료된 후, 해당 앱 상태를 복원하는 방법입니다."
 ---
 
-When a user runs a mobile app and then selects another
-app to run, the first app is moved to the background,
-or _backgrounded_. The operating system (both iOS and Android)
-might kill the backgrounded app to release memory and
-improve performance for the app running in the foreground.
+사용자가 모바일 앱을 실행한 다음 실행할 다른 앱을 선택하면, 첫 번째 앱이 백그라운드로 이동하거나, _백그라운드 (backgrounded)_ 됩니다. 
+운영 체제(iOS와 Android 모두)는 백그라운드 앱을 종료하여 메모리를 해제하고, 포그라운드에서 실행되는 앱의 성능을 개선할 수 있습니다.
 
 When the user selects the app again, bringing it
 back to the foreground, the OS relaunches it.
@@ -46,7 +45,7 @@ moments to prepare.
 
 [state]: /data-and-backend/state-mgmt/ephemeral-vs-app
 
-## Overview
+## Overview {:#overview}
 
 You can enable state restoration with just a few tasks:
 
@@ -95,7 +94,7 @@ Other considerations:
 [`restoreState`]: {{site.api}}/flutter/widgets/RestorationMixin/restoreState.html
 [VeggieSeasons]: {{site.repo.samples}}/tree/main/veggieseasons
 
-## Restoring navigation state
+## Restoring navigation state {:#restoring-navigation-state}
 
 If you want your app to return to a particular route
 that the user was most recently viewing
@@ -112,7 +111,7 @@ implements navigation with the [`go_router`][] package.
 Setting the `restorationId`
 values occur in the `lib/screens` classes.
 
-## Testing state restoration
+## Testing state restoration {:#testing-state-restoration}
 
 To test state restoration, set up your mobile device so that
 it doesn't save state once an app is backgrounded.
@@ -131,7 +130,7 @@ finished with testing!
 [`RestorationManager`]: {{site.api}}/flutter/services/RestorationManager-class.html
 [services]: {{site.api}}/flutter/services/services-library.html
 
-## Other resources
+## Other resources {:#other-resources}
 
 For further information on state restoration,
 check out the following resources:

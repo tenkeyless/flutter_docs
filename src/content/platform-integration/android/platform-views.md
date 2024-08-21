@@ -1,7 +1,10 @@
 ---
-title: Hosting native Android views in your Flutter app with Platform Views
-short-title: Android platform-views
-description: Learn how to host native Android views in your Flutter app with Platform Views.
+# title: Hosting native Android views in your Flutter app with Platform Views
+title: Platform Views를 사용하여 Flutter 앱에서 네이티브 Android 뷰 호스팅
+# short-title: Android platform-views
+short-title: Android 플랫폼 뷰
+# description: Learn how to host native Android views in your Flutter app with Platform Views.
+description: Platform Views를 사용하여 Flutter 앱에서 네이티브 Android 뷰를 호스팅하는 방법을 알아보세요.
 ---
 
 <?code-excerpt path-base="platform_integration/platform_views"?>
@@ -30,7 +33,7 @@ Platform Views on Android have two implementations. They come with tradeoffs
 both in terms of performance and fidelity. 
 Platform views require Android API 23+.
 
-## [Hybrid Composition](#hybrid-composition)
+## [Hybrid Composition](#hybrid-composition) {:#hybrid-composition}
 
 Platform Views are rendered as they are normally. Flutter content is rendered into a texture.
 SurfaceFlinger composes the Flutter content and the platform views.
@@ -40,7 +43,7 @@ SurfaceFlinger composes the Flutter content and the platform views.
 * `-` FPS of application will be lower.
 * `-` Certain transformations that can be applied to Flutter widgets will not work when applied to platform views.
 
-## [Texture Layer](#texturelayerhybridcompisition) (or Texture Layer Hybrid Composition)
+## [Texture Layer](#texturelayerhybridcompisition) (or Texture Layer Hybrid Composition) {:#texture-layer-or-texture-layer-hybrid-composition}
 
 Platform Views are rendered into a texture.
 Flutter draws the platform views (via the texture).
@@ -56,12 +59,12 @@ Flutter content is rendered directly into a Surface.
 To create a platform view on Android,
 use the following steps:
 
-## On the Dart side
+## On the Dart side {:#on-the-dart-side}
 
 On the Dart side, create a `Widget`
 and add one of the following build implementations.
 
-### Hybrid composition
+### Hybrid composition {:#hybrid-composition-1}
 
 In your Dart file,
 for example `native_view_example.dart`,
@@ -125,7 +128,7 @@ For more information, see the API docs for:
 [`PlatformViewLink`]: {{site.api}}/flutter/widgets/PlatformViewLink-class.html
 [`PlatformViewsService`]: {{site.api}}/flutter/services/PlatformViewsService-class.html
 
-### TextureLayerHybridCompisition
+### TextureLayerHybridCompisition {:#texturelayerhybridcompisition}
 
 In your Dart file,
 for example `native_view_example.dart`,
@@ -164,7 +167,7 @@ For more information, see the API docs for:
 
 [`AndroidView`]: {{site.api}}/flutter/widgets/AndroidView-class.html
 
-## On the platform side
+## On the platform side {:#on-the-platform-side}
 
 On the platform side, use the standard
 `io.flutter.plugin.platform` package
@@ -418,11 +421,11 @@ android {
     }
 }
 ```
-### Surface Views 
+### Surface Views {:#surface-views}
 
 Handling SurfaceViews is problematic for Flutter and should be avoided when possible.
 
-### Manual view invalidation
+### Manual view invalidation {:#manual-view-invalidation}
 
 Certain Android Views do not invalidate themselves when their content changes.
 Some example views include `SurfaceView` and `SurfaceTexture`.
@@ -434,7 +437,7 @@ or one of its parent views.
 
 [`AndroidViewSurface`]: {{site.api}}/flutter/widgets/AndroidViewSurface-class.html
 
-### Issues 
+### Issues {:#issues}
 
 [Existing Platform View issues](https://github.com/flutter/flutter/issues?q=is%3Aopen+is%3Aissue+label%3A%22a%3A+platform-views%22)
 
