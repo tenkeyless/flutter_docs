@@ -520,7 +520,7 @@
         - title: 플러그인 작성자를 위한
           permalink: /packages-and-plugins/swift-package-manager/for-plugin-authors
     - divider
-    - title: Flutter 즐겨찾기
+    - title: Flutter Favorite
       permalink: /packages-and-plugins/favorites
     - title: 패키지 저장소
       permalink: https://pub.dev/flutter

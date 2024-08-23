@@ -1,209 +1,155 @@
 ---
-title: Developing packages & plugins
-short-title: Developing
-description: How to write packages and plugins for Flutter.
+# title: Developing packages & plugins
+title: 패키지 및 플러그인 개발
+# short-title: Developing
+short-title: 개발
+# description: How to write packages and plugins for Flutter.
+description: Flutter용 패키지와 플러그인을 작성하는 방법.
 ---
 
-## Package introduction
+## 패키지 소개 {:#package-introduction}
 
-Packages enable the creation of modular code that can be shared easily.
-A minimal package consists of the following:
+패키지는 쉽게 공유할 수 있는 모듈식 코드를 생성할 수 있도록 합니다. 최소 패키지는 다음으로 구성됩니다.
 
 **`pubspec.yaml`**
-: A metadata file that declares the package name,
-  version, author, and so on.
+: 패키지 이름, 버전, 작성자 등을 선언하는 메타데이터 파일입니다.
 
 **`lib`**
-: The `lib` directory contains the public code in
-  the package, minimally a single `<package-name>.dart` file.
+: `lib` 디렉터리에는 패키지의 공개 코드가 들어 있으며, 최소한 단일 `<package-name>.dart` 파일입니다.
 
 :::note
-For a list of dos and don'ts when writing an effective plugin,
-see the Medium article by Mehmet Fidanboylu,
-[Writing a good plugin][].
+효과적인 플러그인을 작성할 때 해야 할 일과 하지 말아야 할 일 리스트는, 
+Mehmet Fidanboylu의 Medium 글 [좋은 플러그인 작성][Writing a good plugin]을 참조하세요.
 :::
 
-### Package types {:#types}
+### 패키지 타입 {:#types}
 
-Packages can contain more than one kind of content:
+패키지에는 여러 종류의 콘텐츠가 포함될 수 있습니다.
 
-**Dart packages**
-: General packages written in Dart,
-  for example the [`path`][] package.
-  Some of these might contain Flutter specific
-  functionality and thus have a dependency on the
-  Flutter framework, restricting their use to Flutter only,
-  for example the [`fluro`][] package.
+**Dart 패키지**
+: Dart로 작성된 일반 패키지, 예를 들어 [`path`][] 패키지. 
+  이 중 일부는 Flutter 특정 기능을 포함할 수 있으므로, Flutter 프레임워크에 종속되어 Flutter에서만 사용할 수 있습니다. 
+  예를 들어 [`fluro`][] 패키지.
 
-**Plugin packages**
-: A specialized Dart package that contains an API written in
-  Dart code combined with one or more platform-specific
-  implementations.
+**플러그인 패키지**
+: Dart 코드로 작성된 API와 하나 이상의 플랫폼별 구현을 결합한 특수 Dart 패키지.
 
-  Plugin packages can be written for Android
-  (using Kotlin or Java), iOS (using Swift or Objective-C),
-  web, macOS, Windows, or Linux, or any combination
-  thereof.
+  플러그인 패키지는 Android(Kotlin 또는 Java 사용), iOS(Swift 또는 Objective-C 사용), 웹, macOS, 
+  Windows 또는 Linux 또는 이들의 조합으로 작성할 수 있습니다.
 
-  A concrete example is the [`url_launcher`][] plugin package.
-  To see how to use the `url_launcher` package, and how it
-  was extended to implement support for web,
-  see the Medium article by Harry Terkelsen,
-  [How to Write a Flutter Web Plugin, Part 1][].
+  구체적인 예로 [`url_launcher`][] 플러그인 패키지가 있습니다. 
+  `url_launcher` 패키지를 사용하는 방법과 웹 지원을 구현하기 위해 확장된 방법을 알아보려면, 
+  Harry Terkelsen의 Medium 글, [Flutter 웹 플러그인 작성 방법, 1부][How to Write a Flutter Web Plugin, Part 1]를 참조하세요.
 
-**FFI Plugin packages**
-: A specialized Dart package that contains an API written in
-  Dart code combined with one or more platform-specific
-  implementations that use Dart FFI([Android][Android], [iOS][iOS], [macOS][macOS]).
+**FFI 플러그인 패키지**
+: Dart 코드로 작성된 API와 Dart FFI([Android][Android], [iOS][iOS], [macOS][macOS])를 사용하는 
+  하나 이상의 플랫폼별 구현을 결합한 특수 Dart 패키지입니다.
 
-## Developing Dart packages {:#dart}
+## Dart 패키지 개발 {:#dart}
 
-The following instructions explain how to write a Flutter
-package.
+다음 지침에서는 Flutter 패키지를 작성하는 방법을 설명합니다.
 
-### Step 1: Create the package
+### 1단계: 패키지 생성 {:#step-1-create-the-package}
 
-To create a starter Flutter package,
-use the `--template=package` flag with `flutter create`:
+Flutter 스타터 패키지를 만들려면, `flutter create` 명령에 `--template=package` 플래그를 사용합니다.
 
 ```console
 $ flutter create --template=package hello
 ```
 
-This creates a package project in the `hello`
-folder with the following content:
+이렇게 하면 `hello` 폴더에 다음 내용이 포함된 패키지 프로젝트가 생성됩니다.
 
 **LICENSE**
-: A (mostly) empty license text file.
+: (대부분) 빈 라이선스 텍스트 파일.
 
 **test/hello_test.dart**
-: The [unit tests][] for the package.
+: 패키지의 [유닛 테스트][unit tests].
 
 **hello.iml**
-: A configuration file used by the IntelliJ IDEs.
+: IntelliJ IDE에서 사용하는 구성 파일.
 
 **.gitignore**
-: A hidden file that tells Git which files or
-  folders to ignore in a project.
+: 프로젝트에서 무시할 파일이나 폴더를 Git에 알려주는 숨겨진 파일.
 
 **.metadata**
-: A hidden file used by IDEs to track the properties
-  of the Flutter project.
+: IDE에서 Flutter 프로젝트의 속성을 추적하는 데 사용하는 숨겨진 파일.
 
 **pubspec.yaml**
-: A yaml file containing metadata that specifies
-  the package's dependencies. Used by the pub tool.
+: 패키지의 종속성을 지정하는 메타데이터가 포함된 yaml 파일. pub 도구에서 사용.
 
 **README.md**
-: A starter markdown file that briefly describes
-  the package's purpose.
+: 패키지의 목적을 간략하게 설명하는 시작 마크다운 파일.
 
 **lib/hello.dart**
-: A starter app containing Dart code for the package.
+: 패키지의 Dart 코드가 포함된 시작 앱.
 
 **.idea/modules.xml**, **.idea/workspace.xml**
-: A hidden folder containing configuration files
-  for the IntelliJ IDEs.
+: IntelliJ IDE의 구성 파일이 들어 있는 숨겨진 폴더.
 
 **CHANGELOG.md**
-: A (mostly) empty markdown file for tracking
-  version changes to the package.
+: 패키지의 버전 변경을 추적하기 위한 (대부분) 빈 마크다운 파일.
 
-### Step 2: Implement the package
+### 2단계: 패키지 구현 {:#step-2-implement-the-package}
 
-For pure Dart packages, simply add the functionality
-inside the main `lib/<package name>.dart` file,
-or in several files in the `lib` directory.
+순수한 Dart 패키지의 경우, 단순히 메인 `lib/<패키지 이름>.dart` 파일 내부나, 
+`lib` 디렉토리의 여러 파일에 기능을 추가하면 됩니다.
 
-To test the package, add [unit tests][]
-in a `test` directory.
+패키지를 테스트하려면, `test` 디렉토리에 [유닛 테스트][unit tests]를 추가합니다.
 
-For additional details on how to organize the
-package contents,
-see the [Dart library package][] documentation.
+패키지 내용을 구성하는 방법에 대한 자세한 내용은 [Dart 라이브러리 패키지][Dart library package] 문서를 참조하세요.
 
-## Developing plugin packages {:#plugin}
+## 플러그인 패키지 개발 {:#plugin}
 
-If you want to develop a package that calls into
-platform-specific APIs,
-you need to develop a plugin package.
+플랫폼별 API를 호출하는 패키지를 개발하려면, 플러그인 패키지를 개발해야 합니다.
 
-The API is connected to the platform-specific
-implementation(s) using a [platform channel][].
+API는 [플랫폼 채널][platform channel]을 사용하여 플랫폼별 구현에 연결됩니다.
 
-### Federated plugins
+### 연합(Federated) 플러그인 {:#federated-plugins}
 
-Federated plugins are a way of splitting support for
-different platforms into separate packages.
-So, a federated plugin can use one package for iOS,
-another for Android, another for web,
-and yet another for a car (as an example of an IoT device).
-Among other benefits, this approach allows a domain expert
-to extend an existing plugin to work for the platform they know best.
+페더레이션 플러그인은 다양한 플랫폼에 대한 지원을 별도의 패키지로 분할하는 방법입니다. 
+따라서, 페더레이션 플러그인은 iOS용 패키지 하나, Android용 패키지 하나, 웹용 패키지 하나, 자동차용 패키지 하나(IoT 기기의 예)를 사용할 수 있습니다. 
+이 접근 방식의 다른 이점 중 하나는, 도메인 전문가가 기존 플러그인을 확장하여 자신이 가장 잘 아는 플랫폼에서 작동하도록 할 수 있다는 것입니다.
 
-A federated plugin requires the following packages:
+페더레이션 플러그인에는 다음 패키지가 필요합니다.
 
-**app-facing package**
-: The package that plugin users depend on to use the plugin.
-  This package specifies the API used by the Flutter app.
+**앱 지향 패키지 (app-facing package)**
+: 플러그인 사용자가 플러그인을 사용하기 위해 의존하는 패키지입니다. 
+  이 패키지는 Flutter 앱에서 사용하는 API를 지정합니다.
 
-**platform package(s)**
-: One or more packages that contain the platform-specific
-  implementation code. The app-facing package calls into
-  these packages&mdash;they aren't included into an app,
-  unless they contain platform-specific functionality
-  accessible to the end user.
+**플랫폼 패키지 (platform package(s))**
+: 플랫폼별 구현 코드가 포함된 하나 이상의 패키지입니다. 
+  앱 지향 패키지는 이러한 패키지를 호출합니다. - 최종 사용자가 액세스할 수 있는 플랫폼별 기능이 포함되지 않는 한, 앱에 포함되지 않습니다.
 
-**platform interface package**
-: The package that glues the app-facing package
-  to the platform package(s). This package declares an
-  interface that any platform package must implement to
-  support the app-facing package. Having a single package
-  that defines this interface ensures that all platform
-  packages implement the same functionality in a uniform way.
+**플랫폼 인터페이스 패키지 (platform interface package)**
+: 앱 지향 패키지를 플랫폼 패키지에 연결하는 패키지입니다. 
+  이 패키지는 어떤 플랫폼 패키지라도 앱 지향 패키지를 지원하기 위해 구현해야 하는 인터페이스를 선언합니다. 
+  이 인터페이스를 정의하는 단일 패키지가 있으면, 모든 플랫폼 패키지가 동일한 기능을 균일한 방식으로 구현합니다.
 
-#### Endorsed federated plugin
+#### 승인된(endorsed) 페더레이션 플러그인 {:#endorsed-federated-plugin}
 
-Ideally, when adding a platform implementation to
-a federated plugin, you will coordinate with the package
-author to include your implementation.
-In this way, the original author _endorses_ your
-implementation.
+이상적으로, 페더레이션 플러그인에 플랫폼 구현을 추가할 때, 패키지 작성자와 협력하여 구현을 포함시킵니다. 
+이런 방식으로, 원본 작성자는 구현을 _지지(endorses)_ 합니다.
 
-For example, say you write a `foobar_windows`
-implementation for the (imaginary) `foobar` plugin.
-In an endorsed plugin, the original `foobar` author
-adds your Windows implementation as a dependency
-in the pubspec for the app-facing package.
-Then, when a developer includes the `foobar` plugin
-in their Flutter app, the Windows implementation,
-as well as the other endorsed implementations,
-are automatically available to the app.
+예를 들어, (가상의) `foobar` 플러그인에 대한 `foobar_windows` 구현을 작성한다고 가정합니다. 
+지지된(endorsed) 플러그인에서, 원본 `foobar` 작성자는 앱 지향 패키지에 대한 pubspec에서 종속성으로, 
+Windows 구현을 추가합니다. 
+그런 다음, 개발자가 Flutter 앱에 `foobar` 플러그인을 포함하면, 
+Windows 구현과 다른 지지된(endorsed) 구현을 앱에서 자동으로 사용할 수 있습니다.
 
-#### Non-endorsed federated plugin
+#### 비승인된(non-endorsed) 페더레이션 플러그인 {:#non-endorsed-federated-plugin}
 
-If you can't, for whatever reason, get your implementation
-added by the original plugin author, then your plugin
-is _not_ endorsed. A developer can still use your
-implementation, but must manually add the plugin
-to the app's pubspec file. So, the developer
-must include both the `foobar` dependency _and_
-the `foobar_windows` dependency in order to achieve
-full functionality.
+어떤 이유로든, 원본 플러그인 작성자가 구현을 추가하도록 할 수 없다면, 당신의 플러그인은 승인(endorsed)되지 _않습니다._ 
+개발자는 여전히 당신의 구현을 사용할 수 있지만, 플러그인을 앱의 pubspec 파일에 수동으로 추가해야 합니다. 
+따라서, 개발자는 전체 기능을 구현하기 위해 `foobar` 종속성 _및_ `foobar_windows` 종속성을 모두 포함해야 합니다.
 
-For more information on federated plugins,
-why they are useful, and how they are
-implemented, see the Medium article by Harry Terkelsen,
-[How To Write a Flutter Web Plugin, Part 2][].
+페더레이션 플러그인에 대한 자세한 내용, 유용한 이유, 구현 방법은, 
+Harry Terkelsen의 Medium 글 [Flutter 웹 플러그인을 작성하는 방법, 2부][How To Write a Flutter Web Plugin, Part 2]를 참조하세요.
 
-### Specifying a plugin's supported platforms {:#plugin-platforms}
+### 플러그인의 지원 플랫폼 지정 {:#plugin-platforms}
 
-Plugins can specify the platforms they support by
-adding keys to the `platforms` map in the
-`pubspec.yaml` file. For example,
-the following pubspec file shows the
-`flutter:` map for the `hello` plugin,
-which supports only iOS and Android:
+플러그인은 `pubspec.yaml` 파일의 `platforms` 맵에 키를 추가하여 지원하는 플랫폼을 지정할 수 있습니다.
+예를 들어, 다음 pubspec 파일은 iOS와 Android만 지원하는, 
+`hello` 플러그인의 `flutter:` 맵을 보여줍니다.
 
 ```yaml
 flutter:
@@ -216,11 +162,10 @@ flutter:
         pluginClass: HelloPlugin
 ```
 
-When adding plugin implementations for more platforms,
-the `platforms` map should be updated accordingly.
-For example, here's the map in the pubspec file
-for the `hello` plugin,
-when updated to add support for macOS and web:
+더 많은 플랫폼에 플러그인 구현을 추가할 때, 
+`platforms` 맵은 그에 따라 업데이트되어야 합니다. 
+예를 들어, macOS와 웹에 대한 지원을 추가하기 위해 업데이트된, 
+`hello` 플러그인의 pubspec 파일에 있는 맵은 다음과 같습니다.
 
 ```yaml
 flutter:
@@ -238,7 +183,7 @@ flutter:
         fileName: hello_web.dart
 ```
 
-#### Federated platform packages
+#### 연합(Federated) 플랫폼 패키지 {:#federated-platform-packages}
 
 A platform package uses the same format,
 but includes an `implements` entry indicating
@@ -256,13 +201,12 @@ flutter:
         pluginClass: HelloPlugin
 ```
 
-#### Endorsed implementations
+#### 승인된(Endorsed) 구현 {:#endorsed-implementations}
 
-An app facing package can endorse a platform package by adding a
-dependency on it, and including it as a `default_package` in the
-`platforms:` map. If the `hello` plugin above endorsed `hello_windows`,
-it would look as follows:
-
+앱 지향 패키지는 종속성을 추가하고 `platforms:` 맵에서 `default_package`로 포함하여, 
+플랫폼 패키지를 승인(endorse)할 수 있습니다. 
+위의 `hello` 플러그인이 `hello_windows`를 승인(endorsed)하는 경우, 
+다음과 같습니다.
 
 ```yaml
 flutter:
@@ -280,18 +224,16 @@ dependencies:
   hello_windows: ^1.0.0
 ```
 
-Note that as shown here, an app-facing package can have
-some platforms implemented within the package,
-and others in endorsed federated implementations.
+여기서 표시된 대로, 
+앱 대상 패키지에는 패키지 내에 일부 플랫폼이 구현되어 있을 수 있고, 
+다른 플랫폼은 승인된 연합 구현(endorsed federated implementations)으로 구현될 수 있습니다.
 
-#### Shared iOS and macOS implementations
+#### iOS 및 macOS 구현 공유 {:#shared-ios-and-macos-implementations}
 
-Many frameworks support both iOS and macOS with identical
-or mostly identical APIs, making it possible to implement
-some plugins for both iOS and macOS with the same codebase.
-Normally each platform's implementation is in its own
-folder, but the `sharedDarwinSource` option allows iOS
-and macOS to use the same folder instead:
+많은 프레임워크는 동일하거나 거의 동일한 API로 iOS와 macOS를 모두 지원하므로, 
+동일한 코드베이스로 iOS와 macOS에 대한 일부 플러그인을 구현할 수 있습니다. 
+일반적으로, 각 플랫폼의 구현은 자체 폴더에 있지만, 
+`sharedDarwinSource` 옵션을 사용하면 iOS와 macOS가 대신 동일한 폴더를 사용할 수 있습니다.
 
 
 ```yaml
@@ -307,20 +249,16 @@ flutter:
 
 environment:
   sdk: ^3.0.0
-  # Flutter versions prior to 3.7 did not support the
-  # sharedDarwinSource option.
+  # Flutter 3.7 이전 버전에서는 sharedDarwinSource 옵션을 지원하지 않았습니다.
   flutter: ">=3.7.0"
 ```
 
-When `sharedDarwinSource` is enabled, instead of
-an `ios` directory for iOS and a `macos` directory
-for macOS, both platforms use a shared `darwin`
-directory for all code and resources. When enabling
-this option, you need to move any existing files
-from `ios` and `macos` to the shared directory. You
-also need to update the podspec file to set the
-dependencies and deployment targets for both platforms,
-for example:
+`sharedDarwinSource`가 활성화된 경우, 
+iOS의 `ios` 디렉토리와 macOS의 `macos` 디렉토리 대신, 
+두 플랫폼 모두 모든 코드와 리소스에 공유 `darwin` 디렉토리를 사용합니다. 
+이 옵션을 활성화하는 경우, 
+`ios`와 `macos`의 기존 파일을 공유 디렉토리로 이동해야 합니다. 
+또한 podspec 파일을 업데이트하여 두 플랫폼 모두에 대한 종속성과 배포 대상을 설정해야 합니다. 예:
 
 ```ruby
   s.ios.dependency 'Flutter'
@@ -329,26 +267,21 @@ for example:
   s.osx.deployment_target = '10.14'
 ```
 
-### Step 1: Create the package
+### 1단계: 패키지 생성 {:#step-1-create-the-package-1}
 
-To create a plugin package, use the `--template=plugin`
-flag with `flutter create`.
+플러그인 패키지를 만들려면, 
+`--template=plugin` 플래그를 `flutter create`와 함께 사용합니다.
 
-Use the `--platforms=` option followed by a
-comma-separated list to specify the platforms
-that the plugin supports. Available platforms are:
-`android`, `ios`, `web`, `linux`, `macos`, and `windows`.
-If no platforms are specified, the
-resulting project doesn't support any platforms.
+`--platforms=` 옵션 뒤에 쉼표로 구분된 리스트를 사용하여 플러그인이 지원하는 플랫폼을 지정합니다. 
+사용 가능한 플랫폼은 `android`, `ios`, `web`, `linux`, `macos`, `windows`입니다. 
+플랫폼을 지정하지 않으면, 결과 프로젝트는 어떤 플랫폼도 지원하지 않습니다.
 
-Use the `--org` option to specify your organization,
-using reverse domain name notation. This value is used
-in various package and bundle identifiers in the
-generated plugin code.
+`--org` 옵션을 사용하여, 역방향 도메인 이름 표기법을 사용하여, 조직을 지정합니다. 
+이 값은 생성된 플러그인 코드의 다양한 패키지 및 번들 식별자에서 사용됩니다.
 
-Use the `-a` option to specify the language for android
-or the `-i` option to specify the language for ios.
-Please choose **one** of the following:
+`-a` 옵션을 사용하여 android 언어를 지정하거나, 
+`-i` 옵션을 사용하여 ios 언어를 지정합니다. 
+다음 중 **하나**를 선택하세요.
 
 ```console
 $ flutter create --org com.example --template=plugin --platforms=android,ios,linux,macos,windows -a kotlin hello
@@ -363,28 +296,25 @@ $ flutter create --org com.example --template=plugin --platforms=android,ios,lin
 $ flutter create --org com.example --template=plugin --platforms=android,ios,linux,macos,windows -i swift hello
 ```
 
-This creates a plugin project in the `hello` folder
-with the following specialized content:
+이렇게 하면 `hello` 폴더에 다음과 같은 특수 콘텐츠가 있는 플러그인 프로젝트가 생성됩니다.
 
 **`lib/hello.dart`**
-: The Dart API for the plugin.
+: 플러그인의 Dart API.
 
 **`android/src/main/java/com/example/hello/HelloPlugin.kt`**
-: The Android platform-specific implementation of the plugin API
-  in Kotlin.
+: Kotlin에서 플러그인 API의 Android 플랫폼별 구현.
 
 **`ios/Classes/HelloPlugin.m`**
-: The iOS-platform specific implementation of the plugin API
-  in Objective-C.
+: Objective-C에서 플러그인 API의 iOS 플랫폼별 구현.
 
 **`example/`**
-: A Flutter app that depends on the plugin,
-  and illustrates how to use it.
+: 플러그인에 종속된 Flutter 앱이며, 플러그인을 사용하는 방법을 보여줍니다.
 
-By default, the plugin project uses Swift for iOS code and
-Kotlin for Android code. If you prefer Objective-C or Java,
-you can specify the iOS language using `-i` and the
-Android language using `-a`. For example:
+기본적으로, 플러그인 프로젝트는 iOS 코드에는 Swift를 사용하고, 
+Android 코드에는 Kotlin을 사용합니다. 
+Objective-C 또는 Java를 선호하는 경우, 
+`-i`를 사용하여 iOS 언어를 지정하고,
+`-a`를 사용하여 Android 언어를 지정할 수 있습니다. 예를 들어:
 
 ```console
 $ flutter create --template=plugin --platforms=android,ios -i objc hello
@@ -393,254 +323,215 @@ $ flutter create --template=plugin --platforms=android,ios -i objc hello
 $ flutter create --template=plugin --platforms=android,ios -a java hello
 ```
 
-### Step 2: Implement the package {:#edit-plugin-package}
+### 2단계: 패키지 구현 {:#edit-plugin-package}
 
-As a plugin package contains code for several platforms
-written in several programming languages,
-some specific steps are needed to ensure a smooth experience.
+플러그인 패키지에는 여러 프로그래밍 언어로 작성된 여러 플랫폼에 대한 코드가 포함되어 있으므로, 원활한 환경을 보장하려면 몇 가지 특정 단계가 필요합니다.
 
-#### Step 2a: Define the package API (.dart)
+#### 스텝 2a: 패키지 API 정의 (.dart) {:#step-2a-define-the-package-api-dart}
 
-The API of the plugin package is defined in Dart code.
-Open the main `hello/` folder in your favorite [Flutter editor][].
-Locate the file `lib/hello.dart`.
+플러그인 패키지의 API는 Dart 코드에 정의되어 있습니다. 
+좋아하는 [Flutter 편집기][Flutter editor]에서 메인 `hello/` 폴더를 엽니다. 
+`lib/hello.dart` 파일을 찾습니다.
 
-#### Step 2b: Add Android platform code (.kt/.java)
+#### 스텝 2b: Android 플랫폼 코드 추가 (.kt/.java) {:#step-2b-add-android-platform-code-kt-java}
 
-We recommend you edit the Android code using Android Studio.
+Android Studio를 사용하여 Android 코드를 편집하는 것이 좋습니다.
 
-Before editing the Android platform code in Android Studio,
-first make sure that the code has been built at least once
-(in other words, run the example app from your IDE/editor,
-or in a terminal execute
-`cd hello/example; flutter build apk --config-only`).
+Android Studio에서 Android 플랫폼 코드를 편집하기 전에, 
+먼저 코드가 최소한 한 번은 빌드되었는지 확인하세요.
+(즉, IDE/편집기에서 예제 앱을 실행하거나, 
+터미널에서 `cd hello/example; flutter build apk --config-only`를 실행하세요.)
 
-Then use the following steps:
+그런 다음 다음 단계를 따르세요.
 
-1. Launch Android Studio.
-1. Select **Open an existing Android Studio Project**
-   in the **Welcome to Android Studio** dialog,
-   or select **File > Open** from the menu,
-   and select the `hello/example/android/build.gradle` file.
-1. In the **Gradle Sync** dialog, select **OK**.
-1. In the **Android Gradle Plugin Update** dialog,
-   select **Don't remind me again for this project**.
+1. Android Studio를 실행합니다.
+2. **Welcome to Android Studio** 대화 상자에서 **Open an existing Android Studio Project**를 선택하거나 메뉴에서 **File > Open**를 선택하고 `hello/example/android/build.gradle` 파일을 선택합니다.
+3. **Gradle Sync** 대화 상자에서, **OK**를 선택합니다.
+4. **Android Gradle Plugin Update** 대화 상자에서 **Don't remind me again for this project**을 선택합니다.
 
-The Android platform code of your plugin is located in
-`hello/java/com.example.hello/HelloPlugin`.
+플러그인의 Android 플랫폼 코드는 `hello/java/com.example.hello/HelloPlugin`에 있습니다.
 
-You can run the example app from Android Studio by
-pressing the run (&#9654;) button.
+실행(&#9654;) 버튼을 눌러 Android Studio에서 예제 앱을 실행할 수 있습니다.
 
-#### Step 2c: Add iOS platform code (.swift/.h+.m)
+#### 스텝 2c: iOS 플랫폼 코드 추가 (.swift/.h+.m) {:#step-2c-add-ios-platform-code-swift-h-m}
 
-We recommend you edit the iOS code using Xcode.
+Xcode를 사용하여 iOS 코드를 편집하는 것이 좋습니다.
 
-Before editing the iOS platform code in Xcode,
-first make sure that the code has been built at least once
-(in other words, run the example app from your IDE/editor,
-or in a terminal execute
-`cd hello/example; flutter build ios --no-codesign --config-only`).
+Xcode에서 iOS 플랫폼 코드를 편집하기 전에, 
+먼저 코드가 최소한 한 번은 빌드되었는지 확인하세요. 
+(즉, IDE/편집기에서 예제 앱을 실행하거나, 터미널에서 `cd hello/example; flutter build ios --no-codesign --config-only`를 실행하세요.)
 
-Then use the following steps:
+그런 다음 다음 단계를 따르세요.
 
-1. Launch Xcode.
-1. Select **File > Open**, and select the
-   `hello/example/ios/Runner.xcworkspace` file.
+1. Xcode를 시작합니다.
+2. **File > Open**를 선택하고, 
+   `hello/example/ios/Runner.xcworkspace` 파일을 선택합니다.
 
-The iOS platform code for your plugin is located in
-`Pods/Development Pods/hello/../../example/ios/.symlinks/plugins/hello/ios/Classes`
-in the Project Navigator. (If you are using `sharedDarwinSource`,
-the path will end with `hello/darwin/Classes` instead.)
+플러그인의 iOS 플랫폼 코드는 Project Navigator의 `Pods/Development Pods/hello/../../example/ios/.symlinks/plugins/hello/ios/Classes`에 있습니다. 
+(`sharedDarwinSource`를 사용하는 경우, 경로는 `hello/darwin/Classes`로 끝납니다.)
 
-You can run the example app by pressing the run (&#9654;) button.
+실행(&#9654;) 버튼을 눌러 예제 앱을 실행할 수 있습니다.
 
-##### Add CocoaPod dependencies
+##### CocoaPod 종속성 추가 {:#add-cocoapod-dependencies}
 
 :::warning
-Flutter is migrating to [Swift Package Manager][]
-to manage iOS and macOS native dependencies.
-Flutter's support of Swift Package Manager is under development.
-The implementation might change in the future.
-Swift Package Manager support is only available
-on Flutter's [`main` channel][].
-Flutter continues to support CocoaPods.
+Flutter는 iOS 및 macOS 네이티브 종속성을 관리하기 위해 [Swift Package Manager][]로 마이그레이션하고 있습니다. Flutter의 Swift Package Manager 지원은 개발 중입니다. 구현은 향후 변경될 수 있습니다. Swift Package Manager 지원은 Flutter의 [`main` channel][]에서만 제공됩니다. Flutter는 CocoaPods를 계속 지원합니다.
 :::
 
 [Swift Package Manager]: https://www.swift.org/documentation/package-manager/
 [`main` channel]: /release/upgrade#switching-flutter-channels
 
-Use the following instructions to add `HelloPod` with the version `0.0.1`:
+다음 지침에 따라 `HelloPod`를 `0.0.1` 버전으로 추가하세요.
 
-1. Specify the dependency at the end of `ios/hello.podspec`:
+1. `ios/hello.podspec`의 끝에 종속성을 지정합니다.
 
    ```ruby
    s.dependency 'HelloPod', '0.0.1'
    ```
 
-   For private pods, refer to
-   [Private CocoaPods][] to ensure repo access:
+   private pods의 경우, 
+   리포지토리 액세스를 보장하려면 [Private CocoaPods][]를 참조하세요.
 
    ```ruby
    s.source = {
-       # For pods hosted on GitHub
+       # GitHub에 호스팅된 Pod의 경우
        :git => "https://github.com/path/to/HelloPod.git",
-       # Alternatively, for pods hosted locally
+       # 또는, 로컬로 호스팅된 Pod의 경우
        # :path => "file:///path/to/private/repo",
        :tag => s.version.to_s
      }`
    ```
 
-[Private CocoaPods]: https://guides.cocoapods.org/making/private-cocoapods.html
+   [Private CocoaPods]: https://guides.cocoapods.org/making/private-cocoapods.html
 
-2. Installing the plugin
+1. 플러그인 설치
+   - 프로젝트의 `pubspec.yaml` 종속성에 플러그인을 추가합니다.
+   - `flutter pub get`을 실행합니다.
+   - 프로젝트의 `ios/` 디렉토리에서 `pod install`을 실행합니다.
 
-   - Add the plugin in the project’s `pubspec.yaml` dependencies.
-   - Run `flutter pub get`.
-   - In the project’s `ios/` directory, run `pod install`.
+pod는 설치 요약에 나타나야 합니다.
 
-The pod should appear in the installation summary.
-
-If your plugin requires a privacy manifest, for example,
-if it uses any **required reason APIs**,
-update the `PrivacyInfo.xcprivacy` file to
-describe your plugin's privacy impact,
-and add the following to the bottom of your podspec file:
+플러그인에 개인 정보 보호 매니페스트가 필요한 경우,
+(예: **required reason APIs**를 사용하는 경우) 
+`PrivacyInfo.xcprivacy` 파일을 업데이트하여, 
+플러그인의 개인 정보 보호 영향을 설명하고, 
+podspec 파일의 맨 아래에 다음을 추가합니다.
 
 ```ruby
 s.resource_bundles = {'your_plugin_privacy' => ['your_plugin/Sources/your_plugin/Resources/PrivacyInfo.xcprivacy']}
 ```
 
-For more information,
-check out [Privacy manifest files][] on the Apple developer site.
+자세한 내용은 Apple 개발자 사이트에서 [개인 정보 매니페스트 파일][Privacy manifest files]을 확인하세요.
 
 [Privacy manifest files]: {{site.apple-dev}}/documentation/bundleresources/privacy_manifest_files
 
-#### Step 2d: Add Linux platform code (.h+.cc)
+#### 스텝 2d: Linux 플랫폼 코드 추가 (.h+.cc) {:#step-2d-add-linux-platform-code-h-cc}
 
-We recommend you edit the Linux code using an IDE with
-C++ integration. The instructions below are for
-Visual Studio Code with the "C/C++" and "CMake" extensions
-installed, but can be adjusted for other IDEs.
+C++ 통합 IDE를 사용하여 Linux 코드를 편집하는 것이 좋습니다. 
+아래 지침은 "C/C++" 및 "CMake" 확장 프로그램이 설치된, 
+Visual Studio Code에 대한 것이지만, 다른 IDE에 맞게 조정할 수 있습니다.
 
-Before editing the Linux platform code in an IDE,
-first make sure that the code has been built at least once
-(in other words, run the example app from your Flutter
-IDE/editor, or in a terminal execute
-`cd hello/example; flutter build linux`).
+IDE에서 Linux 플랫폼 코드를 편집하기 전에, 
+먼저 코드가 최소한 한 번 빌드되었는지 확인하세요.
+(즉, Flutter IDE/편집기에서 예제 앱을 실행하거나, 
+터미널에서 `cd hello/example; flutter build linux`를 실행하세요)
 
-Then use the following steps:
+그런 다음 다음 단계를 따르세요.
 
-1. Launch Visual Studio Code.
-1. Open the `hello/example/linux/` directory.
-1. Choose **Yes** in the prompt asking:
-   `Would you like to configure project "linux"?`.
-   This will allow C++ autocomplete to work.
+1. Visual Studio Code를 실행합니다.
+2. `hello/example/linux/` 디렉토리를 엽니다.
+3. `Would you like to configure project "linux"?`라는 프롬프트에서 **Yes**를 선택합니다. 
+   이렇게 하면 C++ 자동 완성이 작동합니다.
 
-The Linux platform code for your plugin is located in
-`flutter/ephemeral/.plugin_symlinks/hello/linux/`.
+플러그인의 Linux 플랫폼 코드는 `flutter/ephemeral/.plugin_symlinks/hello/linux/`에 있습니다.
 
-You can run the example app using `flutter run`.
-**Note:** Creating a runnable Flutter application
-on Linux requires steps that are part of the `flutter`
-tool, so even if your editor provides CMake
-integration building and running that way won't
-work correctly.
+`flutter run`을 사용하여 예제 앱을 실행할 수 있습니다. 
 
-#### Step 2e: Add macOS platform code (.swift)
+**참고:** Linux에서 실행 가능한 Flutter 애플리케이션을 만들려면, 
+`flutter` tool의 일부인 단계가 필요하므로, 
+편집기에서 CMake 통합을 제공하더라도 해당 방식으로 빌드하고 실행하면 제대로 작동하지 않습니다.
 
-We recommend you edit the macOS code using Xcode.
+#### 스텝 2e: macOS 플랫폼 코드 추가 (.swift) {:#step-2e-add-macos-platform-code-swift}
 
-Before editing the macOS platform code in Xcode,
-first make sure that the code has been built at least once
-(in other words, run the example app from your IDE/editor,
-or in a terminal execute
-`cd hello/example; flutter build macos --config-only`).
+Xcode를 사용하여 macOS 코드를 편집하는 것이 좋습니다.
 
-Then use the following steps:
+Xcode에서 macOS 플랫폼 코드를 편집하기 전에, 
+먼저 코드가 최소한 한 번은 빌드되었는지 확인하세요.
+(즉, IDE/편집기에서 예제 앱을 실행하거나,
+터미널에서 `cd hello/example; flutter build macos --config-only`를 실행하세요)
 
-1. Launch Xcode.
-1. Select **File > Open**, and select the
-   `hello/example/macos/Runner.xcworkspace` file.
+그런 다음 다음 단계를 따르세요.
 
-The macOS platform code for your plugin is located in
-`Pods/Development Pods/hello/../../example/macos/Flutter/ephemeral/.symlinks/plugins/hello/macos/Classes`
-in the Project Navigator. (If you are using `sharedDarwinSource`,
-the path will end with `hello/darwin/Classes` instead.)
+1. Xcode를 시작합니다.
+1. **File > Open**를 선택하고,
+   `hello/example/macos/Runner.xcworkspace` 파일을 선택합니다.
 
-You can run the example app by pressing the run (&#9654;) button.
+플러그인의 macOS 플랫폼 코드는 Project Navigator의 `Pods/Development Pods/hello/../../example/macos/Flutter/ephemeral/.symlinks/plugins/hello/macos/Classes`에 있습니다. 
+(`sharedDarwinSource`를 사용하는 경우, 
+경로는 `hello/darwin/Classes`로 끝납니다.)
 
-#### Step 2f: Add Windows platform code (.h+.cpp)
+실행(&#9654;) 버튼을 눌러 예제 앱을 실행할 수 있습니다.
 
-We recommend you edit the Windows code using Visual Studio.
+#### 스텝 2f: Windows 플랫폼 코드 추가 (.h+.cpp) {:#step-2f-add-windows-platform-code-h-cpp}
 
-Before editing the Windows platform code in Visual Studio,
-first make sure that the code has been built at least once
-(in other words, run the example app from your IDE/editor,
-or in a terminal execute
-`cd hello/example; flutter build windows`).
+Visual Studio를 사용하여 Windows 코드를 편집하는 것이 좋습니다.
 
-Then use the following steps:
+Visual Studio에서 Windows 플랫폼 코드를 편집하기 전에, 
+먼저 코드가 최소한 한 번 빌드되었는지 확인하세요.
+(즉, IDE/편집기에서 예제 앱을 실행하거나, 
+터미널에서 `cd hello/example; flutter build windows`를 실행)
 
-1. Launch Visual Studio.
-1. Select **Open a project or solution**, and select the
-   `hello/example/build/windows/hello_example.sln` file.
+그런 다음 다음 단계를 따르세요.
 
-The Windows platform code for your plugin is located in
-`hello_plugin/Source Files` and `hello_plugin/Header Files` in
-the Solution Explorer.
+1. Visual Studio를 시작합니다.
+2. **Open a project or solution**를 선택하고,
+   `hello/example/build/windows/hello_example.sln` 파일을 선택합니다.
 
-You can run the example app by right-clicking `hello_example` in
-the Solution Explorer and selecting **Set as Startup Project**,
-then pressing the run (&#9654;) button. **Important:** After
-making changes to plugin code, you must select
-**Build > Build Solution** before running again, otherwise
-an outdated copy of the built plugin will be run instead
-of the latest version containing your changes.
+플러그인의 Windows 플랫폼 코드는 솔루션 탐색기(Solution Explorer)의 `hello_plugin/Source Files` 및 `hello_plugin/Header Files`에 있습니다.
 
-#### Step 2g: Connect the API and the platform code
+솔루션 탐색기에서 `hello_example`을 마우스 오른쪽 버튼으로 클릭하고, 
+**Set as Startup Project**을 선택한 다음, 
+실행(&#9654;) 버튼을 눌러 예제 앱을 실행할 수 있습니다. 
 
-Finally, you need to connect the API written in Dart code with
-the platform-specific implementations.
-This is done using a [platform channel][],
-or through the interfaces defined in a platform
-interface package.
+**중요:** 플러그인 코드를 변경한 후에는 다시 실행하기 전에 **Build > Build Solution**를 선택해야 합니다. 그렇지 않으면, 변경 사항이 포함된 최신 버전 대신 빌드된 플러그인의 오래된 사본이 실행됩니다.
 
-### Add support for platforms in an existing plugin project
+#### 스텝 2g: API와 플랫폼 코드를 연결 {:#step-2g-connect-the-api-and-the-platform-code}
 
-To add support for specific platforms to an
-existing plugin project, run `flutter create` with
-the `--template=plugin` flag again in the project directory.
-For example, to add web support in an existing plugin, run:
+마지막으로, Dart 코드로 작성된 API를 플랫폼별 구현과 연결해야 합니다. 
+이는 [플랫폼 채널][platform channel]을 사용하거나, 
+플랫폼 인터페이스 패키지에 정의된 인터페이스를 통해 수행됩니다.
+
+### 기존 플러그인 프로젝트에 플랫폼 지원 추가 {:#add-support-for-platforms-in-an-existing-plugin-project}
+
+기존 플러그인 프로젝트에 특정 플랫폼에 대한 지원을 추가하려면, 
+프로젝트 디렉토리에서 `--template=plugin` 플래그를 사용하여, 
+`flutter create`를 다시 실행합니다. 
+예를 들어, 기존 플러그인에 웹 지원을 추가하려면 다음을 실행합니다.
 
 ```console
 $ flutter create --template=plugin --platforms=web .
 ```
 
-If this command displays a message about updating the
-`pubspec.yaml` file, follow the provided instructions.
+이 명령으로 `pubspec.yaml` 파일을 업데이트한다는 메시지가 표시되면, 
+제공된 지침을 따르세요.
 
-### Dart platform implementations
+### Dart 플랫폼 구현 {:#dart-platform-implementations}
 
-In many cases, non-web platform implementations only use the
-platform-specific implementation language, as shown above. However,
-platform implementations can also use platform-specific Dart as well.
+많은 경우, 웹이 아닌(non-web) 플랫폼 구현은 위에 표시된 것처럼 플랫폼별 구현 언어만 사용합니다. 
+그러나, 플랫폼 구현은 플랫폼별 Dart도 사용할 수 있습니다.
 
 :::note
-The examples below only apply to non-web platforms. Web
-plugin implementations are always written in Dart, and use
-`pluginClass` and `fileName` for their Dart implementations
-as shown above.
+아래 예시는 웹이 아닌 플랫폼에만 적용됩니다. 
+웹 플러그인 구현은 항상 Dart로 작성되며, 
+위에 표시된 대로 Dart 구현에 `pluginClass`와 `fileName`을 사용합니다.
 :::
 
-#### Dart-only platform implementations
+#### Dart 전용 플랫폼 구현 {:#dart-only-platform-implementations}
 
-In some cases, some platforms can be
-implemented entirely in Dart (for example, using FFI).
-For a Dart-only platform implementation on a platform other than web,
-replace the `pluginClass` in pubspec.yaml with a `dartPluginClass`.
-Here is the `hello_windows` example above modified for a
-Dart-only implementation:
+어떤 경우에는, 일부 플랫폼은 Dart로만 구현할 수 있습니다. (예: FFI 사용)
+웹이 아닌 플랫폼에서 Dart 전용 플랫폼을 구현하는 경우, 
+pubspec.yaml의 `pluginClass`를 `dartPluginClass`로 바꾸세요. 
+위의 `hello_windows` 예제를 Dart 전용 구현에 맞게 수정한 예는 다음과 같습니다.
 
 ```yaml
 flutter:
@@ -651,29 +542,27 @@ flutter:
         dartPluginClass: HelloPluginWindows
 ```
 
-In this version you would have no C++ Windows code, and would instead
-subclass the `hello` plugin's Dart platform interface class with a
-`HelloPluginWindows` class that includes a static
-`registerWith()` method.  This method is called during startup,
-and can be used to register the Dart implementation:
+이 버전에서는 C++ Windows 코드가 없고, 
+대신 `hello` 플러그인의 Dart 플랫폼 인터페이스 클래스를, 
+static ​​`registerWith()` 메서드를 포함하는 `HelloPluginWindows` 클래스로 서브클래싱합니다. 
+이 메서드는 시작 중에 호출되며, Dart 구현을 등록하는 데 사용할 수 있습니다.
 
 ```dart
 class HelloPluginWindows extends HelloPluginPlatform {
-  /// Registers this class as the default instance of [HelloPluginPlatform].
+  /// 이 클래스를 [HelloPluginPlatform]의 기본 인스턴스로 등록합니다.
   static void registerWith() {
     HelloPluginPlatform.instance = HelloPluginWindows();
   }
 ```
 
-#### Hybrid platform implementations
+#### 하이브리드 플랫폼 구현 {:#hybrid-platform-implementations}
 
-Platform implementations can also use both Dart and a platform-specific
-language. For example, a plugin could use a different platform channel
-for each platform so that the channels can be customized per platform.
+플랫폼 구현은 Dart와 플랫폼별 언어를 모두 사용할 수도 있습니다. 
+예를 들어, 플러그인은 각 플랫폼에 대해 다른 플랫폼 채널을 사용하여, 
+플랫폼별로 채널을 커스터마이즈할 수 있습니다.
 
-A hybrid implementation uses both of the registration systems
-described above. Here is the `hello_windows` example above modified for a
-hybrid implementation:
+하이브리드 구현은 위에서 설명한 두 등록 시스템을 모두 사용합니다. 
+하이브리드 구현을 위해 수정된 위의 `hello_windows` 예는 다음과 같습니다.
 
 ```yaml
 flutter:
@@ -685,63 +574,56 @@ flutter:
         pluginClass: HelloPlugin
 ```
 
-The Dart `HelloPluginWindows` class would use the `registerWith()`
-shown above for Dart-only implementations, while the C++ `HelloPlugin`
-class would be the same as in a C++-only implementation.
+Dart의 `HelloPluginWindows` 클래스는, 
+Dart 전용 구현에 대해 위에 표시된 `registerWith()`를 사용하는 반면, 
+C++의 `HelloPlugin` 클래스는 C++ 전용 구현과 동일합니다.
 
-### Testing your plugin
+### 플러그인 테스트 {:#testing-your-plugin}
 
-We encourage you test your plugin with automated tests
-to ensure that functionality doesn't regress
-as you make changes to your code.
+플러그인을 자동화된 테스트로 테스트하여 코드를 변경할 때, 
+기능이 퇴보하지 않는지 확인하는 것이 좋습니다.
 
-To learn more about testing your plugins,
-check out [Testing plugins][].
-If you are writing tests for your Flutter app
-and plugins are causing crashes,
-check out [Flutter in plugin tests][].
+플러그인 테스트에 대해 자세히 알아보려면, 
+[플러그인 테스트][Testing plugins]를 확인하세요. 
+Flutter 앱에 대한 테스트를 작성하고 플러그인이 충돌을 일으키는 경우, 
+[플러그인 테스트의 Flutter][Flutter in plugin tests]를 확인하세요.
 
 [Flutter in plugin tests]: /testing/plugins-in-tests
 [Testing plugins]: /testing/testing-plugins
 
-## Developing FFI plugin packages {:#plugin-ffi}
+## FFI 플러그인 패키지 개발 {:#plugin-ffi}
 
-If you want to develop a package that calls into native APIs using
-Dart's FFI, you need to develop an FFI plugin package.
+Dart의 FFI를 사용하여 네이티브 API를 호출하는 패키지를 개발하려면, 
+FFI 플러그인 패키지를 개발해야 합니다.
 
-Both FFI plugin packages and non-FFI plugin packages support
-bundling native code. However, FFI plugin packages don't
-support method channels,
-but they _do_ support method channel registration code.
-To implement a plugin that uses both method channels
-_and_ FFI, use a non-FFI plugin.
-Each platform can use either an FFI or non-FFI platform.
+FFI 플러그인 패키지와 비 FFI 플러그인 패키지 모두 네이티브 코드 번들링을 지원합니다. 
+그러나, FFI 플러그인 패키지는 메서드 채널을 지원하지 않지만, 
+메서드 채널 등록 코드(method channel registration code)는 _지원합니다._
+메서드 채널 _및_ FFI를 모두 사용하는 플러그인을 구현하려면, 
+비 FFI 플러그인을 사용합니다. 
+각 플랫폼은 FFI 또는 비 FFI 플랫폼을 사용할 수 있습니다.
 
-### Step 1: Create the package
+### 1단계: 패키지 생성 {:#step-1-create-the-package-2}
 
-To create a starter FFI plugin package,
-use the `--template=plugin_ffi` flag with `flutter create`:
+시작 FFI 플러그인 패키지를 만들려면, 
+`flutter create` 명령에 `--template=plugin_ffi` 플래그를 사용합니다.
 
 ```console
 $ flutter create --template=plugin_ffi hello
 ```
 
-This creates an FFI plugin project in the `hello`
-folder with the following specialized content:
+이렇게 하면 `hello` 폴더에 다음과 같은 특수 콘텐츠가 있는 FFI 플러그인 프로젝트가 생성됩니다.
 
-**lib**: The Dart code that defines the API of the plugin,
-  and which calls into the native code using `dart:ffi`.
+**lib**: 플러그인의 API를 정의하고, `dart:ffi`를 사용하여 네이티브 코드를 호출하는, Dart 코드입니다.
 
-**src**: The native source code, and a `CMakeLists.txt`
-  file for building that source code into a dynamic library.
+**src**: 네이티브 소스 코드와 해당 소스 코드를 동적 라이브러리로 빌드하기 위한 `CMakeLists.txt` 파일입니다.
 
-**platform folders** (`android`, `ios`, `windows`, etc.): The
-  build files for building and bundling the native code
-  library with the platform application.
+**platform folders** (`android`, `ios`, `windows` 등): 네이티브 코드 라이브러리를 빌드하고 플랫폼 애플리케이션과 번들링하기 위한 빌드 파일입니다.
 
-### Step 2: Building and bundling native code
 
-The `pubspec.yaml` specifies FFI plugins as follows:
+### 2단계: 네이티브 코드 빌드 및 번들링 {:#step-2-building-and-bundling-native-code}
+
+`pubspec.yaml`은 FFI 플러그인을 다음과 같이 지정합니다.
 
 ```yaml
   plugin:
@@ -750,13 +632,11 @@ The `pubspec.yaml` specifies FFI plugins as follows:
         ffiPlugin: true
 ```
 
-This configuration invokes the native build
-for the various target platforms and bundles
-the binaries in Flutter applications using these FFI plugins.
+이 구성은 다양한 대상 플랫폼에 대한 네이티브 빌드를 호출하고, 
+이러한 FFI 플러그인을 사용하여 Flutter 애플리케이션의 바이너리를 번들로 묶습니다.
 
-This can be combined with `dartPluginClass`,
-such as when FFI is used for the
-implementation of one platform in a federated plugin:
+이것은 `dartPluginClass`와 결합될 수 있습니다. 
+예를 들어, FFI가 페더레이션 플러그인에서 하나의 플랫폼을 구현하는 데 사용되는 경우입니다.
 
 ```yaml
   plugin:
@@ -767,7 +647,7 @@ implementation of one platform in a federated plugin:
         ffiPlugin: true
 ```
 
-A plugin can have both FFI and method channels:
+플러그인은 FFI와 메서드 채널을 모두 가질 수 있습니다.
 
 ```yaml
   plugin:
@@ -777,70 +657,59 @@ A plugin can have both FFI and method channels:
         ffiPlugin: true
 ```
 
-The native build systems that are invoked by FFI
-(and method channels) plugins are:
+FFI(및 메서드 채널) 플러그인에서 호출하는 네이티브 빌드 시스템은 다음과 같습니다.
 
-* For Android: Gradle, which invokes the Android NDK for native builds.
-  * See the documentation in `android/build.gradle`.
-* For iOS and macOS: Xcode, using CocoaPods.
-  * See the documentation in `ios/hello.podspec`.
-  * See the documentation in `macos/hello.podspec`.
-* For Linux and Windows: CMake.
-  * See the documentation in `linux/CMakeLists.txt`.
-  * See the documentation in `windows/CMakeLists.txt`.
+* Android의 경우: 네이티브 빌드를 위해 Android NDK를 호출하는 Gradle.
+  * `android/build.gradle`에서 문서를 참조하세요.
+* iOS 및 macOS의 경우: CocoaPods를 사용하는 Xcode.
+  * `ios/hello.podspec`에서 문서를 참조하세요.
+  * `macos/hello.podspec`에서 문서를 참조하세요.
+* Linux 및 Windows의 경우: CMake.
+  * `linux/CMakeLists.txt`에서 문서를 참조하세요.
+  * `windows/CMakeLists.txt`에서 문서를 참조하세요.
 
-### Step 3: Binding to native code
+### 3단계: 네이티브 코드에 바인딩 {:#step-3-binding-to-native-code}
 
-To use the native code, bindings in Dart are needed.
+네이티브 코드를 사용하려면, Dart에서 바인딩이 필요합니다.
 
-To avoid writing these by hand,
-they are generated from the header file
-(`src/hello.h`) by [`package:ffigen`][].
-Reference the [ffigen docs][] for information
-on how to install this package.
+직접 작성하는 것을 피하기 위해, [`package:ffigen`][]에서 헤더 파일(`src/hello.h`)에서 바인딩을 생성합니다. 
+이 패키지를 설치하는 방법에 대한 정보는 [ffigen 문서][ffigen docs]를 참조하세요.
 
-Regenerate the bindings by running the following:
+다음을 실행하여 바인딩을 다시 생성합니다.
 
 ```console
 $  dart run ffigen --config ffigen.yaml
 ```
 
-### Step 4: Invoking native code
+### 4단계: 네이티브 코드 호출 {:#step-4-invoking-native-code}
 
-Very short-running native functions can be directly
-invoked from any isolate.
-For an example, see `sum` in `lib/hello.dart`.
+매우 짧은 실행 시간의 네이티브 함수는 모든 isolate에서 직접 호출할 수 있습니다. 
+예를 들어, `lib/hello.dart`의 `sum`을 참조하세요.
 
-Longer-running functions should be invoked on a
-[helper isolate][] to avoid dropping frames in
-Flutter applications.
-For an example, see `sumAsync` in `lib/hello.dart`.
+Flutter 애플리케이션에서 프레임이 드롭되는 것을 방지하기 위해, 
+더 오래 실행되는 함수는 [helper isolate][]에서 호출해야 합니다. 
+예를 들어 `lib/hello.dart`의 `sumAsync`를 참조하세요.
 
-## Adding documentation
+## 문서 추가 {:#adding-documentation}
 
-It is recommended practice to add the following documentation
-to all packages:
+모든 패키지에 다음 문서를 추가하는 것이 좋습니다.
 
-1. A `README.md` file that introduces the package
-1. A `CHANGELOG.md` file that documents changes in each version
-1. A [`LICENSE`] file containing the terms under which the package
-   is licensed
-1. API documentation for all public APIs (see below for details)
+1. 패키지를 소개하는 `README.md` 파일
+1. 각 버전의 변경 사항을 설명하는 `CHANGELOG.md` 파일
+1. 패키지 라이선스 조건을 포함하는 [`LICENSE`] 파일
+1. 모든 공개 API에 대한 API 문서(자세한 내용은 아래 참조)
 
-### API documentation
+### API 문서 {:#api-documentation}
 
-When you publish a package,
-API documentation is automatically generated and
-published to pub.dev/documentation.
-For example, see the docs for [`device_info`][].
+패키지를 게시하면, API 문서가 자동으로 생성되어 pub.dev/documentation에 게시됩니다. 
+예를 들어 [`device_info`][]에 대한 문서를 참조하세요.
 
-If you wish to generate API documentation locally on
-your development machine, use the following commands:
+개발 머신에서 로컬로 API 문서를 생성하려면, 다음 명령을 사용하세요.
 
 <ol>
 <li>
 
-Change directory to the location of your package:
+패키지 위치로 디렉토리를 변경하세요:
 
 ```console
 cd ~/dev/mypackage
@@ -850,19 +719,19 @@ cd ~/dev/mypackage
 
 <li>
 
-Tell the documentation tool where the
-Flutter SDK is located (change the following commands to reflect
-where you placed it):
+Flutter SDK가 있는 위치를 문서 도구에 알려주세요.
+(다음 명령을 변경하여 배치한 위치를 반영하세요):
 
 ```console
-   export FLUTTER_ROOT=~/dev/flutter  # on macOS or Linux
+   export FLUTTER_ROOT=~/dev/flutter  # macOS 또는 Linux에서
 
-   set FLUTTER_ROOT=~/dev/flutter     # on Windows
+   set FLUTTER_ROOT=~/dev/flutter     # Windows에서
 ```
 </li>
 
-<li>Run the `dart doc` tool
-    (included as part of the Flutter SDK), as follows:
+<li>
+
+다음과 같이 `dart doc` 도구(Flutter SDK의 일부로 포함됨)를 실행합니다.
 
 ```console
    $FLUTTER_ROOT/bin/cache/dart-sdk/bin/dart doc   # on macOS or Linux
@@ -872,28 +741,21 @@ where you placed it):
 </li>
 </ol>
 
-For tips on how to write API documentation, see
-[Effective Dart Documentation][].
+API 문서를 작성하는 방법에 대한 팁은, [효과적인 Dart 문서][Effective Dart Documentation]를 ​​참조하세요.
 
-### Adding licenses to the LICENSE file
+### LICENSE 파일에 라이센스 추가 {:#adding-licenses-to-the-license-file}
 
-Individual licenses inside each LICENSE file
-should be separated by 80 hyphens
-on their own on a line.
+각 LICENSE 파일 내의 개별 라이선스는 한 줄에 80개의 하이픈으로 구분해야 합니다.
 
-If a LICENSE file contains more than one
-component license, then each component
-license must start with the names of the
-packages to which the component license applies,
-with each package name on its own line,
-and the list of package names separated from
-the actual license text by a blank line.
-(The packages need not match the names of
-the pub package. For example, a package might itself contain
-code from multiple third-party sources,
-and might need to include a license for each one.)
+LICENSE 파일에 두 개 이상의 구성 요소 라이선스가 포함된 경우, 
+각 구성 요소 라이선스는 구성 요소 라이선스가 적용되는 패키지의 이름으로 시작해야 하며, 
+각 패키지 이름은 한 줄에 있어야 하며, 
+패키지 이름 리스트는 실제 라이선스 텍스트와 빈 줄로 구분해야 합니다. 
+(패키지는 pub 패키지의 이름과 일치할 필요가 없습니다. 
+예를 들어, 패키지 자체에 여러 타사 소스의 코드가 포함되어 있을 수 있으며, 
+각각에 대한 라이선스를 포함해야 할 수 있습니다.)
 
-The following example shows a well-organized license file:
+다음 예는 잘 구성된 라이선스 파일을 보여줍니다.
 
 ```plaintext
 package_1
@@ -906,7 +768,7 @@ package_2
 <some license text>
 ```
 
-Here is another example of a well-organized license file:
+잘 정리된 라이선스 파일의 또 다른 예는 다음과 같습니다.
 
 ```plaintext
 package_1
@@ -920,7 +782,7 @@ package_2
 <some license text>
 ```
 
-Here is an example of a poorly-organized license file:
+다음은 제대로 구성되지 않은 라이센스 파일의 예입니다.
 
 ```plaintext
 <some license text>
@@ -929,7 +791,7 @@ Here is an example of a poorly-organized license file:
 <some license text>
 ```
 
-Another example of a poorly-organized license file:
+제대로 구성되지 않은 라이센스 파일의 또 다른 예:
 
 ```plaintext
 package_1
@@ -939,42 +801,32 @@ package_1
 <some license text>
 ```
 
-## Publishing your package {:#publish}
+## 패키지 게시 {:#publish}
 
 :::tip
-Have you noticed that some of the packages and plugins
-on pub.dev are designated as [Flutter Favorites][]?
-These are the packages published by verified developers
-and are identified as the packages and plugins you
-should first consider using when writing your app.
-To learn more,
-see the [Flutter Favorites program][].
+pub.dev의 일부 패키지와 플러그인이 [Flutter Favorites][]로 지정되어 있는 것을 알아차리셨나요? 
+이는 검증된 개발자가 게시한 패키지이며, 앱을 작성할 때 먼저 고려해야 할 패키지와 플러그인으로 식별됩니다. 
+자세한 내용은 [Flutter Favorites 프로그램][Flutter Favorites program]을 참조하세요.
 :::
 
-Once you have implemented a package, you can publish it on
-[pub.dev][], so that other developers can easily use it.
+패키지를 구현한 후에는, [pub.dev][]에 게시하여, 다른 개발자가 쉽게 사용할 수 있도록 할 수 있습니다.
 
-Prior to publishing, make sure to review the `pubspec.yaml`,
-`README.md`, and `CHANGELOG.md` files to make sure their
-content is complete and correct. Also, to improve the
-quality and usability of your package (and to make it
-more likely to achieve the status of a Flutter Favorite),
-consider including the following items:
+게시하기 전에 `pubspec.yaml`, `README.md`, `CHANGELOG.md` 파일을 검토하여 콘텐츠가 완전하고 올바른지 확인하세요. 
+또한, 패키지의 품질과 사용성을 개선하고, Flutter Favorite 상태에 도달할 가능성을 높이기 위해, 다음 항목을 포함하는 것을 고려하세요.
 
-* Diverse code usage examples
-* Screenshots, animated gifs, or videos
-* A link to the corresponding code repository
+* 다양한 코드 사용 예
+* 스크린샷, 애니메이션 GIF 또는 비디오
+* 해당 코드 저장소에 대한 링크
 
-Next, run the publish command in `dry-run` mode
-to see if everything passes analysis:
+다음으로, `dry-run` 모드에서 publish 명령을 실행하여, 
+모든 것이 분석을 통과하는지 확인하세요.
 
 ```console
 $ flutter pub publish --dry-run
 ```
 
-The next step is publishing to pub.dev,
-but be sure that you are ready because
-[publishing is forever][]:
+다음 단계는 pub.dev에 게시하는 것입니다. 
+하지만, [게시가 영원하기][publishing is forever] 때문에, 준비가 되어 있는지 확인하세요.
 
 ```console
 $ flutter pub publish
@@ -983,56 +835,45 @@ $ flutter pub publish
 For more details on publishing, see the
 [publishing docs][] on dart.dev.
 
-## Handling package interdependencies {:#dependencies}
+## 패키지 상호 종속성 처리 {:#dependencies}
 
-If you are developing a package `hello` that depends on
-the Dart API exposed by another package, you need to add
-that package to the `dependencies` section of your
-`pubspec.yaml` file. The code below makes the Dart API
-of the `url_launcher` plugin available to `hello`:
+다른 패키지에서 노출된 Dart API에 종속된 패키지 `hello`를 개발하는 경우, 
+해당 패키지를 `pubspec.yaml` 파일의 `dependencies` 섹션에 추가해야 합니다. 
+아래 코드는 `url_launcher` 플러그인의 Dart API를 `hello`에서 사용할 수 있도록 합니다.
 
 ```yaml
 dependencies:
   url_launcher: ^5.0.0
 ```
 
-You can now `import 'package:url_launcher/url_launcher.dart'`
-and `launch(someUrl)` in the Dart code of `hello`.
+이제 `hello`의 Dart 코드에서 `import 'package:url_launcher/url_launcher.dart'`와 `launch(someUrl)`를 사용할 수 있습니다.
 
-This is no different from how you include packages in
-Flutter apps or any other Dart project.
+이는 Flutter 앱이나 다른 Dart 프로젝트에 패키지를 포함하는 방법과 다르지 않습니다.
 
-But if `hello` happens to be a _plugin_ package
-whose platform-specific code needs access
-to the platform-specific APIs exposed by `url_launcher`,
-you also need to add suitable dependency declarations
-to your platform-specific build files, as shown below.
+하지만 `hello`가 플랫폼별 코드가 `url_launcher`에서 노출된 플랫폼별 API에 액세스해야 하는 _플러그인_ 패키지인 경우, 
+아래에 표시된 것처럼, 플랫폼별 빌드 파일에 적절한 종속성 선언을 추가해야 합니다.
 
-### Android
+### Android {:#android}
 
-The following example sets a dependency for
-`url_launcher` in `hello/android/build.gradle`:
+다음 예제에서는 `hello/android/build.gradle`에서 `url_launcher`에 대한 종속성을 설정합니다.
 
 ```groovy
 android {
-    // lines skipped
+    // 줄 생략됨
     dependencies {
         compileOnly rootProject.findProject(":url_launcher")
     }
 }
 ```
 
-You can now `import io.flutter.plugins.urllauncher.UrlLauncherPlugin`
-and access the `UrlLauncherPlugin`
-class in the source code at `hello/android/src`.
+이제 `import io.flutter.plugins.urllauncher.UrlLauncherPlugin`을 사용하여, 
+`hello/android/src` 소스 코드에서 `UrlLauncherPlugin` 클래스에 액세스할 수 있습니다.
 
-For more information on `build.gradle` files, see the
-[Gradle Documentation][] on build scripts.
+`build.gradle` 파일에 대한 자세한 내용은, 빌드 스크립트에 대한 [Gradle 문서][Gradle Documentation]를 ​​참조하세요.
 
-### iOS
+### iOS {:#ios}
 
-The following example sets a dependency for
-`url_launcher` in `hello/ios/hello.podspec`:
+다음 예제에서는 `hello/ios/hello.podspec`에서 `url_launcher`에 대한 종속성을 설정합니다.
 
 ```ruby
 Pod::Spec.new do |s|
@@ -1040,17 +881,14 @@ Pod::Spec.new do |s|
   s.dependency 'url_launcher'
 ```
 
-You can now `#import "UrlLauncherPlugin.h"` and
-access the `UrlLauncherPlugin` class in the source code
-at `hello/ios/Classes`.
+이제 `#import "UrlLauncherPlugin.h"`를 사용하여 `hello/ios/Classes`의 소스 코드에서 `UrlLauncherPlugin` 클래스에 액세스할 수 있습니다.
 
-For additional details on `.podspec` files, see the
-[CocoaPods Documentation][].
+`.podspec` 파일에 대한 추가 세부 정보는 [CocoaPods 문서][CocoaPods Documentation]를 ​​참조하세요.
 
-### Web
+### Web {:#web}
 
-All web dependencies are handled by the `pubspec.yaml`
-file, like any other Dart package.
+다른 Dart 패키지와 마찬가지로, 
+모든 웹 종속성은 `pubspec.yaml` 파일에 의해 처리됩니다.
 
 {% comment %}
 <!-- Remove until we have better text. -->
