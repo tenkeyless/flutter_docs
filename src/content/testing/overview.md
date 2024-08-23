@@ -1,124 +1,106 @@
 ---
-title: Testing Flutter apps
+# title: Testing Flutter apps
+title: Flutter 앱 테스트
+# description: 
+#   Learn more about the different types of testing and how to write them.
 description: 
-  Learn more about the different types of testing and how to write them.
+  다양한 타입의 테스트와 테스트 작성 방법에 대해 자세히 알아보세요.
 ---
 
-The more features your app has, the harder it is to test manually.
-Automated tests help ensure that your app performs correctly before
-you publish it, while retaining your feature and bug fix velocity.
+앱의 기능이 많을수록, 수동으로 테스트하기가 더 어렵습니다. 
+자동화된 테스트는 기능과 버그 수정 속도를 유지하면서, 
+앱을 게시하기 전에 앱이 올바르게 작동하는지 확인하는 데 도움이 됩니다.
 
 :::note
-For hands-on practice of testing Flutter apps, see the
-[How to test a Flutter app][] codelab.
+Flutter 앱 테스트를 직접 연습하려면, [Flutter 앱 테스트 방법][How to test a Flutter app] 코드랩을 참조하세요.
 :::
 
-Automated testing falls into a few categories:
+자동화된 테스트는 몇 가지 카테고리로 나뉩니다.
 
-* A [_unit test_](#unit-tests) tests a single function, method, or class.
-* A [_widget test_](#widget-tests) (in other UI frameworks referred to
-  as _component test_) tests a single widget.
-* An [_integration test_](#integration-tests)
-  tests a complete app or a large part of an app.
+* [_유닛 테스트_](#unit-tests)는 단일 함수, 메서드 또는 클래스를 테스트합니다.
+* [_위젯 테스트_](#widget-tests)(다른 UI 프레임워크에서는 _구성 요소 테스트_ 라고 함)는 단일 위젯을 테스트합니다.
+* [_통합 테스트_](#integration-tests)는 전체 앱 또는 앱의 큰 부분을 테스트합니다.
 
-Generally speaking, a well-tested app has many unit and widget tests,
-tracked by [code coverage][], plus enough integration tests
-to cover all the important use cases. This advice is based on
-the fact that there are trade-offs between different kinds of testing,
-seen below.
+일반적으로, 잘 테스트된 앱에는 [코드 커버리지][code coverage]로 추적되는, 
+많은 유닛 및 위젯 테스트와 모든 중요한 사용 사례를 포괄할 만큼 충분한 통합 테스트가 있습니다. 
+이 조언은 아래에서 볼 수 있듯이, 다양한 종류의 테스트 간에 상충 관계(trade-offs)가 있다는 사실에 근거합니다.
 
-| Tradeoff             | Unit   | Widget | Integration |
+| 트레이드 오프             | 유닛   | 위젯 | 통합 |
 |----------------------|--------|--------|-------------|
-| **Confidence**       | Low    | Higher | Highest     |
-| **Maintenance cost** | Low    | Higher | Highest     |
-| **Dependencies**     | Few    | More   | Most        |
-| **Execution speed**  | Quick  | Quick  | Slow        |
+| **신뢰도(Confidence)** | 낮음 | 높음 | 가장 높음 |
+| **유지 관리 비용(Maintenance cost)** | 낮음 | 높음 | 가장 높음 |
+| **종속성(Dependencies)** | 적음 | 많음 | 가장 많음 |
+| **실행 속도(Execution speed)** | 빠름 | 빠름 | 느림 |
+
 
 {:.table .table-striped}
 
-## Unit tests
+## 유닛 테스트 {:#unit-tests}
 
-A _unit test_ tests a single function, method, or class.
-The goal of a unit test is to verify the correctness of a
-unit of logic under a variety of conditions.
-External dependencies of the unit under test are generally
-[mocked out](/cookbook/testing/unit/mocking).
-Unit tests generally don't read from or write
-to disk, render to screen, or receive user actions from
-outside the process running the test.
-For more information regarding unit tests,
-you can view the following recipes
-or run `flutter test --help` in your terminal.
+_유닛 테스트_ 는 단일 함수, 메서드 또는 클래스를 테스트합니다. 
+유닛 테스트의 목적은 다양한 조건에서 로직 유닛의 정확성을 확인하는 것입니다. 
+테스트 중인 유닛의 외부 종속성은 일반적으로 [Mock](/cookbook/testing/unit/mocking)됩니다. 
+유닛 테스트는 일반적으로 디스크에서 읽거나 쓰거나, 화면에 렌더링하거나, 
+테스트를 실행하는 프로세스 외부에서 사용자 작업을 수신하지 않습니다. 
+유닛 테스트에 대한 자세한 내용은 다음 레시피를 보거나 터미널에서 `flutter test --help`를 실행할 수 있습니다.
 
 :::note
-If you're writing unit tests for code that
-uses plugins and you want to avoid crashes,
-check out [Plugins in Flutter tests][].
-If you want to test your Flutter plugin,
-check out [Testing plugins][].
+플러그인을 사용하는 코드에 대한 유닛 테스트를 작성하고 충돌을 피하고 싶다면, 
+[Flutter 테스트의 플러그인][Plugins in Flutter tests]을 확인하세요. 
+Flutter 플러그인을 테스트하고 싶다면 [플러그인 테스트][Testing plugins]를 확인하세요.
 :::
 
 [Plugins in Flutter tests]: /testing/plugins-in-tests
 [Testing plugins]: /testing/testing-plugins
 
-### Recipes {:.no_toc}
+### 레시피 {:#recipes .no_toc}
 
 {% include docs/testing-toc.md type='unit' %}
 
-## Widget tests
+## 위젯 테스트 {:#widget-tests}
 
-A _widget test_ (in other UI frameworks referred to as _component test_)
-tests a single widget. The goal of a widget test is to verify that the
-widget's UI looks and interacts as expected. Testing a widget involves
-multiple classes and requires a test environment that provides the
-appropriate widget lifecycle context.
+_위젯 테스트_ (다른 UI 프레임워크에서는 _컴포넌트 테스트_ 라고 함)는 단일 위젯을 테스트합니다. 
+위젯 테스트의 목표는 위젯의 UI가 예상대로 보이고, 상호 작용하는지 확인하는 것입니다. 
+위젯 테스트에는 여러 클래스가 포함되며, 적절한 위젯 라이프사이클 컨텍스트를 제공하는 테스트 환경이 필요합니다.
 
-For example, the Widget being tested should be able to receive and
-respond to user actions and events, perform layout, and instantiate child
-widgets. A widget test is therefore more comprehensive than a unit test.
-However, like a unit test, a widget test's environment is replaced with
-an implementation much simpler than a full-blown UI system.
+예를 들어, 테스트되는 위젯은 사용자 작업 및 이벤트를 수신하고 응답하고, 레이아웃을 수행하고, 
+자식 위젯을 인스턴스화할 수 있어야 합니다. 
+따라서 위젯 테스트는 유닛 테스트보다 포괄적입니다. 
+그러나, 유닛 테스트와 마찬가지로 위젯 테스트의 환경은 본격적인 UI 시스템보다 훨씬 간단한 구현으로 대체됩니다.
 
-### Recipes {:.no_toc}
+### 레시피 {:#recipes-1 .no_toc}
 
 {% include docs/testing-toc.md type='widget' %}
 
-## Integration tests
+## 통합 테스트 {:#integration-tests}
 
-An _integration test_ tests a complete app or a large part of an app.
-The goal of an integration test is to verify that all the widgets
-and services being tested work together as expected.
-Furthermore, you can use integration
-tests to verify your app's performance.
+_통합 테스트_ 는 전체 앱 또는 앱의 큰 부분을 테스트합니다. 
+통합 테스트의 목표는 테스트 중인 모든 위젯과 서비스가 예상대로 함께 작동하는지 확인하는 것입니다. 
+또한 통합 테스트를 사용하여 앱의 성능을 확인할 수 있습니다.
 
-Generally, an _integration test_ runs on a real device or an OS emulator,
-such as iOS Simulator or Android Emulator.
-The app under test is typically isolated
-from the test driver code to avoid skewing the results.
+일반적으로 _통합 테스트_ 는 iOS 시뮬레이터나 Android 에뮬레이터와 같은 실제 기기나 OS 에뮬레이터에서 실행됩니다. 
+테스트 중인 앱은 일반적으로 결과를 왜곡하지 않도록 테스트 드라이버 코드에서 분리됩니다.
 
-For more information on how to write integration tests, see the [integration
-testing page][].
+통합 테스트를 작성하는 방법에 대한 자세한 내용은 [통합 테스트 페이지][integration testing page]를 참조하세요.
 
-### Recipes {:.no_toc}
+### 레시피 {:#recipes-2 .no_toc}
 
 {% include docs/testing-toc.md type='integration' %}
 
-## Continuous integration services
+## 지속적인 통합 서비스 (Continuous integration services) {:#continuous-integration-services}
 
-Continuous integration (CI) services allow you to run your
-tests automatically when pushing new code changes.
-This provides timely feedback on whether the code
-changes work as expected and do not introduce bugs.
+CI(Continuous Integration) 서비스를 사용하면 새 코드 변경 사항을 푸시할 때 자동으로 테스트를 실행할 수 있습니다. 
+이를 통해, 코드 변경 사항이 예상대로 작동하고 버그가 발생하지 않는지에 대한 적시 피드백을 제공합니다.
 
-For information on running tests on various continuous
-integration services, see the following:
+다양한 지속적 통합 서비스에서 테스트를 실행하는 방법에 대한 자세한 내용은 다음을 참조하세요.
 
-* [Continuous delivery using fastlane with Flutter][]
-* [Test Flutter apps on Appcircle][]
-* [Test Flutter apps on Travis][]
-* [Test Flutter apps on Cirrus][]
-* [Codemagic CI/CD for Flutter][]
-* [Flutter CI/CD with Bitrise][]
+* [Flutter와 함께 fastlane을 사용한 지속적 배포][Continuous delivery using fastlane with Flutter]
+* [Appcircle에서 Flutter 앱 테스트][Test Flutter apps on Appcircle]
+* [Travis에서 Flutter 앱 테스트][Test Flutter apps on Travis]
+* [Cirrus에서 Flutter 앱 테스트][Test Flutter apps on Cirrus]
+* [Flutter용 Codemagic CI/CD][Codemagic CI/CD for Flutter]
+* [Bitrise를 사용한 Flutter CI/CD][Flutter CI/CD with Bitrise]
+
 
 [code coverage]: https://en.wikipedia.org/wiki/Code_coverage
 [Codemagic CI/CD for Flutter]: https://blog.codemagic.io/getting-started-with-codemagic/

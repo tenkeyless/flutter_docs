@@ -1,25 +1,24 @@
 ---
-title: Testing plugins
-description: Learn how to test your plugin package.
+# title: Testing plugins
+title: 플러그인 테스트
+# description: Learn how to test your plugin package.
+description: 플러그인 패키지를 테스트하는 방법을 알아보세요.
 ---
 
-All of the [usual types of Flutter tests][] apply to
-plugin packages as well, but because plugins contain
-native code they often also require other kinds of tests
-to test all of their functionality.
+모든 [일반적인 Flutter 테스트 타입][usual types of Flutter tests]은 플러그인 패키지에도 적용되지만, 
+플러그인에는 네이티브 코드가 포함되어 있기 때문에, 모든 기능을 테스트하기 위해 다른 종류의 테스트도 필요한 경우가 많습니다.
 
 [usual types of Flutter tests]: /testing/overview
 
 :::note
-To learn how to test your plugin code, read on.
-To learn how to avoid crashes from a plugin when
-testing your Flutter app, check out
-[Plugins in Flutter tests][].
+플러그인 코드를 테스트하는 방법을 알아보려면 계속 읽어보세요. 
+Flutter 앱을 테스트할 때 플러그인으로 인한 충돌을 방지하는 방법을 알아보려면, 
+[Flutter 테스트의 플러그인][Plugins in Flutter tests]을 확인하세요.
 :::
 
 [Plugins in Flutter tests]: /testing/plugins-in-tests
 
-## Types of plugin tests
+## 플러그인 테스트 타입 {:#types-of-plugin-tests}
 
 To see examples of each of these types of tests, you can
 [create a new plugin from the plugin template][plugin-tests]
@@ -98,15 +97,15 @@ native UI interactions.
 [XCTest]: {{site.apple-dev}}/documentation/xctest
 [XCUITest]: {{site.apple-dev}}/library/archive/documentation/DeveloperTools/Conceptual/testing_with_xcode/chapters/09-ui_testing.html
 
-## Running tests
+## 테스트 실행 {:#running-tests}
 
-### Dart unit tests
+### Dart 유닛 테스트 {:#dart-unit-tests}
 
 These can be run like any other Flutter unit tests,
 either from your preferred Flutter IDE,
 or using `flutter test`.
 
-### Integration tests
+### 통합 테스트 {:#integration-tests}
 
 For information on running this type of test, check out the
 [integration test documentation][].
@@ -114,7 +113,7 @@ The commands must be run in the `example` directory.
 
 [integration test documentation]: /cookbook/testing/integration/introduction
 
-### Native unit tests
+### 네이티브 유닛 테스트 {:#native-unit-tests}
 
 For all platforms, you need to build the example
 application at least once before running the unit tests,
@@ -179,7 +178,7 @@ build/windows/plugins/my_plugin/Debug/my_plugin_test.exe
 If you built the example app in release mode rather
 than debug, replace "Debug" with "Release".
 
-## What types of tests to add
+## 어떤 타입의 테스트를 추가해야 합니까? {:#what-types-of-tests-to-add}
 
 The [general advice for testing Flutter projects][general advice]
 applies to plugins as well.

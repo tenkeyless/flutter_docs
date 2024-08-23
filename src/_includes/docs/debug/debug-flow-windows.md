@@ -1,7 +1,6 @@
-#### Build the Windows version of the Flutter app in PowerShell or the Command Prompt
+#### PowerShell 또는 명령 프롬프트에서 Flutter 앱의 Windows 버전 빌드 {:#build-the-windows-version-of-the-flutter-app-in-powershell-or-the-command-prompt}
 
-To generate the needed Windows platform dependencies,
-run the `flutter build` command.
+필요한 Windows 플랫폼 종속성을 생성하려면, `flutter build` 명령을 실행하세요.
 
 ```console
 C:\> flutter build windows --debug
@@ -13,13 +12,13 @@ Building Windows application...                                    31.4s
 ```
 
 {% tabs %}
-{% tab "Start from VS Code" %}
+{% tab "VS Code로 시작하기" %}
 
-#### Start debugging with VS Code first {:#vscode-windows}
+#### 먼저 VS Code로 디버깅 시작 {:#vscode-windows}
 
-If you use VS Code to debug most of your code, start with this section.
+VS Code를 사용하여 대부분의 코드를 디버깅하는 경우, 이 섹션부터 시작하세요.
 
-##### Start the debugger in VS Code
+##### VS Code에서 디버거 시작 {:#start-the-debugger-in-vs-code-1}
 
 {% include docs/debug/debug-flow-vscode-as-start.md %}
 
@@ -32,16 +31,13 @@ If you use VS Code to debug most of your code, start with this section.
      </div>
 {% endcomment %}
 
-##### Attach to the Flutter process in Visual Studio
+##### Visual Studio에서 Flutter 프로세스에 연결 {:#attach-to-the-flutter-process-in-visual-studio}
 
-1. To open the project solution file, go to
-   **File** <span aria-label="and then">></span>
-   **Open** <span aria-label="and then">></span>
-   **Project/Solution…**
+1. 프로젝트 솔루션 파일을 열려면, **File** <span aria-label="and then">></span> **Open** <span aria-label="and then">></span> **Project/Solution…**
 
-   You can also press <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>O</kbd>.
+   <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>O</kbd>를 누를 수도 있습니다.
 
-1. Choose the `build/windows/my_app.sln` file in your Flutter app directory.
+1. Flutter 앱 디렉토리에서 `build/windows/my_app.sln` 파일을 선택합니다.
 
 {% comment %}
    ![Open Project/Solution dialog box in Visual Studio 2022 with my_app.sln file selected.](/assets/images/docs/testing/debugging/native/visual-studio/choose-solution.png){:width="100%"}
@@ -53,39 +49,36 @@ If you use VS Code to debug most of your code, start with this section.
    </div>
 {% endcomment %}
 
-1. Go to **Debug** > **Attach to Process**.
+1. **Debug** > **Attach to Process**로 이동합니다.
 
-   You can also press <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>P</kbd>.
+   <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>P</kbd>를 누를 수도 있습니다.
 
-1. From the **Attach to Process** dialog box, choose `my_app.exe`.
+2. **Attach to Process** 대화 상자에서 `my_app.exe`를 선택합니다.
 
 {% comment %}
    ![Selecting my_app from the Attach to Process dialog box](/assets/images/docs/testing/debugging/native/visual-studio/attach-to-process-dialog.png){:width="100%"}
 {% endcomment %}
 
-   Visual Studio starts monitoring the Flutter app.
+   Visual Studio가 Flutter 앱 모니터링을 시작합니다.
 
 {% comment %}
    ![Visual Studio debugger running and monitoring the Flutter app](/assets/images/docs/testing/debugging/native/visual-studio/debugger-active.png){:width="100%"}
 {% endcomment %}
 
 {% endtab %}
-{% tab "Start from Visual Studio" %}
+{% tab "Visual Studio로 시작하기" %}
 
-#### Start debugging with Visual Studio first
+#### 먼저 Visual Studio로 디버깅 시작 {:#start-debugging-with-visual-studio-first}
 
-If you use Visual Studio to debug most of your code, start with this section.
+Visual Studio를 사용하여 대부분의 코드를 디버깅하는 경우, 이 섹션부터 시작하세요.
 
-##### Start the local Windows debugger
+##### 로컬 Windows 디버거 시작 {:#start-the-local-windows-debugger}
 
-1. To open the project solution file, go to
-   **File** <span aria-label="and then">></span>
-   **Open** <span aria-label="and then">></span>
-   **Project/Solution…**
+1. 프로젝트 솔루션 파일을 열려면 **File** <span aria-label="and then">></span> **Open** <span aria-label="and then">></span> **Project/Solution…**으로 가세요.
 
-   You can also press <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>O</kbd>.
+   <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>O</kbd>를 누를 수도 있습니다.
 
-1. Choose the `build/windows/my_app.sln` file in your Flutter app directory.
+1. Flutter 앱 디렉토리에서 `build/windows/my_app.sln` 파일을 선택합니다.
 
 {% comment %}
    ![Open Project/Solution dialog box in Visual Studio 2022 with my_app.sln file selected.](/assets/images/docs/testing/debugging/native/visual-studio/choose-solution.png){:width="100%"}
@@ -97,41 +90,37 @@ If you use Visual Studio to debug most of your code, start with this section.
    </div>
 {% endcomment %}
 
-1. Set `my_app` as the startup project.
-   In the **Solution Explorer**, right-click on `my_app` and select
-   **Set as Startup Project**.
+1. `my_app`을 시작 프로젝트로 설정합니다. **Solution Explorer**에서, 
+   `my_app`을 마우스 오른쪽 버튼으로 클릭하고, **Set as Startup Project**을 선택합니다.
 
-1. Click **Local Windows Debugger** to start debugging.
+2. **Local Windows Debugger**를 클릭하여 디버깅을 시작합니다.
 
-   You can also press <kbd>F5</kbd>.
+   <kbd>F5</kbd>를 누를 수도 있습니다.
 
-   When the Flutter app has started, a console window displays
-   a message with the Dart VM service URI. It resembles the following response:
+   Flutter 앱이 시작되면, 콘솔 창에 Dart VM 서비스 URI가 포함된 메시지가 표시됩니다. 
+   다음 응답과 유사합니다.
 
    ```console
    flutter: The Dart VM service is listening on http://127.0.0.1:62080/KPHEj2qPD1E=/
    ```
 
-1. Copy the Dart VM service URI.
+3. Dart VM 서비스 URI를 복사합니다.
 
-##### Attach to the Dart VM in VS Code
+##### VS Code에서 Dart VM에 연결 {:#attach-to-the-dart-vm-in-vs-code-2}
 
-1. To open the command palette, go to
-   **View** <span aria-label="and then">></span>
-   **Command Palette...**
+1. 명령 팔레트를 열려면, **View** <span aria-label="and then">></span> **Command Palette...**로 이동합니다.
 
-   You can also press <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd>.
+   <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd>를 누를 수도 있습니다.
 
-1. Type `debug`.
+2. `debug`를 입력합니다.
 
-1. Click the **Debug: Attach to Flutter on Device** command.
+3. **Debug: Attach to Flutter on Device** 명령을 클릭합니다.
 
 {% comment %}
    !['Running the Debug: Attach to Flutter on Device command in VS Code.'](/assets/images/docs/testing/debugging/vscode-ui/screens/attach-flutter-process-menu.png){:width="100%"}
 {% endcomment %}
 
-1. In the **Paste an VM Service URI** box, paste the URI you copied
-   from Visual Studio and press <kbd>Enter</kbd>.
+1. **Paste an VM Service URI** 상자에, Visual Studio에서 복사한 URI를 붙여넣고 <kbd>Enter</kbd> 키를 누릅니다.
 
 {% comment %}
    ![Alt text](/assets/images/docs/testing/debugging/vscode-ui/screens/vscode-add-attach-uri-filled.png)

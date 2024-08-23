@@ -1,60 +1,53 @@
 ---
-title: Common Flutter errors
-description: How to recognize and resolve common Flutter framework errors.
+# title: Common Flutter errors
+title: 일반적인 Flutter 오류
+# description: How to recognize and resolve common Flutter framework errors.
+description: 일반적인 Flutter 프레임워크 오류를 인식하고 해결하는 방법.
 ---
 
 <?code-excerpt path-base="testing/common_errors"?>
 
-## Introduction
+## 소개 {:#introduction}
 
-This page explains several frequently-encountered Flutter
-framework errors (including layout errors) and gives suggestions
-on how to resolve them.
-This is a living document with more errors to be added in
-future revisions, and your contributions are welcomed.
-Feel free to [open an issue][] or [submit a pull request][] to
-make this page more useful to you and the Flutter community.
+이 페이지에서는 자주 발생하는 여러 Flutter 프레임워크 오류(레이아웃 오류 포함)를 설명하고, 
+이를 해결하는 방법에 대한 제안을 제공합니다. 
+이는 향후 개정판에 추가될 오류가 더 많은 라이브 문서이며, 여러분의 기여를 환영합니다. 
+이 페이지를 여러분과 Flutter 커뮤니티에 더 유용하게 만들기 위해, 
+[문제 열기][open an issue] 또는 [풀 리퀘스트 제출][submit a pull request]을 자유롭게 하세요.
 
 [open an issue]: {{site.repo.this}}/issues/new/choose
 [submit a pull request]: {{site.repo.this}}/pulls
 
-## A solid red or grey screen when running your app
+## 앱을 실행할 때 빨간색 또는 회색 화면이 나타납니다. {:#a-solid-red-or-grey-screen-when-running-your-app}
 
-Typically called a "red (or grey) screen of death",
-this is sometimes how Flutter lets
-you know that there's an error.
+일반적으로 "빨간색(또는 회색) 죽음의 화면"이라고 불리는 이것은, 
+때때로 Flutter가 오류가 있음을 알려주는 방식입니다.
 
-The red screen can appear when the app runs in
-debug or profile mode. The grey screen can appear
-when the app runs in release mode.
+앱이 디버그 또는 프로필 모드에서 실행될 때 빨간색 화면이 나타날 수 있습니다. 
+앱이 릴리스 모드에서 실행될 때 회색 화면이 나타날 수 있습니다.
 
-Generally, these errors occur when there's an
-uncaught exception (and you might need another
-try-catch block), or when there is some rendering error,
-such as an overflow error.
+일반적으로, 이러한 오류는 포착되지 않은 예외가 있을 때(그리고 다른 try-catch 블록이 필요할 수 있음) 
+또는 오버플로 오류와 같은 렌더링 오류가 있을 때 발생합니다.
 
-The following articles provide some useful insights
-on debugging this sort of error:
+다음 문서에서는 이러한 종류의 오류를 디버깅하는 데 유용한 통찰력을 제공합니다.
 
-* [Flutter errors demystified][] by Abishek
-* [Understanding and addressing the grey screen in Flutter][] by Christopher Nwosu-Madueke
-* [Flutter stuck on white screen][] by Kesar Bhimani
+* [Flutter 오류의 비밀 해제][Flutter errors demystified] by Abishek
+* [Flutter에서 회색 화면 이해 및 해결][Understanding and addressing the grey screen in Flutter] by Christopher Nwosu-Madueke
+* [Flutter가 흰색 화면에 갇힘][Flutter stuck on white screen] by Kesar Bhimani
 
 [Flutter errors demystified]: {{site.medium}}/@hpatilabhi10/flutter-errors-demystified-red-screen-errors-vs-debug-console-errors-acb3b8ed2625
 [Flutter stuck on white screen]: https://www.dhiwise.com/post/flutter-stuck-on-white-screen-understanding-and-fixing
 [Understanding and addressing the grey screen in Flutter]: {{site.medium}}/@LordChris/understanding-and-addressing-the-grey-screen-in-flutter-5e72c31f408f
 
-## 'A RenderFlex overflowed…'
+## 'A RenderFlex overflowed…' {:#a-renderflex-overflowed}
 
-RenderFlex overflow is one of the most frequently
-encountered Flutter framework errors,
-and you've probably run into it already.
+RenderFlex 오버플로는 가장 자주 발생하는 Flutter 프레임워크 오류 중 하나이며, 
+아마 여러분은 이미 이 오류를 겪었을 것입니다.
 
-**What does the error look like?**
+**오류는 어떻게 생겼나요?**
 
-When it happens, yellow and black stripes appear,
-indicating the area of overflow in the app UI.
-In addition, an error message displays in the debug console:
+오류가 발생하면 노란색과 검은색 줄무늬가 나타나 앱 UI에서 오버플로 영역을 나타냅니다. 
+또한 디버그 콘솔에 오류 메시지가 표시됩니다.
 
 ```plaintext
 The following assertion was thrown during layout:
@@ -71,12 +64,10 @@ being too big for the RenderFlex.
 (Additional lines of this message omitted)
 ```
 
-**How might you run into this error?**
+**어떻게 이 오류가 발생할 수 있나요?**
 
-The error often occurs when a `Column` or `Row` has a
-child widget that isn't constrained in its size.
-For example,
-the code snippet below demonstrates a common scenario:
+이 오류는 `Column` 또는 `Row`에 크기에 제한이 없는 자식 위젯이 있을 때 종종 발생합니다. 
+예를 들어, 아래 코드 조각은 일반적인 시나리오를 보여줍니다.
 
 <?code-excerpt "lib/renderflex_overflow.dart (problem)"?>
 ```dart
@@ -103,35 +94,23 @@ Widget build(BuildContext context) {
 }
 ```
 
-In the above example,
-the `Column` tries to be wider than the space the `Row`
-(its parent) can allocate to it, causing an overflow error.
-Why does the `Column` try to do that?
-To understand this layout behavior, you need to know
-how Flutter framework performs layout:
+위의 예에서, `Column`은 `Row`(부모)가 할당할 수 있는 공간보다 더 넓게 만들려고 시도하여, 오버플로 오류가 발생합니다. `Column`은 왜 그렇게 하려고 할까요? 
+이 레이아웃 동작을 이해하려면, Flutter 프레임워크가 레이아웃을 수행하는 방식을 알아야 합니다.
 
-"_To perform layout, Flutter walks the render tree in a depth-first traversal
-and **passes down size constraints** from parent to child… Children respond by
-**passing up a size** to their parent object within the constraints the parent
-established._" – [Flutter architectural overview][]
+"_레이아웃을 수행하기 위해, Flutter는 깊이 우선 순회(depth-first traversal)에서 렌더 트리를 탐색하고, 부모에서 자식으로 **크기 제약 조건을 아래로(passes down size constraints)** 전달합니다... 자식은 부모가 설정한 제약 조건 내에서 부모 객체로 **크기를 위로 전달(passing up a size)** 하여 응답합니다._" – [Flutter 아키텍처 개요][Flutter architectural overview]
 
-In this case, the `Row` widget doesn't constrain the
-size of its children, nor does the `Column` widget.
-Lacking constraints from its parent widget, the second
-`Text` widget tries to be as wide as all the characters
-it needs to display. The self-determined width of the
-`Text` widget then gets adopted by the `Column`, which
-clashes with the maximum amount of horizontal space its parent,
-the `Row` widget, can provide.
+이 경우, `Row` 위젯은 자식의 크기를 제한하지 않으며, `Column` 위젯도 마찬가지입니다. 
+부모 위젯의 제약 조건이 없는, 두 번째 `Text` 위젯은 표시하는 데 필요한 모든 문자만큼 넓게 만들려고 합니다. 
+그러면 `Text` 위젯의 자체 결정 너비가 `Column` 위젯에 의해 채택되는데, 
+이는 부모 위젯인 `Row` 위젯이 제공할 수 있는 최대 수평 공간과 충돌합니다.
 
 [Flutter architectural overview]: /resources/architectural-overview#layout-and-rendering
 
-**How to fix it?**
+**어떻게 고치나요?**
 
-Well, you need to make sure the `Column` won't attempt
-to be wider than it can be. To achieve this,
-you need to constrain its width. One way to do it is to
-wrap the `Column` in an `Expanded` widget:
+글쎄요, `Column`이 가능한 것보다 더 넓어지려고 하지 않도록 해야 합니다. 
+이를 달성하려면, 너비를 제한해야 합니다. 
+이를 위한 한 가지 방법은 `Column`을 `Expanded` 위젯으로 래핑하는 것입니다.
 
 <?code-excerpt "lib/renderflex_overflow.dart (solution)"?>
 ```dart
@@ -140,73 +119,65 @@ return const Row(
     Icon(Icons.message),
     Expanded(
       child: Column(
-          // code omitted
+          // 코드 생략
           ),
     ),
   ],
 );
 ```
 
-Another way is to wrap the `Column` in a `Flexible` widget
-and specify a `flex` factor. In fact,
-the `Expanded` widget is equivalent to the `Flexible` widget
-with a `flex` factor of 1.0, as [its source code][] shows.
-To further understand how to use the `Flex` widget in Flutter layouts,
-check out [this 90-second Widget of the Week video][flexible-video]
-on the `Flexible` widget.
+다른 방법은 `Column`을 `Flexible` 위젯으로 래핑하고, `flex` 인수를 지정하는 것입니다. 
+사실 `Expanded` 위젯은 `flex` 인수가 1.0인 `Flexible` 위젯과 동일합니다. 
+[소스 코드][its source code]에서 볼 수 있습니다. 
+Flutter 레이아웃에서 `Flex` 위젯을 사용하는 방법을 자세히 알아보려면, 
+`Flexible` 위젯에 대한 [이 90초짜리 주간 위젯 비디오][flexible-video]를 확인하세요.
 
-**Further information:**
+**추가 정보:**
 
-The resources linked below provide further information about this error.
+아래 링크된 리소스는 이 오류에 대한 추가 정보를 제공합니다.
 
-* [Flexible (Flutter Widget of the Week)][flexible-video]
-* [How to debug layout issues with the Flutter Inspector][medium-article]
-* [Understanding constraints][]
+* [Flutter Widget of the Week(주간 위젯)][flexible-video]
+* [Flutter Inspector로 레이아웃 문제를 디버깅하는 방법][medium-article]
+* [제약 조건 이해][Understanding constraints]
 
 [its source code]: {{site.repo.flutter}}/blob/c8e42b47f5ea8b5ff7bf2f2b0a2a8e765f1aa51d/packages/flutter/lib/src/widgets/basic.dart#L5166-L5174
 [flexible-video]: {{site.yt.watch}}?v=CI7x0mAZiY0
 [medium-article]: {{site.flutter-medium}}/how-to-debug-layout-issues-with-the-flutter-inspector-87460a7b9db#738b
 [Understanding constraints]: /ui/layout/constraints
 
-## 'RenderBox was not laid out'
+## 'RenderBox was not laid out' {:#renderbox-was-not-laid-out}
 
-While this error is pretty common,
-it's often a side effect of a primary error
-occurring earlier in the rendering pipeline.
+이 오류는 꽤 흔하지만, 종종 렌더링 파이프라인에서 일찍 발생한 기본 오류의 부작용입니다.
 
-**What does the error look like?**
+**오류는 어떻게 생겼나요?**
 
-The message shown by the error looks like this:
+오류에서 표시되는 메시지는 다음과 같습니다.
 
 ```plaintext
 RenderBox was not laid out: 
 RenderViewport#5a477 NEEDS-LAYOUT NEEDS-PAINT NEEDS-COMPOSITING-BITS-UPDATE
 ```
 
-**How might you run into this error?**
+**어떻게 이 오류가 발생할 수 있나요?**
 
-Usually, the issue is related to violation of box constraints,
-and it needs to be solved by providing more information
-to Flutter about how you'd like to constrain the widgets in question.
-You can learn more about how constraints work
-in Flutter on the [Understanding constraints][] page.
+일반적으로, 이 문제는 상자 제약 조건 위반과 관련이 있으며, 
+해당 위젯을 제약하는 방법에 대한 자세한 정보를 Flutter에 제공하여 해결해야 합니다. 
+Flutter에서 제약 조건이 작동하는 방식에 대한 자세한 내용은 [제약 조건 이해][Understanding constraints] 페이지에서 확인할 수 있습니다.
 
-The `RenderBox was not laid out` error is often
-caused by one of two other errors:
+`RenderBox was not laid out` 오류는 종종 두 가지 다른 오류 중 하나로 인해 발생합니다.
 
-* 'Vertical viewport was given unbounded height'
-* 'An InputDecorator...cannot have an unbounded width'
+* '수직 뷰포트에 무제한 높이가 지정되었습니다' ('Vertical viewport was given unbounded height')
+* 'InputDecorator...에는 무제한 너비가 있을 수 없습니다' ('An InputDecorator...cannot have an unbounded width')
 
 <a id="unbounded"></a>
 
-## 'Vertical viewport was given unbounded height'
+## 'Vertical viewport was given unbounded height' {:#vertical-viewport-was-given-unbounded-height}
 
-This is another common layout error you could run into
-while creating a UI in your Flutter app.
+이것은 Flutter 앱에서 UI를 만드는 동안 발생할 수 있는 또 다른 일반적인 레이아웃 오류입니다.
 
-**What does the error look like?**
+**오류는 어떻게 생겼나요?**
 
-The message shown by the error looks like this:
+오류에 표시된 메시지는 다음과 같습니다.
 
 ```plaintext
 The following assertion was thrown during performResize():
@@ -219,17 +190,12 @@ scrollable widget is nested inside another scrollable widget.
 (Additional lines of this message omitted)
 ```
 
-**How might you run into this error?**
+**어떻게 이 오류가 발생할 수 있나요?**
 
-The error is often caused when a `ListView`
-(or other kinds of scrollable widgets such as `GridView`)
-is placed inside a `Column`. A `ListView` takes all
-the vertical space available to it,
-unless it's constrained by its parent widget.
-However, a `Column` doesn't impose any constraint
-on its children's height by default.
-The combination of the two behaviors leads to the failure of
-determining the size of the `ListView`.
+이 오류는 `ListView`(또는 `GridView`와 같은 다른 종류의 scrollable 위젯)가 `Column` 내부에 배치될 때 종종 발생합니다. 
+`ListView`는 부모 위젯에 의해 제한되지 않는 한, 사용 가능한 모든 수직 공간을 차지합니다. 
+그러나, `Column`은 기본적으로 자식의 높이에 어떠한 제약도 가하지 않습니다. 
+두 가지 동작이 결합되면, `ListView`의 크기를 결정하지 못하게 됩니다.
 
 <?code-excerpt "lib/unbounded_height.dart (problem)"?>
 ```dart
@@ -256,13 +222,11 @@ Widget build(BuildContext context) {
 }
 ```
 
-**How to fix it?**
+**어떻게 고치나요?**
 
-To fix this error, specify how tall the `ListView` should be.
-To make it as tall as the remaining space in the `Column`,
-wrap it using an `Expanded` widget (as shown in the following example).
-Otherwise, specify an absolute height using a `SizedBox`
-widget or a relative height using a `Flexible` widget.
+이 오류를 수정하려면 `ListView`의 높이를 지정합니다. 
+`Column`의 나머지 공간과 같은 높이로 만들려면, `Expanded` 위젯을 사용하여 래핑합니다. (다음 예에서 표시)
+그렇지 않으면, `SizedBox` 위젯을 사용하여 절대 높이를 지정하거나, `Flexible` 위젯을 사용하여 상대 높이를 지정합니다.
 
 <?code-excerpt "lib/unbounded_height.dart (solution)"?>
 ```dart
@@ -291,23 +255,21 @@ Widget build(BuildContext context) {
 }
 ```
 
-**Further information:**
+**추가 정보:**
 
-The resources linked below provide
-further information about this error.
+아래 링크된 리소스는 이 오류에 대한 추가 정보를 제공합니다.
 
-* [How to debug layout issues with the Flutter Inspector][medium-article]
-* [Understanding constraints][]
+* [Flutter Inspector로 레이아웃 문제를 디버깅하는 방법][medium-article]
+* [제약 조건 이해][Understanding constraints]
 
-## 'An InputDecorator...cannot have an unbounded width'
+## 'An InputDecorator...cannot have an unbounded width' {:#an-inputdecorator-cannot-have-an-unbounded-width}
 
-The error message suggests that it's also related
-to box constraints, which are important to understand
-to avoid many of the most common Flutter framework errors.
+오류 메시지는 상자 제약 조건과도 관련이 있음을 시사하는데, 
+이는 가장 흔한 Flutter 프레임워크 오류 중 많은 부분을 피하기 위해 이해하는 것이 중요합니다.
 
-**What does the error look like?**
+**오류는 어떻게 생겼나요?**
 
-The message shown by the error looks like this:
+오류에 표시된 메시지는 다음과 같습니다.
 
 ```plaintext
 The following assertion was thrown during performLayout():
@@ -320,11 +282,10 @@ width of the InputDecorator or the TextField that contains it.
 (Additional lines of this message omitted)
 ```
 
-**How might you run into the error?**
+**어떻게 오류가 발생할 수 있나요?**
 
-This error occurs, for example, when a `Row` contains a
-`TextFormField` or a `TextField` but the latter has
-no width constraint.
+이 오류는 예를 들어 `Row`에 `TextFormField` 또는 `TextField`가 포함되어 있지만, 
+후자에 너비 제약 조건이 없는 경우 발생합니다.
 
 <?code-excerpt "lib/unbounded_width.dart (problem)"?>
 ```dart
@@ -344,12 +305,10 @@ Widget build(BuildContext context) {
 }
 ```
 
-**How to fix it?**
+**어떻게 고치나요?**
 
-As suggested by the error message,
-fix this error by constraining the text field
-using either an `Expanded` or `SizedBox` widget.
-The following example demonstrates using an `Expanded` widget:
+오류 메시지에서 제안한 대로, `Expanded` 또는 `SizedBox` 위젯을 사용하여 텍스트 필드를 제한하여 이 오류를 수정합니다. 
+다음 예는 `Expanded` 위젯을 사용하는 방법을 보여줍니다.
 
 <?code-excerpt "lib/unbounded_width.dart (solution)"?>
 ```dart
@@ -369,13 +328,13 @@ Widget build(BuildContext context) {
 }
 ```
 
-## 'Incorrect use of ParentData widget'
+## 'Incorrect use of ParentData widget' {:#incorrect-use-of-parentdata-widget}
 
-This error is about missing an expected parent widget.
+이 오류는 예상된 부모 위젯이 누락된 것과 관련이 있습니다.
 
-**What does the error look like?**
+**오류는 어떻게 생겼나요?**
 
-The message shown by the error looks like this:
+오류에서 표시되는 메시지는 다음과 같습니다.
 
 ```plaintext
 The following assertion was thrown while looking for parent data:
@@ -385,41 +344,35 @@ Usually, this indicates that at least one of the offending ParentDataWidgets
 listed above is not placed directly inside a compatible ancestor widget.
 ```
 
-**How might you run into the error?**
+**어떻게 오류가 발생할 수 있나요?**
 
-While Flutter's widgets are generally flexible
-in how they can be composed together in a UI,
-a small subset of those widgets expect specific parent widgets.
-When this expectation can't be satisfied in your widget tree,
-you're likely to encounter this error.
+Flutter의 위젯은 일반적으로 UI에서 함께 구성할 수 있는 방식이 유연하지만, 
+이러한 위젯 중 일부는 특정 부모 위젯을 기대합니다. 
+위젯 트리에서 이러한 기대를 충족할 수 없는 경우, 이 오류가 발생할 가능성이 높습니다.
 
-Here is an _incomplete_ list of widgets that expect
-specific parent widgets within the Flutter framework.
-Feel free to submit a PR (using the doc icon in
-the top right corner of the page) to expand this list.
+Flutter 프레임워크 내에서 특정 부모 위젯을 기대하는 위젯의 _불완전한_ 리스트는 다음과 같습니다. 
+이 리스트를 확장하려면 PR을 제출하세요. (페이지 오른쪽 상단 모서리에 있는 문서 아이콘 사용)
 
-| Widget                                |  Expected parent widget(s) |
+| 위젯                                |  예상 부모 위젯 |
 |:--------------------------------------|---------------------------:|
-| `Flexible`                            | `Row`, `Column`, or `Flex` |
-| `Expanded` (a specialized `Flexible`) | `Row`, `Column`, or `Flex` |
+| `Flexible`                            | `Row`, `Column` 또는 `Flex` |
+| `Expanded` (특수한 형태의 `Flexible`) | `Row`, `Column` 또는 `Flex` |
 | `Positioned`                          |                    `Stack` |
 | `TableCell`                           |                    `Table` |
 
-**How to fix it?**
+{:.table .table-striped}
 
-The fix should be obvious once you know
-which parent widget is missing.
+**어떻게 고치나요?**
 
-## 'setState called during build'
+어느 부모 위젯이 누락되었는지 알게 되면, 수정 방법이 명확해질 것입니다.
 
-The `build` method in your Flutter code isn't
-a good place to call `setState`,
-either directly or indirectly.
+## 'setState called during build' {:#setstate-called-during-build}
 
-**What does the error look like?**
+Flutter 코드의 `build` 메서드는, 직접적이든 간접적이든, `setState`를 호출하기에 좋은 곳이 아닙니다.
 
-When the error occurs,
-the following message is displayed in the console:
+**오류는 어떻게 생겼나요?**
+
+오류가 발생하면, 콘솔에 다음 메시지가 표시됩니다.
 
 ```plaintext
 The following assertion was thrown building DialogPage(dirty, dependencies: 
@@ -432,23 +385,19 @@ is already in the process of building widgets.
 (Additional lines of this message omitted)
 ```
 
-**How might you run into the error?**
+**어떻게 오류가 발생할 수 있나요?**
 
-In general, this error occurs when the `setState`
-method is called within the `build` method.
+일반적으로, 이 오류는 `build` 메서드 내에서 `setState` 메서드가 호출될 때 발생합니다.
 
-A common scenario where this error occurs is when
-attempting to trigger a `Dialog` from within the
-`build` method. This is often motivated by the need to
-immediately show information to the user,
-but `setState` should never be called from a `build` method.
+이 오류가 발생하는 일반적인 시나리오는, `build` 메서드 내에서 `Dialog`를 트리거하려고 할 때입니다. 
+이는 종종 사용자에게 정보를 즉시 표시해야 할 필요성에서 비롯되지만, `setState`는 `build` 메서드에서 호출해서는 안 됩니다.
 
-The following snippet seems to be a common culprit of this error:
+다음 스니펫은 이 오류의 일반적인 원인인 듯합니다.
 
 <?code-excerpt "lib/set_state_build.dart (problem)"?>
 ```dart
 Widget build(BuildContext context) {
-  // Don't do this.
+  // 이렇게 하지 마세요.
   showDialog(
       context: context,
       builder: (context) {
@@ -467,22 +416,16 @@ Widget build(BuildContext context) {
 }
 ```
 
-This code doesn't make an explicit call to `setState`,
-but it's called by `showDialog`.
-The `build` method isn't the right place to call
-`showDialog` because `build` can be called by the
-framework for every frame, for example, during an animation.
+이 코드는 `setState`를 명시적으로 호출하지 않지만, `showDialog`에서 호출합니다. 
+`build` 메서드는 `showDialog`를 호출하기에 적합한 곳이 아닙니다. 
+`build`는, 예를 들어, 애니메이션 중에 프레임워크에서 모든 프레임에 대해 호출될 수 있기 때문입니다.
 
-**How to fix it?**
+**어떻게 고치나요?**
 
-One way to avoid this error is to use the `Navigator` API
-to trigger the dialog as a route. In the following example,
-there are two pages. The second page has a
-dialog to be displayed upon entry.
-When the user requests the second page by
-clicking a button on the first page,
-the `Navigator` pushes two routes–one
-for the second page and another for the dialog.
+이 오류를 피하는 한 가지 방법은 `Navigator` API를 사용하여 대화 상자를 경로로 트리거하는 것입니다. 
+다음 예에서는 두 페이지가 있습니다. 두 번째 페이지에는 진입 시 표시되는 대화 상자가 있습니다. 
+사용자가 첫 번째 페이지의 버튼을 클릭하여 두 번째 페이지를 요청하면, `Navigator`는 두 개의 경로를 푸시합니다. 
+하나는 두 번째 페이지용이고, 다른 하나는 대화 상자용입니다.
 
 <?code-excerpt "lib/set_state_build.dart (solution)"?>
 ```dart
@@ -518,31 +461,23 @@ class FirstScreen extends StatelessWidget {
 }
 ```
 
-## `The ScrollController is attached to multiple scroll views`
+## `The ScrollController is attached to multiple scroll views` {:#the-scrollcontroller-is-attached-to-multiple-scroll-views}
 
-This error can occur when multiple scrolling
-widgets (such as `ListView`) appear on the
-screen at the same time. It's more likely for
-this error to occur on a web or desktop app,
-than a mobile app since it's rare to encounter
-this scenario on mobile.
+이 오류는 여러 스크롤 위젯(예: `ListView`)이 동시에 화면에 나타날 때 발생할 수 있습니다. 
+모바일 앱에서는 이 시나리오가 드물기 때문에, 모바일 앱보다 웹 또는 데스크톱 앱에서 이 오류가 발생할 가능성이 더 큽니다.
 
-For more information and to learn how to fix,
-check out the following video on
-[`PrimaryScrollController`][controller-video]:
+자세한 내용과 수정 방법을 알아보려면, [`PrimaryScrollController`][controller-video]에서 다음 비디오를 확인하세요.
 
 {% ytEmbed '33_0ABjFJUU', 'PrimaryScrollController | Decoding Flutter', true %}
 
 [controller-video]: {{site.api}}/flutter/widgets/PrimaryScrollController-class.html
 
-## References
+## 참고자료 {:#references}
 
-To learn more about how to debug errors,
-especially layout errors in Flutter,
-check out the following resources:
+Flutter에서 특히 레이아웃 오류를 디버깅하는 방법에 대해 자세히 알아보려면, 다음 리소스를 확인하세요.
 
-* [How to debug layout issues with the Flutter Inspector][medium-article]
-* [Understanding constraints][]
-* [Flutter architectural overview][]
+* [Flutter Inspector로 레이아웃 문제를 디버깅하는 방법][medium-article]
+* [제약 조건 이해][Understanding constraints]
+* [Flutter 아키텍처 개요][Flutter architectural overview]
 
 [Flutter architectural overview]: /resources/architectural-overview#layout-and-rendering

@@ -1,57 +1,41 @@
 ---
-title: Handling errors in Flutter
-description: How to control error messages and logging of errors
+# title: Handling errors in Flutter
+title: Flutter에서 오류 처리
+# description: How to control error messages and logging of errors
+description: 오류 메시지 및 오류 로깅을 제어하는 ​​방법
 ---
 
 <?code-excerpt path-base="testing/errors"?>
 
-The Flutter framework catches errors that occur during callbacks
-triggered by the framework itself, including errors encountered
-during the build, layout, and paint phases. Errors that don't occur
-within Flutter's callbacks can't be caught by the framework,
-but you can handle them by setting up an error handler on the
-[`PlatformDispatcher`][].
+Flutter 프레임워크는 빌드, 레이아웃 및 페인트 단계에서 발생한 오류를 포함하여, 
+프레임워크 자체에서 트리거한 콜백 중에 발생하는 오류를 포착합니다. 
+Flutter의 콜백 내에서 발생하지 않는 오류는 프레임워크에서 포착할 수 없지만, 
+[`PlatformDispatcher`][]에서 오류 처리기를 설정하여 처리할 수 있습니다.
 
-All errors caught by Flutter are routed to the
-[`FlutterError.onError`][] handler. By default,
-this calls [`FlutterError.presentError`][],
-which dumps the error to the device logs.
-When running from an IDE, the inspector overrides this
-behavior so that errors can also be routed to the IDE's
-console, allowing you to inspect the
-objects mentioned in the message.
+Flutter에서 포착한 모든 오류는 [`FlutterError.onError`][] 처리기로 라우팅됩니다. 
+기본적으로 이는 [`FlutterError.presentError`][]를 호출하여, 오류를 장치 로그에 덤프합니다. 
+IDE에서 실행할 때, 검사기는 이 동작을 재정의하여 오류를 IDE의 콘솔로 라우팅하여, 
+메시지에 언급된 객체를 검사할 수 있도록 합니다.
 
 :::note
-Consider calling [`FlutterError.presentError`][]
-from your custom error handler in order to see
-the logs in the console as well.
+콘솔에서 로그를 보려면 커스텀 오류 처리기에서, [`FlutterError.presentError`][]를 호출하는 것을 고려하세요.
 :::
 
-When an error occurs during the build phase,
-the [`ErrorWidget.builder`][] callback is
-invoked to build the widget that is used
-instead of the one that failed. By default,
-in debug mode this shows an error message in red,
-and in release mode this shows a gray background.
+빌드 단계에서 오류가 발생하면, [`ErrorWidget.builder`][] 콜백이 호출되어 실패한 위젯 대신 사용되는 위젯을 빌드합니다. 
+기본적으로, 디버그 모드에서는 오류 메시지가 빨간색으로 표시되고, 릴리스 모드에서는 회색 배경으로 표시됩니다.
 
-When errors occur without a Flutter callback on the call stack,
-they are handled by the `PlatformDispatcher`'s error callback. By default,
-this only prints errors and does nothing else.
+호출 스택에서 Flutter 콜백 없이 오류가 발생하면, `PlatformDispatcher`의 오류 콜백에서 처리합니다. 
+기본적으로, 오류만 출력하고 다른 작업은 수행하지 않습니다.
 
-You can customize these behaviors,
-typically by setting them to values in
-your `void main()` function.
+이러한 동작은, 일반적으로 `void main()` 함수에서 값으로 설정하여, 커스터마이즈 할 수 있습니다.
 
-Below each error type handling is explained. At the bottom
-there's a code snippet which handles all types of errors. Even
-though you can just copy-paste the snippet, we recommend you
-to first get acquainted with each of the error types.
+각 오류 타입 처리에 대한 설명은 아래에 있습니다. 
+맨 아래에는 모든 타입의 오류를 처리하는 코드 조각이 있습니다. 
+조각만 복사하여 붙여넣을 수 있지만, 먼저 각 오류 타입을 알아보는 것이 좋습니다.
 
-## Errors caught by Flutter
+## Flutter에서 발견된 오류 {:#errors-caught-by-flutter}
 
-For example, to make your application quit immediately any time an
-error is caught by Flutter in release mode, you could use the
-following handler:
+예를 들어, Flutter가 릴리스 모드에서 오류를 포착할 때마다 애플리케이션이 즉시 종료되도록 하려면, 다음 핸들러를 사용할 수 있습니다.
 
 <?code-excerpt "lib/quit_immediate.dart (on-error-main)"?>
 ```dart
@@ -68,22 +52,19 @@ void main() {
   runApp(const MyApp());
 }
 
-// The rest of the `flutter create` code...
+// `flutter create` 코드의 나머지 부분...
 ```
 
 :::note
-The top-level [`kReleaseMode`][] constant indicates
-whether the app was compiled in release mode.
+최상위 [`kReleaseMode`][] 상수는 앱이 릴리스 모드로 컴파일되었는지 여부를 나타냅니다.
 :::
 
-This handler can also be used to report errors to a logging service.
-For more details, see our cookbook chapter for
-[reporting errors to a service][].
+이 핸들러는 로깅 서비스에 오류를 보고하는 데에도 사용할 수 있습니다.
+자세한 내용은 [서비스에 오류 보고][reporting errors to a service]에 대한 요리책 장을 참조하세요.
 
-## Define a custom error widget for build phase errors
+## 빌드 단계 오류에 대한 커스텀 오류 위젯을 정의 {:#define-a-custom-error-widget-for-build-phase-errors}
 
-To define a customized error widget that displays whenever
-the builder fails to build a widget, use [`MaterialApp.builder`][].
+빌더가 위젯을 빌드하지 못할 때마다 표시되는 커스터마이즈된 오류 위젯을 정의하려면, [`MaterialApp.builder`][]를 사용합니다.
 
 <?code-excerpt "lib/excerpts.dart (custom-error)"?>
 ```dart
@@ -107,11 +88,9 @@ class MyApp extends StatelessWidget {
 }
 ```
 
-## Errors not caught by Flutter
+## Flutter에서 포착되지 않는 오류 {:#errors-not-caught-by-flutter}
 
-Consider an `onPressed` callback that invokes an asynchronous function,
-such as `MethodChannel.invokeMethod` (or pretty much any plugin).
-For example:
+`MethodChannel.invokeMethod`(또는 거의 모든 플러그인)와 같은, 비동기 함수를 호출하는 `onPressed` 콜백을 고려하세요. 예를 들어:
 
 <?code-excerpt "lib/excerpts.dart (on-pressed)" replace="/return //g;/^\);$/)/g"?>
 ```dart
@@ -124,10 +103,9 @@ OutlinedButton(
 )
 ```
 
-If `invokeMethod` throws an error, it won't be forwarded to `FlutterError.onError`.
-Instead, it's forwarded to the `PlatformDispatcher`.
+`invokeMethod`가 오류를 throw하면, `FlutterError.onError`로 전달되지 않습니다. 대신, `PlatformDispatcher`로 전달됩니다.
 
-To catch such an error, use [`PlatformDispatcher.instance.onError`][].
+이러한 오류를 catch 하려면, [`PlatformDispatcher.instance.onError`][]를 사용합니다.
 
 <?code-excerpt "lib/excerpts.dart (catch-error)"?>
 ```dart
@@ -144,11 +122,11 @@ void main() {
 }
 ```
 
-## Handling all types of errors
+## 모든 타입의 오류 처리 {:#handling-all-types-of-errors}
 
-Say you want to exit application on any exception and to display
-a custom error widget whenever a widget building fails - you can base
-your errors handling on next code snippet:
+예외가 발생할 때마다 애플리케이션을 종료하고, 
+위젯 빌드가 실패할 때마다 커스텀 오류 위젯을 표시하려는 경우, 
+다음 코드 조각을 기반으로 오류 처리를 수행할 수 있습니다.
 
 <?code-excerpt "lib/main.dart (all-errors)"?>
 ```dart
