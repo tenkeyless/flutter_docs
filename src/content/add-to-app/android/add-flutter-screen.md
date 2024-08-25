@@ -1,21 +1,24 @@
 ---
-title: Add a Flutter screen to an Android app
-short-title: Add a Flutter screen
+# title: Add a Flutter screen to an Android app
+title: Android 앱에 Flutter 화면 추가
+# short-title: Add a Flutter screen
+short-title: Flutter 화면 추가
+# description: >
+  # Learn how to add a single Flutter screen to your existing Android app.
 description: >
-  Learn how to add a single Flutter screen to your existing Android app.
+  기존 Android 앱에 단일 Flutter 화면을 추가하는 방법을 알아보세요.
 ---
 
-This guide describes how to add a single Flutter screen to an
-existing Android app. A Flutter screen can be added as a normal,
-opaque screen, or as a see-through, translucent screen.
-Both options are described in this guide.
+이 가이드에서는 기존 Android 앱에 단일 Flutter 화면을 추가하는 방법을 설명합니다. 
+Flutter 화면은 일반 불투명 화면 또는 투명한 반투명(translucent) 화면으로 추가할 수 있습니다. 
+이 가이드에서는 두 가지 옵션 모두 설명합니다.
 
-## Add a normal Flutter screen
+## 일반 Flutter 화면 추가 {:#add-a-normal-flutter-screen}
 
 <img src='/assets/images/docs/development/add-to-app/android/add-flutter-screen/add-single-flutter-screen_header.png'
 class="mw-100" alt="Add Flutter Screen Header">
 
-### Step 1: Add FlutterActivity to AndroidManifest.xml
+### 1단계: AndroidManifest.xml에 FlutterActivity 추가 {:#step-1-add-flutteractivity-to-androidmanifest-xml}
 
 Flutter provides [`FlutterActivity`][] to display a Flutter
 experience within an Android app. Like any other [`Activity`][],
@@ -40,7 +43,7 @@ Android's system chrome, like Android's navigation bar, and to
 the background color of the `FlutterActivity` just before
 the Flutter UI renders itself for the first time.
 
-### Step 2: Launch FlutterActivity
+### 2단계: FlutterActivity 실행 {:#step-2-launch-flutteractivity}
 
 With `FlutterActivity` registered in your manifest file,
 add code to launch `FlutterActivity` from whatever point
@@ -135,7 +138,7 @@ is to instruct `FlutterActivity` to use a pre-warmed,
 cached `FlutterEngine`, which minimizes Flutter's
 initialization time. That approach is discussed next.
 
-### Step 3: (Optional) Use a cached FlutterEngine
+### 3단계: (선택 사항) 캐시된 FlutterEngine 사용 {:#step-3-optional-use-a-cached-flutterengine}
 
 Every `FlutterActivity` creates its own `FlutterEngine`
 by default. Each `FlutterEngine` has a non-trivial
@@ -305,7 +308,7 @@ of Flutter, use a release build.
 
 {% include docs/add-to-app/android-initial-route-cached-engine.md %}
 
-## Add a translucent Flutter screen
+## 반투명(translucency) Flutter 화면 추가 {:#add-a-translucent-flutter-screen}
 
 <img src='/assets/images/docs/development/add-to-app/android/add-flutter-screen/add-single-flutter-screen-transparent_header.png'
 class="mw-100" alt="Add Flutter Screen With Translucency Header">
@@ -320,7 +323,7 @@ To make your `FlutterActivity` translucent,
 make the following changes to the regular process of
 creating and launching a `FlutterActivity`.
 
-### Step 1: Use a theme with translucency
+### 1단계: 반투명 테마 사용 {:#step-1-use-a-theme-with-translucency}
 
 Android requires a special theme property for `Activity`s that render
 with a translucent background. Create or update an Android theme with the
@@ -348,7 +351,7 @@ Your `FlutterActivity` now supports translucency.
 Next, you need to launch your `FlutterActivity`
 with explicit transparency support.
 
-### Step 2: Start FlutterActivity with transparency
+### 2단계: 투명성을 사용하여 FlutterActivity 시작 {:#step-2-start-flutteractivity-with-transparency}
 
 To launch your `FlutterActivity` with a transparent background,
 pass the appropriate `BackgroundMode` to the `IntentBuilder`:

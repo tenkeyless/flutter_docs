@@ -1,16 +1,19 @@
 ---
-title: Manage plugins and dependencies in add-to-app
-short-title: Plugin setup
+# title: Manage plugins and dependencies in add-to-app
+title: 앱 to 앱에서 플러그인 및 종속성 관리
+# short-title: Plugin setup
+short-title: 플러그인 설정
+# description: >
+#   Learn how to use plugins and share your 
+#   plugin's library dependencies with your existing app.
 description: >
-  Learn how to use plugins and share your 
-  plugin's library dependencies with your existing app.
+  플러그인을 사용하는 방법과 플러그인 라이브러리 종속성을 기존 앱과 공유하는 방법을 알아보세요.
 ---
 
-This guide describes how to set up your project to consume
-plugins and how to manage your Gradle library dependencies
-between your existing Android app and your Flutter module's plugins.
+이 가이드에서는 플러그인을 사용하도록 프로젝트를 설정하는 방법과 
+기존 Android 앱과 Flutter 모듈의 플러그인 간의 Gradle 라이브러리 종속성을 관리하는 방법을 설명합니다.
 
-## A. Simple scenario
+## A. 간단한 시나리오 {:#a-simple-scenario}
 
 In the simple cases:
 
@@ -29,7 +32,7 @@ Gradle subproject or AARs,
 transitive Android Gradle libraries are automatically
 bundled as needed into your outer existing app.
 
-## B. Plugins needing project edits
+## B. 프로젝트 편집이 필요한 플러그인 {:#b-plugins-needing-project-edits}
 
 Some plugins require you to make some edits to the
 Android side of your project.
@@ -66,7 +69,7 @@ AndroidManifest.xml, Gradle files or adding more Java files
 in that wrapper library.
 :::
 
-## C. Merging libraries
+## C. 라이브러리 병합 {:#c-merging-libraries}
 
 The scenario that requires slightly more attention is if
 your existing Android application already depends on the

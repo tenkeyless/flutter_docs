@@ -1,39 +1,38 @@
 ---
-title: Integrate a Flutter module into your iOS project
-short-title: Integrate Flutter
-description: Learn how to integrate a Flutter module into your existing iOS project.
+# title: Integrate a Flutter module into your iOS project
+title: iOS 프로젝트에 Flutter 모듈 통합
+# short-title: Integrate Flutter
+short-title: Flutter 통합
+# description: Learn how to integrate a Flutter module into your existing iOS project.
+description: 기존 iOS 프로젝트에 Flutter 모듈을 통합하는 방법을 알아보세요.
 ---
 
-Flutter UI components can be incrementally added into your existing iOS
-application as embedded frameworks.
-To embed Flutter in your existing application,
-consider one of the following three methods.
+Flutter UI 구성 요소는 기존 iOS 애플리케이션에 임베디드 프레임워크로 점진적으로 추가할 수 있습니다. 
+기존 애플리케이션에 Flutter를 임베디드하려면 다음 세 가지 방법 중 하나를 고려하세요.
 
-| Embedding Method | Methodology | Benefit |
+| 임베딩 방법 | 방법론 | 이익 |
 |---|---|---|
-| Use CocoaPods _(Recommended)_ | Install and use the Flutter SDK and CocoaPods. Flutter compiles the `flutter_module` from source each time Xcode builds the iOS app. | Least complicated method to embed Flutter into your app. |
-| Use [iOS frameworks][] | Create iOS frameworks for Flutter components, embed them into your iOS, and update your existing app's build settings. | Doesn't require every developer to install the Flutter SDK and CocoaPods on their local machines. |
-| Use iOS frameworks and CocoaPods | Embed the frameworks for your iOS app and the plugins in Xcode, but distribute the Flutter engine as a CocoaPods podspec. | Provides an alternative to distributing the large Flutter engine (`Flutter.xcframework`) library. |
+| CocoaPods 사용 _(권장됨)_ | Flutter SDK와 CocoaPods를 설치하고 사용합니다. Flutter는 Xcode가 iOS 앱을 빌드할 때마다 소스에서 `flutter_module`을 컴파일합니다. | 앱에 Flutter를 내장하는 가장 간단한 방법입니다. |
+| [iOS frameworks][] 사용 | Flutter 구성 요소용 iOS 프레임워크를 만들고, 이를 iOS에 내장하고, 기존 앱의 빌드 설정을 업데이트합니다. | 모든 개발자가 로컬 머신에 Flutter SDK와 CocoaPods를 설치할 필요는 없습니다. |
+| iOS frameworks 및 CocoaPods 사용 | iOS 앱과 플러그인을 Xcode에 내장하고, Flutter 엔진은 CocoaPods podspec으로 배포합니다. | 대규모 Flutter 엔진(`Flutter.xcframework`) 라이브러리를 배포하는 것에 대한 대안을 제공합니다. |
 
 {:.table .table-striped}
 
 [iOS frameworks]: {{site.apple-dev}}/library/archive/documentation/MacOSX/Conceptual/BPFrameworks/Concepts/WhatAreFrameworks.html
 
-When you add Flutter to your existing iOS app,
-it [increases the size of your iOS app][app-size].
+기존 iOS 앱에 Flutter를 추가하면, [iOS 앱의 크기][app-size]가 증가합니다.
 
-For examples using an app built with UIKit,
-see the iOS directories in the [add_to_app code samples][].
-For an example using SwiftUI, consult the iOS directory in [News Feed App][].
+UIKit으로 빌드된 앱을 사용하는 예는 [add_to_app 코드 샘플][add_to_app code samples]의 iOS 디렉토리를 참조하세요. 
+SwiftUI를 사용하는 예는 [뉴스 피드 앱][News Feed App]의 iOS 디렉토리를 참조하세요.
 
-## Development system requirements
+## 개발 시스템 요구 사항 {:#development-system-requirements}
 
 Your development environment must meet the
 [macOS system requirements for Flutter][] with [Xcode installed][].
 Flutter supports Xcode {{site.appmin.xcode}} or later and
 [CocoaPods][] {{site.appmin.cocoapods}} or later.
 
-## Create a Flutter module
+## Flutter 모듈 생성 {:#create-a-flutter-module}
 
 To embed Flutter into your existing application with any method,
 create a Flutter module first.
@@ -59,7 +58,7 @@ This project contains a single-view example version of your module
 before embedding it in your existing iOS app.
 This helps when testing the Flutter-only parts of your code.
 
-## Organize your module
+## 모듈을 구성하세요 {:#organize-your-module}
 
 The `my_flutter` module directory structure resembles a typical Flutter app.
 
@@ -102,7 +101,7 @@ embedding the module into your existing application with CocoaPods.
 
 :::
 
-## Embed a Flutter module in your iOS app
+## iOS 앱에 Flutter 모듈 임베드 {:#embed-a-flutter-module-in-your-ios-app}
 
 After you have developed your Flutter module,
 you can embed it using the methods described
@@ -137,7 +136,7 @@ consult [Debugging your add-to-app module][].
 {% endtabs %}
 
 
-## Set local network privacy permissions
+## 로컬 네트워크 개인 정보 보호 권한 설정 {:#set-local-network-privacy-permissions}
 
 On iOS 14 and later, enable the Dart multicast DNS service in the
 **Debug** version of your iOS app.
@@ -263,7 +262,7 @@ Adjust the names as needed depending on your app's build configurations.
    _(Optional)_ To grant permission before the app loads, enable
    **Settings > Privacy > Local Network > Your App**.
 
-## Mitigate known issue with Apple Silicon Macs
+## Apple Silicon Mac의 알려진 문제 완화 {:#mitigate-known-issue-with-apple-silicon-macs}
 
 On [Macs running Apple Silicon][apple-silicon],
 the host app builds for an `arm64` simulator.
@@ -305,7 +304,7 @@ exclude `arm64` from the simulator architectures in your host app.
 
 1. Repeat for any iOS unit test targets.
 
-## Next steps
+## 다음 단계 {:#next-steps}
 
 You can now [add a Flutter screen][] to your existing iOS app.
 

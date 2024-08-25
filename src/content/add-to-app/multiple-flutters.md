@@ -1,12 +1,16 @@
 ---
-title: Multiple Flutter screens or views
-short-title: Add multiple Flutters
+# title: Multiple Flutter screens or views
+title: 여러 개의 Flutter 화면 또는 뷰
+# short-title: Add multiple Flutters
+short-title: 여러 개의 Flutter 추가
+# description: >
+#   How to integrate multiple instances of 
+#   Flutter engine, screens, or views to your application.
 description: >
-  How to integrate multiple instances of 
-  Flutter engine, screens, or views to your application.
+  여러 Flutter 엔진, 화면 또는 뷰 인스턴스를 애플리케이션에 통합하는 방법입니다.
 ---
 
-## Scenarios
+## 시나리오 {:#scenarios}
 
 If you're integrating Flutter into an existing app,
 or gradually migrating an existing app to use Flutter,
@@ -33,7 +37,7 @@ memory cost (~180kB) for adding additional Flutter instances. This fixed cost
 reduction allows the multiple Flutter instance pattern to be used more liberally
 in your add-to-app integration.
 
-## Components
+## 컴포넌트 {:#components}
 
 The primary API for adding multiple Flutter instances on both Android and iOS
 is based on a new `FlutterEngineGroup` class ([Android API][], [iOS API][])
@@ -68,14 +72,14 @@ rendering latency and lower memory footprint.
   `FlutterEngine`s but does remove the ability to spawn additional
   `FlutterEngine`s that share resources with existing spawned engines.
 
-## Communication
+## 커뮤니케이션 {:#communication}
 
 Communication between Flutter instances is handled using [platform channels][]
 (or [Pigeon][]) through the host platform. To see our roadmap on communication,
 or other planned work on enhancing multiple Flutter instances, check out
 [Issue 72009][].
 
-## Samples
+## 샘플 {:#samples}
 
 You can find a sample demonstrating how to use `FlutterEngineGroup`
 on both Android and iOS on [GitHub][].

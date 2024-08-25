@@ -1,16 +1,19 @@
 ---
-title: Embedding Flutter on the web
-short-title: Embedding Flutter web
-description: Learn the different ways to embed Flutter views into web content.
+# title: Embedding Flutter on the web
+title: 웹에 Flutter 임베딩
+# short-title: Embedding Flutter web
+short-title: Flutter 웹 임베딩
+# description: Learn the different ways to embed Flutter views into web content.
+description: Flutter 뷰를 웹 콘텐츠에 포함하는 다양한 방법을 알아보세요.
 ---
 
-Flutter views and web content can be composed to produce a web application
-in different ways. Choose one of the following depending on your use-case:
+Flutter 뷰와 웹 콘텐츠를 구성하여 다양한 방식으로 웹 애플리케이션을 생성할 수 있습니다. 
+사용 사례에 따라 다음 중 하나를 선택하세요.
 
-* A Flutter view controls the full page (full-screen mode)
-* Adding Flutter views to an existing web application (embedded mode)
+* Flutter 뷰는 전체 페이지를 제어합니다. (전체 화면 모드)
+* 기존 웹 애플리케이션에 Flutter 뷰 추가. (임베디드 모드)
 
-## Full-screen mode
+## 1. 전체 화면 모드 {:#full-screen-mode}
 
 In full screen mode, the Flutter web application takes control of the whole
 browser window and covers its viewport completely when rendering. This is the
@@ -35,7 +38,7 @@ check out [Customize app initialization][].
 
 [Customize app initialization]: {{site.docs}}/platform-integration/web/initialization/
 
-### `iframe` embedding
+### `iframe` 임베딩 {:#iframe-embedding}
 
 Full-screen mode is recommended when embedding a Flutter web application in an
 `iframe`. The page that embeds the `iframe` can size and position it as needed,
@@ -50,7 +53,7 @@ check out the [Inline Frame element][] docs on MDN.
 
 [Inline Frame element]: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/iframe
 
-## Embedded mode
+## 2. 임베디드 모드 {:#embedded-mode}
 
 Flutter web applications can also render content into an arbitrary number of
 elements (commonly `div`s) of another web application; this is called "embedded
@@ -65,7 +68,7 @@ In this mode:
 * The Flutter application is notified when views are added or removed,
   so it can adjust its widgets accordingly.
 
-### Enable multi-view mode
+### multi-view 모드 활성화 {:#enable-multi-view-mode}
 
 Enable multi-view mode setting `multiViewEnabled: true` in the
 `initializeEngine` method as shown:
@@ -86,7 +89,7 @@ _flutter.loader.load({
 });
 ```
 
-### Manage Flutter views from JS
+### JS에서 Flutter 뷰 관리 {:#manage-flutter-views-from-js}
 
 To add or remove views, use the `app` object returned by the `runApp` method:
 
@@ -100,7 +103,7 @@ let viewId = app.addView({
 let viewConfig = flutterApp.removeView(viewId);
 ```
 
-### Handling view changes from Dart
+### Dart에서 뷰 변경 처리 {:#handling-view-changes-from-dart}
 
 View additions and removals are surfaced to Flutter through the
 [`didChangeMetrics` method][] of the `WidgetsBinding` class.
@@ -205,7 +208,7 @@ the [Multi View Playground repo][] that was used during development.
 [`WidgetsBinding` mixin]: {{site.api}}/flutter/widgets/WidgetsBinding-mixin.html
 [`WidgetBuilder` function]: {{site.api}}/flutter/widgets/WidgetBuilder.html
 
-### Identifying views
+### 뷰 식별 {:#identifying-views}
 
 Each `FlutterView` has an identifier assigned by Flutter when
 attached. This `viewId` can be used to uniquely identify each view, retrieve
@@ -227,7 +230,7 @@ Read more about the [`View.of` constructor][].
 
 [`View.of` constructor]: {{site.api}}/flutter/widgets/View/of.html
 
-### Initial view configuration
+### 초기 뷰 구성 {:#initial-view-configuration}
 
 Flutter views can receive any initialization data from JS when starting up.
 The values are passed through the `initialData` property of the `addView`
@@ -258,7 +261,7 @@ object passed from JS so it's type-safe in your Dart program, check out:
 
 [JS Interoperability]: {{site.dart-site}}/interop/js-interop
 
-### View constraints
+### 뷰 제약조건 {:#view-constraints}
 
 By default, an embedded Flutter web view considers the size of its `hostElement`
 as an immutable property, and tightly constrains its layout to the available
@@ -294,7 +297,7 @@ and [Understanding constraints][].
 [`ViewConstraints` class]: {{site.api}}/flutter/dart-ui/ViewConstraints-class.html
 [Understanding constraints]: {{site.docs}}/ui/layout/constraints
 
-## Custom element (`hostElement`)
+## 커스텀 요소 (`hostElement`) {:#custom-element-hostelement}
 
 _Between Flutter 3.10 and 3.24_<br />
 You can embed a single-view Flutter web app into any HTML element of your web

@@ -1,10 +1,13 @@
 ---
-title: Add Flutter to an existing app
-short-title: Add to app
-description: Adding Flutter as a library to an existing Android or iOS app.
+# title: Add Flutter to an existing app
+title: 기존 앱에 Flutter 추가
+# short-title: Add to app
+short-title: 앱 to 앱
+# description: Adding Flutter as a library to an existing Android or iOS app.
+description: 기존 Android 또는 iOS 앱에 Flutter를 라이브러리로 추가합니다.
 ---
 
-## Add-to-app
+## 앱 to 앱 {:#add-to-app}
 
 It's sometimes not practical to rewrite your entire application in
 Flutter all at once. For those situations,
@@ -26,9 +29,9 @@ Having multiple Flutter instances allows each instance to maintain
 independent application and UI state while using minimal
 memory resources. See more in the [multiple Flutters][] page.
 
-## Supported features
+## 지원되는 기능 {:#supported-features}
 
-### Add to Android applications
+### Android 애플리케이션에 추가 {:#add-to-android-applications}
 
 {% render docs/app-figure.md, image:"development/add-to-app/android-overview.gif", alt:"Add-to-app steps on Android" %}
 
@@ -50,7 +53,7 @@ memory resources. See more in the [multiple Flutters][] page.
   using `flutter attach` from IDEs or the command line to
   connect to an app that contains Flutter.
 
-### Add to iOS applications
+### iOS 애플리케이션에 추가 {:#add-to-ios-applications}
 
 {% render docs/app-figure.md, image:"development/add-to-app/ios-overview.gif", alt:"Add-to-app steps on iOS" %}
 
@@ -72,7 +75,7 @@ See our [add-to-app GitHub Samples repository][]
 for sample projects in Android and iOS that import
 a Flutter module for UI.
 
-## Get started
+## 시작하기 {:#get-started}
 
 To get started, see our project integration guide for
 Android and iOS:
@@ -94,7 +97,7 @@ Android and iOS:
   </a>
 </div>
 
-## API usage
+## API 사용 {:#api-usage}
 
 After Flutter is integrated into your project,
 see our API usage guides at the following links:
@@ -116,7 +119,7 @@ see our API usage guides at the following links:
   </a>
 </div>
 
-## Limitations
+## 제한 사항 {:#limitations}
 
 * Packing multiple Flutter libraries into an
   application isn't supported.
