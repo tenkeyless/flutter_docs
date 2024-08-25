@@ -602,7 +602,7 @@
       permalink: /perf/ui-performance
     - title: 웹을 위한 성능 프로파일링
       permalink: /perf/web-performance
-    - title: 셰이더 컴파일 잼크 (Shader compilation jank)
+    - title: 셰이더 컴파일 jank
       permalink: /perf/shader
     - title: 성능 지표
       permalink: /perf/metrics

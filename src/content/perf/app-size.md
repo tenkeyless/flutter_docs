@@ -1,92 +1,78 @@
 ---
-title: Measuring your app's size
-description: How to measure app size for iOS and Android.
+# title: Measuring your app's size
+title: 앱 크기 측정
+# description: How to measure app size for iOS and Android.
+description: iOS 및 Android에서 앱 크기를 측정하는 방법.
 ---
 
-Many developers are concerned with the size of their compiled app.
-As the APK, app bundle, or IPA version of a Flutter app is
-self-contained and holds all the code and assets needed to run the app,
-its size can be a concern. The larger an app,
-the more space it requires on a device,
-the longer it takes to download,
-and it might break the limit of useful
-features like Android instant apps.
+많은 개발자가 컴파일된 앱의 크기에 대해 우려합니다. 
+Flutter 앱의 APK, 앱 번들 또는 IPA 버전은 자체 포함되고, 
+앱을 실행하는 데 필요한 모든 코드와 assets을 보유하기 때문에, 크기가 문제가 될 수 있습니다. 
+앱이 클수록, 기기에서 필요한 공간이 더 많고, 다운로드하는 데 시간이 더 오래 걸리며, 
+Android 인스턴트 앱과 같은 유용한 기능의 한계를 깨뜨릴 수 있습니다.
 
-## Debug builds are not representative
+## 디버그 빌드는 대표적(representative)이지 않습니다.  {:#debug-builds-are-not-representative}
 
-By default, launching your app with `flutter run`,
-or by clicking the **Play** button in your IDE
-(as used in [Test drive][] and
-[Write your first Flutter app][]),
-generates a _debug_ build of the Flutter app.
-The app size of a debug build is large due to
-the debugging overhead that allows for hot reload
-and source-level debugging. As such, it is not representative of a production
-app end users download.
+기본적으로, `flutter run`으로 앱을 시작하거나, 
+IDE에서 **Play** 버튼을 클릭하면([테스트 드라이브][Test drive] 및 [첫 번째 Flutter 앱 작성][Write your first Flutter app]에서 사용), 
+Flutter 앱의 _debug_ 빌드가 생성됩니다. 
+디버그 빌드의 앱 크기는 핫 리로드 및 소스 레벨 디버깅을 허용하는 디버깅 오버헤드로 인해 큽니다. 
+따라서, 최종 사용자 다운로드가 일어나는 프로덕션 앱에는 대표적이지 않습니다.
 
-## Checking the total size
+## 전체 크기 확인 {:#checking-the-total-size}
 
-A default release build, such as one created by `flutter build apk` or
-`flutter build ios`, is built to conveniently assemble your upload package
-to the Play Store and App Store. As such, they're also not representative of
-your end-users' download size. The stores generally reprocess and split
-your upload package to target the specific downloader and the downloader's
-hardware, such as filtering for assets targeting the phone's DPI, filtering
-native libraries targeting the phone's CPU architecture.
+`flutter build apk` 또는 `flutter build ios`에서 만든 것과 같은, 기본 릴리스 빌드는, 
+Play Store 및 App Store에 업로드 패키지를 편리하게 조립하도록 빌드됩니다. 
+따라서, 최종 사용자의 다운로드 크기를 나타내지 않습니다. 
+일반적으로 스토어는 업로드 패키지를 다시 처리하고 분할하여, 특정 다운로더와 다운로더의 하드웨어를 대상으로 합니다. 
+예를 들어, 휴대폰의 DPI를 대상으로 하는 assets을 필터링하고, 
+휴대폰의 CPU 아키텍처를 대상으로 하는 네이티브 라이브러리를 필터링합니다.
 
-### Estimating total size
+### 전체 크기 추정 {:#estimating-total-size}
 
-To get the closest approximate size on each platform, use the following
-instructions.
+각 플랫폼에서 가장 근접한 대략적인 크기를 알아보려면, 다음 지침을 따르세요.
 
-#### Android
+#### Android {:#android}
 
-Follow the Google [Play Console's instructions][] for checking app download and
-install sizes.
+앱 다운로드 및 설치 크기를 확인하려면 Google [Play Console의 지침][Play Console's instructions]을 따르세요.
 
-Produce an upload package for your application:
+애플리케이션에 대한 업로드 패키지를 생성하세요.
 
 ```console
 flutter build appbundle
 ```
 
-Log into your [Google Play Console][]. Upload your application binary by drag
-dropping the .aab file.
+[Google Play Console][]에 로그인합니다. .aab 파일을 끌어서 놓아 애플리케이션 바이너리를 업로드합니다.
 
-View the application's download and install size in the **Android vitals** ->
-**App size** tab.
+**Android vitals** -> **App size** 탭에서, 애플리케이션의 다운로드 및 설치 크기를 확인합니다.
 
-{% render docs/app-figure.md, image:"perf/vital-size.png", alt:"App size tab in Google Play Console" %}
+{% render docs/app-figure.md, image:"perf/vital-size.png", alt:"Google Play Console의 앱 크기 탭" %}
 
-The download size is calculated based on an XXXHDPI (~640dpi) device on an
-arm64-v8a architecture. Your end users' download sizes might vary depending on
-their hardware.
+다운로드 크기는 arm64-v8a 아키텍처의 XXXHDPI(~640dpi) 장치를 기준으로 계산됩니다. 
+최종 사용자의 다운로드 크기는 하드웨어에 따라 다를 수 있습니다.
 
-The top tab has a toggle for download size and install size. The page also
-contains optimization tips further below.
+상단 탭에는 다운로드 크기와 설치 크기에 대한 토글이 있습니다. 
+이 페이지에는 아래에 최적화 팁도 포함되어 있습니다.
 
-#### iOS
+#### iOS {:#ios}
 
-Create an [Xcode App Size Report][].
+[Xcode 앱 크기 보고서][Xcode App Size Report]를 ​​만듭니다.
 
-First, by configuring the app version and build as described in the
-[iOS create build archive instructions][].
+먼저, [iOS 빌드 아카이브 생성 지침][iOS create build archive instructions]에 설명된 대로 앱 버전과 빌드를 구성합니다.
 
-Then:
+그런 다음:
 
-1. Run `flutter build ipa --export-method development`.
-1. Run `open build/ios/archive/*.xcarchive` to open the archive in Xcode.
-1. Click **Distribute App**.
-1. Select a method of distribution. **Development** is the simplest if you don't
-   intend to distribute the application.
-1. In **App Thinning**, select 'all compatible device variants'.
-1. Select **Strip Swift symbols**.
+1. `flutter build ipa --export-method development`를 실행합니다.
+2. `open build/ios/archive/*.xcarchive`를 실행하여, Xcode에서 아카이브를 엽니다.
+3. **Distribute App**를 클릭합니다.
+4. 배포 방법을 선택합니다. 애플리케이션을 배포하지 않으려면, **Development**이 가장 간단합니다.
+5. **App Thinning**에서 'all compatible device variants'을 선택합니다.
+6. **Strip Swift symbols**를 선택합니다.
 
-Sign and export the IPA. The exported directory contains
-`App Thinning Size Report.txt` with details about your projected
-application size on different devices and versions of iOS.
+IPA에 서명하고 내보냅니다. 
+내보낸 디렉토리에는 다양한 기기와 iOS 버전에서 예상되는 애플리케이션 크기에 대한 세부 정보가 포함된 `App Thinning Size Report.txt`가 들어 있습니다.
 
-The App Size Report for the default demo app in Flutter 1.17 shows:
+Flutter 1.17의 기본 데모 앱에 대한 앱 크기 보고서는 다음을 보여줍니다.
 
 ```plaintext
 Variant: Runner-7433FC8E-1DF4-4299-A7E8-E00768671BEB.ipa
@@ -96,35 +82,26 @@ App size: 5.4 MB compressed, 13.7 MB uncompressed
 On Demand Resources size: Zero KB compressed, Zero KB uncompressed
 ```
 
-In this example, the app has an approximate
-download size of 5.4 MB and an approximate
-installation size of 13.7 MB on an iPhone12,1 ([Model ID / Hardware
-number][] for iPhone 11)
-and iPhone11,8 (iPhone XR) running iOS 13.0.
+이 예에서, 
+앱은 iOS 13.0을 실행하는 iPhone12,1(iPhone 11의 경우 [모델 ID/하드웨어 번호][Model ID / Hardware number]) 및 iPhone11,8(iPhone XR)에서, 대략 5.4MB의 다운로드 크기와 대략 13.7MB의 설치 크기를 갖습니다.
 
-To measure an iOS app exactly,
-you have to upload a release IPA to Apple's
-App Store Connect ([instructions][])
-and obtain the size report from there.
-IPAs are commonly larger than APKs as explained
-in [How big is the Flutter engine?][], a
-section in the Flutter [FAQ][].
+iOS 앱을 정확히 측정하려면, 릴리스 IPA를 Apple의 App Store Connect([지침][instructions])에 업로드하고, 
+거기에서 크기 보고서를 얻어야 합니다. 
+IPA는 일반적으로 Flutter [FAQ][]의 섹션의 [Flutter 엔진은 얼마나 큰가요?][How big is the Flutter engine?]에서 설명한 대로 APK보다 큽니다.
 
-## Breaking down the size
+## 크기를 분해하기 {:#breaking-down-the-size}
 
-Starting in Flutter version 1.22 and DevTools version 0.9.1,
-a size analysis tool is included to help developers understand the breakdown
-of the release build of their application.
+Flutter 버전 1.22와 DevTools 버전 0.9.1부터, 
+개발자가 애플리케이션 릴리스 빌드의 세부 내용을 이해하는 데 도움이 되는 크기 분석 도구가 포함되었습니다.
 
 :::warning
-As stated in the [checking total size](#checking-the-total-size) section
-above, an upload package is not representative of your end users' download
-size. Be aware that redundant native library architectures and asset densities
-seen in the breakdown tool can be filtered by the Play Store and App Store.
+위의 [전체 크기 확인](#checking-the-total-size) 섹션에서 언급했듯이, 
+업로드 패키지는 최종 사용자의 다운로드 크기를 나타내지 않습니다. 
+분석 도구에서 볼 수 있는 중복 네이티브 라이브러리 아키텍처와 asset 밀도는, 
+Play Store와 App Store에서 필터링할 수 있습니다.
 :::
 
-The size analysis tool is invoked by passing the `--analyze-size` flag when
-building:
+크기 분석 도구는 빌드할 때 `--analyze-size` 플래그를 전달하여 호출됩니다.
 
 - `flutter build apk --analyze-size`
 - `flutter build appbundle --analyze-size`
@@ -133,59 +110,48 @@ building:
 - `flutter build macos --analyze-size`
 - `flutter build windows --analyze-size`
 
-This build is different from a standard release build in two ways.
+이 빌드는 두 가지 면에서 표준 릴리스 빌드와 다릅니다.
 
-1. The tool compiles Dart in a way that records code size usage of Dart
-   packages.
-2. The tool displays a high level summary of the size breakdown
-   in the terminal, and leaves a `*-code-size-analysis_*.json` file for more
-   detailed analysis in DevTools.
+1. 이 도구는 Dart 패키지의 코드 크기 사용을 기록하는 방식으로 Dart를 컴파일합니다.
+2. 이 도구는 터미널에 크기 분석의 높은 레벨의 요약을 표시하고, 
+   DevTools에서 더 자세한 분석을 위해 `*-code-size-analysis_*.json` 파일을 남깁니다.
 
-In addition to analyzing a single build, two builds can also be diffed by
-loading two `*-code-size-analysis_*.json` files into DevTools.
-Check out the [DevTools documentation][] for details.
+단일 빌드를 분석하는 것 외에도, 두 개의 `*-code-size-analysis_*.json` 파일을 DevTools에 로드하여, 두 개의 빌드를 비교할 수도 있습니다. 
+자세한 내용은 [DevTools 문서][DevTools documentation]를 ​​확인하세요.
 
-{% render docs/app-figure.md, image:"perf/size-summary.png", alt:"Size summary of an Android application in terminal" %}
+{% render docs/app-figure.md, image:"perf/size-summary.png", alt:"터미널에서 Android 애플리케이션의 크기 요약" %}
 
-Through the summary, you can get a quick idea of the size usage per category
-(such as asset, native code, Flutter libraries, etc). The compiled Dart
-native library is further broken down by package for quick analysis.
+요약을 통해, 카테고리(asset, 네이티브 코드, Flutter 라이브러리 등)별 크기 사용량을 빠르게 파악할 수 있습니다. 
+컴파일된 Dart 네이티브 라이브러리는 빠른 분석을 위해 패키지별로 더 세분화됩니다.
 
 :::warning
-This tool on iOS creates a .app rather than an IPA. Use this tool to
-evaluate the relative size of the .app's content. To get
-a closer estimate of the download size, reference the
-[Estimating total size](#estimating-total-size) section above.
+iOS의 이 도구는 IPA가 아닌 .app을 만듭니다. 
+이 도구를 사용하여 .app 콘텐츠의 상대적 크기를 평가합니다. 
+다운로드 크기를 더 자세히 추정하려면, 위의 [전체 크기 추정](#estimating-total-size) 섹션을 참조하세요.
 :::
 
-### Deeper analysis in DevTools
+### DevTools에서 더 심층적인 분석 {:#deeper-analysis-in-devtools}
 
-The `*-code-size-analysis_*.json` file produced above can be further
-analyzed in deeper detail in DevTools where a tree or a treemap view can
-break down the contents of the application into the individual file level and
-up to function level for the Dart AOT artifact.
+위에서 생성된 `*-code-size-analysis_*.json` 파일은 DevTools에서 더 자세히 분석할 수 있습니다. 
+여기서 트리 또는 트리맵 뷰는 애플리케이션의 내용을 개별 파일 수준과 Dart AOT 아티팩트의 기능 수준까지 세분화할 수 있습니다.
 
-This can be done by `dart devtools`, selecting
-`Open app size tool` and uploading the JSON file.
+`dart devtools`에서 `Open app size tool`를 선택하고, JSON 파일을 업로드하여 이를 수행할 수 있습니다.
 
-{% render docs/app-figure.md, image:"perf/devtools-size.png", alt:"Example breakdown of app in DevTools" %}
+{% render docs/app-figure.md, image:"perf/devtools-size.png", alt:"DevTools에서 앱의 분해 예시" %}
 
-For further information on using the DevTools app size tool,
-check out the [DevTools documentation][].
+DevTools 앱 크기 도구 사용에 대한 자세한 내용은 [DevTools 문서][DevTools documentation]를 ​​확인하세요.
 
-## Reducing app size
+## 앱 크기 줄이기 {:#reducing-app-size}
 
-When building a release version of your app,
-consider using the `--split-debug-info` tag.
-This tag can dramatically reduce code size.
-For an example of using this tag, see
-[Obfuscating Dart code][].
+앱의 릴리스 버전을 빌드할 때, `--split-debug-info` 태그를 사용하는 것을 고려하세요. 
+이 태그는 코드 크기를 극적으로 줄일 수 있습니다. 
+이 태그를 사용하는 예는, [Dart 코드 난독화][Obfuscating Dart code]를 참조하세요.
 
-Some other things you can do to make your app smaller are:
+앱을 더 작게 만들기 위해 할 수 있는 다른 몇 가지 작업은 다음과 같습니다.
 
-* Remove unused resources
-* Minimize resource imported from libraries
-* Compress PNG and JPEG files
+* 사용하지 않는 리소스 제거
+* 라이브러리에서 가져온 리소스 최소화
+* PNG 및 JPEG 파일 압축
 
 [FAQ]: /resources/faq
 [How big is the Flutter engine?]: /resources/faq#how-big-is-the-flutter-engine
