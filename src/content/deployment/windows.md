@@ -1,24 +1,22 @@
 ---
-title: Build and release a Windows desktop app
-description: How to release a Flutter app to the Microsoft Store.
+# title: Build and release a Windows desktop app
+title: Windows 데스크톱 앱 빌드 및 릴리스
+# description: How to release a Flutter app to the Microsoft Store.
+description: Microsoft Store에 Flutter 앱을 출시하는 방법.
 short-title: windows
 ---
 
-One convenient approach to distributing Windows apps
-is the [Microsoft Store][microsoftstore].
-This guide provides a step-by-step walkthrough
-of packaging and deploying a Flutter app in this way.
+Windows 앱을 배포하는 편리한 방법 중 하나는 [Microsoft Store][microsoftstore]입니다. 
+이 가이드는 이런 방식으로 Flutter 앱을 패키징하고 배포하는 단계별 연습 과정을 제공합니다.
 
 :::note
-You are not required to publish Windows apps through the
-Microsoft Store, particularly if you prefer more control
-over the distribution experience or don't want to deal
-with the certification process. The Microsoft documentation
-includes more information about traditional installation
-approaches, including [Windows Installer][msidocs].
+특히 배포 환경을 더 많이 제어하거나 인증 프로세스를 처리하고 싶지 않은 경우, 
+Microsoft Store를 통해 Windows 앱을 게시할 필요는 없습니다. 
+Microsoft 문서에는 [Windows Installer][msidocs]를 포함하여, 
+기존 설치 방법에 대한 자세한 정보가 포함되어 있습니다.
 :::
 
-## Preliminaries
+## 사전 준비 {:#preliminaries}
 
 Before beginning the process of releasing
 a Flutter Windows desktop app to the Microsoft Store,
@@ -27,7 +25,7 @@ first confirm that it satisfies [Microsoft Store Policies][storepolicies].
 Also, you must join the
 [Microsoft Partner Network][microsoftpartner] to be able to submit apps.
 
-## Set up your application in the Partner Center
+## 파트너 센터(Partner Center)에서 애플리케이션 설정 {:#set-up-your-application-in-the-partner-center}
 
 Manage an application's life cycle in the
 [Microsoft Partner Center][microsoftpartner].
@@ -44,7 +42,7 @@ configured together with the first submission
 and are automatically retained
 for the subsequent submissions.
 
-## Packaging and deployment
+## 패키징 및 배포 {:#packaging-and-deployment}
 
 In order to publish an application to Microsoft Store,
 you must first package it.
@@ -52,7 +50,7 @@ The valid formats are **.msix**, **.msixbundle**,
 **.msixupload**, **.appx**, **.appxbundle**,
 **.appxupload**, and **.xap**.
 
-### Manual packaging and deployment for the Microsoft Store
+### Microsoft Store에 대한 수동 패키징 및 배포 {:#manual-packaging-and-deployment-for-the-microsoft-store}
 
 Check out [MSIX packaging][msix packaging]
 to learn about packaging
@@ -79,14 +77,14 @@ You can do this by creating a new submission,
 navigating to **Packages**,
 and uploading the created application package.
 
-### Continuous deployment
+### 지속적인 배포 {:#continuous-deployment}
 
 In addition to manually creating and deploying the package,
 you can automate the build, package, versioning,
 and deployment process using CI/CD tooling after having submitted
 the application to the Microsoft Store for the first time.
 
-#### Codemagic CI/CD
+#### Codemagic CI/CD {:#codemagic-cicd}
 
 [Codemagic CI/CD][codemagic] uses the
 [`msix` pub package][msix package] to package
@@ -108,7 +106,7 @@ so, Codemagic requires
 [associating the Azure Active Directory
 and Partner Center accounts][azureadassociation].
 
-#### GitHub Actions CI/CD
+#### GitHub Actions CI/CD {:#github-actions-cicd}
 
 GitHub Actions can use the
 [Microsoft Dev Store CLI](https://learn.microsoft.com/windows/apps/publish/msstore-dev-cli/overview)
@@ -158,7 +156,7 @@ The steps necessary for MSIX publishing resemble the following
   run: msstore publish -v
 ```
 
-## Updating the app's version number
+## 앱 버전 번호 업데이트 {:#updating-the-apps-version-number}
 
 For apps published to the Microsoft Store,
 the version number must be set during the
@@ -206,7 +204,7 @@ information. For more information,
 refer to the [version migration guide][].
 :::
 
-## Add app icons
+## 앱 아이콘 추가 {:#add-app-icons}
 
 To update the icon of a Flutter Windows
 desktop application before packaging use the
@@ -230,7 +228,7 @@ the size of 300 x 300 pixels.
 
 All uploaded images are retained for subsequent submissions.
 
-## Validating the application package
+## 애플리케이션 패키지 검증 {:#validating-the-application-package}
 
 Before publication to the Microsoft Store,
 first validate the application package locally.
