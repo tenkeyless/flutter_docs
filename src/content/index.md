@@ -1,7 +1,10 @@
 ---
-title: Flutter documentation
-short-title: Docs
-description: Get started with Flutter. Widgets, examples, updates, and API docs to help you write your first Flutter app.
+# title: Flutter documentation
+title: Flutter 문서
+# short-title: Docs
+short-title: 문서
+# description: Get started with Flutter. Widgets, examples, updates, and API docs to help you write your first Flutter app.
+description: Flutter를 시작하세요. 첫 번째 Flutter 앱을 작성하는 데 도움이 되는 위젯, 예제, 업데이트 및 API 문서.
 ---
 
 <div class="card-grid">
@@ -15,40 +18,35 @@ description: Get started with Flutter. Widgets, examples, updates, and API docs 
 {% endfor %}
 </div>
 
-**To see changes to the site since our last release,
-see [What's new][].**
+**마지막 릴리스 이후 사이트의 변경 사항을 보려면, [새로운 기능][What's new]을 참조하세요.**
 
 [What's new]: /release/whats-new
 
-## New to Flutter?
+## Flutter를 처음 사용하시나요? {:#new-to-flutter}
 
-Once you've gone through [Get started][],
-including [Write your first Flutter app][],
-here are some next steps.
+[시작하기][Get started]와 
+[첫 번째 Flutter 앱 작성하기][Write your first Flutter app]를 마치면 다음 단계는 다음과 같습니다.
 
 [Write your first Flutter app]: /get-started/codelab
 
-### Docs
+### 문서 {:#docs}
 
-Coming from another platform? Check out Flutter for:
-[Android][], [SwiftUI][], [UIKit][], [React Native][], and
-[Xamarin.Forms][] developers.
+다른 플랫폼에서 오셨나요? 
+다음을 위한 Flutter를 확인해 보세요: 
+[Android][], [SwiftUI][], [UIKit][], [React Native][], [Xamarin.Forms][] 개발자를 위한 Flutter.
 
-[Building layouts][]
-: Learn how to create layouts in Flutter,
-  where everything is a widget.
+[레이아웃 빌드][Building layouts]
+: 모든 것이 위젯인 Flutter에서, 레이아웃을 만드는 방법을 알아보세요.
 
-[Understanding constraints][]
-: Once you understand that "Constraints
-  flow down. Sizes flow up. Parents set
-  positions", then you are well on your
-  way to understanding Flutter's layout model.
+[제약 조건 이해][Understanding constraints]
+: "제약 조건은 아래로 흐릅니다. 크기는 위로 흐릅니다. 부모는 위치를 설정합니다"라는 것을 이해하면, 
+  Flutter의 레이아웃 모델을 이해하는 데 큰 도움이 됩니다.
 
-[Adding interactivity to your Flutter app][interactivity]
-: Learn how to add a stateful widget to your app.
+[Flutter 앱에 상호 작용 추가][interactivity]
+: 앱에 stateful 위젯을 추가하는 방법을 알아보세요.
 
 [FAQ][]
-: Get the answers to frequently asked questions.
+: 자주 묻는 질문에 대한 답변을 확인하세요.
 
 [Android]: /get-started/flutter-for/android-devs
 [Building layouts]: /ui/layout
@@ -61,14 +59,12 @@ Coming from another platform? Check out Flutter for:
 [Understanding constraints]: /ui/layout/constraints
 [Xamarin.Forms]: /get-started/flutter-for/xamarin-forms-devs
 
-### Videos
+### 비디오 {:#videos}
 
-Check out the Introducing Flutter series.
-Learn Flutter basics like
-[how do I make my first Flutter app?][first-app]
-In Flutter, "everything is a widget"!
-Learn more about `Stateless` and `Stateful`
-widgets in [What is State?][]
+Flutter 소개 시리즈를 확인하세요. 
+[첫 번째 Flutter 앱을 만드는 방법][first-app]과 같은 Flutter 기본 사항을 알아보세요. 
+Flutter에서는 "모든 것이 위젯입니다"! 
+[State란 무엇인가][What is State?]에서, `Stateless` 및 `Stateful` 위젯에 대해 자세히 알아보세요.
 
 <div class="card-grid">
     <div class="card">
@@ -86,16 +82,15 @@ widgets in [What is State?][]
 [first-app]: {{site.yt.watch}}?v=xWV71C2kp38
 [What is State?]: {{site.yt.watch}}?v=QlwiL_yLh6E
 
-{% videoWrapper 'Only have 60 seconds? Learn how to build and deploy a Flutter App!' %}
+{% videoWrapper '60초 밖에 없나요? Flutter 앱을 빌드하고 배포하는 방법을 알아보세요!' %}
 {% ytEmbed 'ZnufaryH43s', 'How to build and deploy a Flutter app in 60 seconds!', true %}
 {% endvideoWrapper %}
 
-## Want to skill up?
+## 기술을 향상시키고 싶나요? {:#want-to-skill-up}
 
-Dive deeper into how Flutter works under the hood!
-Learn [why you write standalone widgets instead of
-using helper methods][standalone-widgets] or
-[what is "BuildContext" and how is it used][buildcontext]?
+Flutter가 후드 아래에서 어떻게 작동하는지 더 자세히 알아보세요! 
+[헬퍼 메서드를 사용하는 대신 독립형 위젯을 작성하는 이유][standalone-widgets] 또는 
+["BuildContext"란 무엇이고 어떻게 사용합니까][buildcontext]를 알아보세요.
 
 <div class="card-grid">
     <div class="card">
@@ -113,11 +108,10 @@ using helper methods][standalone-widgets] or
 [standalone-widgets]: {{site.yt.watch}}?v=IOyq-eTRhvo
 [buildcontext]: {{site.yt.watch}}?v=rIaaH87z1-g
 
-To learn about all of the Flutter video series,
-see our [videos][] page.
+모든 Flutter 비디오 시리즈에 대해 알아보려면, [videos][] 페이지를 참조하세요.
 
-We release new videos almost every week on the Flutter YouTube channel:
+Flutter YouTube 채널에서 거의 매주 새로운 비디오를 공개합니다.
 
-<a class="btn btn-primary" target="_blank" href="https://www.youtube.com/@flutterdev">Explore more Flutter videos</a>
+<a class="btn btn-primary" target="_blank" href="https://www.youtube.com/@flutterdev">더 많은 Flutter 비디오 탐색</a>
 
 [videos]: /resources/videos
