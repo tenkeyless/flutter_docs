@@ -32,7 +32,7 @@ Flutter Forward를 위해 제작된 콘텐츠를 즐기실 수 있습니다!
 
 Flutter Forward는 2023년 1월 25일 케냐 나이로비에서 열렸습니다. 
 이벤트 전에, Flutter 팀은 이벤트에 앞서 새로운 콘텐츠와 활동을 특징으로 하는 17일간의 Flutter를 제공했습니다. 
-이 재생 목록에는 Flutter Forward와 관련된 이러한 비디오와 기타 사전 이벤트 비디오가 포함되어 있습니다.
+이 재생 리스트에는 Flutter Forward와 관련된 이러한 비디오와 기타 사전 이벤트 비디오가 포함되어 있습니다.
 
 {% ytEmbed 'hpgkrUPRBjc?start=6', 'Flutter Forward 2023 준비 - 17일간의 Flutter' %}
 

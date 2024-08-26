@@ -2,7 +2,7 @@
 # title: Flutter widget index
 title: Flutter Widget 인덱스
 # description: An alphabetical list of Flutter widgets.
-description: Flutter 위젯의 알파벳순 목록입니다.
+description: Flutter 위젯의 알파벳순 리스트입니다.
 # short-title: Widgets
 short-title: 위젯
 show_breadcrumbs: false
@@ -10,7 +10,7 @@ show_breadcrumbs: false
 
 {% assign sorted = catalog.widgets | sort:'name' -%}
 
-이것은 Flutter와 함께 제공되는 많은 위젯의 알파벳순 목록입니다. 
+이것은 Flutter와 함께 제공되는 많은 위젯의 알파벳순 리스트입니다. 
 또한 [카테고리 별 위젯 탐색][catalog]를 할 수 있습니다.
 
 또한 [Flutter YouTube 채널]({{site.social.youtube}})에서, 

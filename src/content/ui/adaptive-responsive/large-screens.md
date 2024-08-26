@@ -27,7 +27,7 @@ Flutter는 _또한_ 대형 화면 기기를 웹, 데스크톱, iPad로 정의합
 
 * 앱의 사용자 참여 지표를 개선합니다.
 * Play 스토어에서 앱의 가시성을 높입니다. 
-  최근 [Play 스토어 업데이트][Play Store updates]는 기기 유형별 평가를 표시하고, 앱에 대형 화면 지원이 없는 경우를 나타냅니다.
+  최근 [Play 스토어 업데이트][Play Store updates]는 기기 타입별 평가를 표시하고, 앱에 대형 화면 지원이 없는 경우를 나타냅니다.
 * 앱이 iPadOS 제출 지침을 충족하고 [App Store에서 승인][accepted in the App Store]되었는지 확인합니다.
 :::
 

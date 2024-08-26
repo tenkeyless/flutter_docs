@@ -111,7 +111,7 @@ Icon(
 모든 레이아웃 위젯에는 다음 중 하나가 있습니다.
 
 * 단일 자식을 취하는 경우, `child` 속성 (예: `Center` 또는 `Container`)
-* 위젯 목록을 취하는 경우, `children` 속성 (예: `Row`, `Column`, `ListView` 또는 `Stack`)
+* 위젯 리스트를 취하는 경우, `children` 속성 (예: `Row`, `Column`, `ListView` 또는 `Stack`)
 
 `Text` 위젯을 `Center` 위젯에 추가합니다.
 
@@ -874,7 +874,7 @@ List<Container> _buildGridTileList(int count) => List.generate(
   <img src='/assets/images/docs/ui/layout/listview.png' class="border mw-100 text-center"
       alt="ListView containing movie theaters and restaurants">
 
-  `ListView`를 사용하여 `ListTile`들을 사용하여 사업체 목록을 표시합니다. 
+  `ListView`를 사용하여 `ListTile`들을 사용하여 사업체 리스트를 표시합니다. 
   `Divider`는 극장과 레스토랑을 구분합니다.
 
   **앱 소스:** [grid_and_list]({{examples}}/layout/grid_and_list)
@@ -937,7 +937,7 @@ ListTile _tile(String title, String subtitle, IconData icon) {
 #### 요약 (Stack) {:#summary-stack}
 
 * 다른 위젯과 겹치는 위젯에 사용
-* 자식 목록에서 첫 번째 위젯은 베이스 위젯입니다. 이후 자식은 해당 기본 위젯 위에 겹쳐집니다.
+* 자식 리스트에서 첫 번째 위젯은 베이스 위젯입니다. 이후 자식은 해당 기본 위젯 위에 겹쳐집니다.
 * `Stack`의 콘텐츠는 스크롤할 수 없습니다.
 * 렌더 상자를 초과하는 자식을 clip 할 수 있습니다.
 
@@ -995,14 +995,14 @@ Widget _buildStack() {
 ### Card {:#card}
 
 [Material 라이브러리][Material library]의 [`Card`][]에는, 관련 정보가 들어 있으며 거의 ​​모든 위젯에서 구성할 수 있지만, 종종 [`ListTile`][]과 함께 사용됩니다. 
-`Card`에는 자식이 하나 있지만, 자식은 열, 행, 목록, 그리드 또는 여러 자식을 지원하는 다른 위젯일 수 있습니다. 
+`Card`에는 자식이 하나 있지만, 자식은 열, 행, 리스트, 그리드 또는 여러 자식을 지원하는 다른 위젯일 수 있습니다. 
 기본적으로 `Card`는 크기를 0x0픽셀로 줄입니다. 
 [`SizedBox`][]를 사용하여 카드의 크기를 제한할 수 있습니다.
 
 Flutter에서, `Card`는 약간 둥근 모서리와 그림자가 있어 3D 효과를 줍니다. 
 `Card`의 `elevation` 속성을 변경하면, 그림자 효과를 제어할 수 있습니다. 
 예를 들어, 높이를 24로 설정하면, `Card`가 표면에서 더 멀리 들리고 그림자가 더 분산됩니다. 
-지원되는 높이 값 목록은 [Material 가이드라인][Material Design]의 [Elevation][]을 참조하세요. 
+지원되는 높이 값 리스트는 [Material 가이드라인][Material Design]의 [Elevation][]을 참조하세요. 
 지원되지 않는 값을 지정하면 그림자 기능이 완전히 비활성화됩니다.
 
 #### 요약 (Card) {:#summary-card}

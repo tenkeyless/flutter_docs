@@ -775,7 +775,7 @@ Flutter는 다중 패러다임 프로그래밍 환경입니다.
 
 버그가 발생한 것 같으면, [문제 추적기][issue tracker]에 신고하세요. 
 "HOWTO" 타입의 질문에는 [Stack Overflow][]를 사용할 수도 있습니다. 
-토론을 위해, [{{site.email}}][]에서 메일링 목록에 가입하거나, [Discord][]에서 저희를 찾으세요.
+토론을 위해, [{{site.email}}][]에서 메일링 리스트에 가입하거나, [Discord][]에서 저희를 찾으세요.
 
 자세한 내용은 [커뮤니티][Community] 페이지를 참조하세요.
 
@@ -825,7 +825,7 @@ Flutter에는 두 가지 구성 요소가 포함되어 있습니다.
 
 ### 내 Flutter 애플리케이션에 표시해야 하는 라이선스를 어떻게 확인할 수 있나요? {:#how-can-i-determine-the-licenses-my-flutter-application-needs-to-show}
 
-표시해야 하는 라이선스 목록을 찾는 API가 있습니다.
+표시해야 하는 라이선스 리스트를 찾는 API가 있습니다.
 
 * 애플리케이션에 [`Drawer`][]가 있는 경우, [`AboutListTile`][]을 추가합니다.
 

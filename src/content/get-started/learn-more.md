@@ -42,7 +42,7 @@ prev:
 * [Dart를 사용한 완벽한 Flutter 개발자 부트캠프][The Complete Flutter Developer Bootcamp Using Dart]
 * [Udacity 온라인 Flutter 교육][Udacity online Flutter training]
 
-[메일링 목록][mailing list]에서 저희에게 연락하세요. 여러분의 소식을 듣고 싶습니다!
+[메일링 리스트][mailing list]에서 저희에게 연락하세요. 여러분의 소식을 듣고 싶습니다!
 
 행복한 플러터링 되세요!
 

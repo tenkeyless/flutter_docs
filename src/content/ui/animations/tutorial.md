@@ -83,7 +83,7 @@ class ShakeCurve extends Curve {
 }
 ```
 
-Flutter와 함께 제공되는 `Curves` 상수의 전체 목록(시각적 미리보기 포함)은 [`Curves`] 문서를 탐색해 보세요.
+Flutter와 함께 제공되는 `Curves` 상수의 전체 리스트(시각적 미리보기 포함)는 [`Curves`] 문서를 탐색해 보세요.
 :::
 
 `CurvedAnimation`과 `AnimationController`(다음 섹션에서 설명)는 모두 `Animation<double>` 타입이므로, 
@@ -137,7 +137,7 @@ GitHub의 [animate1][]에서 이에 대한 예를 볼 수 있습니다.
 
 기본적으로, `AnimationController` 객체는 0.0에서 1.0까지입니다. 
 다른 범위나 다른 데이터 타입이 필요한 경우, [`Tween`][]을 사용하여, 
-애니메이션을 다른 범위나 데이터 유형으로 보간하도록 구성할 수 있습니다. 
+애니메이션을 다른 범위나 데이터 타입으로 보간하도록 구성할 수 있습니다. 
 예를 들어, 다음 `Tween`은 -200.0에서 0.0까지입니다.
 
 <?code-excerpt "animate5/lib/main.dart (tween)"?>

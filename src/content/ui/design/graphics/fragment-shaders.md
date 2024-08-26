@@ -107,7 +107,7 @@ void paint(Canvas canvas, Size size, FragmentShader shader) {
 셰이더는 Flutter와 함께 사용할 경우 다음과 같은 제한 사항이 적용됩니다.
 
 * UBO 및 SSBO는 지원되지 않습니다.
-* `sampler2D`가 유일하게 지원되는 샘플러 유형입니다.
+* `sampler2D`가 유일하게 지원되는 샘플러 타입입니다.
 * `texture`의 두 인수 버전(sampler 및 uv)만 지원됩니다.
 * 추가 가변 입력을 선언할 수 없습니다.
 * Skia를 타겟팅할 때 모든 정밀도 힌트가 무시됩니다.

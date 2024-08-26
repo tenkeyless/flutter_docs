@@ -37,7 +37,7 @@ diff2html: true
 
 ## 레이아웃을 다이어그램으로 표시 {:#diagram-the-layout}
 
-이 섹션에서는, 앱 사용자에게 어떤 유형의 사용자 경험을 원하는지 고려하세요.
+이 섹션에서는, 앱 사용자에게 어떤 타입의 사용자 경험을 원하는지 고려하세요.
 
 사용자 인터페이스의 구성 요소를 배치하는 방법을 고려하세요. 
 레이아웃은 이러한 배치의 전체 최종 결과로 구성됩니다. 
@@ -250,8 +250,8 @@ class TitleSection extends StatelessWidget {
 * `SingleChildScrollView` 위젯은 스크롤할 수 있습니다. 
   이를 통해 현재 화면에 맞지 않는 요소를 표시할 수 있습니다.
 * `Column` 위젯은 `children` 속성 내의 모든 요소를 ​​나열된 순서대로 표시합니다. 
-  `children` 목록에 나열된 첫 번째 요소는 목록 맨 위에 표시됩니다. 
-  `children` 목록에 있는 요소는 화면에서 위에서 아래로 배열 순서대로 표시됩니다.
+  `children` 리스트에 나열된 첫 번째 요소는 리스트 맨 위에 표시됩니다. 
+  `children` 리스트에 있는 요소는 화면에서 위에서 아래로 배열 순서대로 표시됩니다.
 
 [`SingleChildScrollView`]: {{site.api}}/flutter/widgets/SingleChildScrollView-class.html
 
@@ -586,7 +586,7 @@ class ImageSection extends StatelessWidget {
 
 ### 이미지 섹션을 표시하도록 앱 업데이트 {:#update-the-app-to-display-the-image-section}
 
-`ImageSection` 위젯을 `children` 목록의 첫 번째 자식으로 추가합니다. 
+`ImageSection` 위젯을 `children` 리스트의 첫 번째 자식으로 추가합니다. 
 `image` 속성을 [제공된 이미지를 사용하도록 앱 구성](#configure-your-app-to-use-supplied-images)에서 추가한 이미지 경로로 설정합니다.
 
 ```diff2html

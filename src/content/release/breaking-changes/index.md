@@ -4,7 +4,7 @@ title: 주요 변경 사항 및 마이그레이션 가이드
 # short-title: Breaking changes
 short-title: 주요 변경 사항
 # description: A list of migration guides for breaking changes in Flutter.
-description: Flutter의 중요한 변경 사항에 대한 마이그레이션 가이드 목록입니다.
+description: Flutter의 중요한 변경 사항에 대한 마이그레이션 가이드 리스트입니다.
 ---
 
 [주요 변경 사항 정책][breaking change policy]에 설명된 대로, 

@@ -18,7 +18,7 @@ description: 위젯을 테스트하기 위해 Finder 클래스를 사용하는 �
 
 이 레시피는 `flutter_test` 패키지에서 제공하는 [`find`][] 상수를 살펴보고, 
 제공하는 일부 `Finder`를 사용하는 방법을 보여줍니다.
-사용 가능한 finder의 전체 목록은 [`CommonFinders` 문서][`CommonFinders` documentation]를 ​​참조하세요.
+사용 가능한 finder의 전체 리스트는 [`CommonFinders` 문서][`CommonFinders` documentation]를 ​​참조하세요.
 
 위젯 테스트와 `Finder` 클래스의 역할에 익숙하지 않은 경우, 
 [위젯 테스트 소개][Introduction to widget testing] 레시피를 검토하세요.
