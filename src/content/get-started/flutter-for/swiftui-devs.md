@@ -1,47 +1,42 @@
 ---
-title: Flutter for SwiftUI Developers
-description: Learn how to apply SwiftUI developer knowledge when building Flutter apps.
+# title: Flutter for SwiftUI Developers
+title: SwiftUI 개발자를 위한 Flutter
+# description: Learn how to apply SwiftUI developer knowledge when building Flutter apps.
+description: Flutter 앱을 만들 때 SwiftUI 개발자 지식을 적용하는 방법을 알아보세요.
 ---
 
 <?code-excerpt path-base="get-started/flutter-for/ios_devs"?>
 
 {% assign sample_path = "blob/main/examples/get-started/flutter-for/ios_devs" %}
 
-SwiftUI developers who want to write mobile apps using Flutter
-should review this guide.
-It explains how to apply existing SwiftUI knowledge to Flutter.
+Flutter를 사용하여 모바일 앱을 작성하려는 SwiftUI 개발자는 이 가이드를 검토해야 합니다. 
+기존 SwiftUI 지식을 Flutter에 적용하는 방법을 설명합니다.
 
 :::note
-If you instead have experience building apps for iOS with UIKit,
-see [Flutter for UIKit developers][].
+UIKit을 사용하여 iOS용 앱을 빌드한 경험이 있는 경우, 
+[UIKit 개발자를 위한 Flutter][Flutter for UIKit developers]를 참조하세요.
 :::
 
-Flutter is a framework for building cross-platform applications
-that uses the Dart programming language.
-To understand some differences between programming with Dart
-and programming with Swift, see [Learning Dart as a Swift Developer][]
-and [Flutter concurrency for Swift developers][].
+Flutter는 Dart 프로그래밍 언어를 사용하는 크로스 플랫폼 애플리케이션을 빌드하기 위한 프레임워크입니다. 
+Dart로 프로그래밍하는 것과 Swift로 프로그래밍하는 것의 차이점을 이해하려면, 
+[Swift 개발자로서 Dart 배우기][Learning Dart as a Swift Developer]와 [Swift 개발자를 위한 Flutter 동시성][Flutter concurrency for Swift developers]을 참조하세요.
 
-Your SwiftUI knowledge and experience
-are highly valuable when building with Flutter.
+Flutter로 빌드할 때 SwiftUI에 대한 지식과 경험은 매우 귀중합니다.
 {% comment %}
   TODO: Add talk about plugin system for interacting with OS and hardware
   when [iOS and Apple hardware interactions with Flutter][] is released.
 {% endcomment %}
 
-Flutter also makes a number of adaptations
-to app behavior when running on iOS and macOS.
-To learn how, see [Platform adaptations][].
+Flutter는 iOS 및 macOS에서 실행할 때 앱 동작에 대한 여러 가지 적응을 합니다. 
+자세한 내용은 [플랫폼 적응][Platform adaptations]을 참조하세요.
 
 :::tip
-To integrate Flutter code into an **existing** iOS app,
-check out [Add Flutter to existing app][].
+**기존** iOS 앱에 Flutter 코드를 통합하려면, [기존 앱에 Flutter 추가][Add Flutter to existing app]를 확인하세요.
 :::
 
-This document can be used as a cookbook by jumping around
-and finding questions that are most relevant to your needs.
-This guide embeds sample code.
-You can test full working examples on DartPad or view them on GitHub.
+이 문서는 쿡북으로 사용할 수 있으며, 돌아다니며 귀하의 요구 사항과 가장 관련성이 높은 질문을 찾을 수 있습니다. 
+이 가이드에는 샘플 코드가 포함되어 있습니다. 
+DartPad에서 전체 작동 예제를 테스트하거나 GitHub에서 볼 수 있습니다.
 
 ## Overview
 

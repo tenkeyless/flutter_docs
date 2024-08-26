@@ -1,33 +1,33 @@
 ---
-title: Flutter for Android developers
+# title: Flutter for Android developers
+title: Android 개발자를 위한 Flutter
+# description: Learn how to apply Android developer knowledge when building Flutter apps.
 description: Learn how to apply Android developer knowledge when building Flutter apps.
 ---
 
 <?code-excerpt path-base="get-started/flutter-for/android_devs"?>
 
-This document is meant for Android developers looking to apply their
-existing Android knowledge to build mobile apps with Flutter.
-If you understand the fundamentals of the Android framework then you
-can use this document as a jump start to Flutter development.
+이 문서는 Flutter로 모바일 앱을 빌드하기 위해, 
+기존 Android 지식을 적용하려는 Android 개발자를 위한 것입니다. 
+Android 프레임워크의 기본 사항을 이해한다면, 
+이 문서를 Flutter 개발을 위한 시작점으로 사용할 수 있습니다.
 
 :::note
-To integrate Flutter code into your Android app, see
-[Add Flutter to existing app][].
+Flutter 코드를 Android 앱에 통합하려면, 
+[기존 앱에 Flutter 추가][Add Flutter to existing app]를 참조하세요.
 :::
 
-Your Android knowledge and skill set are highly valuable when building with
-Flutter, because Flutter relies on the mobile operating system for numerous
-capabilities and configurations. Flutter is a new way to build UIs for mobile,
-but it has a plugin system to communicate with Android (and iOS) for non-UI
-tasks. If you're an expert with Android, you don't have to relearn everything
-to use Flutter.
+Flutter로 빌드할 때 Android에 대한 지식과 기술 세트는 매우 귀중합니다. 
+Flutter는 다양한 기능과 구성을 위해 모바일 운영 체제에 의존하기 때문입니다. 
+Flutter는 모바일용 UI를 빌드하는 새로운 방법이지만, 
+UI가 아닌 작업을 위해 Android(및 iOS)와 통신하는 플러그인 시스템이 있습니다. 
+Android 전문가라면, Flutter를 사용하기 위해 모든 것을 다시 배울 필요가 없습니다.
 
-This document can be used as a cookbook by jumping around and
-finding questions that are most relevant to your needs.
+이 문서는 돌아다니며 필요에 가장 적합한 질문을 찾아 쿡북으로 사용할 수 있습니다.
 
-## Views
+## Views {:#views}
 
-### What is the equivalent of a View in Flutter?
+### What is the equivalent of a View in Flutter? {:#what-is-the-equivalent-of-a-view-in-flutter}
 
 :::secondary
 How is react-style, or _declarative_, programming different than the
@@ -63,7 +63,7 @@ But Flutter is flexible and expressive enough to implement any design language.
 For example, on iOS, you can use the [Cupertino widgets][]
 to produce an interface that looks like [Apple's iOS design language][].
 
-### How do I update widgets?
+### How do I update widgets? {:#how-do-i-update-widgets}
 
 In Android, you update your views by directly mutating them. However,
 in Flutter, `Widget`s are immutable and are not updated directly,
@@ -177,7 +177,7 @@ class _SampleAppPageState extends State<SampleAppPage> {
 }
 ```
 
-### How do I lay out my widgets? Where is my XML layout file?
+### How do I lay out my widgets? Where is my XML layout file? {:#how-do-i-lay-out-my-widgets-where-is-my-xml-layout-file}
 
 In Android, you write layouts in XML, but in Flutter you write your layouts
 with a widget tree.
@@ -208,7 +208,7 @@ Widget build(BuildContext context) {
 You can view some of the layouts that Flutter has to offer in the
 [widget catalog][].
 
-### How do I add or remove a component from my layout?
+### How do I add or remove a component from my layout? {:#how-do-i-add-or-remove-a-component-from-my-layout}
 
 In Android, you call `addChild()` or `removeChild()`
 on a parent to dynamically add or remove child views.
@@ -290,7 +290,7 @@ class _SampleAppPageState extends State<SampleAppPage> {
 }
 ```
 
-### How do I animate a widget?
+### How do I animate a widget? {:#how-do-i-animate-a-widget}
 
 In Android, you either create animations using XML, or call the `animate()`
 method on a view. In Flutter, animate widgets using the animation
@@ -394,7 +394,7 @@ For more information, see
 the [Animations tutorial][],
 and the [Animations overview][].
 
-### How do I use a Canvas to draw/paint?
+### How do I use a Canvas to draw/paint? {:#how-do-i-use-a-canvas-to-drawpaint}
 
 In Android, you would use the `Canvas` and `Drawable`
 to draw images and shapes to the screen.
@@ -476,7 +476,7 @@ class SignaturePainter extends CustomPainter {
 
 [Custom Paint]: {{site.so}}/questions/46241071/create-signature-area-for-mobile-app-in-dart-flutter
 
-### How do I build custom widgets?
+### How do I build custom widgets? {:#how-do-i-build-custom-widgets}
 
 In Android, you typically subclass `View`, or use a pre-existing view,
 to override and implement methods that achieve the desired behavior.
@@ -521,7 +521,7 @@ Widget build(BuildContext context) {
 }
 ```
 
-## Intents
+## Intents {:#intents}
 
 ### What is the equivalent of an Intent in Flutter?
 

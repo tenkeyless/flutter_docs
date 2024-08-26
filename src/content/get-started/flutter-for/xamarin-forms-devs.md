@@ -1,25 +1,20 @@
 ---
-title: Flutter for Xamarin.Forms developers
-description: Learn how to apply Xamarin.Forms developer knowledge when building Flutter apps.
+# title: Flutter for Xamarin.Forms developers
+title: Xamarin.Forms 개발자를 위한 Flutter
+# description: Learn how to apply Xamarin.Forms developer knowledge when building Flutter apps.
+description: Flutter 앱을 빌드할 때 Xamarin.Forms 개발자 지식을 적용하는 방법을 알아보세요.
 ---
 
 <?code-excerpt path-base="get-started/flutter-for/xamarin_devs"?>
 
-This document is meant for Xamarin.Forms developers
-looking to apply their existing knowledge
-to build mobile apps with Flutter.
-If you understand the fundamentals of the Xamarin.Forms framework,
-then you can use this document as a jump start to Flutter development.
+이 문서는 Flutter로 모바일 앱을 빌드하기 위해 기존 지식을 적용하려는 Xamarin.Forms 개발자를 위한 것입니다. 
+Xamarin.Forms 프레임워크의 기본 사항을 이해한다면, 이 문서를 Flutter 개발을 위한 시작점으로 사용할 수 있습니다.
 
-Your Android and iOS knowledge and skill set
-are valuable when building with Flutter,
-because Flutter relies on the native operating system configurations,
-similar to how you would configure your native Xamarin.Forms projects.
-The Flutter Frameworks is also similar to how you create a single UI,
-that is used on multiple platforms.
+Flutter로 빌드할 때는 Android 및 iOS 지식과 기술 세트가 중요합니다. 
+Flutter는 네이티브 Xamarin.Forms 프로젝트를 구성하는 방식과 유사한 네이티브 운영 체제 구성에 의존하기 때문입니다. 
+Flutter 프레임워크는 여러 플랫폼에서 사용되는 단일 UI를 만드는 방식과도 유사합니다.
 
-This document can be used as a cookbook by jumping around
-and finding questions that are most relevant to your needs.
+이 문서는 필요에 가장 적합한 질문을 찾아 탐색하면서 쿡북으로 사용할 수 있습니다.
 
 ## Project setup
 
