@@ -8,44 +8,28 @@ description: "OS에 의해 Android 앱이 종료된 후, 해당 앱 상태를 �
 사용자가 모바일 앱을 실행한 다음 실행할 다른 앱을 선택하면, 첫 번째 앱이 백그라운드로 이동하거나, _백그라운드 (backgrounded)_ 됩니다. 
 운영 체제(iOS와 Android 모두)는 백그라운드 앱을 종료하여 메모리를 해제하고, 포그라운드에서 실행되는 앱의 성능을 개선할 수 있습니다.
 
-When the user selects the app again, bringing it
-back to the foreground, the OS relaunches it.
-But, unless you've set up a way to save the
-state of the app before it was killed,
-you've lost the state and the app starts from scratch.
-The user has lost the continuity they expect,
-which is clearly not ideal.
-(Imagine filling out a lengthy form and being interrupted
-by a phone call _before_ clicking **Submit**.)
+사용자가 앱을 다시 선택하여, 포그라운드로 다시 가져오면, OS가 앱을 다시 시작합니다. 
+하지만, 앱이 종료되기 전의 상태를 저장하는 방법을 설정하지 않았다면, 상태를 잃고 앱은 처음부터 다시 시작합니다. 
+사용자는 기대했던 연속성을 잃었고, 이는 분명 이상적이지 않습니다. 
+(긴 양식을 작성하다가 **Submit**을 클릭하기 _전에_ 전화로 중단되는 상황을 상상해 보세요.)
 
-So, how can you restore the state of the app so that
-it looks like it did before it was sent to the
-background?
+그렇다면, 앱 상태를 백그라운드로 보내지기 전처럼 복원하려면 어떻게 해야 할까요?
 
-Flutter has a solution for this with the
-[`RestorationManager`][] (and related classes)
-in the [services][] library.
-With the `RestorationManager`, the Flutter framework
-provides the state data to the engine _as the state
-changes_, so that the app is ready when the OS signals
-that it's about to kill the app, giving the app only
-moments to prepare.
+Flutter는 [services][] 라이브러리의 [`RestorationManager`][](및 관련 클래스)를 사용하여 이 문제를 해결합니다. 
+`RestorationManager`를 사용하면, Flutter 프레임워크가 _상태가 변경됨에 따라_ 엔진에 상태 데이터를 제공하므로, 
+OS가 앱을 종료하려고 한다는 신호를 보낼 때 앱이 준비되고, 앱은 준비할 시간만 갖게 됩니다.
 
-:::secondary Instance state vs long-lived state
-  When should you use the `RestorationManager` and
-  when should you save state to long term storage?
-  _Instance state_
-  (also called _short-term_ or _ephemeral_ state),
-  includes unsubmitted form field values, the currently
-  selected tab, and so on. On Android, this is
-  limited to 1 MB and, if the app exceeds this,
-  it crashes with a `TransactionTooLargeException`
-  error in the native code.
+:::secondary 인스턴스 상태 vs long-lived 상태
+  `RestorationManager`를 언제 사용해야 하고, 상태를 장기 저장소에 저장해야 하는 경우는 언제인가요? 
+  _인스턴스 상태_(_단기(short-term)_ 또는 _임시적(ephemeral) 상태_ 라고도 함)에는 제출되지 않은 양식 필드 값, 
+  현재 선택된 탭 등이 포함됩니다. 
+  Android에서는 1MB로 제한되며, 앱이 이를 초과하면, 
+  네이티브 코드에서 `TransactionTooLargeException` 오류와 함께 충돌합니다.
 :::
 
 [state]: /data-and-backend/state-mgmt/ephemeral-vs-app
 
-## Overview {:#overview}
+## 개요 {:#overview}
 
 You can enable state restoration with just a few tasks:
 
@@ -94,7 +78,7 @@ Other considerations:
 [`restoreState`]: {{site.api}}/flutter/widgets/RestorationMixin/restoreState.html
 [VeggieSeasons]: {{site.repo.samples}}/tree/main/veggieseasons
 
-## Restoring navigation state {:#restoring-navigation-state}
+## 네비게이션 상태 복원 {:#restoring-navigation-state}
 
 If you want your app to return to a particular route
 that the user was most recently viewing
@@ -111,7 +95,7 @@ implements navigation with the [`go_router`][] package.
 Setting the `restorationId`
 values occur in the `lib/screens` classes.
 
-## Testing state restoration {:#testing-state-restoration}
+## 상태 복원 테스트 {:#testing-state-restoration}
 
 To test state restoration, set up your mobile device so that
 it doesn't save state once an app is backgrounded.
@@ -130,7 +114,7 @@ finished with testing!
 [`RestorationManager`]: {{site.api}}/flutter/services/RestorationManager-class.html
 [services]: {{site.api}}/flutter/services/services-library.html
 
-## Other resources {:#other-resources}
+## 기타 리소스 {:#other-resources}
 
 For further information on state restoration,
 check out the following resources:

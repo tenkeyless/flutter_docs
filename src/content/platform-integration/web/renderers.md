@@ -1,22 +1,24 @@
 ---
-title: Web renderers
-description: How to choose a web renderer for running and building a web app.
+# title: Web renderers
+title: 웹 렌더러
+# description: How to choose a web renderer for running and building a web app.
+description: 웹 앱을 실행하고 구축하기 위한 웹 렌더러를 선택하는 방법.
 ---
 
-When running and building apps for the web, you can choose between two different
-renderers. This page describes both renderers and how to choose the best one for
-your needs. The two renderers are:
+웹용 앱을 실행하고 빌드할 때, 두 가지 다른 렌더러 중에서 선택할 수 있습니다. 
+이 페이지에서는 두 렌더러와 필요에 가장 적합한 렌더러를 선택하는 방법을 설명합니다. 
+두 렌더러는 다음과 같습니다.
 
-**CanvasKit renderer**
-: This renderer is fully consistent with Flutter mobile and desktop, has faster
-  performance with higher widget density, but adds about 1.5MB in download size.
-  [CanvasKit][canvaskit] uses WebGL to render Skia paint commands.
+**CanvasKit 렌더러**
+: 이 렌더러는 Flutter 모바일 및 데스크톱과 완벽하게 일치하며, 
+  더 높은 위젯 밀도로 더 빠른 성능을 제공하지만, 다운로드 크기가 약 1.5MB 추가됩니다. 
+  [CanvasKit][canvaskit]은 WebGL을 사용하여 Skia 페인트 명령을 렌더링합니다.
 
-**HTML renderer**
-: This renderer, which has a smaller download size than the CanvasKit renderer,
-  uses a combination of HTML elements, CSS, Canvas elements, and SVG elements.
+**HTML 렌더러**
+: CanvasKit 렌더러보다 다운로드 크기가 작은 이 렌더러는, 
+  HTML 요소, CSS, Canvas 요소 및 SVG 요소를 조합하여 사용합니다.
 
-## Command line options
+## 명령줄 옵션 {:#command-line-options}
 
 The `--web-renderer` command line option takes one of three values:
 `canvaskit`, `html`, or `auto`.
@@ -40,7 +42,7 @@ flutter build web --web-renderer canvaskit
 This flag is ignored when a non-browser (mobile or desktop) device
 target is selected.
 
-## Runtime configuration
+## 런타임 구성 {:#runtime-configuration}
 
 To override the web renderer at runtime:
 
@@ -85,7 +87,7 @@ check out [Legacy web app initialization][web-init-legacy].
 [customizing-web-init]: /platform-integration/web/initialization
 [web-init-legacy]: /platform-integration/web/initialization-legacy
 
-## Choosing which option to use
+## 사용할 옵션 선택 {:#choosing-which-option-to-use}
 
 Choose the `canvaskit` option (default) if you are prioritizing performance and
 pixel-perfect consistency on both desktop and mobile browsers.
@@ -96,7 +98,7 @@ both desktop and mobile browsers.
 Choose the `auto` option if you are optimizing for download size on
 mobile browsers and optimizing for performance on desktop browsers.
 
-## Examples
+## 예제 {:#examples}
 
 Run in Chrome using the default renderer option (`canvaskit`):
 

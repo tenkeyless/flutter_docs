@@ -1,16 +1,18 @@
 ---
-title: External windows in Flutter Windows apps
-description: Special considerations for adding external windows to Flutter apps
+# title: External windows in Flutter Windows apps
+title: Flutter Windows 앱의 외부 창
+# description: Special considerations for adding external windows to Flutter apps
+description: Flutter 앱에 외부 창을 추가할 때의 특별 고려 사항
 ---
 
-# Windows lifecycle
+<!-- # Windows lifecycle -->
+# 윈도우 라이프사이클
 
-## Who is affected
+## 누가 영향을 받나요? {:#who-is-affected}
 
 Windows applications built against Flutter versions after 3.13 that open non-Flutter windows.
 
-
-## Overview
+## 개요 {:#overview}
 
 When adding a non-Flutter window to a Flutter Windows app, it will not be part
 of the logic for application lifecycle state updates by default. For example,
@@ -19,7 +21,8 @@ state will not appropriately update to inactive or hidden. As a result, the app
 may receive incorrect lifecycle state changes through
 [WidgetsBindingObserver.didChangeAppLifecycle][].
 
-# What do I need to do?
+<!-- # What do I need to do? -->
+# 어떻게 해야 하나요?
 
 To add the external window to this application logic,
 the window's `WndProc` procedure

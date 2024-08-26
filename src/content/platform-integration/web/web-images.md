@@ -1,33 +1,33 @@
 ---
-title: Display images on the web
-short-title: Web images
-description: Learn how to load and display images on the web.
+# title: Display images on the web
+title: 웹에 이미지 표시
+# short-title: Web images
+short-title: 웹 이미지
+# description: Learn how to load and display images on the web.
+description: 웹에 이미지를 로드하고 표시하는 방법을 알아보세요.
 ---
 
-The web supports the standard [`Image`][] widget to display images.
-However, because web browsers are built to run untrusted code safely,
-there are certain limitations in what you can do with images compared
-to mobile and desktop platforms. This page explains these limitations
-and offers ways to work around them.
+웹은 이미지를 표시하기 위한 표준 [`Image`][] 위젯을 지원합니다. 
+그러나, 웹 브라우저는 신뢰할 수 없는 코드를 안전하게 실행하도록 만들어졌기 때문에, 
+모바일 및 데스크톱 플랫폼과 비교했을 때 이미지로 할 수 있는 작업에 특정 제한이 있습니다. 
+이 페이지에서는 이러한 제한을 설명하고 이를 해결하는 방법을 제공합니다.
 
 [`Image`]: {{site.api}}/flutter/widgets/Image-class.html
 
 :::note
-For information on how to optimize web loading speed,
-check out the (free) article on Medium,
-[Best practices for optimizing Flutter web loading speed][article].
+웹 로딩 속도를 최적화하는 방법에 대한 자세한 내용은, 
+Medium의 (무료) 글인 [Flutter 웹 로딩 속도 최적화 모범 사례][article]를 확인하세요.
 
 [article]: {{site.flutter-medium}}/best-practices-for-optimizing-flutter-web-loading-speed-7cc0df14ce5c
 :::
 
-
-## Background
+## 백그라운드 {:#background}
 
 This section summarizes the technologies available
 across Flutter and the web,
 on which the solutions below are based on.
 
-### Images in Flutter
+### Flutter의 이미지 {:#images-in-flutter}
 
 Flutter offers the [`Image`][] widget as well as the low-level
 [`dart:ui/Image`][] class for rendering images.
@@ -38,7 +38,7 @@ of the image is needed.
 
 [`dart:ui/Image`]: {{site.api}}/flutter/dart-ui/Image-class.html
 
-### Images on the web
+### 웹상의 이미지 {:#images-on-the-web}
 
 The web offers several methods for displaying images.
 Below are some of the common ones:
@@ -69,7 +69,7 @@ hardware-acceleration.
 [`drawImage`]: https://developer.mozilla.org/docs/Web/API/CanvasRenderingContext2D/drawImage
 [`<canvas>`]: https://developer.mozilla.org/docs/Web/HTML/Element/canvas
 
-### Cross-Origin Resource Sharing (CORS)
+### 교차 출처 리소스 공유(CORS, Cross-Origin Resource Sharing) {:#cross-origin-resource-sharing-cors}
 
 [CORS][] is a mechanism that browsers use to control
 how one site accesses the resources of another site.
@@ -95,7 +95,7 @@ the domain that serves your application.
 [XHR]: https://developer.mozilla.org/docs/Web/API/XMLHttpRequest
 [`fetch`]: https://developer.mozilla.org/docs/Web/API/Fetch_API/Using_Fetch
 
-### Flutter renderers on the web
+### 웹상의 Flutter 렌더러 {:#flutter-renderers-on-the-web}
 
 Flutter offers a choice of two renderers on the web:
 
@@ -133,9 +133,9 @@ and is therefore subject to the CORS policy.
 [`Scene.toImage`]: {{site.api}}/flutter/dart-ui/Scene/toImage.html
 [`Codec.getNextFrame`]: {{site.api}}/flutter/dart-ui/Codec/getNextFrame.html
 
-## Solutions
+## 솔루션 {:#solutions}
 
-### In-memory, asset, and same-origin network images
+### 메모리 내, asset 및 동일 출처 네트워크 이미지 {:#in-memory-asset-and-same-origin-network-images}
 
 If the app has the bytes of the encoded image in memory,
 provided as an [asset][], or stored on the
@@ -150,7 +150,7 @@ in both HTML and CanvasKit modes.
 [`Image.asset`]: {{site.api}}/flutter/widgets/Image/Image.asset.html
 [`Image.network`]: {{site.api}}/flutter/widgets/Image/Image.network.html
 
-### Cross-origin images
+### 교차 출처(Cross-origin) 이미지 {:#cross-origin-images}
 
 The HTML renderer can load cross-origin images
 without extra configuration.
@@ -158,7 +158,7 @@ without extra configuration.
 CanvasKit requires that the app gets the bytes of the encoded image.
 There are several ways to do this, discussed below.
 
-#### Host your images in a CORS-enabled CDN.
+#### CORS가 활성화된 CDN에 이미지를 호스팅하세요. {:#host-your-images-in-a-cors-enabled-cdn}
 
 Typically, content delivery networks (CDN)
 can be configured to customize what domains
@@ -169,7 +169,7 @@ header in the `firebase.json` file.
 
 [custom-header]: {{site.firebase}}/docs/hosting/full-config#headers
 
-#### Lack control over the image server? Use a CORS proxy.
+#### 이미지 서버에 대한 제어가 부족합니까? CORS 프록시를 사용하세요. {:#lack-control-over-the-image-server-use-a-cors-proxy}
 
 If the image server cannot be configured to allow CORS
 requests from your application,
@@ -189,7 +189,7 @@ Examples:
 [CloudFlare Workers]: https://developers.cloudflare.com/workers/examples/cors-header-proxy
 [Firebase Functions]: {{site.github}}/7kfpun/cors-proxy
 
-#### Use `<img>` in a platform view.
+#### 플랫폼 뷰에서는 `<img>`를 사용합니다. {:#use-img-in-a-platform-view}
 
 Flutter supports embedding HTML inside the app using
 [`HtmlElementView`][].  Use it to create an `<img>`

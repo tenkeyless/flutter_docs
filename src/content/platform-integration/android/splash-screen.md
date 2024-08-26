@@ -13,7 +13,7 @@ class="mw-100" alt="A graphic outlining the launch flow of an app including a sp
 스플래시 화면(런치 화면이라고도 함)은 Android 앱이 로드되는 동안 간단한 초기 경험을 제공합니다. 
 앱 엔진이 로드되고 앱이 초기화될 시간을 허용하는 동시에, 애플리케이션의 무대를 설정합니다.
 
-## Overview {:#overview}
+## 개요 {:#overview}
 
 :::warning
 If you are experiencing a crash from implementing a splash screen, you
@@ -48,7 +48,7 @@ same engine throughout your app to minimize wait
 time associated with initialization of the Flutter engine.
 :::
 
-## Initializing the app {:#initializing-the-app}
+## 앱 초기화 {:#initializing-the-app}
 
 Every Android app requires initialization time while the
 operating system sets up the app's process.
@@ -90,7 +90,7 @@ background color of the Flutter UI.
 
 [drawables]: {{site.android-dev}}/studio/write/resource-manager#import
 
-## Set up the FlutterActivity in AndroidManifest.xml {:#set-up-the-flutteractivity-in-androidmanifest-xml}
+## AndroidManifest.xml에 FlutterActivity 설정 {:#set-up-the-flutteractivity-in-androidmanifest-xml}
 
 In `AndroidManifest.xml`, set the `theme` of
 `FlutterActivity` to the launch theme. Then,

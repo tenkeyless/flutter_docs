@@ -1,36 +1,31 @@
 ---
-title: Adding iOS app extensions
-description: Learn how to add app extensions to your Flutter apps
+# title: Adding iOS app extensions
+title: iOS 앱 확장 프로그램 추가
+# description: Learn how to add app extensions to your Flutter apps
+description: Flutter 앱에 앱 확장 기능을 추가하는 방법을 알아보세요
 ---
 
-iOS app extensions allow you to expand functionality
-outside your app. Your app could appear as a home screen widget,
-or you can make portions of your app available within other apps.
+iOS 앱 확장을 사용하면 앱 외부에서 기능을 확장할 수 있습니다. 
+앱은 홈 화면 위젯으로 표시되거나, 앱의 일부를 다른 앱 내에서 사용할 수 있습니다.
 
-To learn more about app extensions, check out
-[Apple's documentation][].
+앱 확장에 대해 자세히 알아보려면 [Apple 문서][Apple's documentation]를 ​​확인하세요.
 
 :::note
-If you experience a build error when building an
-iOS app that includes an app extension, be
-aware that there is an open bug. The workaround
-involves changing the order of the build process.
-For more information, check out
-[Issue #9690][] and [Issue #135056][].
+앱 확장을 포함하는 iOS 앱을 빌드할 때 빌드 오류가 발생하는 경우, 열려 있는 버그가 있다는 것을 알아두십시오. 
+해결 방법은 빌드 프로세스 순서를 변경하는 것입니다. 
+자세한 내용은, [문제 #9690][Issue #9690] 및 [문제 #135056][Issue #135056]을 확인하십시오.
 :::
 
 [Issue #9690]:   {{site.github}}/flutter/website/issues/9690
 [Issue #135056]: {{site.github}}/flutter/flutter/issues/135056
 
-The iOS 18 release, coming in September 2024 and currently in beta,
-adds new functionality for customizing a device's
-the Control Center, including creating multiple pages.
-You can also create new toggles for the Control Center
-using the [`ControlCenter`] API, to feature your app.
+2024년 9월에 출시되고, 현재 베타 버전인 iOS 18 릴리스에서는, 여러 페이지를 만드는 것을 포함하여, 
+기기의 제어 센터를 커스터마이즈 하기 위한 새로운 기능이 추가되었습니다. 
+또한 [`ControlCenter`] API를 사용하여, 제어 센터에 대한 새로운 토글을 만들어, 앱을 특징으로 할 수 있습니다.
 
 [`ControlCenter`]: {{site.apple-dev}}/documentation/widgetkit/controlcenter
 
-## How do you add an app extension to your Flutter app?
+## Flutter 앱에 앱 확장 기능을 추가하려면 어떻게 해야 하나요? {:#how-do-you-add-an-app-extension-to-your-flutter-app}
 
 To add an app extension to your Flutter app,
 add the extension point *target* to your Xcode project.
@@ -57,7 +52,7 @@ check out the
 [Adding a Home Screen Widget to your Flutter app][lab]
 codelab.
 
-## How do Flutter apps interact with App Extensions? 
+## Flutter 앱은 앱 확장 프로그램과 어떻게 상호작용하나요? {:#how-do-flutter-apps-interact-with-app-extensions} 
 
 Flutter apps interact with app extensions using the same
 techniques as UIKit or SwiftUI apps.
@@ -68,7 +63,7 @@ The app and your extension can read and write to
 shared resources or use higher-level APIs
 to communicate with each other.
 
-### Using higher-level APIs
+### 높은 레벨 API 사용 {:#using-higher-level-apis}
 
 Some extensions have APIs. For example, 
 the [Core Spotlight][] framework indexes your app,
@@ -82,7 +77,7 @@ To find plugins that wrap extension APIs,
 check out [Leveraging Apple's System APIs and Frameworks][leverage]
 or search [pub.dev][].
 
-### Sharing resources
+### 리소스 공유 {:#sharing-resources}
 
 To share resources between your Flutter app
 and your app extension, put the `Runner` app target
@@ -118,7 +113,7 @@ Choose one of the following sources for your data.
   the [`path_provider`][] plugin to create a database with the
   [`sqflite`][] plugin.
 
-### Background updates
+### 백그라운드 업데이트 {:#background-updates}
 
 Background tasks provide a means to update your extension
 through code regardless of the status of your app.
@@ -126,14 +121,14 @@ through code regardless of the status of your app.
 To schedule background work from your Flutter app,
 use the [`workmanager`][] plugin.
 
-### Deep linking
+### 딥 링크 {:#deep-linking}
 
 You might want to direct users from an
 app extension to a specific page in your Flutter app.
 To open a specific route in your app,
 you can use [Deep Linking][].
 
-## Creating app extension UIs with Flutter
+## Flutter로 앱 확장 UI 만들기 {:#creating-app-extension-uis-with-flutter}
 
 Some app extensions display a user interface.
 
@@ -245,7 +240,7 @@ use an iOS simulator to test your extension in debug mode.
     }
     ```
 
-## Test extensions
+## 확장 테스트 {:#test-extensions}
 
 Testing extensions on simulators and physical devices
 have slightly different procedures.
@@ -255,7 +250,7 @@ The different procedures are necessary due to bugs(which bugs?) in Xcode.
 Revisit these docs after future Xcode releases to see if they are fixed.
 {% endcomment -%}
 
-### Test on a simulator
+### 시뮬레이터에서 테스트 {:#test-on-a-simulator}
 
 1. Build and run the main application target.
 1. After the app is launched on the simulator,
@@ -266,7 +261,7 @@ Revisit these docs after future Xcode releases to see if they are fixed.
 1. Select a photo, tap the share button, then tap
    on the share extension icon of your app.
 
-### Test on a physical device
+### 실제 장치에서 테스트 {:#test-on-a-physical-device}
 
 You can use the following procedure or the
 [Testing on simulators](#test-on-a-simulator) instructions
@@ -279,7 +274,7 @@ to test on physical devices.
 1. Select a photo, tap the share button,
    then tap on the share extension icon of your app.
 
-## Tutorials
+## 튜토리얼 {:#tutorials}
 
 For step-by-step instruction for using app
 extensions with your Flutter iOS app, check out the

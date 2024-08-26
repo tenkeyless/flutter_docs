@@ -1,40 +1,34 @@
 ---
-title: Hosting native iOS views in your Flutter app with Platform Views
-short-title: iOS platform-views
-description: Learn how to host native iOS views in your Flutter app with Platform Views.
+# title: Hosting native iOS views in your Flutter app with Platform Views
+title: Platform Views를 사용하여 Flutter 앱에서 네이티브 iOS 뷰 호스팅
+# short-title: iOS platform-views
+short-title: iOS 플랫폼 뷰
+# description: Learn how to host native iOS views in your Flutter app with Platform Views.
+description: Platform 뷰를 사용하여 Flutter 앱에서 네이티브 iOS 뷰를 호스팅하는 방법을 알아보세요.
 ---
 
 <?code-excerpt path-base="platform_integration/platform_views"?>
 
-Platform views allow you to embed native views in a Flutter app,
-so you can apply transforms, clips, and opacity to the native view
-from Dart.
+플랫폼 뷰를 사용하면 Flutter 앱에 네이티브 뷰를 임베드할 수 있으므로, 
+Dart에서 네이티브 뷰에 변환, 클립 및 불투명도를 적용할 수 있습니다.
 
-This allows you, for example, to use the native
-Google Maps from the Android and iOS SDKs
-directly inside your Flutter app.
+이를 통해, 예를 들어, Android 및 iOS SDK의 네이티브 Google Maps를 Flutter 앱 내에서 직접 사용할 수 있습니다.
 
 :::note
-This page discusses how to host your own native iOS views
-within a Flutter app.
-If you'd like to embed native Android views in your Flutter app,
-see [Hosting native Android views][].
-If you'd like to embed native macOS views in your Flutter app,
-see [Hosting native macOS views][].
+이 페이지에서는 Flutter 앱 내에서 자체 네이티브 iOS 뷰를 호스팅하는 방법을 설명합니다. 
+Flutter 앱에 네이티브 Android 뷰를 포함하려면, [네이티브 Android 뷰 호스팅][Hosting native Android views]을 참조하세요. 
+Flutter 앱에 네이티브 macOS 뷰를 포함하려면, [네이티브 macOS 뷰 호스팅][Hosting native macOS views]을 참조하세요.
 :::
 
 [Hosting native Android views]: /platform-integration/android/platform-views
 [Hosting native macOS views]: /platform-integration/macos/platform-views
 
+iOS는 하이브리드 구성(Hybrid composition)만 사용하는데, 
+이는 네이티브 `UIView`가 뷰 계층 구조에 추가된다는 것을 의미합니다.
 
-iOS only uses Hybrid composition,
-which means that the native
-`UIView` is appended to the view hierarchy.
+iOS에서 플랫폼 뷰를 만들려면, 다음 지침을 따르세요.
 
-To create a platform view on iOS,
-use the following instructions:
-
-## On the Dart side
+## Dart 측에서 {:#on-the-dart-side}
 
 On the Dart side, create a `Widget`
 and add the build implementation,
@@ -85,7 +79,7 @@ For more information, see the API docs for:
 
 [`UIKitView`]: {{site.api}}/flutter/widgets/UiKitView-class.html
 
-## On the platform side
+## 플랫폼 측에서 {:#on-the-platform-side}
 
 On the platform side, use either Swift or Objective-C:
 
@@ -350,7 +344,7 @@ For more information, see the API docs for:
 [`FlutterPlatformViewFactory`]: {{site.api}}/ios-embedder/protocol_flutter_platform_view_factory-p.html
 [`PlatformView`]: {{site.api}}/javadoc/io/flutter/plugin/platform/PlatformView.html
 
-## Putting it together
+## 그것을 함께 넣기 {:#putting-it-together}
 
 When implementing the `build()` method in Dart,
 you can use [`defaultTargetPlatform`][]
@@ -377,7 +371,7 @@ Widget build(BuildContext context) {
 }
 ```
 
-## Performance
+## 성능 {:#performance}
 Platform views in Flutter come with performance trade-offs.
 
 For example, in a typical Flutter app, the Flutter UI is 
@@ -401,7 +395,7 @@ animation is happening in Dart.
 In other words, if an animation is slow while a platform view is rendered, 
 then consider taking a screenshot of the native view and rendering it as a texture.
 
-## Composition limitations
+## 구성 제한 사항 {:#composition-limitations}
 
 There are some limitations when composing iOS Platform Views.
 

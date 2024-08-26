@@ -12,34 +12,26 @@ _FFI_ 는 [_외부 함수 인터페이스 (foreign function interface)_][FFI]의
 유사한 기능에 대한 다른 용어로는 _네이티브 인터페이스(native interface)_ 및 _언어 바인딩(language bindings)_ 이 있습니다.
 
 :::note
-This page describes using the `dart:ffi` library
-in Android apps. For information on iOS, see
-[Binding to native iOS code using dart:ffi][ios-ffi].
-For information in macOS, see
-[Binding to native macOS code using dart:ffi][macos-ffi].
-This feature is not yet supported for web plugins.
+이 페이지에서는 Android 앱에서 `dart:ffi` 라이브러리를 사용하는 방법을 설명합니다. 
+iOS에 대한 정보는, [dart:ffi를 사용하여 네이티브 iOS 코드에 바인딩][ios-ffi]를 참조하세요. 
+macOS에 대한 정보는, [dart:ffi를 사용하여 네이티브 macOS 코드에 바인딩][macos-ffi]를 참조하세요. 
+이 기능은 아직 웹 플러그인에서 지원되지 않습니다.
 :::
-
 
 [ios-ffi]: /platform-integration/ios/c-interop
 [dart:ffi]: {{site.dart.api}}/dev/dart-ffi/dart-ffi-library.html
 [macos-ffi]: /platform-integration/macos/c-interop
 [FFI]: https://en.wikipedia.org/wiki/Foreign_function_interface
 
-Before your library or program can use the FFI library
-to bind to native code, you must ensure that the
-native code is loaded and its symbols are visible to Dart.
-This page focuses on compiling, packaging,
-and loading Android native code within a Flutter plugin or app.
+라이브러리나 프로그램이 FFI 라이브러리를 사용하여 네이티브 코드에 바인딩하려면, 
+네이티브 코드가 로드되고 해당 심볼이 Dart에서 볼 수 있는지 확인해야 합니다. 
+이 페이지는 Flutter 플러그인이나 앱 내에서 Android 네이티브 코드를 컴파일, 패키징, 로드하는 데 중점을 둡니다.
 
-This tutorial demonstrates how to bundle C/C++
-sources in a Flutter plugin and bind to them using
-the Dart FFI library on both Android and iOS.
-In this walkthrough, you'll create a C function
-that implements 32-bit addition and then
-exposes it through a Dart plugin named "native_add".
+이 튜토리얼은 Flutter 플러그인에서 C/C++ 소스를 번들로 묶고, 
+Android와 iOS에서 Dart FFI 라이브러리를 사용하여 바인딩하는 방법을 보여줍니다. 
+이 연습에서는 32비트 추가를 구현한 다음 "native_add"라는 Dart 플러그인을 통해 노출하는 C 함수를 만듭니다.
 
-## Dynamic vs static linking {:#dynamic-vs-static-linking}
+## Dynamic vs static 링크 {:#dynamic-vs-static-linking}
 
 A native library can be linked into an app either
 dynamically or statically. A statically linked library
@@ -72,7 +64,7 @@ which we don't link to statically).
 [`DynamicLibrary.open`]: {{site.dart.api}}/dev/dart-ffi/DynamicLibrary/DynamicLibrary.open.html
 [`DynamicLibrary.process`]: {{site.dart.api}}/dev/dart-ffi/DynamicLibrary/DynamicLibrary.process.html
 
-## Create an FFI plugin {:#create-an-ffi-plugin}
+## FFI 플러그인 생성 {:#create-an-ffi-plugin}
 
 To create an FFI plugin called "native_add",
 do the following:
@@ -107,9 +99,9 @@ The native code is invoked from dart in `lib/native_add_bindings_generated.dart`
 
 The bindings are generated with [package:ffigen]({{site.pub-pkg}}/ffigen).
 
-## Other use cases {:#other-use-cases}
+## 다른 사용 사례 {:#other-use-cases}
 
-### Platform library {:#platform-library}
+### Platform 라이브러리 {:#platform-library}
 
 To link against a platform library,
 use the following instructions:
@@ -130,13 +122,13 @@ the documentation.
 
 [Android NDK Native APIs]: {{site.android-dev}}/ndk/guides/stable_apis
 
-#### First-party library
+#### 퍼스트파티 라이브러리 {:#first-party-library}
 
 The process for including native code in source
 code or binary form is the same for an app or
 plugin.
 
-#### Open-source third-party
+#### 오픈소스 서드파티 {:#open-source-third-party}
 
 Follow the [Add C and C++ code to your project][]
 instructions in the Android docs to
@@ -146,7 +138,7 @@ code toolchain (either CMake or `ndk-build`).
 
 [Add C and C++ code to your project]: {{site.android-dev}}/studio/projects/add-native-code
 
-#### Closed-source third-party library
+#### 폐쇄형 소스 서드파티 라이브러리 {:#closed-source-third-party-library}
 
 To create a Flutter plugin that includes Dart
 source code, but distribute the C/C++ library
@@ -161,7 +153,7 @@ in binary form, use the following instructions:
    JCenter.
 
 
-## Android APK size (shared object compression) {:#android-apk-size-shared-object-compression}
+## Android APK 크기(공유 객체 압축) {:#android-apk-size-shared-object-compression}
 
 [Android guidelines][] in general recommend
 distributing native shared objects uncompressed

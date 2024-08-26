@@ -1,11 +1,13 @@
 ---
-title: Web FAQ
-description: Some gotchas and differences when writing or running web apps in Flutter.
+# title: Web FAQ
+title: 웹 FAQ
+# description: Some gotchas and differences when writing or running web apps in Flutter.
+description: Flutter에서 웹 앱을 작성하거나 실행할 때의 몇 가지 문제점과 차이점.
 ---
 
-## Questions
+## 질문 {:#questions}
 
-### What scenarios are ideal for Flutter on the web?
+### 웹에서 Flutter를 사용하기에 이상적인 시나리오는 무엇입니까? {:#what-scenarios-are-ideal-for-flutter-on-the-web}
 
 Not every web page makes sense in Flutter, but we think Flutter is particularly
 suited for app-centric experiences:
@@ -23,7 +25,7 @@ interactive experiences into these websites.
 For more information on how you can use Flutter on the web,
 see [Web support for Flutter][].
 
-### Search Engine Optimization (SEO)
+### 검색 엔진 최적화 (SEO, Search Engine Optimization) {:#search-engine-optimization-seo}
 
 In general, Flutter is geared towards dynamic application experiences. Flutter's
 web support is no exception. Flutter web prioritizes performance, fidelity, and
@@ -40,11 +42,11 @@ investigate search engine indexability of Flutter web. To that end, we built a
 small website containing [Hawaii-themed space stories][space_hawaii], hoping
 that search engines find and index this site.
 
-### How do I create an app that also runs on the web?
+### 웹에서도 실행되는 앱을 어떻게 만들 수 있나요? {:#how-do-i-create-an-app-that-also-runs-on-the-web}
 
 See [building a web app with Flutter][].
 
-### Does hot reload work with a web app?
+### 웹 앱에서도 핫 리로드가 작동하나요? {:#does-hot-reload-work-with-a-web-app}
 
 No, but you can use hot restart. Hot restart is a fast way of seeing your
 changes without having to relaunch your web app and wait for it to compile and
@@ -52,13 +54,13 @@ load. This works similarly to the hot reload feature for Flutter mobile
 development. The only difference is that hot reload remembers your state and hot
 restart doesn't.
 
-### How do I restart the app running in the browser?
+### 브라우저에서 실행 중인 앱을 다시 시작하려면 어떻게 해야 하나요?{:#how-do-i-restart-the-app-running-in-the-browser}
 
 You can either use the browser's refresh button,
 or you can enter "R" in the console where
 "flutter run -d chrome" is running.
 
-### Which web browsers are supported by Flutter?
+### Flutter는 어떤 웹 브라우저를 지원하나요? {:#which-web-browsers-are-supported-by-flutter}
 
 Flutter web apps can run on the following browsers:
 
@@ -70,7 +72,7 @@ Flutter web apps can run on the following browsers:
 During development, Chrome (on macOS, Windows, and Linux) and Edge (on Windows)
 are supported as the default browsers for debugging your app.
 
-### Can I build, run, and deploy web apps in any of the IDEs?
+### 어떤 IDE에서든 웹 앱을 빌드, 실행, 배포할 수 있나요? {:#can-i-build-run-and-deploy-web-apps-in-any-of-the-ides}
 
 You can select **Chrome** or **Edge** as the target device in
 Android Studio/IntelliJ and VS Code.
@@ -78,11 +80,11 @@ Android Studio/IntelliJ and VS Code.
 The device pulldown should now include the **Chrome (web)**
 option for all channels.
 
-### How do I build a responsive app for the web?
+### 웹용 반응형 앱을 어떻게 만들 수 있나요? {:#how-do-i-build-a-responsive-app-for-the-web}
 
 See [Creating responsive apps][].
 
-### Can I use `dart:io` with a web app?
+### 웹 앱에서 `dart:io`를 사용할 수 있나요? {:#can-i-use-dart-io-with-a-web-app}
 
 No. The file system is not accessible from the browser.
 For network functionality, use the [`http`][]
@@ -90,14 +92,14 @@ package. Note that security works somewhat
 differently because the browser (and not the app)
 controls the headers on an HTTP request.
 
-### How do I handle web-specific imports?
+### 웹 관련 import를 어떻게 처리하나요? {:#how-do-i-handle-web-specific-imports}
 
 Some plugins require platform-specific imports, particularly if they use the
 file system, which is not accessible from the browser. To use these plugins
 in your app, see the [documentation for conditional imports][]
 on [dart.dev]({{site.dart-site}}).
 
-### Does Flutter web support concurrency?
+### Flutter 웹은 동시성을 지원하나요? {:#does-flutter-web-support-concurrency}
 
 Dart's concurrency support via [isolates][]
 is not currently supported in Flutter web.
@@ -106,15 +108,15 @@ Flutter web apps can potentially work around this
 by using [web workers][],
 although no such support is built in.
 
-### How do I embed a Flutter web app in a web page?
+### 웹 페이지에 Flutter 웹앱을 어떻게 임베드하나요? {:#how-do-i-embed-a-flutter-web-app-in-a-web-page}
 
 See [Embedding Flutter web][].
 
-### How do I embed web content in a Flutter web app?
+### Flutter 웹앱에 웹 콘텐츠를 어떻게 임베드하나요? {:#how-do-i-embed-web-content-in-a-flutter-web-app}
 
 See [Web content in Flutter][].
 
-### How do I debug a web app?
+### 웹앱을 디버깅하려면 어떻게 해야 하나요? {:#how-do-i-debug-a-web-app}
 
 Use [Flutter DevTools][] for the following tasks:
 
@@ -128,16 +130,16 @@ Use [Chrome DevTools][] for the following tasks:
 * [Analyzing performance][]&mdash;make sure to use a
   profile build
 
-### How do I test a web app?
+### 웹앱을 어떻게 테스트하나요? {:#how-do-i-test-a-web-app}
 
 Use [widget tests][] or integration tests. To learn more about
 running integration tests in a browser, see the [Integration testing][] page.
 
-### How do I deploy a web app?
+### 웹앱을 어떻게 배포하나요? {:#how-do-i-deploy-a-web-app}
 
 See [Preparing a web app for release][].
 
-### Does `Platform.is` work on the web?
+### `Platform.is`는 웹에서 작동하나요? {:#does-platform-is-work-on-the-web}
 
 Not currently.
 

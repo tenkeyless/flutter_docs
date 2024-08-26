@@ -1,7 +1,10 @@
 ---
-title: Adding a launch screen to your iOS app
-short-title: Launch screen
-description: Learn how to add a launch screen to your iOS app.
+# title: Adding a launch screen to your iOS app
+title: iOS 앱에 시작 화면 추가
+# short-title: Launch screen
+short-title: 시작 화면
+# description: Learn how to add a launch screen to your iOS app.
+description: iOS 앱에 시작 화면을 추가하는 방법을 알아보세요.
 toc: false
 ---
 
@@ -10,17 +13,14 @@ Consider introducing an image here similar to the android splash-screen one:
 https://github.com/flutter/website/issues/8357
 {% endcomment -%}
 
-[Launch screens][] provide a simple initial experience while your iOS app loads.
-They set the stage for your application, while allowing time for the app engine
-to load and your app to initialize.
+[런치 스크린][Launch screens]은 iOS 앱이 로드되는 동안 간단한 초기 경험을 제공합니다. 
+앱 엔진이 로드되고 앱이 초기화될 시간을 허용하는 동시에, 애플리케이션의 무대를 설정합니다.
 
 [Launch screens]: {{site.apple-dev}}/design/human-interface-guidelines/launching#Launch-screens
 
-All apps submitted to the Apple App Store
-[must provide a launch screen][apple-requirement]
-with an Xcode storyboard.
+Apple App Store에 제출된 모든 앱은 Xcode 스토리보드가 포함된 [시작 화면을 제공해야][apple-requirement] 합니다.
 
-## Customize the launch screen
+## 시작 화면 커스터마이즈 {:#customize-the-launch-screen}
 
 The default Flutter template includes an Xcode
 storyboard named `LaunchScreen.storyboard`

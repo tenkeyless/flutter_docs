@@ -1,15 +1,17 @@
 ---
-title: Build Linux apps with Flutter
-description: Platform-specific considerations when building for Linux with Flutter.
+# title: Build Linux apps with Flutter
+title: Flutter로 Linux 앱 빌드
+# description: Platform-specific considerations when building for Linux with Flutter.
+description: Flutter로 Linux를 빌드할 때 플랫폼별 고려 사항.
 toc: true
-short-title: Linux development
+# short-title: Linux development
+short-title: Linux 개발
 ---
 
-This page discusses considerations unique to building
-Linux apps with Flutter, including shell integration
-and preparation of apps for distribution.
+이 페이지에서는 셸 통합과 배포를 위한 앱 준비를 포함하여, 
+Flutter를 사용하여 Linux 앱을 빌드하는 데 고유한 고려 사항에 대해 설명합니다.
 
-## Integrate with Linux
+## Linux와 통합 {:#integrate-with-linux}
 
 The Linux programming interface,
 comprising library functions and system calls,
@@ -46,7 +48,7 @@ including common packages such as [`url_launcher`],
 [`file_selector`]: {{site.pub-pkg}}/file_selector
 [`path_provider`]: {{site.pub-pkg}}/path_provider
 
-## Prepare Linux apps for distribution
+## 배포를 위한 Linux 앱 준비 {:#prepare-linux-apps-for-distribution}
 
 The executable binary can be found in your project under
 `build/linux/x64/<build mode>/bundle/`.
@@ -83,7 +85,7 @@ $ sudo apt-get install libgtk-3-0 libblkid1 liblzma5
 To learn how to publish a Linux application to the [Snap Store],
 consult [Build and release a Linux application to the Snap Store][].
 
-## Additional resources
+## 추가적인 리소스 {:#additional-resources}
 
 To learn how to create Linux Debian (`.deb`) and RPM (`.rpm`)
 builds of your Flutter desktop app,

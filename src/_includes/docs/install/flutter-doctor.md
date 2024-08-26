@@ -1,5 +1,5 @@
 
-## Check your development setup
+## 개발 설정 확인하기 {:#check-your-development-setup}
 
 {% render docs/help-link.md, location:'win-doctor' %}
 
@@ -35,7 +35,7 @@
 {% assign compiler = 'Visual Studio' %}
 {% endcase %}
 
-### Run Flutter doctor
+### Flutter doctor 실행 {:#run-flutter-doctor}
 
 The `flutter doctor` command validates that all components of a
 complete Flutter development environment for {{include.devos}}.
@@ -55,7 +55,7 @@ If you followed this guide, the result of your command should resemble:
 
 {% include docs/install/flutter-doctor-success.md config=include.config devos=include.devos -%}
 
-### Troubleshoot Flutter doctor issues
+### Flutter Doctor 문제 해결 {:#troubleshoot-flutter-doctor-issues}
 
 When the `flutter doctor` command returns an error, it could be for Flutter,
 VS Code, {{compiler}}, the connected device, or network resources.
