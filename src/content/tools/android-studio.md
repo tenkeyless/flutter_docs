@@ -1,19 +1,22 @@
 ---
-title: Android Studio and IntelliJ
+# title: Android Studio and IntelliJ
+title: Android Studio 및 IntelliJ
+# description: >
+#   How to develop Flutter apps in Android Studio or other IntelliJ products.
 description: >
-  How to develop Flutter apps in Android Studio or other IntelliJ products.
+  Android Studio 또는 기타 IntelliJ 제품에서 Flutter 앱을 개발하는 방법.
 ---
 
 <ul class="nav nav-tabs" id="ide" role="tablist">
   <li class="nav-item">
-    <a class="nav-link active" role="tab" aria-selected="true">Android Studio and IntelliJ</a>
+    <a class="nav-link active" role="tab" aria-selected="true">Android Studio 및 IntelliJ</a>
   </li>
   <li class="nav-item">
     <a class="nav-link" href="/tools/vs-code" role="tab" aria-selected="false">Visual Studio Code</a>
   </li>
 </ul>
 
-## Installation and setup
+## 초기화 및 셋업 {:#installation-and-setup}
 
 Follow the [Set up an editor](/get-started/editor?tab=androidstudio)
 instructions to install the Dart and Flutter plugins.
