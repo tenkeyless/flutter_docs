@@ -3,7 +3,6 @@ title: "암묵적 애니메이션 (Implicit animations)"
 description: >
   상호 작용 예제와 연습을 통해 Flutter의 암묵적 애니메이션 위젯을 사용하는 방법을 알아보세요.
 toc: true
-diff2html: true
 js:
   - defer: true
     url: /assets/js/inject_dartpad.js
@@ -74,30 +73,36 @@ _암묵적으로 애니메이션이 적용된 위젯(implicitly animated widgets
 페이드인 효과를 만들려면, `AnimatedOpacity` 위젯을 사용하여 `opacity` 속성을 애니메이션으로 적용할 수 있습니다. 
 `Column` 위젯을 `AnimatedOpacity` 위젯으로 래핑합니다.
 
-```diff2html
---- opacity1/lib/main.dart
-+++ opacity2/lib/main.dart
-@@ -26,12 +26,14 @@
-         ),
-         onPressed: () => {},
-       ),
--      const Column(
--        children: [
--          Text('Type: Owl'),
--          Text('Age: 39'),
--          Text('Employment: None'),
--        ],
-+      AnimatedOpacity(
-+        child: const Column(
-+          children: [
-+            Text('Type: Owl'),
-+            Text('Age: 39'),
-+            Text('Employment: None'),
-+          ],
-+        ),
-       )
-     ]);
-   }
+```dart diff
+  @override
+  Widget build(BuildContext context) {
+    return ListView(children: <Widget>[
+      Image.network(owlUrl),
+      TextButton(
+        child: const Text(
+          'Show Details',
+          style: TextStyle(color: Colors.blueAccent),
+        ),
+        onPressed: () => {},
+      ),
+-     const Column(
+-       children: [
+-         Text('Type: Owl'),
+-         Text('Age: 39'),
+-         Text('Employment: None'),
+-       ],
+-     ),
++     AnimatedOpacity(
++       child: const Column(
++         children: [
++           Text('Type: Owl'),
++           Text('Age: 39'),
++           Text('Employment: None'),
++         ],
++       ),
++     ),
+    ]);
+  }
 ```
 
 :::note
@@ -110,26 +115,17 @@ _암묵적으로 애니메이션이 적용된 위젯(implicitly animated widgets
 사용자가 **Show details**를 클릭하기 전에 텍스트를 숨기려면, 
 `opacity`의 시작 값을 0으로 설정합니다.
 
-```diff2html
---- opacity2/lib/main.dart
-+++ opacity3/lib/main.dart
-@@ -15,6 +15,8 @@
- }
-
- class _FadeInDemoState extends State<FadeInDemo> {
-+  double opacity = 0;
-+
-   @override
-   Widget build(BuildContext context) {
-     return ListView(children: <Widget>[
-@@ -27,6 +29,7 @@
-         onPressed: () => {},
-       ),
-       AnimatedOpacity(
-+        opacity: opacity,
-         child: const Column(
-           children: [
-             Text('Type: Owl'),
+```dart diff
+  class _FadeInDemoState extends State<FadeInDemo> {
++   double opacity = 0;
++ 
+    @override
+    Widget build(BuildContext context) {
+      return ListView(children: <Widget>[
+        // ...
+        AnimatedOpacity(
++         opacity: opacity,
+          child: const Column(
 ```
 
 #### 3. 애니메이션 지속시간 설정 {:#3-set-the-duration-of-the-animation}
@@ -137,17 +133,11 @@ _암묵적으로 애니메이션이 적용된 위젯(implicitly animated widgets
 `opacity` 매개변수 외에도, `AnimatedOpacity`는 애니메이션에 사용할 [duration][]이 필요합니다. 
 이 예제에서는, 2초로 시작할 수 있습니다.
 
-```diff2html
---- opacity3/lib/main.dart
-+++ opacity4/lib/main.dart
-@@ -29,6 +29,7 @@
-         onPressed: () => {},
-       ),
-       AnimatedOpacity(
-+        duration: const Duration(seconds: 2),
-         opacity: opacity,
-         child: const Column(
-           children: [
+```dart diff
+  AnimatedOpacity(
++   duration: const Duration(seconds: 2),
+    opacity: opacity,
+    child: const Column(
 ```
 
 #### 4. 애니메이션에 대한 트리거를 설정하고, 종료 값 선택 {:#4-set-up-a-trigger-for-animation-and-choose-an-end-value}
@@ -157,20 +147,17 @@ _암묵적으로 애니메이션이 적용된 위젯(implicitly animated widgets
 사용자가 **Show details**를 클릭할 때 `FadeInDemo` 위젯이 완전히 표시되도록 하려면, 
 `onPressed()` 핸들러를 사용하여 `opacity`를 1로 설정합니다.
 
-```diff2html
---- opacity4/lib/main.dart
-+++ opacity5/lib/main.dart
-@@ -26,7 +26,9 @@
-           'Show Details',
-           style: TextStyle(color: Colors.blueAccent),
-         ),
--        onPressed: () => {},
-+        onPressed: () => setState(() {
-+          opacity = 1;
-+        }),
-       ),
-       AnimatedOpacity(
-         duration: const Duration(seconds: 2),
+```dart diff
+  TextButton(
+    child: const Text(
+      'Show Details',
+      style: TextStyle(color: Colors.blueAccent),
+    ),
+-   onPressed: () => {},
++   onPressed: () => setState(() {
++     opacity = 1;
++   }),
+  ),
 ```
 
 :::note
@@ -235,18 +222,19 @@ _암묵적으로 애니메이션이 적용된 위젯(implicitly animated widgets
 
 `Container` 위젯을 `AnimatedContainer` 위젯으로 변경합니다.
 
-```diff2html
---- container1/lib/main.dart
-+++ container2/lib/main.dart
-@@ -47,7 +47,7 @@
-             SizedBox(
-               width: 128,
-               height: 128,
--              child: Container(
-+              child: AnimatedContainer(
-                 margin: EdgeInsets.all(margin),
-                 decoration: BoxDecoration(
-                   color: color,
+```dart diff
+  SizedBox(
+    width: 128,
+    height: 128,
+-   child: Container(
++   child: AnimatedContainer(
+      margin: EdgeInsets.all(margin),
+      decoration: BoxDecoration(
+        color: color,
+        borderRadius: BorderRadius.circular(borderRadius),
+      ),
+    ),
+  ),
 ```
 
 :::note
@@ -261,24 +249,18 @@ _암묵적으로 애니메이션이 적용된 위젯(implicitly animated widgets
 `change()` 메서드는 `setState()` 메서드를 사용하여 
 `color`, `borderRadius` 및 `margin` 상태 변수에 대한 새 값을 설정할 수 있습니다.
 
-```diff2html
---- container2/lib/main.dart
-+++ container3/lib/main.dart
-@@ -38,6 +38,14 @@
-     margin = randomMargin();
-   }
-
-+  void change() {
-+    setState(() {
-+      color = randomColor();
-+      borderRadius = randomBorderRadius();
-+      margin = randomMargin();
-+    });
-+  }
+```dart diff
++ void change() {
++   setState(() {
++     color = randomColor();
++     borderRadius = randomBorderRadius();
++     margin = randomMargin();
++   });
++ }
 +
-   @override
-   Widget build(BuildContext context) {
-     return Scaffold(
+  @override
+  Widget build(BuildContext context) {
+    // ...
 ```
 
 #### 3. 애니메이션에 대한 트리거 설정 {:#3-set-up-a-trigger-for-the-animation}
@@ -286,44 +268,31 @@ _암묵적으로 애니메이션이 적용된 위젯(implicitly animated widgets
 사용자가 **Change**를 누를 때마다 애니메이션이 트리거되도록 설정하려면, 
 `onPressed()` 핸들러에서 `change()` 메서드를 호출합니다.
 
-```diff2html
---- container3/lib/main.dart
-+++ container4/lib/main.dart
-@@ -65,7 +65,7 @@
-             ),
-             ElevatedButton(
-               child: const Text('Change'),
--              onPressed: () => {},
-+              onPressed: () => change(),
-             ),
-           ],
-         ),
+```dart diff
+  ElevatedButton(
+    child: const Text('Change'),
+-   onPressed: () => {},
++   onPressed: () => change(),
+  ),
 ```
 
 #### 4. 기간 설정 {:#4-set-duration}
 
 이전 값과 새 값 사이의 전환을 담당하는 애니메이션의 `duration`을 설정합니다.
 
-```diff2html
---- container4/lib/main.dart
-+++ container5/lib/main.dart
-@@ -6,6 +6,8 @@
-
- import 'package:flutter/material.dart';
-
-+const _duration = Duration(milliseconds: 400);
-+
- double randomBorderRadius() {
-   return Random().nextDouble() * 64;
- }
-@@ -61,6 +63,7 @@
-                   color: color,
-                   borderRadius: BorderRadius.circular(borderRadius),
-                 ),
-+                duration: _duration,
-               ),
-             ),
-             ElevatedButton(
+```dart diff
+  SizedBox(
+    width: 128,
+    height: 128,
+    child: AnimatedContainer(
+      margin: EdgeInsets.all(margin),
+      decoration: BoxDecoration(
+        color: color,
+        borderRadius: BorderRadius.circular(borderRadius),
+      ),
++     duration: const Duration(milliseconds: 400),
+    ),
+  ),
 ```
 
 ### 모양 변환 (완료) {:#shape-shifting-complete}
@@ -353,17 +322,20 @@ _암묵적으로 애니메이션이 적용된 위젯(implicitly animated widgets
 [완전한 모양 변환 예제][complete shape-shifting example]에서 `curve` 매개변수의 값을 지정합니다.
 `curve`에 [`easeInOutBack`][] 상수를 전달하면 애니메이션이 변경됩니다.
 
-```diff2html
---- container5/lib/main.dart
-+++ container6/lib/main.dart
-@@ -64,6 +64,7 @@
-                   borderRadius: BorderRadius.circular(borderRadius),
-                 ),
-                 duration: _duration,
-+                curve: Curves.easeInOutBack,
-               ),
-             ),
-             ElevatedButton(
+```dart diff
+  SizedBox(
+    width: 128,
+    height: 128,
+    child: AnimatedContainer(
+      margin: EdgeInsets.all(margin),
+      decoration: BoxDecoration(
+        color: color,
+        borderRadius: BorderRadius.circular(borderRadius),
+      ),
+      duration: _duration,
++     curve: Curves.easeInOutBack,
+    ),
+  ),
 ```
 
 `Curves.easeInOutBack` 상수를 `AnimatedContainer` 위젯의 `curve` 속성에 전달하여, 

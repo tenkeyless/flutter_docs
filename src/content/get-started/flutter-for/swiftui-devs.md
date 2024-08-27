@@ -34,9 +34,10 @@ Flutter는 iOS 및 macOS에서 실행할 때 앱 동작에 대한 여러 가지 
 **기존** iOS 앱에 Flutter 코드를 통합하려면, [기존 앱에 Flutter 추가][Add Flutter to existing app]를 확인하세요.
 :::
 
-이 문서는 쿡북으로 사용할 수 있으며, 돌아다니며 귀하의 요구 사항과 가장 관련성이 높은 질문을 찾을 수 있습니다. 
+이 문서는 돌아다니며 귀하의 요구 사항과 가장 관련이 있는 질문을 찾아 쿡북으로 사용할 수 있습니다. 
 이 가이드에는 샘플 코드가 포함되어 있습니다. 
-DartPad에서 전체 작동 예제를 테스트하거나 GitHub에서 볼 수 있습니다.
+호버 또는 포커스 시 나타나는 "DartPad에서 열기" 버튼을 사용하여, 
+DartPad에서 일부 예제를 열고 실행할 수 있습니다.
 
 ## Overview
 
@@ -194,19 +195,8 @@ struct HomePage: View {
 To start your **Flutter** app, pass in an instance of your app to
 the `runApp` function.
 
-<nav class="navbar bg-primary">
- <ul class="navbar-nav navbar-code ml-auto">
-  <li class="nav-item">
-    <a class="btn btn-navbar-code" href="{{site.dartpad}}/?id=d3d38ae68f7d6444421d0485a1fd02db">Test in DartPad</a>
-  </li>
-  <li class="nav-item">
-    <a class="btn btn-navbar-code" href="{{site.repo.this}}/{{sample_path}}/lib/get_started.dart">View on GitHub</a>
-  </li>
-</ul>
-</nav>
-
 <?code-excerpt "lib/get_started.dart (main)"?>
-```dart
+```dart dartpad="42cf3026e1460ef618257684ee5af6a2"
 void main() {
   runApp(const MyApp());
 }
@@ -217,19 +207,8 @@ user interface it represents.
 It's common to begin your app with a [`WidgetApp`][] class,
 like [`CupertinoApp`][].
 
-<nav class="navbar bg-primary">
- <ul class="navbar-nav navbar-code ml-auto">
-  <li class="nav-item">
-    <a class="btn btn-navbar-code" href="{{site.dartpad}}/?id=d3d38ae68f7d6444421d0485a1fd02db">Test in DartPad</a>
-  </li>
-  <li class="nav-item">
-    <a class="btn btn-navbar-code" href="{{site.repo.this}}/{{sample_path}}/lib/get_started.dart">View on GitHub</a>
-  </li>
-</ul>
-</nav>
-
 <?code-excerpt "lib/get_started.dart (myapp)"?>
-```dart
+```dart dartpad="42cf3026e1460ef618257684ee5af6a2"
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -247,19 +226,8 @@ class MyApp extends StatelessWidget {
 The widget used in `HomePage` might begin with the `Scaffold` class.
 `Scaffold` implements a basic layout structure for an app.
 
-<nav class="navbar bg-primary">
- <ul class="navbar-nav navbar-code ml-auto">
-  <li class="nav-item">
-    <a class="btn btn-navbar-code" href="{{site.dartpad}}/?id=d3d38ae68f7d6444421d0485a1fd02db">Test in DartPad</a>
-  </li>
-  <li class="nav-item">
-    <a class="btn btn-navbar-code" href="{{site.repo.this}}/{{sample_path}}/lib/get_started.dart">View on GitHub</a>
-  </li>
-</ul>
-</nav>
-
 <?code-excerpt "lib/get_started.dart (homepage)"?>
-```dart
+```dart dartpad="42cf3026e1460ef618257684ee5af6a2"
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
@@ -298,19 +266,8 @@ Button("Do something") {
 To achieve the same result in **Flutter**,
 use the `CupertinoButton` class:
 
-<nav class="navbar bg-primary">
- <ul class="navbar-nav navbar-code ml-auto">
-  <li class="nav-item">
-    <a class="btn btn-navbar-code" href="{{site.dartpad}}/?id=b776dfe43c91e580c66b2b93368745eb">Test in DartPad</a>
-  </li>
-  <li class="nav-item">
-    <a class="btn btn-navbar-code" href="{{site.repo.this}}/{{sample_path}}/lib/text_button.dart">View on GitHub</a>
-  </li>
-</ul>
-</nav>
-
 <?code-excerpt "lib/text_button.dart (text-button)"?>
-```dart
+```dart dartpad="3c9b9a4de431b86725197a7fc2c84158"
         CupertinoButton(
   onPressed: () {
     // This closure is called when your button is tapped.
@@ -344,19 +301,8 @@ HStack {
 
 **Flutter** uses [`Row`][] rather than `HStack`:
 
-<nav class="navbar bg-primary">
- <ul class="navbar-nav navbar-code ml-auto">
-  <li class="nav-item">
-    <a class="btn btn-navbar-code" href="{{site.dartpad}}/?id=5715d4f269f629d274ef1b0e9546853b">Test in DartPad</a>
-  </li>
-  <li class="nav-item">
-    <a class="btn btn-navbar-code" href="{{site.repo.this}}/{{sample_path}}/lib/row.dart">View on GitHub</a>
-  </li>
-</ul>
-</nav>
-
 <?code-excerpt "lib/row.dart (row)"?>
-```dart
+```dart dartpad="0365338f938427b01d72e37cea554f75"
     Row(
   mainAxisAlignment: MainAxisAlignment.center,
   children: [
@@ -389,19 +335,8 @@ VStack {
 **Flutter** uses the same Dart code from the previous example,
 except it swaps [`Column`][] for `Row`:
 
-<nav class="navbar bg-primary">
- <ul class="navbar-nav navbar-code ml-auto">
-  <li class="nav-item">
-    <a class="btn btn-navbar-code" href="{{site.dartpad}}/?id=5e85473354959c0712f05e86d111c584">Test in DartPad</a>
-  </li>
-  <li class="nav-item">
-    <a class="btn btn-navbar-code" href="{{site.repo.this}}/{{sample_path}}/lib/column.dart">View on GitHub</a>
-  </li>
-</ul>
-</nav>
-
 <?code-excerpt "lib/column.dart (column)"?>
-```dart
+```dart dartpad="d9a288be0c2a353296fc8825680b84b8"
     Column(
   mainAxisAlignment: MainAxisAlignment.center,
   children: [
@@ -446,19 +381,8 @@ This resembles how **Flutter** prefers to build its list widgets.
 Flutter doesn't need the list items to be identifiable.
 You set the number of items to display then build a widget for each item.
 
-<nav class="navbar bg-primary">
- <ul class="navbar-nav navbar-code ml-auto">
-  <li class="nav-item">
-    <a class="btn btn-navbar-code" href="{{site.dartpad}}/?id=66e6728e204021e3b9e0190be50d014b">Test in DartPad</a>
-  </li>
-  <li class="nav-item">
-    <a class="btn btn-navbar-code" href="{{site.repo.this}}/{{sample_path}}/lib/list.dart">View on GitHub</a>
-  </li>
-</ul>
-</nav>
-
 <?code-excerpt "lib/list.dart (simple-list)"?>
-```dart
+```dart dartpad="67426fd4f9c38c0c1db96b1af65598f2"
 class Person {
   String name;
   Person(this.name);
@@ -530,19 +454,8 @@ This widget has various constructors. Each constructor has
 a similar goal, but uses different input parameters.
 The following example uses the `.builder()` initializer:
 
-<nav class="navbar bg-primary">
- <ul class="navbar-nav navbar-code ml-auto">
-  <li class="nav-item">
-    <a class="btn btn-navbar-code" href="{{site.dartpad}}/?id=4ac2d2433390042d25c97f1e819ec337">Test in DartPad</a>
-  </li>
-  <li class="nav-item">
-    <a class="btn btn-navbar-code" href="{{site.repo.this}}/{{sample_path}}/lib/grid.dart">View on GitHub</a>
-  </li>
-</ul>
-</nav>
-
 <?code-excerpt "lib/grid.dart (grid-example)"?>
-```dart
+```dart dartpad="d6b9174f33db94164e457b3da80da933"
 const widgets = [
   Text('Row 1'),
   Icon(CupertinoIcons.arrow_down_square),
@@ -601,19 +514,8 @@ To create a scrolling view, **Flutter** uses [`SingleChildScrollView`][].
 In the following example, the function `mockPerson` mocks instances
 of the `Person` class to create the custom `PersonView` widget.
 
-<nav class="navbar bg-primary">
- <ul class="navbar-nav navbar-code ml-auto">
-  <li class="nav-item">
-    <a class="btn btn-navbar-code" href="{{site.dartpad}}/?id=63039c5371995ae53d971d613a936f7b">Test in DartPad</a>
-  </li>
-  <li class="nav-item">
-    <a class="btn btn-navbar-code" href="{{site.repo.this}}/{{sample_path}}/lib/scroll.dart">View on GitHub</a>
-  </li>
-</ul>
-</nav>
-
 <?code-excerpt "lib/scroll.dart (scroll-example)"?>
-```dart
+```dart dartpad="a75740320989ed04020d95502a0de34e"
     SingleChildScrollView(
   child: Column(
     children: mockPersons
@@ -678,19 +580,8 @@ to tell the framework to redraw the widget.
 
 The following example shows a part of a counter app:
 
-<nav class="navbar bg-primary">
- <ul class="navbar-nav navbar-code ml-auto">
-  <li class="nav-item">
-    <a class="btn btn-navbar-code" href="{{site.dartpad}}/?id=c5fcf5897c21456c518ea954c2587ada">Test in DartPad</a>
-  </li>
-  <li class="nav-item">
-    <a class="btn btn-navbar-code" href="{{site.repo.this}}/{{sample_path}}/lib/state.dart">View on GitHub</a>
-  </li>
-</ul>
-</nav>
-
 <?code-excerpt "lib/state.dart (state)"?>
-```dart
+```dart dartpad="34815ab7d6ee0c5a45c82597df444450"
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
   @override
@@ -754,19 +645,8 @@ Flutter names these widgets with the following format: `AnimatedFoo`.
 For example: To rotate a button, use the [`AnimatedRotation`][] class.
 This animates the `Transform.rotate` widget.
 
-<nav class="navbar bg-primary">
- <ul class="navbar-nav navbar-code ml-auto">
-  <li class="nav-item">
-    <a class="btn btn-navbar-code" href="{{site.dartpad}}/?id=4b9cfedfe9ca09baeb83456fdf7cbe32">Test in DartPad</a>
-  </li>
-  <li class="nav-item">
-    <a class="btn btn-navbar-code" href="{{site.repo.this}}/{{sample_path}}/lib/simple_animation.dart">View on GitHub</a>
-  </li>
-</ul>
-</nav>
-
 <?code-excerpt "lib/simple_animation.dart (animated-button)"?>
-```dart
+```dart dartpad="0ad0572cbf98ead2e5d31a2a94430f19"
     AnimatedRotation(
   duration: const Duration(seconds: 1),
   turns: turns,
@@ -807,19 +687,8 @@ with two classes that help you draw:
 
 1. [`CustomPaint`][] that requires a painter:
 
-    <nav class="navbar bg-primary">
-    <ul class="navbar-nav navbar-code ml-auto">
-      <li class="nav-item">
-        <a class="btn btn-navbar-code" href="{{site.dartpad}}/?id=fccb26fc4bca4c08ca37931089a837e7">Test in DartPad</a>
-      </li>
-      <li class="nav-item">
-        <a class="btn btn-navbar-code" href="{{site.repo.this}}/{{sample_path}}/lib/canvas.dart">View on GitHub</a>
-      </li>
-    </ul>
-    </nav>
-
     <?code-excerpt "lib/canvas.dart (custom-paint)"?>
-    ```dart
+    ```dart dartpad="978d64ee66d54177fb639f8a9f801039"
         CustomPaint(
       painter: SignaturePainter(_points),
       size: Size.infinite,
@@ -828,19 +697,8 @@ with two classes that help you draw:
 
 2. [`CustomPainter`][] that implements your algorithm to draw to the canvas.
 
-    <nav class="navbar bg-primary">
-    <ul class="navbar-nav navbar-code ml-auto">
-      <li class="nav-item">
-        <a class="btn btn-navbar-code" href="{{site.dartpad}}/?id=fccb26fc4bca4c08ca37931089a837e7">Test in DartPad</a>
-      </li>
-      <li class="nav-item">
-        <a class="btn btn-navbar-code" href="{{site.repo.this}}/{{sample_path}}/lib/canvas.dart">View on GitHub</a>
-      </li>
-    </ul>
-    </nav>
-
     <?code-excerpt "lib/canvas.dart (custom-painter)"?>
-    ```dart
+    ```dart dartpad="978d64ee66d54177fb639f8a9f801039"
     class SignaturePainter extends CustomPainter {
       SignaturePainter(this.points);
     
@@ -905,19 +763,8 @@ call your navigation routes using their names.
 1. Name each route in the class passed to the `runApp()` function.
    The following example uses `App`:
 
-    <nav class="navbar bg-primary">
-    <ul class="navbar-nav navbar-code ml-auto">
-      <li class="nav-item">
-        <a class="btn btn-navbar-code" href="{{site.dartpad}}/?id=5ae0624689958c4775b064d39d108d9e">Test in DartPad</a>
-      </li>
-      <li class="nav-item">
-        <a class="btn btn-navbar-code" href="{{site.repo.this}}/{{sample_path}}/lib/navigation.dart">View on GitHub</a>
-      </li>
-    </ul>
-    </nav>
-
     <?code-excerpt "lib/navigation.dart (routes)"?>
-    ```dart
+    ```dart dartpad="d8b22d4dcbefdc8a2e21f1382cf7dc2a"
     // Defines the route name as a constant
     // so that it's reusable.
     const detailsPageRouteName = '/details';
@@ -945,19 +792,8 @@ call your navigation routes using their names.
    `mockPersons()`. Tapping a person pushes the person's detail page
    to the `Navigator` using `pushNamed()`.
 
-    <nav class="navbar bg-primary">
-    <ul class="navbar-nav navbar-code ml-auto">
-      <li class="nav-item">
-        <a class="btn btn-navbar-code" href="{{site.dartpad}}/?id=5ae0624689958c4775b064d39d108d9e">Test in DartPad</a>
-      </li>
-      <li class="nav-item">
-        <a class="btn btn-navbar-code" href="{{site.repo.this}}/{{sample_path}}/lib/navigation.dart">View on GitHub</a>
-      </li>
-    </ul>
-    </nav>
-
     <?code-excerpt "lib/navigation.dart (list-view)"?>
-    ```dart
+    ```dart dartpad="d8b22d4dcbefdc8a2e21f1382cf7dc2a"
         ListView.builder(
       itemCount: mockPersons.length,
       itemBuilder: (context, index) {
@@ -989,19 +825,8 @@ call your navigation routes using their names.
    widget when navigating to the new route.
    Extract the arguments using `ModalRoute.of()`:
 
-    <nav class="navbar bg-primary">
-    <ul class="navbar-nav navbar-code ml-auto">
-      <li class="nav-item">
-        <a class="btn btn-navbar-code" href="{{site.dartpad}}/?id=5ae0624689958c4775b064d39d108d9e">Test in DartPad</a>
-      </li>
-      <li class="nav-item">
-        <a class="btn btn-navbar-code" href="{{site.repo.this}}/{{sample_path}}/lib/navigation.dart">View on GitHub</a>
-      </li>
-    </ul>
-    </nav>
-
     <?code-excerpt "lib/navigation.dart (details-page)"?>
-    ```dart
+    ```dart dartpad="d8b22d4dcbefdc8a2e21f1382cf7dc2a"
     class DetailsPage extends StatelessWidget {
       const DetailsPage({super.key});
     
@@ -1039,19 +864,8 @@ Button("Pop back") {
 
 In **Flutter**, use the `pop()` function of the `Navigator` class:
 
-<nav class="navbar bg-primary">
- <ul class="navbar-nav navbar-code ml-auto">
-  <li class="nav-item">
-    <a class="btn btn-navbar-code" href="{{site.dartpad}}/?id=0cf352feaeaea2eb107f784d879e480d">Test in DartPad</a>
-  </li>
-  <li class="nav-item">
-    <a class="btn btn-navbar-code" href="{{site.repo.this}}/{{sample_path}}/lib/popback.dart">View on GitHub</a>
-  </li>
-</ul>
-</nav>
-
 <?code-excerpt "lib/popback.dart (pop-back)"?>
-```dart
+```dart dartpad="3c125ab2dfba9f4178aeaeb8619c5bea"
 TextButton(
   onPressed: () {
     // This code allows the
@@ -1083,16 +897,8 @@ URL to another application.
 
 In **Flutter**, use the [`url_launcher`][] plugin.
 
-<nav class="navbar bg-primary">
- <ul class="navbar-nav navbar-code ml-auto">
-  <li class="nav-item">
-    <a class="btn btn-navbar-code" href="{{site.repo.this}}/{{sample_path}}/lib/openapp.dart">View on GitHub</a>
-  </li>
-</ul>
-</nav>
-
 <?code-excerpt "lib/openapp.dart (open-app-example)"?>
-```dart
+```dart dartpad="695beba25fa8120d89c9960cb222e276"
     CupertinoButton(
   onPressed: () async {
     await launchUrl(
@@ -1121,19 +927,8 @@ In **Flutter**, you can control light and dark mode at the app-level.
 To control the brightness mode, use the `theme` property
 of the `App` class:
 
-<nav class="navbar bg-primary">
- <ul class="navbar-nav navbar-code ml-auto">
- <li class="nav-item">
-    <a class="btn btn-navbar-code" href="{{site.dartpad}}/?id=c446775c3224787e51fb18b054a08a1c">Test in DartPad</a>
-  </li>
-  <li class="nav-item">
-    <a class="btn btn-navbar-code" href="{{site.repo.this}}/{{sample_path}}/lib/cupertino_themes.dart">View on GitHub</a>
-  </li>
-</ul>
-</nav>
-
 <?code-excerpt "lib/cupertino_themes.dart (theme)"?>
-```dart
+```dart dartpad="18790cfaa8441085994373a4bc4f46b0"
     CupertinoApp(
   theme: CupertinoThemeData(
     brightness: Brightness.dark,
@@ -1157,19 +952,8 @@ Text("Hello, world!")
 To style text in **Flutter**, add a `TextStyle` widget as the value
 of the `style` parameter of the `Text` widget.
 
-<nav class="navbar bg-primary">
- <ul class="navbar-nav navbar-code ml-auto">
- <li class="nav-item">
-    <a class="btn btn-navbar-code" href="{{site.dartpad}}/?id=c446775c3224787e51fb18b054a08a1c">Test in DartPad</a>
-  </li>
-  <li class="nav-item">
-    <a class="btn btn-navbar-code" href="{{site.repo.this}}/{{sample_path}}/lib/cupertino_themes.dart">View on GitHub</a>
-  </li>
-</ul>
-</nav>
-
 <?code-excerpt "lib/cupertino_themes.dart (styling-text)"?>
-```dart
+```dart dartpad="18790cfaa8441085994373a4bc4f46b0"
     Text(
   'Hello, world!',
   style: TextStyle(
@@ -1203,19 +987,8 @@ In the following example:
 - The `color` property of the child `Text` widget sets the button
   text color.
 
-<nav class="navbar bg-primary">
- <ul class="navbar-nav navbar-code ml-auto">
- <li class="nav-item">
-    <a class="btn btn-navbar-code" href="{{site.dartpad}}/?id=8ffd244574c98f510c29712f6e6c2204">Test in DartPad</a>
-  </li>
-  <li class="nav-item">
-    <a class="btn btn-navbar-code" href="{{site.repo.this}}/{{sample_path}}/lib/stylingbutton.dart">View on GitHub</a>
-  </li>
-</ul>
-</nav>
-
 <?code-excerpt "lib/stylingbutton.dart (styling-button)"?>
-```dart
+```dart dartpad="f8b6622f526fc5c7d5adadf1e071c28f"
 child: CupertinoButton(
   color: CupertinoColors.systemYellow,
   onPressed: () {},
@@ -1268,14 +1041,6 @@ To add a custom font to your project, follow these steps:
 
 After you add the font to your project, you can use it as in the
 following example:
-
-<nav class="navbar bg-primary">
- <ul class="navbar-nav navbar-code ml-auto">
-  <li class="nav-item">
-    <a class="btn btn-navbar-code" href="{{site.repo.this}}/{{sample_path}}/lib/stylingbutton.dart">View on GitHub</a>
-  </li>
-</ul>
-</nav>
 
 <?code-excerpt "lib/stylingbutton.dart (custom-font)"?>
 ```dart

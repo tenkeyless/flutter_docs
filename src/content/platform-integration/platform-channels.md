@@ -566,7 +566,7 @@ Objective-C를 사용하는 표준 템플릿 설정에서 Swift에 대한 지원
     let batteryChannel = FlutterMethodChannel(name: "samples.flutter.dev/battery",
                                               binaryMessenger: controller.binaryMessenger)
     batteryChannel.setMethodCallHandler({
-      (call: FlutterMethodCall, result: @escaping FlutterResult) -> Void in
+      [weak self] (call: FlutterMethodCall, result: FlutterResult) -> Void in
       // 이 메서드는 UI 스레드에서 호출됩니다.
       // 배터리 메시지를 처리합니다.
     })

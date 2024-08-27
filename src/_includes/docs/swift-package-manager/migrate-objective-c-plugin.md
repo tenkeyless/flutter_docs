@@ -142,7 +142,7 @@
    :::
 
 7. 플러그인에 [`PrivacyInfo.xcprivacy` 파일][`PrivacyInfo.xcprivacy` file]이 있는 경우, 
-   이를 `ios/Sources/plugin_name/PrivacyInfo.xcprivacy`로 이동하고, 
+   이를 `ios/plugin_name/Sources/plugin_name/PrivacyInfo.xcprivacy`로 이동하고, 
    `Package.swift` 파일에서 리소스의 주석 처리를 제거합니다.
 
    ```swift title="Package.swift"
@@ -158,11 +158,13 @@
                ],
    ```
 
-8. `ios/Assets`에서 `ios/Sources/plugin_name`(또는 하위 디렉토리)으로 모든 리소스 파일을 이동합니다.
+1. `ios/Assets`에서 `ios/plugin_name/Sources/plugin_name`(또는 하위 디렉토리)으로 
+   모든 리소스 파일을 이동합니다. 
    해당되는 경우, 리소스 파일을 `Package.swift` 파일에 추가합니다. 
    자세한 지침은 [https://developer.apple.com/documentation/xcode/bundling-resources-with-a-swift-package](https://developer.apple.com/documentation/xcode/bundling-resources-with-a-swift-package)를 참조하세요.
 
-9. `ios/Classes`에서 모든 public 헤더를 `ios/Sources/plugin_name/include/plugin_name`으로 이동합니다.
+2. `ios/Classes`에서 `ios/plugin_name/Sources/plugin_name/include/plugin_name`으로 
+   모든 공개 헤더를 이동합니다.
 
    * 어떤 헤더가 public인지 확실하지 않으면, 
      `podspec` 파일의 [`public_header_files`][] 속성을 확인하세요. 
@@ -172,7 +174,7 @@
    * `pubspec.yaml` 파일에 정의된
      `pluginClass`는 public 이어야 하며, 이 디렉토리 내에 있어야 합니다.
 
-10. `modulemap` 처리.
+1.  `modulemap` 처리.
 
     플러그인에 `modulemap`이 없으면, 이 단계를 건너뜁니다.
 
@@ -180,28 +182,23 @@
     Swift Package Manager에서 제거하는 것을 고려하세요. 
     이렇게 하면 모든 공개 헤더를 모듈을 통해 사용할 수 있습니다.
 
-    Swift Package Manager에서 `modulemap`을 제거하지만 CocoaPods에서는 유지하려면, 
-    플러그인의 `Package.swift` 파일에서 `modulemap`과 엄브렐라 헤더를 제외합니다.
+   Swift Package Manager의 `modulemap`을 제거하지만 CocoaPods의 경우 유지하려면, 
+   플러그인의 `Package.swift` 파일에서 `modulemap`과 엄브렐라 헤더를 제외합니다.
 
-    아래 예에서는 `modulemap`과 엄브렐라 헤더가 `ios/Sources/plugin_name/include` 디렉토리에 있다고 가정합니다.
+   아래 예에서는 `modulemap`과 엄브렐라 헤더가 `ios/plugin_name/Sources/plugin_name/include` 
+   디렉토리에 있다고 가정합니다.
 
-    ```diff2html
-    --- a/Package.swift
-    +++ b/Package.swift
-    @@ -1,3 +1,4 @@ 
-            .target(
-                name: "plugin_name",
-                dependencies: [],
-    +           exclude: ["include/cocoapods_plugin_name.modulemap", "include/plugin_name-umbrella.h"],
+    ```swift title="Package.swift" diff
+      .target(
+          name: "plugin_name",
+          dependencies: [],
+    +     exclude: ["include/cocoapods_plugin_name.modulemap", "include/plugin_name-umbrella.h"],
     ```
 
     CocoaPods와 Swift Package Manager 모두와 유닛 테스트의 호환성을 유지하려면 다음을 시도해 보세요.
 
-    ```diff2html
-    --- a/Tests/TestFile.m
-    +++ b/Tests/TestFile.m
-    @@ -1,2 +1,4 @@
-    @import plugin_name;
+    ```objc title="Tests/TestFile.m" diff
+      @import plugin_name;
     - @import plugin_name.Test;
     + #if __has_include(<plugin_name/plugin_name-umbrella.h>)
     +   @import plugin_name.Test;
@@ -210,11 +207,11 @@
 
     Swift 패키지와 함께 커스텀 `modulemap`을 사용하려면, [Swift Package Manager 문서][Swift Package Manager's documentation]를 ​​참조하세요.
 
-11. `ios/Classes`에서 `ios/plugin_name/Sources/plugin_name`으로 모든 파일을 이동합니다.
+1.  `ios/Classes`에서 `ios/plugin_name/Sources/plugin_name`으로 모든 파일을 이동합니다.
 
-12. `ios/Assets`, `ios/Resources`, `ios/Classes` 디렉토리는 이제 비어 있어야 하며 삭제할 수 있습니다.
+2.  `ios/Assets`, `ios/Resources`, `ios/Classes` 디렉토리는 이제 비어 있어야 하며 삭제할 수 있습니다.
 
-13. 헤더 파일이 구현 파일과 더 이상 같은 디렉토리에 없는 경우, import 문을 업데이트해야 합니다.
+3.  헤더 파일이 구현 파일과 더 이상 같은 디렉토리에 없는 경우, import 문을 업데이트해야 합니다.
 
     예를 들어, 다음 마이그레이션을 상상해 보세요.
    
@@ -229,140 +226,130 @@
     * 이후:
 
       <pre>
-      ios/plugin_name_ios/Sources/plugin_name_ios/
-      └── <b>include/plugin_name_ios/</b>
+      ios/plugin_name/Sources/plugin_name/
+      └── <b>include/plugin_name/</b>
          └── PublicHeaderFile.h
       └── ImplementationFile.m
       </pre>
 
-    이 예에서 `ImplementationFile.m`의 import 문은 다음과 같이 업데이트되어야 합니다.
+   이 예에서, `ImplementationFile.m`의 import 문은 다음과 같이 업데이트되어야 합니다.
 
-    ```diff2html
-    --- a/Sources/plugin_name_ios/ImplementationFile.m
-    +++ b/Sources/plugin_name_ios/ImplementationFile.m
-    @@ -1,1 +1,1 @@
-    - #import "PublicHeaderFile.h"
-    + #import "./include/plugin_name_ios/PublicHeaderFile.h"
-    ```
+   ```objc title="Sources/plugin_name/ImplementationFile.m" diff
+   - #import "PublicHeaderFile.h"
+   + #import "./include/plugin_name/PublicHeaderFile.h"
+   ```
 
-14. 플러그인에서 [Pigeon][]을 사용하는 경우, Pigeon 입력 파일을 업데이트합니다.
+4. 플러그인이 [Pigeon][]을 사용하는 경우, Pigeon 입력 파일을 업데이트하세요.
 
-    ```diff2html
-    --- a/pigeons/messages.dart
-    +++ b/pigeons/messages.dart
-    @@ -18,8 +18,8 @@ import 'package:pigeon/pigeon.dart';
-       javaOptions: JavaOptions(),
-    -  objcHeaderOut: 'ios/Classes/messages.g.h',
-    -  objcSourceOut: 'ios/Classes/messages.g.m',
-    +  objcHeaderOut: 'ios/plugin_name_ios/Sources/plugin_name_ios/messages.g.h',
-    +  objcSourceOut: 'ios/plugin_name_ios/Sources/plugin_name_ios/messages.g.m',
-       copyrightHeader: 'pigeons/copyright.txt',
-    ```
+   ```dart title="pigeons/messages.dart" diff
+     javaOptions: JavaOptions(),
+   - objcHeaderOut: 'ios/Classes/messages.g.h',
+   - objcSourceOut: 'ios/Classes/messages.g.m',
+   + objcHeaderOut: 'ios/plugin_name/Sources/plugin_name/messages.g.h',
+   + objcSourceOut: 'ios/plugin_name/Sources/plugin_name/messages.g.m',
+     copyrightHeader: 'pigeons/copyright.txt',
+   ```
 
-    `objcHeaderOut` 파일이 더 이상 `objcSourceOut`과 같은 디렉토리에 없으면, 
-    `ObjcOptions.headerIncludePath`를 사용하여 `#import`를 변경할 수 있습니다.
+   `objcHeaderOut` 파일이 더 이상 `objcSourceOut`과 같은 디렉토리에 없으면, 
+   `ObjcOptions.headerIncludePath`를 사용하여 `#import`를 변경할 수 있습니다.
 
-    ```diff2html
-    --- a/pigeons/messages.dart
-    +++ b/pigeons/messages.dart
-    @@ -18,8 +18,8 @@ import 'package:pigeon/pigeon.dart';
-       javaOptions: JavaOptions(),
-    -  objcHeaderOut: 'ios/Classes/messages.g.h',
-    -  objcSourceOut: 'ios/Classes/messages.g.m',
-    +  objcHeaderOut: 'ios/plugin_name_ios/Sources/plugin_name_ios/include/plugin_name_ios/messages.g.h',
-    +  objcSourceOut: 'ios/plugin_name_ios/Sources/plugin_name_ios/messages.g.m',
-    +  objcOptions: ObjcOptions(
-    +    headerIncludePath: './include/plugin_name_ios/messages.g.h',
-    +  ),
-       copyrightHeader: 'pigeons/copyright.txt',
-    ```
+   ```dart title="pigeons/messages.dart" diff
+     javaOptions: JavaOptions(),
+   - objcHeaderOut: 'ios/Classes/messages.g.h',
+   - objcSourceOut: 'ios/Classes/messages.g.m',
+   + objcHeaderOut: 'ios/plugin_name/Sources/plugin_name/include/plugin_name/messages.g.h',
+   + objcSourceOut: 'ios/plugin_name/Sources/plugin_name/messages.g.m',
+   + objcOptions: ObjcOptions(
+   +   headerIncludePath: './include/plugin_name/messages.g.h',
+   + ),
+     copyrightHeader: 'pigeons/copyright.txt',
+   ```
 
-    Pigeon을 실행하여 최신 구성으로 코드를 다시 생성합니다.
+   Pigeon을 실행하여 최신 구성으로 코드를 다시 생성합니다.
 
-15. 필요한 커스터마이즈 내용으로 `Package.swift` 파일을 업데이트하세요.
+5. 필요한 커스터마이즈 내용으로 `Package.swift` 파일을 업데이트하세요.
 
-    1. Xcode에서 `ios/plugin_name/` 디렉토리를 엽니다.
+   1. Xcode에서 `ios/plugin_name/` 디렉토리를 엽니다.
 
-    2. Xcode에서 `Package.swift` 파일을 엽니다. 
-       Xcode가 이 파일에 대한 경고나 오류를 생성하지 않는지 확인합니다.
+   2. Xcode에서 `Package.swift` 파일을 엽니다. 
+      Xcode가 이 파일에 대한 경고나 오류를 생성하지 않는지 확인합니다.
 
-       :::tip
-       Xcode에 파일이 표시되지 않으면, Xcode를 종료하고(**Xcode > Quit Xcode**) 다시 엽니다.
+      :::tip
+      Xcode에 파일이 표시되지 않으면, Xcode를 종료하고(**Xcode > Quit Xcode**) 다시 엽니다.
  
-       변경한 후 Xcode가 업데이트되지 않으면, **File > Packages > Reset Package Caches**을 클릭해 보세요.
-       :::
+      변경한 후 Xcode가 업데이트되지 않으면, **File > Packages > Reset Package Caches**을 클릭해 보세요.
+      :::
 
-    3. `ios/plugin_name.podspec` 파일에 [CocoaPods `dependency`][]가 있는 경우, 
-       해당 [Swift Package Manager 종속성][Swift Package Manager dependencies]을 `Package.swift` 파일에 추가합니다.
+   3. `ios/plugin_name.podspec` 파일에 [CocoaPods `dependency`][]가 있는 경우, 
+      해당 [Swift Package Manager 종속성][Swift Package Manager dependencies]을 `Package.swift` 파일에 추가합니다.
 
-    4. 패키지가 명시적으로 `static` 또는 `dynamic`으로 연결되어야 하는 경우([Apple에서 권장하지 않음][not recommended by Apple]), 
-       [Product][]를 업데이트하여 타입을 정의합니다.
+   4. 패키지가 명시적으로 `static` 또는 `dynamic`으로 연결되어야 하는 경우([Apple에서 권장하지 않음][not recommended by Apple]), 
+      [Product][]를 업데이트하여 타입을 정의합니다.
 
-       ```swift title="Package.swift"
-       products: [
-           .library(name: "plugin-name", type: .static, targets: ["plugin_name"])
-       ],
-       ```
+      ```swift title="Package.swift"
+      products: [
+         .library(name: "plugin-name", type: .static, targets: ["plugin_name"])
+      ],
+      ```
 
-    5. 다른 커스터마이즈를 합니다. 
-       `Package.swift` 파일을 작성하는 방법에 대한 자세한 내용은 [https://developer.apple.com/documentation/packagedescription](https://developer.apple.com/documentation/packagedescription)을 참조하세요.
+   5. 다른 커스터마이즈를 합니다. 
+      `Package.swift` 파일을 작성하는 방법에 대한 자세한 내용은 [https://developer.apple.com/documentation/packagedescription](https://developer.apple.com/documentation/packagedescription)을 참조하세요.
  
-       :::tip
-       `Package.swift` 파일에 타겟을 추가하는 경우 고유한(unique) 이름을 사용하세요. 
-       이렇게 하면 다른 패키지의 타겟과 충돌하는 것을 피할 수 있습니다.
-       :::
+      :::tip
+      `Package.swift` 파일에 타겟을 추가하는 경우 고유한(unique) 이름을 사용하세요. 
+      이렇게 하면 다른 패키지의 타겟과 충돌하는 것을 피할 수 있습니다.
+      :::
 
-16. `ios/plugin_name.podspec`을 업데이트하여 새로운 경로를 가리키도록 합니다.
+6. `ios/plugin_name.podspec`을 업데이트하여 새로운 경로를 가리키도록 합니다.
 
-    ```diff2html
-    --- a/ios/plugin_name.podspec
-    +++ b/ios/plugin_name.podspec
-    @@ -21,4 +21,4 @@
-    - s.source_files = 'Classes/**/*.{h,m}'
-    - s.public_header_files = 'Classes/**/*.h'
-    - s.module_map = 'Classes/cocoapods_plugin_name.modulemap'
-    - s.resource_bundles = {'plugin_name_privacy' => ['Resources/PrivacyInfo.xcprivacy']}
-    + s.source_files = 'plugin_name/Sources/plugin_name/**/*.{h,m}'
-    + s.public_header_files = 'plugin_name/Sources/plugin_name/include/**/*.h'
-    + s.module_map = 'plugin_name/Sources/plugin_name/include/cocoapods_plugin_name.modulemap'
-    + s.resource_bundles = {'plugin_name_privacy' => ['plugin_name/Sources/plugin_name/PrivacyInfo.xcprivacy']}
-    ```
+   ```ruby title="ios/plugin_name.podspec" diff
+   - s.source_files = 'Classes/**/*.{h,m}'
+   - s.public_header_files = 'Classes/**/*.h'
+   - s.module_map = 'Classes/cocoapods_plugin_name.modulemap'
+   - s.resource_bundles = {'plugin_name_privacy' => ['Resources/PrivacyInfo.xcprivacy']}
+   + s.source_files = 'plugin_name/Sources/plugin_name/**/*.{h,m}'
+   + s.public_header_files = 'plugin_name/Sources/plugin_name/include/**/*.h'
+   + s.module_map = 'plugin_name/Sources/plugin_name/include/cocoapods_plugin_name.modulemap'
+   + s.resource_bundles = {'plugin_name_privacy' => ['plugin_name/Sources/plugin_name/PrivacyInfo.xcprivacy']}
+   ```
 
-17. `SWIFTPM_MODULE_BUNDLE`을 사용하기 위해 번들에서 리소스 로딩을 업데이트합니다.
+7. `SWIFTPM_MODULE_BUNDLE`을 사용하기 위해 번들에서 리소스 로딩을 업데이트합니다.
 
-    ```objc
-    #if SWIFT_PACKAGE
-       NSBundle *bundle = SWIFTPM_MODULE_BUNDLE;
-     #else
-       NSBundle *bundle = [NSBundle bundleForClass:[self class]];
-     #endif
-     NSURL *imageURL = [bundle URLForResource:@"image" withExtension:@"jpg"];
-    ```
+   ```objc
+   #if SWIFT_PACKAGE
+      NSBundle *bundle = SWIFTPM_MODULE_BUNDLE;
+    #else
+      NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+    #endif
+    NSURL *imageURL = [bundle URLForResource:@"image" withExtension:@"jpg"];
+   ```
 
-    :::note
-    `SWIFTPM_MODULE_BUNDLE`은 실제 리소스가 있는 경우에만 작동합니다.
-    ([`Package.swift` 파일에 정의됨][Bundling resources] 또는 [Xcode에서 자동으로 포함됨][Xcode resource detection])
-    그렇지 않은 경우, `SWIFTPM_MODULE_BUNDLE`을 사용하면 오류가 발생합니다.
-    :::
+   :::note
+   `SWIFTPM_MODULE_BUNDLE`은 실제 리소스가 있는 경우에만 작동합니다.
+   ([`Package.swift` 파일에 정의됨][Bundling resources] 또는 [Xcode에서 자동으로 포함됨][Xcode resource detection])
+   그렇지 않은 경우, `SWIFTPM_MODULE_BUNDLE`을 사용하면 오류가 발생합니다.
+   :::
 
-18. `ios/Sources/plugin_name/include` 디렉토리에 `.gitkeep`만 포함되어 있는 경우, 
+8.  `ios/Sources/plugin_name/include` 디렉토리에 `.gitkeep`만 포함되어 있는 경우, 
     `.gitignore`를 업데이트하여 다음을 포함해야 합니다.
- 
-     ```text title=".gitignore"
-     !.gitkeep
-     ```
+
+    ```text title=".gitignore"
+    !.gitkeep
+    ```
 
     `flutter pub publish --dry-run`을 실행하여 `include` 디렉토리가 게시되었는지 확인하세요.
 
-19. 플러그인의 변경 사항을 버전 제어 시스템(version control system)에 커밋합니다.
+9.  플러그인의 변경 사항을 버전 제어 시스템(version control system)에 커밋합니다.
 
-20. 플러그인이 CocoaPods에서 여전히 작동하는지 확인합니다.
+10. 플러그인이 CocoaPods에서 여전히 작동하는지 확인합니다.
 
     1. Swift Package Manager를 끕니다.
 
        ```sh
        flutter config --no-enable-swift-package-manager
        ```
+      
+       그렇지 않으면, Flutter 버전 3.24 이상이 설치되어 있지 않으면, 플러그인의 예제 앱이 빌드되지 않습니다.
 
     2. 플러그인의 예제 앱으로 이동합니다.
 
@@ -392,7 +379,7 @@
        pod lib lint ios/plugin_name.podspec  --configuration=Debug --skip-tests --use-modular-headers
        ```
 
-21. 플러그인이 Swift Package Manager와 작동하는지 확인하세요.
+11. 플러그인이 Swift Package Manager와 작동하는지 확인하세요.
 
     1. Swift Package Manager를 켭니다.
 
@@ -427,7 +414,7 @@
     4. Xcode에서 플러그인의 예제 앱을 엽니다. 
        왼쪽의 **Project Navigator**에 **Package Dependencies**가 표시되는지 확인합니다.
 
-22. 테스트에 통과하는지 확인하세요.
+12. 테스트에 통과하는지 확인하세요.
 
     * **플러그인에 네이티브 유닛 테스트(XCTest)가 있는 경우, [플러그인의 예제 앱에서 유닛 테스트 업데이트][update unit tests in the plugin's example app]도 수행해야 합니다.**
 

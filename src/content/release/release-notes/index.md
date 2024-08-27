@@ -139,4 +139,4 @@ description: 이전 릴리스에 대한 Flutter 릴리스 노트입니다.
 [1.12.13 announcement]: {{site.flutter-medium}}/announcing-flutter-1-12-what-a-year-22c256ba525d
 [1.12.13 release notes and change log]: /release/release-notes/release-notes-1.12.13
 [Archived release notes]: /release/release-notes/release-notes-archive
-[CHANGELOG]: {{site.repo.flutter}}/blob/main/CHANGELOG.md
+[CHANGELOG]: {{site.repo.flutter}}/blob/stable/CHANGELOG.md

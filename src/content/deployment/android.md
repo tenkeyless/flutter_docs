@@ -55,7 +55,7 @@ short-title: Android
 
 1. `<my-app>/android/app/build.gradle`에 Android의 Material에 대한 종속성을 추가합니다.
 
-```groovy
+```kotlin
 dependencies {
     // ...
     implementation("com.google.android.material:material:<version>")
@@ -67,16 +67,16 @@ dependencies {
 
 1. `<my-app>/android/app/src/main/res/values/styles.xml`에서 밝은 테마를 설정합니다.
 
-   ```diff
-   -<style name="NormalTheme" parent="@android:style/Theme.Light.NoTitleBar">
-   +<style name="NormalTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+   ```xml diff
+   - <style name="NormalTheme" parent="@android:style/Theme.Light.NoTitleBar">
+   + <style name="NormalTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
    ```
 
 1. `<my-app>/android/app/src/main/res/values-night/styles.xml`에서 다크 테마를 설정합니다.
 
-   ```diff
-   -<style name="NormalTheme" parent="@android:style/Theme.Black.NoTitleBar">
-   +<style name="NormalTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+   ```xml diff
+   - <style name="NormalTheme" parent="@android:style/Theme.Black.NoTitleBar">
+   + <style name="NormalTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
    ```
 
 <a id="signing-the-app"></a>
@@ -162,42 +162,42 @@ Gradle을 구성하려면, `<project>/android/app/build.gradle` 파일을 편집
 
 1. `keystoreProperties` 객체를 설정하여, `key.properties` 파일을 로드합니다.
 
-   ```diff title="[project]/android/app/build.gradle"
-   +   def keystoreProperties = new Properties()
-   +   def keystorePropertiesFile = rootProject.file('key.properties')
-   +   if (keystorePropertiesFile.exists()) {
-   +       keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
-   +   }
+   ```kotlin diff title="[project]/android/app/build.gradle"
+   + def keystoreProperties = new Properties()
+   + def keystorePropertiesFile = rootProject.file('key.properties')
+   + if (keystorePropertiesFile.exists()) {
+   +     keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+   + }
    +
-      android {
-         ...
-      }
+     android {
+        ...
+     }
    ```
 
 2. `android` 속성 블록 안에 있는 `buildTypes` 속성 블록 앞에 서명 구성을 추가합니다.
 
-   ```diff title="[project]/android/app/build.gradle"
-       android {
-           ...
+   ```kotlin diff title="[project]/android/app/build.gradle"
+     android {
+         // ...
 
-   +       signingConfigs {
-   +           release {
-   +               keyAlias keystoreProperties['keyAlias']
-   +               keyPassword keystoreProperties['keyPassword']
-   +               storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
-   +               storePassword keystoreProperties['storePassword']
-   +           }
-   +       }
-           buildTypes {
-              release {
+   +     signingConfigs {
+   +         release {
+   +             keyAlias = keystoreProperties['keyAlias']
+   +             keyPassword = keystoreProperties['keyPassword']
+   +             storeFile = keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
+   +             storePassword = keystoreProperties['storePassword']
+   +         }
+   +     }
+         buildTypes {
+             release {
                  // TODO: 릴리스 빌드에 대한 자체 서명 구성을 추가합니다. 
                  // 지금은 디버그 키로 서명하므로, `flutter run --release`가 작동합니다.
-   -                signingConfig signingConfigs.debug
-   +                signingConfig signingConfigs.release
-              }
-           }
-       ...
-       }
+   -             signingConfig = signingConfigs.debug
+   +             signingConfig = signingConfigs.release
+             }
+         }
+     ...
+     }
    ```
 
 이제 Flutter가 모든 릴리스 빌드에 서명합니다.
@@ -218,6 +218,9 @@ R8을 비활성화하려면, `--no-shrink` 플래그를
 
 :::note
 난독화(Obfuscation)와 축소(minification)는 Android 애플리케이션의 컴파일 시간을 상당히 늘릴 수 있습니다.
+
+`--[no-]shrink` 플래그는 효과가 없습니다. 코드 축소는 릴리스 빌드에서 항상 활성화됩니다.
+자세한 내용은 [앱 축소, 난독화 및 최적화]({{site.android-dev}}/studio/build/shrink-code)를 확인하세요.
 :::
 
 ## multidex 지원 활성화 {:#enable-multidex-support}
@@ -295,7 +298,7 @@ Android 빌드 구성을 확인하려면, 기본 [Gradle 빌드 스크립트][gr
 기본 Gradle 빌드 스크립트는 `[project]/android/app/build.gradle`에서 찾을 수 있습니다. 
 이러한 속성의 값을 변경할 수 있습니다.
 
-```groovy title="[project]/android/app/build.gradle"
+```kotlin title="[project]/android/app/build.gradle"
 android {
     namespace = "com.example.[project]"
     // "flutter."로 시작하는 모든 값은 Flutter Gradle 플러그인에서 값을 가져옵니다.

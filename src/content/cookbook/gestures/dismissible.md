@@ -95,18 +95,15 @@ itemBuilder: (context, index) {
 표시기를 추가하려면, `Dismissible`에 `background` 매개변수를 제공합니다.
 
 
-```diff2html
---- lib/step2.dart (Dismissible)
-+++ lib/main.dart (Dismissible)
-@@ -16,6 +16,8 @@
-       ScaffoldMessenger.of(context)
-           .showSnackBar(SnackBar(content: Text('$item dismissed')));
-     },
-+    // 아이템을 스와이프 하면(swiped away), 빨간색 배경이 표시됩니다.
-+    background: Container(color: Colors.red),
-     child: ListTile(
-       title: Text(item),
-     ),
+```dart diff
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text('$item dismissed')));
+  },
++ // 아이템을 스와이프 하면(swiped away), 빨간색 배경이 표시됩니다.
++ background: Container(color: Colors.red),
+  child: ListTile(
+    title: Text(item),
+  ),
 ```
 
 ## 상호 작용 예제 {:#interactive-example}

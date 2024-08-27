@@ -5,7 +5,6 @@ title: Flutter 레이아웃으로 빌드하기
 short-title: 레이아웃 튜토리얼
 # description: Learn how to build a layout in Flutter.
 description: Flutter에서 레이아웃을 만드는 방법을 알아보세요.
-diff2html: true
 ---
 
 {% assign examples = site.repo.this | append: "/tree/" | append: site.branch | append: "/examples" -%}
@@ -234,15 +233,12 @@ class TitleSection extends StatelessWidget {
 `body` 속성에서, `Center` 위젯을 `SingleChildScrollView` 위젯으로 바꿉니다. 
 [`SingleChildScrollView`][] 위젯 내에서, `Text` 위젯을 `Column` 위젯으로 바꿉니다.
 
-```diff2html
---- ../base/lib/main.dart
-+++ step2/lib/main.dart
-@@ -21,2 +17,3 @@
--        body: const Center(
--          child: Text('Hello World'),
-+        body: const SingleChildScrollView(
-+          child: Column(
-+            children: [
+```dart diff
+- body: const Center(
+-   child: Text('Hello World'),
++ body: const SingleChildScrollView(
++   child: Column(
++     children: [
 ```
 
 이러한 코드 업데이트는 다음과 같은 방식으로 앱을 변경합니다.
@@ -261,16 +257,13 @@ class TitleSection extends StatelessWidget {
 그러면 화면 맨 위에 배치됩니다. 
 제공된 이름과 위치를 `TitleSection` 생성자에 전달합니다.
 
-```diff2html
---- ../base/lib/main.dart
-+++ step2/lib/main.dart
-@@ -23 +19,6 @@
-+            children: [
-+              TitleSection(
-+                name: 'Oeschinen Lake Campground',
-+                location: 'Kandersteg, Switzerland',
-+              ),
-+            ],
+```dart diff
++ children: [
++   TitleSection(
++     name: 'Oeschinen Lake Campground',
++     location: 'Kandersteg, Switzerland',
++   ),
++ ],
 ```
 
 :::tip
@@ -309,7 +302,7 @@ class ButtonSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Color color = Theme.of(context).primaryColor;
-// ···
+    // ···
   }
 }
 ```
@@ -436,17 +429,13 @@ class ButtonWithText extends StatelessWidget {
 
 <?code-excerpt path-base="layout/lakes"?>
 
-```diff2html
---- step2/lib/main.dart (add-widget)
-+++ step3/lib/main.dart (add-widget)
-@@ -5,6 +5,7 @@
-         name: 'Oeschinen Lake Campground',
-         location: 'Kandersteg, Switzerland',
-       ),
-+      ButtonSection(),
-     ],
-   ),
- ),
+```dart diff
+    TitleSection(
+      name: 'Oeschinen Lake Campground',
+      location: 'Kandersteg, Switzerland',
+    ),
++   ButtonSection(),
+  ],
 ```
 
 ## 텍스트 섹션 추가 {:#add-the-text-section}
@@ -493,26 +482,21 @@ class TextSection extends StatelessWidget {
 `ButtonSection` 뒤에 자식으로 새 `TextSection` 위젯을 추가합니다. 
 `TextSection` 위젯을 추가할 때, `description` 속성을 위치 설명의 텍스트로 설정합니다.
 
-```diff2html
---- step3/lib/main.dart (add-widget)
-+++ step4/lib/main.dart (add-widget)
-@@ -6,6 +6,16 @@
-         location: 'Kandersteg, Switzerland',
-       ),
-       ButtonSection(),
-+      TextSection(
-+        description:
-+            'Lake Oeschinen lies at the foot of the Blüemlisalp in the '
-+            'Bernese Alps. Situated 1,578 meters above sea level, it '
-+            'is one of the larger Alpine Lakes. A gondola ride from '
-+            'Kandersteg, followed by a half-hour walk through pastures '
-+            'and pine forest, leads you to the lake, which warms to 20 '
-+            'degrees Celsius in the summer. Activities enjoyed here '
-+            'include rowing, and riding the summer toboggan run.',
-+      ),
-     ],
-   ),
- ),
+```dart diff
+      location: 'Kandersteg, Switzerland',
+    ),
+    ButtonSection(),
++   TextSection(
++     description:
++         'Lake Oeschinen lies at the foot of the Blüemlisalp in the '
++         'Bernese Alps. Situated 1,578 meters above sea level, it '
++         'is one of the larger Alpine Lakes. A gondola ride from '
++         'Kandersteg, followed by a half-hour walk through pastures '
++         'and pine forest, leads you to the lake, which warms to 20 '
++         'degrees Celsius in the summer. Activities enjoyed here '
++         'include rowing, and riding the summer toboggan run.',
++   ),
+  ], 
 ```
 
 ## 이미지 섹션 추가 {:#add-the-image-section}
@@ -536,11 +520,7 @@ class TextSection extends StatelessWidget {
 2. 이미지를 포함하려면, 앱의 루트 디렉토리에 있는 `pubspec.yaml` 파일에 `assets` 태그를 추가합니다.
    `assets`를 추가하면, 코드에서 사용할 수 있는 이미지에 대한 포인터 세트 역할을 합니다.
 
-   ```diff2html
-   --- step4/pubspec.yaml
-   +++ step5/pubspec.yaml
-   @@ -19,3 +19,5 @@
-
+   ```yaml title="pubspec.yaml" diff
     flutter:
       uses-material-design: true
    +  assets:
@@ -589,19 +569,14 @@ class ImageSection extends StatelessWidget {
 `ImageSection` 위젯을 `children` 리스트의 첫 번째 자식으로 추가합니다. 
 `image` 속성을 [제공된 이미지를 사용하도록 앱 구성](#configure-your-app-to-use-supplied-images)에서 추가한 이미지 경로로 설정합니다.
 
-```diff2html
---- step4/lib/main.dart (add-widget)
-+++ step5/lib/main.dart (add-widget)
-@@ -1,6 +1,9 @@
- body: const SingleChildScrollView(
-   child: Column(
-     children: [
-+      ImageSection(
-+        image: 'images/lake.jpg',
-+      ),
-       TitleSection(
-         name: 'Oeschinen Lake Campground',
-         location: 'Kandersteg, Switzerland',
+```dart diff
+  children: [
++   ImageSection(
++     image: 'images/lake.jpg',
++   ),
+    TitleSection(
+      name: 'Oeschinen Lake Campground',
+      location: 'Kandersteg, Switzerland',
 ```
 
 ## 축하해요 {:#congratulations}

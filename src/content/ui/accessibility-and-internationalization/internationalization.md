@@ -695,20 +695,22 @@ MaterialApp(
 | `output-dir`                        | 생성된 현지화 클래스가 작성되는 디렉토리입니다. 이 옵션은 Flutter 프로젝트의 다른 곳에 현지화 코드를 생성하려는 경우에만 관련이 있습니다. 또한 `synthetic-package` 플래그를 false로 설정해야 합니다.<br /><br />앱은 이 디렉토리에서 `output-localization-file` 옵션에 지정된 파일을 import 해야 합니다. 지정하지 않으면, `arb-dir`에 지정된 입력 디렉토리와 동일한 디렉토리가 기본값으로 지정됩니다. |
 | `template-arb-file`                 | Dart 로컬라이제이션 및 메시지 파일을 생성하는 기반으로 사용되는 템플릿 arb 파일입니다. 기본값은 `app_en.arb`입니다. |
 | `output-localization-file`          | 출력 로컬라이제이션 및 로컬라이제이션 delegate 클래스의 파일 이름입니다. 기본값은 `app_localizations.dart`입니다. |
-| `untranslated-messages-file`        | 아직 번역되지 않은 지역화 메시지를 설명하는 파일의 위치입니다. 이 옵션을 사용하면, 대상 위치에 다음 형식으로 JSON 파일이 생성됩니다. <br /> <br />`"locale": ["message_1", "message_2" ... "message_n"]`<br /><br /> 이 옵션을 지정하지 않으면, 번역되지 않은 메시지의 요약이 명령줄에  출력됩니다. |
+| `untranslated-messages-file`        | 아직 번역되지 않은 지역화 메시지를 설명하는 파일의 위치입니다. 이 옵션을 사용하면, 대상 위치에 다음 형식으로 JSON 파일이 생성됩니다. <br /> <br />`"locale": ["message_1", "message_2" ... "message_n"]`<br /><br /> 이 옵션을 지정하지 않으면, 번역되지 않은 메시지의 요약이 명령줄에 출력됩니다. |
 | `output-class`                      | 출력 로컬라이제이션 및 로컬라이제이션 delegate 클래스에 사용할 Dart 클래스 이름입니다. 기본값은 `AppLocalizations`입니다. |
 | `preferred-supported-locales`       | 애플리케이션에 대한 기본 지원 로케일 리스트입니다. 기본적으로, 도구는 지원되는 로케일 리스트를 알파벳순으로 생성합니다. 이 플래그를 사용하여 다른 로케일로 기본 설정합니다.<br /><br />예를 들어, 장치가 지원하는 경우 `[ en_US ]`를 전달하여 미국 영어로 기본 설정합니다. |
 | `header`                            | 생성된 Dart 현지화 파일에 추가할(prepend) 헤더입니다. 이 옵션은 문자열을 받습니다.<br /><br />예를 들어, `"/// 모든 현지화된 파일."`을 전달하여, 생성된 Dart 파일에 이 문자열을 추가(prepend)합니다.<br /><br />또는, `header-file` 옵션을 확인하여 긴 헤더의 경우 텍스트 파일을 전달합니다. |
 | `header-file`                       | 생성된 Dart 로컬라이제이션 파일에 추가(prepend)할 헤더입니다. 이 옵션의 값은 생성된 각 Dart 파일의 맨 위에 삽입되는 헤더 텍스트를 포함하는 파일의 이름입니다. <br /><br /> 또는, `header` 옵션을 확인하여 더 간단한 헤더에 대한 문자열을 전달합니다.<br /><br />이 파일은 `arb-dir`에 지정된 디렉토리에 배치해야 합니다. |
 | `[no-]use-deferred-loading`         | 지연된(deferred) 로케일로 import한 Dart 현지화 파일을 생성할지 여부를 지정하여, Flutter 웹에서 각 로케일의 지연 로딩(lazy loading)을 허용합니다.<br /><br />이렇게 하면 JavaScript 번들의 크기를 줄여 웹 앱의 초기 시작 시간을 줄일 수 있습니다. 이 플래그를 true로 설정하면, 특정 로케일의 메시지는 필요에 따라 Flutter 앱에서만 다운로드하고 로드합니다. 다양한 로케일과 많은 현지화 문자열이 있는 프로젝트의 경우, 로딩을 지연하면 성능이 향상될 수 있습니다. 로케일 수가 적은 프로젝트의 경우, 차이가 미미하여, 나머지 애플리케이션과 현지화를 번들링하는 것에 비해 시작 속도가 느려질 수 있습니다.<br /><br />이 플래그는 모바일이나 데스크톱과 같은 다른 플랫폼에는 영향을 미치지 않습니다. |
 | `gen-inputs-and-outputs-list`      | 지정된 경우, 도구는 도구의 입력 및 출력을 포함하는 JSON 파일을 생성하며, 이름은 `gen_l10n_inputs_and_outputs.json`입니다.<br /><br />이것은 최신 로컬라이제이션 세트를 생성할 때, Flutter 프로젝트의 어떤 파일을 사용했는지 추적하는 데 유용할 수 있습니다. 예를 들어, Flutter 도구의 빌드 시스템은 이 파일을 사용하여 핫 리로드 중에 gen_l10n을 호출할 시기를 추적합니다.<br /><br />이 옵션의 값은 JSON 파일이 생성되는 디렉토리입니다. null인 경우 JSON 파일이 생성되지 않습니다. |
-| `synthetic-package`                 | 생성된 출력 파일을 합성 패키지로 생성할지 아니면, Flutter 프로젝트의 지정된 디렉토리에 생성할지 여부를 결정합니다. 이 플래그는 기본적으로 `true`입니다. `synthetic-package`가 `false`로 설정되면, 기본적으로 `arb-dir`로 지정된 디렉토리에 로컬라이제이션 파일을 생성합니다. `output-dir`이 지정되면, 해당 디렉토리에 파일이 생성됩니다. |
+| `synthetic-package`                 | 생성된 출력 파일을 합성(synthetic) 패키지로 생성할지 아니면, Flutter 프로젝트의 지정된 디렉토리에 생성할지 여부를 결정합니다. 이 플래그는 기본적으로 `true`입니다. `synthetic-package`가 `false`로 설정되면, 기본적으로 `arb-dir`로 지정된 디렉토리에 로컬라이제이션 파일을 생성합니다. `output-dir`이 지정되면, 해당 디렉토리에 파일이 생성됩니다. |
 | `project-dir`                       | 이 옵션이 지정되면, 도구는 이 옵션으로 전달된 경로를 루트 Flutter 프로젝트의 디렉토리로 사용합니다.<br /><br />null인 경우, 현재 작업 디렉토리에 대한 상대 경로가 사용됩니다. |
 | `[no-]required-resource-attributes` | 모든 리소스 ID에 해당 리소스 속성이 포함되어야 합니다.<br /><br />기본적으로, 간단한 메시지에는 메타데이터가 필요하지 않지만, 이는 독자에게 메시지의 의미에 대한 컨텍스트를 제공하므로 적극 권장됩니다.<br /><br />복수형 메시지에도 리소스 속성이 필요합니다. |
-| `[no-]nullable-getter`              | 로컬라이제이션 클래스 게터가 null 허용(nullable)인지 여부를 지정합니다.<br /><br />기본적으로, 이 값은 true이므로, `Localizations.of(context)`는 이전 버전과의 호환성을 위해 null 허용 값을 반환합니다. 이 값이 false이면, `Localizations.of(context)`의 반환 값에 대해 null 검사가 수행되어, 사용자 코드에서 null 검사가 필요 없게 됩니다. |
+| `[no-]nullable-getter`              | 로컬라이제이션 클래스 getter가 null 허용(nullable)인지 여부를 지정합니다.<br /><br />기본적으로, 이 값은 true이므로, `Localizations.of(context)`는 이전 버전과의 호환성을 위해 null 허용 값을 반환합니다. 이 값이 false이면, `Localizations.of(context)`의 반환 값에 대해 null 검사가 수행되어, 사용자 코드에서 null 검사가 필요 없게 됩니다. |
 | `[no-]format`                       | 이 옵션을 지정하면 현지화 파일을 생성한 후 `dart format` 명령이 실행됩니다. |
 | `use-escaping`                      | 작은따옴표를 이스케이프 구문으로 사용할지 여부를 지정합니다. |
 | `[no-]suppress-warnings`            | 이 값을 지정하면 모든 경고가 억제(suppressed)됩니다. |
+| `[no-]relax-syntax`                 | 이 옵션을 지정하면, 구문이 완화되어, 특수 문자 "{"는 유효한 자리 표시자가 따르지 않으면 문자열로 처리되고, 이전에 특수 문자로 처리된 "{"를 닫지 않으면 "}"가 문자열로 처리됩니다. |
+| `[no-]use-named-parameters`         | 생성된 지역화 방법에 명명된 매개변수를 사용할지 여부입니다. |
 
 {:.table .table-striped}
 

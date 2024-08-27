@@ -127,7 +127,7 @@
    :::
 
 7. 플러그인에 [`PrivacyInfo.xcprivacy` 파일][`PrivacyInfo.xcprivacy` file]이 있는 경우, 
-   이를 `ios/Sources/plugin_name/PrivacyInfo.xcprivacy`로 이동하고, 
+   이를 `ios/plugin_name/Sources/plugin_name/PrivacyInfo.xcprivacy`로 이동하고, 
    `Package.swift` 파일에서 리소스의 주석 처리를 제거합니다.
 
    ```swift title="Package.swift"
@@ -143,7 +143,7 @@
                ],
    ```
 
-8. `ios/Assets`에서 `ios/Sources/plugin_name`(또는 하위 디렉토리)으로 모든 리소스 파일을 이동합니다.
+8. `ios/Assets`에서 `ios/plugin_name/Sources/plugin_name`(또는 하위 디렉토리)으로 모든 리소스 파일을 이동합니다.
    해당되는 경우, 리소스 파일을 `Package.swift` 파일에 추가합니다. 
    자세한 지침은 [https://developer.apple.com/documentation/xcode/bundling-resources-with-a-swift-package](https://developer.apple.com/documentation/xcode/bundling-resources-with-a-swift-package)를 참조하세요.
 
@@ -153,16 +153,13 @@
 
 11. 플러그인에서 [Pigeon][]을 사용하는 경우 Pigeon 입력 파일을 업데이트합니다.
 
-    ```diff2html
-    --- a/pigeons/messages.dart
-    +++ b/pigeons/messages.dart
-    @@ -16,7 +16,7 @@ import 'package:pigeon/pigeon.dart';
-       kotlinOptions: KotlinOptions(),
-       javaOut: 'android/app/src/main/java/io/flutter/plugins/Messages.java',
-       javaOptions: JavaOptions(),
-    -  swiftOut: 'ios/Classes/messages.g.swift',
-    +  swiftOut: 'ios/plugin_name/Sources/plugin_name/messages.g.swift',
-       swiftOptions: SwiftOptions(),
+    ```dart title="pigeons/messages.dart" diff
+    kotlinOptions: KotlinOptions(),
+    javaOut: 'android/app/src/main/java/io/flutter/plugins/Messages.java',
+    javaOptions: JavaOptions(),
+    - swiftOut: 'ios/Classes/messages.g.swift',
+    + swiftOut: 'ios/plugin_name/Sources/plugin_name/messages.g.swift',
+    swiftOptions: SwiftOptions(),
     ```
 
 12. 필요한 커스터마이즈로 `Package.swift` 파일을 업데이트합니다.
@@ -190,7 +187,7 @@
        ],
        ```
 
-    5. 다른 커스터마이즈를 합니다. 
+    1. 다른 커스터마이즈를 합니다. 
        `Package.swift` 파일을 작성하는 방법에 대한 자세한 내용은 [https://developer.apple.com/documentation/packagedescription](https://developer.apple.com/documentation/packagedescription)을 참조하세요.
 
        :::tip
@@ -198,19 +195,16 @@
        이렇게 하면 다른 패키지의 타겟과 충돌하는 것을 피할 수 있습니다.
        :::
 
-13. `ios/plugin_name.podspec`을 업데이트하여 새로운 경로를 가리키도록 합니다.
+1.  `ios/plugin_name.podspec`을 업데이트하여 새로운 경로를 가리키도록 합니다.
 
-    ```diff2html
-    --- a/ios/plugin_name.podspec
-    +++ b/ios/plugin_name.podspec
-    @@ -1,2 +1,2 @@
+    ```ruby title="ios/plugin_name.podspec" diff
     - s.source_files = 'Classes/**/*.swift'
     - s.resource_bundles = {'plugin_name_privacy' => ['Resources/PrivacyInfo.xcprivacy']}
     + s.source_files = 'plugin_name/Sources/plugin_name/**/*.swift'
     + s.resource_bundles = {'plugin_name_privacy' => ['plugin_name/Sources/plugin_name/PrivacyInfo.xcprivacy']}
     ```
 
-14. [`Bundle.module`][]을 사용하여 번들에서 리소스 로딩을 업데이트합니다.
+2.  [`Bundle.module`][]을 사용하여 번들에서 리소스 로딩을 업데이트합니다.
 
     ```swift
     #if SWIFT_PACKAGE
@@ -225,9 +219,9 @@
     그렇지 않으면, `Bundle.module`을 사용하면 오류가 발생합니다.
     :::
 
-15. 플러그인의 변경 사항을 버전 제어 시스템(version control system)에 커밋합니다.
+3.  플러그인의 변경 사항을 버전 제어 시스템(version control system)에 커밋합니다.
 
-16. 플러그인이 CocoaPods에서 여전히 작동하는지 확인합니다.
+4.  플러그인이 CocoaPods에서 여전히 작동하는지 확인합니다.
 
     1. Swift Package Manager를 끕니다.
 
@@ -263,7 +257,7 @@
        pod lib lint ios/plugin_name.podspec  --configuration=Debug --skip-tests --use-modular-headers
        ```
 
-17. 플러그인이 Swift Package Manager와 작동하는지 확인하세요.
+5.  플러그인이 Swift Package Manager와 작동하는지 확인하세요.
 
     1. Swift Package Manager를 켭니다.
 
@@ -298,7 +292,7 @@
     4. Xcode에서 플러그인의 예제 앱을 엽니다. 
        왼쪽의 **Project Navigator**에 **Package Dependencies**가 표시되는지 확인합니다.
 
-18. 테스트에 통과하는지 확인하세요.
+6.  테스트에 통과하는지 확인하세요.
 
     * **플러그인에 네이티브 유닛 테스트(XCTest)가 있는 경우, [플러그인의 예제 앱에서 유닛 테스트 업데이트][update unit tests in the plugin's example app]도 수행해야 합니다.**
 

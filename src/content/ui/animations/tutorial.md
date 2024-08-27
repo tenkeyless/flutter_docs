@@ -260,52 +260,46 @@ class _LogoAppState extends State<LogoApp> {
 
 애니메이션이 없는 예제의 변경 사항은 다음과 같이 강조 표시됩니다.
 
-```diff2html
---- animate0/lib/main.dart
-+++ animate1/lib/main.dart
-@@ -9,16 +9,39 @@
-   State<LogoApp> createState() => _LogoAppState();
- }
-
--class _LogoAppState extends State<LogoApp> {
-+class _LogoAppState extends State<LogoApp> with SingleTickerProviderStateMixin {
-+  late Animation<double> animation;
-+  late AnimationController controller;
-+
-+  @override
-+  void initState() {
-+    super.initState();
-+    controller =
-+        AnimationController(duration: const Duration(seconds: 2), vsync: this);
-+    animation = Tween<double>(begin: 0, end: 300).animate(controller)
-+      ..addListener(() {
-+        setState(() {
-+          // 여기서 변경된 상태는 애니메이션 객체의 값입니다.
-+        });
-+      });
-+    controller.forward();
-+  }
-+
-   @override
-   Widget build(BuildContext context) {
-     return Center(
-       child: Container(
-         margin: const EdgeInsets.symmetric(vertical: 10),
--        height: 300,
--        width: 300,
-+        height: animation.value,
-+        width: animation.value,
-         child: const FlutterLogo(),
-       ),
-     );
-   }
-+
-+  @override
-+  void dispose() {
-+    controller.dispose();
-+    super.dispose();
-+  }
- }
+```dart diff
+- class _LogoAppState extends State<LogoApp> {
++ class _LogoAppState extends State<LogoApp> with SingleTickerProviderStateMixin {
++   late Animation<double> animation;
++   late AnimationController controller;
++ 
++   @override
++   void initState() {
++     super.initState();
++     controller =
++         AnimationController(duration: const Duration(seconds: 2), vsync: this);
++     animation = Tween<double>(begin: 0, end: 300).animate(controller)
++       ..addListener(() {
++         setState(() {
++           // 여기서 변경된 상태는 애니메이션 객체의 값입니다.
++         });
++       });
++     controller.forward();
++   }
++ 
+    @override
+    Widget build(BuildContext context) {
+      return Center(
+        child: Container(
+          margin: const EdgeInsets.symmetric(vertical: 10),
+-         height: 300,
+-         width: 300,
++         height: animation.value,
++         width: animation.value,
+          child: const FlutterLogo(),
+        ),
+      );
+    }
++ 
++   @override
++   void dispose() {
++     controller.dispose();
++     super.dispose();
++   }
+  }
 ```
 
 **앱 소스:** [animate1][]
@@ -322,20 +316,20 @@ Dart의 캐스케이드 표기법인 `..addListener()`의 두 점에 익숙하�
 이 구문은 `addListener()` 메서드가 `animate()`의 반환 값으로 호출된다는 것을 의미합니다. 
 다음 예를 고려하세요.
 
-<?code-excerpt "animate1/lib/main.dart (addListener)" replace="/animation.*|\.\.addListener/[!$&!]/g"?>
-```dart
-[!animation = Tween<double>(begin: 0, end: 300).animate(controller)!]
-  [!..addListener!](() {
+<?code-excerpt "animate1/lib/main.dart (add-listener)"?>
+```dart highlightLines=2
+animation = Tween<double>(begin: 0, end: 300).animate(controller)
+  ..addListener(() {
     // ···
   });
 ```
 
 이 코드는 다음과 동일합니다.
 
-<?code-excerpt "animate1/lib/main.dart (addListener)" replace="/animation.*/$&;/g; /  \./animation/g; /animation.*/[!$&!]/g"?>
-```dart
-[!animation = Tween<double>(begin: 0, end: 300).animate(controller);!]
-[!animation.addListener(() {!]
+<?code-excerpt "animate1/lib/main.dart (add-listener)" replace="/animation.*/$&;/g; /  \./animation/g;"?>
+```dart highlightLines=2
+animation = Tween<double>(begin: 0, end: 300).animate(controller);
+animation.addListener(() {
     // ···
   });
 ```
@@ -391,73 +385,60 @@ class AnimatedLogo extends AnimatedWidget {
 `LogoApp`은 여전히 ​​`AnimationController`와 `Tween`을 관리하고, 
 `Animation` 객체를 `AnimatedLogo`에 전달합니다.
 
-```diff2html
---- animate1/lib/main.dart
-+++ animate2/lib/main.dart
-@@ -1,10 +1,28 @@
- import 'package:flutter/material.dart';
+```dart diff
+  void main() => runApp(const LogoApp());
 
- void main() => runApp(const LogoApp());
++ class AnimatedLogo extends AnimatedWidget {
++   const AnimatedLogo({super.key, required Animation<double> animation})
++       : super(listenable: animation);
++ 
++   @override
++   Widget build(BuildContext context) {
++     final animation = listenable as Animation<double>;
++     return Center(
++       child: Container(
++         margin: const EdgeInsets.symmetric(vertical: 10),
++         height: animation.value,
++         width: animation.value,
++         child: const FlutterLogo(),
++       ),
++     );
++   }
++ }
++ 
+  class LogoApp extends StatefulWidget {
+    // ...
 
-+class AnimatedLogo extends AnimatedWidget {
-+  const AnimatedLogo({super.key, required Animation<double> animation})
-+      : super(listenable: animation);
-+
-+  @override
-+  Widget build(BuildContext context) {
-+    final animation = listenable as Animation<double>;
-+    return Center(
-+      child: Container(
-+        margin: const EdgeInsets.symmetric(vertical: 10),
-+        height: animation.value,
-+        width: animation.value,
-+        child: const FlutterLogo(),
-+      ),
-+    );
-+  }
-+}
-+
- class LogoApp extends StatefulWidget {
-   const LogoApp({super.key});
+    @override
+    void initState() {
+      super.initState();
+      controller =
+          AnimationController(duration: const Duration(seconds: 2), vsync: this);
+-     animation = Tween<double>(begin: 0, end: 300).animate(controller)
+-       ..addListener(() {
+-         setState(() {
+-           // The state that has changed here is the animation object's value.
+-         });
+-       });
++     animation = Tween<double>(begin: 0, end: 300).animate(controller);
+      controller.forward();
+    }
 
-   @override
-   State<LogoApp> createState() => _LogoAppState();
- }
-@@ -15,32 +33,18 @@
-
-   @override
-   void initState() {
-     super.initState();
-     controller =
-         AnimationController(duration: const Duration(seconds: 2), vsync: this);
--    animation = Tween<double>(begin: 0, end: 300).animate(controller)
--      ..addListener(() {
--        setState(() {
--          // The state that has changed here is the animation object's value.
--        });
--      });
-+    animation = Tween<double>(begin: 0, end: 300).animate(controller);
-     controller.forward();
-   }
-
-   @override
--  Widget build(BuildContext context) {
--    return Center(
--      child: Container(
--        margin: const EdgeInsets.symmetric(vertical: 10),
--        height: animation.value,
--        width: animation.value,
--        child: const FlutterLogo(),
--      ),
--    );
--  }
-+  Widget build(BuildContext context) => AnimatedLogo(animation: animation);
-
-   @override
-   void dispose() {
-     controller.dispose();
-     super.dispose();
-   }
+    @override
+-   Widget build(BuildContext context) {
+-     return Center(
+-       child: Container(
+-         margin: const EdgeInsets.symmetric(vertical: 10),
+-         height: animation.value,
+-         width: animation.value,
+-         child: const FlutterLogo(),
+-       ),
+-     );
+-   }
++   Widget build(BuildContext context) => AnimatedLogo(animation: animation);
+    
+    // ...
+  }
 ```
 
 **앱 소스:** [animate2][]
@@ -474,8 +455,8 @@ class AnimatedLogo extends AnimatedWidget {
 다음 코드는 이전 예제를 수정하여 상태 변경을 수신하고 업데이트를 출력합니다. 
 강조 표시된 줄은 변경 사항을 보여줍니다.
 
-<?code-excerpt "animate3/lib/main.dart (print-state)" plaster="none" replace="/\/\/ (\.\..*)/$1;/g; /\.\..*/[!$&!]/g; /\n  }/$&\n  \/\/ .../g"?>
-```dart
+<?code-excerpt "animate3/lib/main.dart (print-state)" plaster="none" replace="/\/\/ (\.\..*)/$1;/g; /\n  }/$&\n  \/\/ .../g"?>
+```dart highlightLines=11
 class _LogoAppState extends State<LogoApp> with SingleTickerProviderStateMixin {
   late Animation<double> animation;
   late AnimationController controller;
@@ -486,7 +467,7 @@ class _LogoAppState extends State<LogoApp> with SingleTickerProviderStateMixin {
     controller =
         AnimationController(duration: const Duration(seconds: 2), vsync: this);
     animation = Tween<double>(begin: 0, end: 300).animate(controller)
-      [!..addStatusListener((status) => print('$status'));!]
+      ..addStatusListener((status) => print('$status'));
     controller.forward();
   }
   // ...
@@ -503,26 +484,23 @@ AnimationStatus.completed
 다음으로, `addStatusListener()`를 사용하여 애니메이션을 시작 또는 끝에서 반전(reverse)합니다. 
 이렇게 하면 "호흡(breathing)" 효과가 생성됩니다.
 
-```diff2html
---- animate2/lib/main.dart
-+++ animate3/lib/main.dart
-@@ -35,7 +35,15 @@
-   void initState() {
-     super.initState();
-     controller =
-         AnimationController(duration: const Duration(seconds: 2), vsync: this);
--    animation = Tween<double>(begin: 0, end: 300).animate(controller);
-+    animation = Tween<double>(begin: 0, end: 300).animate(controller)
-+      ..addStatusListener((status) {
-+        if (status == AnimationStatus.completed) {
-+          controller.reverse();
-+        } else if (status == AnimationStatus.dismissed) {
-+          controller.forward();
-+        }
-+      })
-+      ..addStatusListener((status) => print('$status'));
-     controller.forward();
-   }
+```dart diff
+  void initState() {
+    super.initState();
+    controller =
+        AnimationController(duration: const Duration(seconds: 2), vsync: this);
+-   animation = Tween<double>(begin: 0, end: 300).animate(controller);
++   animation = Tween<double>(begin: 0, end: 300).animate(controller)
++     ..addStatusListener((status) {
++       if (status == AnimationStatus.completed) {
++         controller.reverse();
++       } else if (status == AnimationStatus.dismissed) {
++         controller.forward();
++       }
++     })
++     ..addStatusListener((status) => print('$status'));
+    controller.forward();
+  }
 ```
 
 **앱 소스:** [animate3][]
@@ -592,8 +570,11 @@ build() 함수는 `AnimatedBuilder`를 생성하여 반환합니다.
 <?code-excerpt "animate4/lib/main.dart (grow-transition)"?>
 ```dart
 class GrowTransition extends StatelessWidget {
-  const GrowTransition(
-      {required this.child, required this.animation, super.key});
+  const GrowTransition({
+    required this.child,
+    required this.animation,
+    super.key,
+  });
 
   final Widget child;
   final Animation<double> animation;
@@ -623,91 +604,70 @@ class GrowTransition extends StatelessWidget {
 `LogoWidget`을 자식으로 하는 `GrowTransition` 객체와 전환을 구동하는 애니메이션 객체를 반환합니다. 
 이것들은 위의 글머리 기호에 나열된 세 가지 요소입니다.
 
-```diff2html
---- animate2/lib/main.dart
-+++ animate4/lib/main.dart
-@@ -1,27 +1,47 @@
- import 'package:flutter/material.dart';
+```dart diff
+  void main() => runApp(const LogoApp());
+  
++ class LogoWidget extends StatelessWidget {
++   const LogoWidget({super.key});
++ 
++   // Leave out the height and width so it fills the animating parent.
++   @override
++   Widget build(BuildContext context) {
++     return Container(
++       margin: const EdgeInsets.symmetric(vertical: 10),
++       child: const FlutterLogo(),
++     );
++   }
++ }
++ 
++ class GrowTransition extends StatelessWidget {
++   const GrowTransition({
++     required this.child,
++     required this.animation,
++     super.key,
++   });
++ 
++   final Widget child;
++   final Animation<double> animation;
++ 
++   @override
++   Widget build(BuildContext context) {
++     final animation = listenable as Animation<double>;
++     return Center(
++       child: Container(
++         margin: const EdgeInsets.symmetric(vertical: 10),
++         height: animation.value,
++         width: animation.value,
++         child: const FlutterLogo(),
++       child: AnimatedBuilder(
++         animation: animation,
++         builder: (context, child) {
++           return SizedBox(
++             height: animation.value,
++             width: animation.value,
++             child: child,
++           );
++         },
++         child: child,
++       ),
++     );
++   }
++ }
 
- void main() => runApp(const LogoApp());
+  class LogoApp extends StatefulWidget {
+    // ...
 
--class AnimatedLogo extends AnimatedWidget {
--  const AnimatedLogo({super.key, required Animation<double> animation})
--      : super(listenable: animation);
-+class LogoWidget extends StatelessWidget {
-+  const LogoWidget({super.key});
-+
-+  // 높이와 너비를 생략하여, 애니메이션을 적용하는 부모를 채웁니다.
-+  @override
-+  Widget build(BuildContext context) {
-+    return Container(
-+      margin: const EdgeInsets.symmetric(vertical: 10),
-+      child: const FlutterLogo(),
-+    );
-+  }
-+}
-+
-+class GrowTransition extends StatelessWidget {
-+  const GrowTransition(
-+      {required this.child, required this.animation, super.key});
-+
-+  final Widget child;
-+  final Animation<double> animation;
+    @override
+-   Widget build(BuildContext context) => AnimatedLogo(animation: animation);
++   Widget build(BuildContext context) {
++     return GrowTransition(
++       animation: animation,
++       child: const LogoWidget(),
++     );
++   }
 
-   @override
-   Widget build(BuildContext context) {
--    final animation = listenable as Animation<double>;
-     return Center(
--      child: Container(
--        margin: const EdgeInsets.symmetric(vertical: 10),
--        height: animation.value,
--        width: animation.value,
--        child: const FlutterLogo(),
-+      child: AnimatedBuilder(
-+        animation: animation,
-+        builder: (context, child) {
-+          return SizedBox(
-+            height: animation.value,
-+            width: animation.value,
-+            child: child,
-+          );
-+        },
-+        child: child,
-       ),
-     );
-   }
- }
-
- class LogoApp extends StatefulWidget {
-   const LogoApp({super.key});
-
-   @override
-   State<LogoApp> createState() => _LogoAppState();
-@@ -34,18 +54,23 @@
-   @override
-   void initState() {
-     super.initState();
-     controller =
-         AnimationController(duration: const Duration(seconds: 2), vsync: this);
-     animation = Tween<double>(begin: 0, end: 300).animate(controller);
-     controller.forward();
-   }
-
-   @override
--  Widget build(BuildContext context) => AnimatedLogo(animation: animation);
-+  Widget build(BuildContext context) {
-+    return GrowTransition(
-+      animation: animation,
-+      child: const LogoWidget(),
-+    );
-+  }
-
-   @override
-   void dispose() {
-     controller.dispose();
-     super.dispose();
-   }
- }
+    // ...
+  }
 ```
 
 **앱 소스:** [animate4][]

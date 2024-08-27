@@ -5,7 +5,6 @@ title: Flutter의 레이아웃
 short-title: 레이아웃
 # description: Learn how Flutter's layout mechanism works and how to build a layout.
 description: Flutter의 레이아웃 메커니즘이 작동하는 방식과 레이아웃을 구축하는 방법을 알아보세요.
-diff2html: true
 ---
 
 {% assign api = site.api | append: '/flutter' -%}

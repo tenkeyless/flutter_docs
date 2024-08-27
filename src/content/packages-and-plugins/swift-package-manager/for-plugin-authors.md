@@ -3,7 +3,6 @@
 title: 플러그인 작성자를 위한 Swift Package Manager
 # description: How to add Swift Package Manager compatibility to iOS and macOS plugins
 description: iOS 및 macOS 플러그인에 Swift Package Manager 호환성을 추가하는 방법
-diff2html: true
 ---
 
 :::warning
@@ -68,16 +67,12 @@ Swift Package Manager를 지원하지 않는 플러그인은 마이그레이션�
 
 2. (`OCMock`와 같이) 테스트에 CocoaPod 종속성을 사용했다면, `Podfile` 파일에서 해당 종속성을 제거해야 합니다.
 
-   ```diff2html
-   --- a/ios/Podfile
-   +++ b/ios/Podfile
-   @@ -33,7 +33,6 @@ target 'Runner' do
-      target 'RunnerTests' do
-        inherit! :search_paths
+   ```ruby title="ios/Podfile" diff
+     target 'RunnerTests' do
+       inherit! :search_paths
    
-   -    pod 'OCMock', '3.5'
-      end
-    end
+   -   pod 'OCMock', '3.5'
+     end
    ```
 
    그런 다음 터미널에서, `plugin_name_ios/example/ios` 디렉토리에서 `pod install`을 실행합니다.

@@ -16,13 +16,12 @@ short-title: 웹
 * [웹에 배포](#deploying-to-the-web)
 * [Firebase Hosting 호스팅에 배포](#deploying-to-firebase-hosting)
 * [웹에서 이미지 처리](#handling-images-on-the-web)
-* [웹 렌더러 선택](#choosing-a-web-renderer)
+* [빌드 모드 및 렌더러 선택](#choosing-a-build-mode-and-a-renderer)
 * [최소화(Minification)](#minification)
 
 ## 릴리스를 위한 앱 빌드 {:#building-the-app-for-release}
 
 `flutter build web` 명령을 사용하여 배포용 앱을 빌드합니다. 
-`--web-renderer` 옵션을 사용하여 사용할 렌더러를 선택할 수도 있습니다. ([웹 렌더러][Web renderers] 참조)
 이렇게 하면 assets을 포함한 앱이 생성되고, 해당 파일이 프로젝트의 `/build/web` 디렉터리에 저장됩니다.
 
 간단한 앱의 릴리스 빌드는 다음과 같은 구조를 갖습니다.
@@ -46,9 +45,7 @@ short-title: 웹
   canvaskit
     canvaskit.js
     canvaskit.wasm
-    profiling
-      canvaskit.js
-      canvaskit.wasm
+    <other files>
   favicon.png
   flutter.js
   flutter_service_worker.js
@@ -58,10 +55,10 @@ short-title: 웹
   version.json
 ```
 
-:::note
+<!-- :::note
 `canvaskit` 디렉토리와 그 내용은 CanvasKit 렌더러가 선택된 경우에만 존재하며, 
 HTML 렌더러가 선택된 경우에는 존재하지 않습니다.
-:::
+::: -->
 
 웹 서버를 시작하고(예: `python -m http.server 8000` 또는 [dhttpd][] 패키지 사용), 
 /build/web 디렉토리를 엽니다. 
@@ -131,17 +128,18 @@ npm install -g firebase-tools
 
 자세한 내용은 [웹에서 이미지 표시][Displaying images on the web]를 참조하세요.
 
-## 웹 렌더러 선택 {:#choosing-a-web-renderer}
+## 빌드 모드 및 렌더러 선택 {:choosing-a-build-mode-and-a-renderer}
 
-기본적으로, `flutter build` 및 `flutter run` 명령은 웹 렌더러에 대해 `auto` 선택을 사용합니다. 
-즉, 앱은 모바일 브라우저에서는 HTML 렌더러로 실행되고, 데스크톱 브라우저에서는 CanvasKit으로 실행됩니다. 
-각 플랫폼의 특성을 최적화하기 위해 이 조합을 권장합니다.
+Flutter 웹은 두 가지 빌드 모드(default와 WebAssembly)와, 두 가지 렌더러(`canvaskit`과 `skwasm`)를 제공합니다.
 
 자세한 내용은 [웹 렌더러][Web renderers]를 참조하세요.
 
 ## 최소화(Minification) {:#minification}
 
-릴리스 빌드를 만들면 최소화가 처리됩니다.
+앱 시작을 개선하기 위해 컴파일러는 사용하지 않는 코드(_트리 셰이킹_ 이라고 함)를 제거하고, 
+코드 심볼의 이름을 더 짧은 문자열로 변경하여(예: `AlignmentGeometryTween`을 `ab`와 비슷한 이름으로 변경), 
+컴파일된 코드의 크기를 줄입니다. 
+이 두 가지 최적화 중 어느 것이 적용되는지는 빌드 모드에 따라 달라집니다.
 
 | 웹 앱 빌드 타입 | 코드가 최소화되나요? | 트리 쉐이킹이 수행되나요? |
 |-----------------------|----------------|-------------------------|
@@ -164,7 +162,7 @@ Flutter 기반 PWA는 다른 웹 기반 PWA와 같은 방식으로 설치할 수
 Flutter 앱이 PWA임을 나타내는 설정은 `manifest.json`에서 제공하는데, 
 이 설정은 `web` 디렉터리의 `flutter create`에서 생성됩니다.
 
-PWA 지원은 진행 중이므로, 이상해 보이는 것이 있으면 [피드백을 보내주세요][give us feedback].
+PWA 지원은 진행 중인 작업입니다. 예상대로 작동하지 않는 것이 보이면 [피드백을 보내주세요][give us feedback].
 
 [dhttpd]: {{site.pub}}/packages/dhttpd
 [Displaying images on the web]: /platform-integration/web/web-images

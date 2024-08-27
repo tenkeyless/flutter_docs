@@ -94,30 +94,24 @@ class _DraggableCardState extends State<DraggableCard> {
 자세한 내용은, [TickerProvider][]에 대한 문서를 참조하세요.
 :::
 
-```diff2html
---- lib/starter.dart
-+++ lib/step1.dart
-@@ -29,14 +29,20 @@
-   State<DraggableCard> createState() => _DraggableCardState();
- }
-
--class _DraggableCardState extends State<DraggableCard> {
-+class _DraggableCardState extends State<DraggableCard>
-+    with SingleTickerProviderStateMixin {
-+  late AnimationController _controller;
+```dart diff
+- class _DraggableCardState extends State<DraggableCard> {
++ class _DraggableCardState extends State<DraggableCard>
++     with SingleTickerProviderStateMixin {
++   late AnimationController _controller;
 +
-   @override
-   void initState() {
-     super.initState();
-+    _controller =
-+        AnimationController(vsync: this, duration: const Duration(seconds: 1));
-   }
+    @override
+    void initState() {
+      super.initState();
++     _controller =
++         AnimationController(vsync: this, duration: const Duration(seconds: 1));
+    }
 
-   @override
-   void dispose() {
-+    _controller.dispose();
-     super.dispose();
-   }
+    @override
+    void dispose() {
++     _controller.dispose();
+      super.dispose();
+    }
 ```
 
 ## 2단계: 제스처를 사용하여 위젯 이동 {:#step-2-move-the-widget-using-gestures}
@@ -125,14 +119,11 @@ class _DraggableCardState extends State<DraggableCard> {
 위젯을 드래그할 때 움직이게 하고, 
 `_DraggableCardState` 클래스에 [Alignment][] 필드를 추가합니다.
 
-```diff2html
---- lib/step1.dart (alignment)
-+++ lib/step2.dart (alignment)
-@@ -1,3 +1,4 @@
- class _DraggableCardState extends State<DraggableCard>
-     with SingleTickerProviderStateMixin {
-   late AnimationController _controller;
-+  Alignment _dragAlignment = Alignment.center;
+```dart diff
+  class _DraggableCardState extends State<DraggableCard>
+      with SingleTickerProviderStateMixin {
+    late AnimationController _controller;
++   Alignment _dragAlignment = Alignment.center;
 ```
 
 `onPanDown`, `onPanUpdate`, `onPanEnd` 콜백을 처리하는 [GestureDetector][]를 추가합니다. 
@@ -140,35 +131,32 @@ class _DraggableCardState extends State<DraggableCard> {
 (이렇게 하면 "드래그된 픽셀" 단위가 [Align][]에서 사용하는 좌표로 변환됩니다.) 
 그런 다음, `Align` 위젯의 `alignment`를 `_dragAlignment`로 설정합니다.
 
-```diff2html
---- lib/step1.dart (build)
-+++ lib/step2.dart (build)
-@@ -1,8 +1,22 @@
- @override
- Widget build(BuildContext context) {
--  return Align(
--    child: Card(
--      child: widget.child,
-+  var size = MediaQuery.of(context).size;
-+  return GestureDetector(
-+    onPanDown: (details) {},
-+    onPanUpdate: (details) {
-+      setState(() {
-+        _dragAlignment += Alignment(
-+          details.delta.dx / (size.width / 2),
-+          details.delta.dy / (size.height / 2),
-+        );
-+      });
-+    },
-+    onPanEnd: (details) {},
-+    child: Align(
-+      alignment: _dragAlignment,
-+      child: Card(
-+        child: widget.child,
-+      ),
-     ),
-   );
- }
+```dart diff
+  @override
+  Widget build(BuildContext context) {
+-   return Align(
+-     child: Card(
+-       child: widget.child,
++   var size = MediaQuery.of(context).size;
++   return GestureDetector(
++     onPanDown: (details) {},
++     onPanUpdate: (details) {
++       setState(() {
++         _dragAlignment += Alignment(
++           details.delta.dx / (size.width / 2),
++           details.delta.dy / (size.height / 2),
++         );
++       });
++     },
++     onPanEnd: (details) {},
++     child: Align(
++       alignment: _dragAlignment,
++       child: Card(
++         child: widget.child,
++       ),
+      ),
+    );
+  }
 ```
 
 ## 3단계: 위젯 애니메이션 하기 {:#step-3-animate-the-widget}
@@ -178,15 +166,12 @@ class _DraggableCardState extends State<DraggableCard> {
 `Animation<Alignment>` 필드와 `_runAnimation` 메서드를 추가합니다. 
 이 메서드는 위젯이 드래그된 지점과 중앙의 지점 사이를 보간하는 `Tween`을 정의합니다.
 
-```diff2html
---- lib/step2.dart (animation)
-+++ lib/step3.dart (animation)
-@@ -1,4 +1,5 @@
- class _DraggableCardState extends State<DraggableCard>
-     with SingleTickerProviderStateMixin {
-   late AnimationController _controller;
-+  late Animation<Alignment> _animation;
-   Alignment _dragAlignment = Alignment.center;
+```dart diff
+  class _DraggableCardState extends State<DraggableCard>
+      with SingleTickerProviderStateMixin {
+    late AnimationController _controller;
++   late Animation<Alignment> _animation;
+    Alignment _dragAlignment = Alignment.center;
 ```
 
 <?code-excerpt "lib/step3.dart (runAnimation)"?>
@@ -205,19 +190,18 @@ void _runAnimation() {
 
 다음으로, `AnimationController`가 값을 생성하면 `_dragAlignment`를 업데이트합니다.
 
-```diff2html
---- lib/step2.dart (init-state)
-+++ lib/step3.dart (init-state)
-@@ -3,4 +3,9 @@
-   super.initState();
-   _controller =
-       AnimationController(vsync: this, duration: const Duration(seconds: 1));
-+  _controller.addListener(() {
-+    setState(() {
-+      _dragAlignment = _animation.value;
-+    });
-+  });
- }
+```dart diff
+  @override
+  void initState() {
+    super.initState();
+    _controller =
+        AnimationController(vsync: this, duration: const Duration(seconds: 1));
++   _controller.addListener(() {
++     setState(() {
++       _dragAlignment = _animation.value;
++     });
++   });
+  }
 ```
 
 다음으로, `Align` 위젯이 `_dragAlignment` 필드를 사용하도록 합니다.
@@ -234,29 +218,20 @@ child: Align(
 
 마지막으로, 애니메이션 컨트롤러를 관리하기 위해 `GestureDetector`를 업데이트합니다.
 
-```diff2html
---- lib/step2.dart (gesture)
-+++ lib/step3.dart (gesture)
-@@ -1,5 +1,7 @@
- return GestureDetector(
--  onPanDown: (details) {},
-+  onPanDown: (details) {
-+    _controller.stop();
-+  },
-   onPanUpdate: (details) {
-     setState(() {
-       _dragAlignment += Alignment(
-@@ -8,7 +10,9 @@
-       );
-     });
-   },
--  onPanEnd: (details) {},
-+  onPanEnd: (details) {
-+    _runAnimation();
-+  },
-   child: Align(
-     alignment: _dragAlignment,
-     child: Card(
+```dart diff
+  return GestureDetector(
+-   onPanDown: (details) {},
++   onPanDown: (details) {
++     _controller.stop();
++   },
+    onPanUpdate: (details) {
+      // ...
+    },
+-   onPanEnd: (details) {},
++   onPanEnd: (details) {
++     _runAnimation();
++   },
+    child: Align(
 ```
 
 ## 4단계: 스프링 동작을 시뮬레이션하기 위한 속도 계산 {:#step-4-calculate-the-velocity-to-simulate-a-springing-motion}

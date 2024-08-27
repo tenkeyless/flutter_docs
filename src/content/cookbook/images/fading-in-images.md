@@ -76,10 +76,10 @@ class MyApp extends StatelessWidget {
 먼저, 프로젝트의 `pubspec.yaml` 파일에 에셋을 추가합니다. 
 (자세한 내용은 [에셋 및 이미지 추가][Adding assets and images] 참조)
 
-```diff
- flutter:
-   assets:
-+    - assets/loading.gif
+```yaml diff
+  flutter:
+    assets:
++     - assets/loading.gif
 ```
 
 그런 다음, [`FadeInImage.assetNetwork()`][] 생성자를 사용합니다.

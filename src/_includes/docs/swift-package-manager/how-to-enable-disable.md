@@ -20,11 +20,11 @@ Flutter의 Swift Package Manager 지원은 기본적으로 꺼져 있습니다. 
    flutter config --enable-swift-package-manager
    ```
 
-Flutter CLI를 사용하여 앱을 실행하면 [프로젝트를 마이그레이션][addSPM]하여,
+Flutter CLI를 사용하여 앱을 실행하면 [프로젝트를 마이그레이션][addSPM]하여, 
 Swift Package Manager 통합을 추가합니다. 
-이렇게 하면, 프로젝트에서 Flutter 플러그인이 종속된 Swift 패키지를 다운로드합니다. 
-Swift Package Manager 기능을 비활성화하면, 
-마이그레이션된 앱에서 [Swift Package Manager 통합을 제거][removeSPM]해야 합니다.
+이렇게 하면 프로젝트에서 Flutter 플러그인이 의존하는 Swift 패키지를 다운로드합니다. 
+Swift Package Manager 통합이 있는 앱에는 Flutter 버전 3.24 이상이 필요합니다. 
+이전 Flutter 버전을 사용하려면 앱에서 [Swift Package Manager 통합 제거][removeSPM]해야 합니다.
 
 Flutter는 아직 Swift Package Manager를 지원하지 않는 종속성의 경우, CocoaPods로 폴백합니다.
 

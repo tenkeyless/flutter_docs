@@ -225,22 +225,18 @@ void _toggleFavorite() {
 
 <?code-excerpt path-base=""?>
 
-```diff2html
---- layout/lakes/step6/lib/main.dart
-+++ layout/lakes/interactive/lib/main.dart
-@@ -83,11 +83,7 @@
-               ],
-             ),
-           ),
--          Icon(
--            Icons.star,
--            color: Colors.red[500],
--          ),
--          const Text('41'),
-+          const FavoriteWidget(),
-         ],
-       ),
-     );
+```dart diff
+  child: Row(
+    children: [
+      // ...
+-     Icon(
+-       Icons.star,
+-       color: Colors.red[500],
+-     ),
+-     const Text('41'),
++     const FavoriteWidget(),
+    ],
+  ),
 ```
 
 그게 다예요! 앱을 핫 리로드하면 별 아이콘이 탭에 응답해야 합니다.
