@@ -1,7 +1,6 @@
-#### Build the iOS version of the Flutter app in the Terminal
+#### 터미널에서 Flutter 앱의 iOS 버전 빌드 {:#build-the-ios-version-of-the-flutter-app-in-the-terminal}
 
-To generate the needed iOS platform dependencies,
-run the `flutter build` command.
+필요한 iOS 플랫폼 종속성을 생성하려면, `flutter build` 명령을 실행하세요.
 
 ```console
 $ flutter build ios --config-only --no-codesign --debug
@@ -13,40 +12,38 @@ Building com.example.myApp for device (ios)...
 ```
 
 {% tabs "darwin-debug-flow" %}
-{% tab "Start from VS Code" %}
+{% tab "VS Code로 시작하기" %}
 
-#### Start debugging with VS Code first {:#vscode-ios}
+#### 먼저 VS Code로 디버깅 시작 {:#vscode-ios}
 
-If you use VS Code to debug most of your code, start with this section.
+VS Code를 사용하여 대부분의 코드를 디버깅하는 경우, 이 섹션부터 시작하세요.
 
-##### Start the Dart debugger in VS Code
+##### VS Code에서 Dart 디버거 시작 {:#start-the-dart-debugger-in-vs-code}
 
 {% include docs/debug/debug-flow-vscode-as-start.md add=include.add %}
 
-##### Attach to the Flutter process in Xcode
+##### Xcode에서 Flutter 프로세스에 연결 {:#attach-to-the-flutter-process-in-xcode}
 
-To attach to the Flutter app in Xcode:
+Xcode에서 Flutter 앱에 연결하려면:
 
-1. Go to **Debug** <span aria-label="and then">></span>
-   **Attach to Process** <span aria-label="and then">></span>
+1. **Debug** <span aria-label="and then">></span> **Attach to Process** <span aria-label="and then">></span>
 
-1. Select **Runner**. It should be at the top of the
-   **Attach to Process** menu under the **Likely Targets** heading.
+2. **Runner**를 선택합니다. **Attach to Process** 메뉴의 맨 위에 **Likely Targets** 제목 아래에 있어야 합니다.
 
 {% endtab %}
-{% tab "Start from Xcode" %}
+{% tab "Xcode로 시작하기" %}
 
-#### Start debugging with Xcode first {:#xcode-ios}
+#### 먼저 Xcode로 디버깅 시작 {:#xcode-ios}
 
-If you use Xcode to debug most of your code, start with this section.
+Xcode를 사용하여 대부분의 코드를 디버깅하는 경우, 이 섹션부터 시작하세요.
 
-##### Start the Xcode debugger
+##### Xcode 디버거 시작 {:#start-the-xcode-debugger}
 
-1. Open `ios/Runner.xcworkspace` from your Flutter app directory.
+1. Flutter 앱 디렉토리에서 `ios/Runner.xcworkspace`를 엽니다.
 
-1. Select the correct device using the **Scheme** menu in the toolbar.
+1. 툴바의 **Scheme** 메뉴를 사용하여 올바른 기기를 선택합니다.
 
-    If you have no preference, choose **iPhone Pro 14**.
+    선호 사항이 없으면, **iPhone Pro 14**를 선택합니다.
 
    {% comment %}
     ![Selecting iPhone 14 in the Scheme menu in the Xcode toolbar](/assets/images/docs/testing/debugging/native/xcode/select-device.png){:width="100%"}
@@ -57,7 +54,7 @@ If you use Xcode to debug most of your code, start with this section.
     </div>
     {% endcomment %}
 
-1. Run this Runner as a normal app in Xcode.
+2. Xcode에서 이 Runner를 일반 앱으로 실행합니다.
 
     {% comment %}
     ![Start button in Xcode interface](/assets/images/docs/testing/debugging/native/xcode/run-app.png)
@@ -68,8 +65,8 @@ If you use Xcode to debug most of your code, start with this section.
     </div>
     {% endcomment %}
 
-    When the run completes, the **Debug** area at the bottom of Xcode displays
-    a message with the Dart VM service URI. It resembles the following response:
+    실행이 완료되면, Xcode 하단의 **Debug** 영역에 Dart VM 서비스 URI가 포함된 메시지가 표시됩니다. 
+    다음 응답과 유사합니다.
 
     ```console
     2023-07-12 14:55:39.966191-0500 Runner[58361:53017145]
@@ -77,26 +74,23 @@ If you use Xcode to debug most of your code, start with this section.
         http://127.0.0.1:50642/00wEOvfyff8=/
     ```
 
-1. Copy the Dart VM service URI.
+3. Dart VM 서비스 URI를 복사합니다.
 
-##### Attach to the Dart VM in VS Code
+##### VS Code에서 Dart VM에 연결 {:#attach-to-the-dart-vm-in-vs-code}
 
-1. To open the command palette, go to
-    **View** <span aria-label="and then">></span>
-    **Command Palette...**
+1. 명령 팔레트를 열려면 **View** <span aria-label="그리고">></span> **Command Palette...**로 이동합니다.
 
-    You can also press <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd>.
+    <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd>를 누를 수도 있습니다.
 
-1. Type `debug`.
+2. `debug`를 입력합니다.
 
-1. Click the **Debug: Attach to Flutter on Device** command.
-
+3. **Debug: Attach to Flutter on Device** 명령을 클릭합니다.
+   
 {% comment %}
     !['Running the Debug: Attach to Flutter on Device command in VS Code.'](/assets/images/docs/testing/debugging/vscode-ui/screens/attach-flutter-process-menu.png){:width="100%"}
 {% endcomment %}
 
-1. In the **Paste an VM Service URI** box, paste the URI you copied
-    from Xcode and press <kbd>Enter</kbd>.
+1. **Paste an VM Service URI** 상자에, Xcode에서 복사한 URI를 붙여넣고 <kbd>Enter</kbd>를 누릅니다.
 
 {% comment %}
     ![Alt text](/assets/images/docs/testing/debugging/vscode-ui/screens/vscode-add-attach-uri-filled.png)

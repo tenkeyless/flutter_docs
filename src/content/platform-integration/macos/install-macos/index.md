@@ -1,13 +1,14 @@
 ---
-title: Add macOS as a target platform for Flutter
-description: Configure your system to develop Flutter for macOS.
-short-title: Set up macOS development
+# title: Add macOS as a target platform for Flutter
+title: Flutter의 대상 플랫폼으로 macOS 추가
+# description: Configure your system to develop Flutter for macOS.
+description: macOS용 Flutter를 개발하기 위해 시스템을 구성하세요.
+# short-title: Set up macOS development
+short-title: macOS 개발 설정
 target-list: [iOS, Android, web]
 ---
 
-To set up your development environment for targeting macOS,
-choose the guide that corresponds to the [Getting Started path][] you followed,
-or the platform you already have set up.
+macOS를 타겟으로 개발 환경을 설정하려면, [시작하기 path][Getting Started path]에 해당하는 가이드나 이미 설정한 플랫폼을 선택하세요.
 
 <div class="card-grid">
 {% for target in target-list %}
@@ -29,7 +30,7 @@ or the platform you already have set up.
           <span class="material-symbols">laptop_mac</span>
         </span>
         <span class="text-muted d-block">
-        Make {{ target }} and macOS desktop apps
+        {{ target }} 및 macOS 데스크톱 앱 만들기
         </span>
       </header>
     </div>

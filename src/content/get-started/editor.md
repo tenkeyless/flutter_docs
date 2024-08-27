@@ -1,101 +1,88 @@
 ---
-title: Set up an editor
-description: Configuring an IDE for Flutter.
+# title: Set up an editor
+title: 편집기 설정
+# description: Configuring an IDE for Flutter.
+description: Flutter를 위한 IDE 구성.
 prev:
-  title: Install
+  title: 설치
   path: /get-started/install
 next:
-  title: Test drive
+  title: 테스트 드라이브
   path: /get-started/test-drive
 toc: false
 ---
 
-You can build apps with Flutter using any text editor or
-integrated development environment (IDE)
-combined with Flutter's command-line tools.
-The Flutter team recommends using an editor that supports
-a Flutter extension or plugin, like VS Code and Android Studio.
-These plugins provide code completion, syntax highlighting,
-widget editing assists, run & debug support, and more.
+Flutter의 명령줄 도구와 결합된 모든 텍스트 편집기나 통합 개발 환경(IDE)을 사용하여, 
+Flutter로 앱을 빌드할 수 있습니다. 
+Flutter 팀은 VS Code 및 Android Studio와 같이, 
+Flutter 확장 프로그램이나 플러그인을 지원하는 편집기를 사용하는 것을 권장합니다. 
+이러한 플러그인은 코드 완성, 구문 강조, 위젯 편집 지원, 실행 및 디버그 지원 등을 제공합니다.
 
-You can add a supported plugin for Visual Studio Code,
-Android Studio, or IntelliJ IDEA Community, Educational,
-and Ultimate editions.
-The [Flutter plugin][] _only_ works with
-Android Studio and the listed editions of IntelliJ IDEA.
+Visual Studio Code, Android Studio 또는 IntelliJ IDEA Community, Educational 및 Ultimate 에디션에 지원되는 플러그인을 추가할 수 있습니다. 
+[Flutter 플러그인][Flutter plugin]은 Android Studio 및 나열된 IntelliJ IDEA _에디션에서만_ 작동합니다.
 
-(The [Dart plugin][] supports eight additional JetBrains IDEs.)
+([Dart 플러그인][Dart plugin]은 8개의 추가 JetBrains IDE를 지원합니다.)
 
 [Flutter plugin]: https://plugins.jetbrains.com/plugin/9212-flutter
 [Dart plugin]: https://plugins.jetbrains.com/plugin/6351-dart
 
-Follow these procedures to add the Flutter plugin to VS Code,
-Android Studio, or IntelliJ.
+다음 절차에 따라 VS Code, Android Studio 또는 IntelliJ에 Flutter 플러그인을 추가하세요.
 
-If you choose another IDE, skip ahead
-to the [next step: Test drive](/get-started/test-drive).
+다른 IDE를 선택하는 경우, [다음 단계: 테스트 드라이브](/get-started/test-drive)로 건너뛰세요.
 
 {% tabs %}
 {% tab "Visual Studio Code" %}
 
-## Install VS Code
+## VS Code 설치 {:#install-vs-code}
 
-[VS Code][] is a code editor to build and debug apps.
-With the Flutter extension installed, you can compile, deploy, and debug
-Flutter apps.
+[VS Code][]는 앱을 빌드하고 디버깅하는 코드 편집기입니다. 
+Flutter 확장 프로그램을 설치하면 Flutter 앱을 컴파일, 배포 및 디버깅할 수 있습니다.
 
-To install the latest version of VS Code,
-follow Microsoft's instructions for the relevant platform:
+최신 버전의 VS Code를 설치하려면, 해당 플랫폼에 대한 Microsoft 지침을 따르세요.
 
-- [Install on macOS][]
-- [Install on Windows][]
-- [Install on Linux][]
+- [macOS에 설치][Install on macOS]
+- [Windows에 설치][Install on Windows]
+- [Linux에 설치][Install on Linux]
 
 [VS Code]: https://code.visualstudio.com/
 [Install on macOS]: https://code.visualstudio.com/docs/setup/mac
 [Install on Windows]: https://code.visualstudio.com/docs/setup/windows
 [Install on Linux]: https://code.visualstudio.com/docs/setup/linux
 
-## Install the VS Code Flutter extension
+## VS Code Flutter 확장 프로그램 설치 {:#install-the-vs-code-flutter-extension}
 
-1. Start **VS Code**.
+1. **VS Code**를 시작합니다.
 
-1. Open a browser and go to the [Flutter extension][] page
-   on the Visual Studio Marketplace.
+2. 브라우저를 열고, Visual Studio Marketplace의 [Flutter 확장 프로그램][Flutter extension] 페이지로 이동합니다.
 
-1. Click **Install**.
-   Installing the Flutter extension also installs the Dart extension.
+3. **Install**을 클릭합니다. Flutter 확장 프로그램을 설치하면, Dart 확장 프로그램도 설치됩니다.
 
 [Flutter extension]: https://marketplace.visualstudio.com/items?itemName=Dart-Code.flutter
 
-## Validate your VS Code setup
+## VS Code 설정 검증 {:#validate-your-vs-code-setup}
 
-1. Go to **View** <span aria-label="and then">></span>
-   **Command Palette...**.
+1. **View** <span aria-label="and then">></span> **Command Palette...** 로 이동합니다.
 
-   You can also press <kbd>Ctrl</kbd> / <kbd>Cmd</kbd> +
-   <kbd>Shift</kbd> + <kbd>P</kbd>.
+   <kbd>Ctrl</kbd> / <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd>를 누를 수도 있습니다.
 
-1. Type `doctor`.
+2. `doctor`를 입력합니다.
 
-1. Select the **Flutter: Run Flutter Doctor**.
+3. **Flutter: Run Flutter Doctor**를 선택합니다.
 
-   Once you select this command, VS Code does the following.
+   이 명령을 선택하고, VS Code에서 다음을 수행합니다.
 
-   - Opens the **Output** panel.
-   - Displays **flutter (flutter)** in the dropdown on the upper right
-     of this panel.
-   - Displays the output of Flutter Doctor command.
+   - **Output** 패널을 엽니다.
+   - 이 패널의 오른쪽 위 드롭다운에 **flutter (flutter)** 를 표시합니다.
+   - Flutter Doctor 명령의 출력을 표시합니다.
 
 {% endtab %}
-{% tab "Android Studio and IntelliJ" %}
+{% tab "Android Studio 및 IntelliJ" %}
 
-## Install Android Studio or IntelliJ IDEA
+## Android Studio 또는 IntelliJ IDEA 설치 {:#install-android-studio-or-intellij-idea}
 
-Android Studio and IntelliJ IDEA offer a complete,
-IDE experience once you install the Flutter plugin.
+Android Studio와 IntelliJ IDEA는 Flutter 플러그인을 설치하면, 완전한 IDE 환경을 제공합니다.
 
-To install the latest version of the following IDEs, follow their instructions:
+다음 IDE의 최신 버전을 설치하려면 해당 지침을 따르세요.
 
 - [Android Studio][]
 - [IntelliJ IDEA Community][]
@@ -105,62 +92,59 @@ To install the latest version of the following IDEs, follow their instructions:
 [IntelliJ IDEA Community]: https://www.jetbrains.com/idea/download/
 [IntelliJ IDEA Ultimate]: https://www.jetbrains.com/idea/download/
 
-## Install the Flutter plugin
+## Flutter 플러그인을 설치하세요 {:#install-the-flutter-plugin}
 
-The installation instructions vary by platform.
+설치 지침은 플랫폼마다 다릅니다.
 
-### macOS
+### macOS {:#macos}
 
-Use the following instructions for macOS:
+macOS의 경우 다음 지침을 따르세요.
 
-1. Start Android Studio or IntelliJ.
+1. Android Studio 또는 IntelliJ를 시작합니다.
 
-1. From the macOS menu bar, go to **Android Studio** (or **IntelliJ**)
-   <span aria-label="and then">></span> **Settings...**.
+2. macOS 메뉴 바에서, **Android Studio**(또는 **IntelliJ**) <span aria-label="and then">></span> **Settings...** 로 이동합니다.
 
-   You can also press <kbd>Cmd</kbd> + <kbd>,</kbd>.
+   <kbd>Cmd</kbd> + <kbd>,</kbd>를 누를 수도 있습니다.
 
-   The **Preferences** dialog opens.
+   **Preferences** 대화 상자가 열립니다.
 
-1. From the list at the left, select **Plugins**.
+3. 왼쪽 리스트에서, **Plugins**을 선택합니다.
 
-1. From the top of this panel, select **Marketplace**.
+4. 이 패널의 상단에서, **Marketplace**를 선택합니다.
 
-1. Type `flutter` in the plugins search field.
+5. 플러그인 검색 필드에 `flutter`를 입력합니다.
 
-1. Select the **Flutter** plugin.
+6. **Flutter** 플러그인을 선택합니다.
 
-1. Click **Install**.
+7. **Install**를 클릭합니다.
 
-1. Click **Yes** when prompted to install the plugin.
+8. 플러그인을 설치하라는 메시지가 표시되면 **Yes**를 클릭합니다.
 
-1. Click **Restart** when prompted.
+9. 메시지가 표시되면 **Restart**을 클릭합니다.
 
-### Linux or Windows
+### Linux 또는 Windows {:#linux-or-windows}
 
-Use the following instructions for Linux or Windows:
+Linux 또는 Windows의 경우 다음 지침을 따르세요.
 
-1. Go to **File** <span aria-label="and then">></span>
-   **Settings**.
+1. **File** <span aria-label="and then">></span> **Settings**으로 이동합니다.
 
-   You can also press <kbd>Ctrl</kbd> + <kbd>Alt</kbd> +
-   <kbd>S</kbd>.
+   <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>S</kbd>를 누를 수도 있습니다.
 
-   The **Preferences** dialog opens.
+   **Preferences** 대화 상자가 열립니다.
 
-1. From the list at the left, select **Plugins**.
+2. 왼쪽 리스트에서 **Plugins**을 선택합니다.
 
-1. From the top of this panel, select **Marketplace**.
+3. 이 패널의 상단에서 **Marketplace**를 선택합니다.
 
-1. Type `flutter` in the plugins search field.
+4. 플러그인 검색 필드에 `flutter`를 입력합니다.
 
-1. Select the **Flutter** plugin.
+5. **Flutter** 플러그인을 선택합니다.
 
-1. Click **Install**.
+6. **Install**를 클릭합니다.
 
-1. Click **Yes** when prompted to install the plugin.
+7. 플러그인을 설치하라는 메시지가 표시되면 **Yes**를 클릭합니다.
 
-1. Click **Restart** when prompted.
+8. 메시지가 표시되면 **Restart**을 클릭합니다.
 
 {% endtab %}
 {% endtabs %}

@@ -1,47 +1,38 @@
 ---
-title: Performance metrics
-description: Flutter metrics, and which tools and APIs are used to get them
+# title: Performance metrics
+title: 성능 메트릭
+# description: Flutter metrics, and which tools and APIs are used to get them
+description: Flutter 메트릭과 이를 얻기 위해 사용되는 도구 및 API
 ---
 
-* Startup time to the first frame
-  * Check the time when
-    [WidgetsBinding.instance.firstFrameRasterized][firstFrameRasterized] 
-    is true.
-  * See the
-    [perf dashboard](https://flutter-flutter-perf.skia.org/e/?queries=sub_result%3DtimeToFirstFrameRasterizedMicros).
+* 첫 번째 프레임까지의 시작 시간
+  * [WidgetsBinding.instance.firstFrameRasterized][firstFrameRasterized]가 true인 시간을 확인합니다.
+  * [perf 대시보드](https://flutter-flutter-perf.skia.org/e/?queries=sub_result%3DtimeToFirstFrameRasterizedMicros)를 참조하세요.
 
-* Frame buildDuration, rasterDuration, and totalSpan
-  * See [`FrameTiming`]({{site.api}}/flutter/dart-ui/FrameTiming-class.html)
-    in the API docs.
+* 프레임 buildDuration, rasterDuration 및 totalSpan
+  * API 문서에서 [`FrameTiming`]({{site.api}}/flutter/dart-ui/FrameTiming-class.html)을 참조하세요.
 
-* Statistics of frame `buildDuration` (`*_frame_build_time_millis`)
-  * We recommend monitoring four stats: average, 90th percentile, 99th
-    percentile, and worst frame build time.
-  * See, for example, [metrics][transition_build] for the 
-    `flutter_gallery__transition_perf` test.
+* 프레임 `buildDuration`의 통계(`*_frame_build_time_millis`)
+  * 평균, 90th percentile, 99th percentile 및 최악의 프레임 빌드 시간이라는 네 가지 통계를 모니터링하는 것이 좋습니다.
+  * 예를 들어, `flutter_gallery__transition_perf` 테스트에 대한 [메트릭][transition_build]을 참조하세요.
 
-* Statistics of frame `rasterDuration` (`*_frame_build_time_millis`)
-  * We recommend monitoring four stats: average, 90th percentile, 99th
-    percentile, and worst frame build time.
-  * See, for example, [metrics][transition_raster] for the 
-    `flutter_gallery__transition_perf` test.
+* 프레임 `rasterDuration`의 통계(`*_frame_build_time_millis`)
+  * 평균, 90th percentile, 99th percentile, 최악의 프레임 빌드 시간이라는 네 가지 통계를 모니터링하는 것이 좋습니다.
+  * 예를 들어 `flutter_gallery__transition_perf` 테스트에 대한 [메트릭][transition_raster]을 참조하세요.
 
-* CPU/GPU usage (a good approximation for energy use)
-  * The usage is currently only available through trace events. See
-    [profiling_summarizer.dart][profiling_summarizer].
-  * See [metrics][cpu_gpu] for the `simple_animation_perf_ios` test.
+* CPU/GPU 사용량(에너지 사용량에 대한 좋은 근사치)
+  * 사용량은 현재 추적 이벤트를 통해서만 사용할 수 있습니다. 
+    [profiling_summarizer.dart][profiling_summarizer]를 참조하세요.
+  * `simple_animation_perf_ios` 테스트에 대한 [메트릭][cpu_gpu]을 참조하세요.
 
-* release_size_bytes to approximately measure the size of a Flutter app
-  * See the [basic_material_app_android][], [basic_material_app_ios][],
-    [hello_world_android][], [hello_world_ios][], [flutter_gallery_android][],
-    and [flutter_gallery_ios][] tests.
-  * See [metrics][size_perf] in the dashboard.
-  * For info on how to measure the size more accurately,
-    see the [app size](/perf/app-size) page.
+* release_size_bytes는 Flutter 앱의 크기를 대략적으로 측정합니다.
+  * [basic_material_app_android][], [basic_material_app_ios][], [hello_world_android][], 
+    [hello_world_ios][], [flutter_gallery_android][], [flutter_gallery_ios][] 테스트를 참조하세요.
+  * 대시보드에서 [메트릭][size_perf]을 참조하세요.
+  * 크기를 더 정확하게 측정하는 방법에 대한 자세한 내용은 [app size](/perf/app-size) 페이지를 참조하세요.
 
-For a complete list of performance metrics Flutter measures per commit, visit 
-the following sites, click **Query**, and filter the **test** and 
-**sub_result** fields:
+Flutter가 커밋당 측정하는 성능 지표의 전체 리스트를 보려면, 다음 사이트를 방문하여, 
+**Query**를 클릭하고 **test** 및 **sub_result** 필드를 필터링하세요.
 
   * [https://flutter-flutter-perf.skia.org/e/](https://flutter-flutter-perf.skia.org/e/)
   * [https://flutter-engine-perf.skia.org/e/](https://flutter-engine-perf.skia.org/e/)

@@ -1,20 +1,21 @@
 ---
-title: Flutter web app initialization
-description: Customize how Flutter apps are initialized on the web.
+# title: Flutter web app initialization
+title: Flutter 웹 앱 초기화
+# description: Customize how Flutter apps are initialized on the web.
+description: Flutter 앱이 웹에서 초기화되는 방식을 커스터마이즈합니다.
 ---
 
 :::note
-This page describes APIs that are available in Flutter 3.22 and later.
-To customize web app initialization in Flutter 3.21 or earlier,
-check out the previous [Customizing web app initialization][] documentation.
+이 페이지에서는 Flutter 3.22 이상에서 사용 가능한 API를 설명합니다. 
+Flutter 3.21 이하에서 웹 앱 초기화를 커스터마이즈하려면, 
+이전 [웹 앱 초기화 커스터마이즈][Customizing web app initialization] 문서를 확인하세요.
 :::
 
 [Customizing web app initialization]: /platform-integration/web/initialization-legacy
 
-This page details the initialization process for Flutter web apps, and
-how this process can be customized.
+이 페이지에서는 Flutter 웹 앱의 초기화 프로세스와 이 프로세스를 커스터마이즈하는 방법을 자세히 설명합니다.
 
-## `flutter_bootstrap.js`
+## `flutter_bootstrap.js` {:#flutter_bootstrap-js}
 
 When building your flutter app, the `flutter build web` command produces
 a script called `flutter_bootstrap.js` in
@@ -54,7 +55,7 @@ output directory (`build/web`) during the build step.
 
 <a id="customizing-initialization" aria-hidden="true"></a>
 
-## Customize initialization
+## 초기화 커스터마이즈 {:#customize-initialization}
 
 By default, `flutter build web` generates a `flutter_bootstrap.js` file that
 does a simple initialization of your Flutter app.
@@ -88,14 +89,14 @@ substitute in either the `flutter_bootstrap.js` or `index.html` files:
 
 <a id="write-a-custom-flutter_bootstrap-js" aria-hidden="true"></a>
 
-## Write a custom `flutter_bootstrap.js` {:#custom-bootstrap-js}
+## 커스텀 `flutter_bootstrap.js` 작성 {:#custom-bootstrap-js}
 
 Any custom `flutter_bootstrap.js` script needs to have three components in
 order to successfully start your Flutter app:
 
 * A `{% raw %}{{flutter_js}}{% endraw %}` token,
   to make `_flutter.loader` available.
-* A `{% raw %}{{flutter_build_config}}{% endraw %}` token, 
+* A `{% raw %}{{flutter_build_config}}{% endraw %}` token,
   which provides information about the build to the
   `FlutterLoader` needed to start your app.
 * A call to `_flutter.loader.load()`, which actually starts the app.
@@ -109,7 +110,7 @@ The most basic `flutter_bootstrap.js` file would look something like this:
 _flutter.loader.load();
 ```
 
-## The `_flutter.loader.load()` API
+## `_flutter.loader.load()` API {:#the-_flutter-loader-load-api}
 
 The `_flutter.loader.load()` JavaScript API can be invoked with optional
 arguments to customize initialization behavior:
@@ -133,7 +134,7 @@ The `config` argument is an object that can have the following optional fields:
 |`canvasKitMaximumSurfaces`| The maximum number of overlay surfaces that the CanvasKit renderer can use. |`double`|
 |`debugShowSemanticNodes`| If `true`, Flutter visibly renders the semantics tree onscreen (for debugging).  |`bool`|
 |`hostElement`| HTML Element into which Flutter renders the app. When not set, Flutter web takes over the whole page. |`HtmlElement`|
-|`renderer`| Specifies the [web renderer][web-renderers] for the current Flutter application, either `"canvaskit"` or `"html"`. |`String`|
+|`renderer`| Specifies the [web renderer][web-renderers] for the current Flutter application, either `"canvaskit"` or `"skwasm"`. |`String`|
 
 {:.table}
 
@@ -149,19 +150,19 @@ The `serviceWorkerSettings` argument has the following optional fields.
 
 {:.table}
 
-## Example: Customizing Flutter configuration based on URL query parameters
+## 예: URL 쿼리 매개변수를 기반으로 Flutter 구성 커스터마이즈 {:#example-customizing-flutter-configuration-based-on-url-query-parameters}
 
 The following example shows a custom `flutter_bootstrap.js` that allows
-the user to force the app to use the `CanvasKit` renderer by providing
-a query parameter called `?force_canvaskit=true` in the URL of their website:
+the user to select a renderer by providing a `renderer` query parameter,
+e.g. `?renderer=skwasm`, in the URL of their website:
 
 ```js
 {% raw %}{{flutter_js}}{% endraw %}
 {% raw %}{{flutter_build_config}}{% endraw %}
 
 const searchParams = new URLSearchParams(window.location.search);
-const forceCanvaskit = searchParams.get('force_canvaskit') === 'true';
-const userConfig = forceCanvaskit ? {'renderer': 'canvaskit'} : {};
+const renderer = searchParams.get('renderer');
+const userConfig = renderer ? {'renderer': renderer} : {};
 _flutter.loader.load({
   config: userConfig,
   serviceWorkerSettings: {
@@ -171,12 +172,12 @@ _flutter.loader.load({
 ```
 
 This script evaluates the `URLSearchParams` of the page to determine whether
-the user passed `force_canvaskit=true` and then
+the user passed a `renderer` query parameter and then
 changes the user configuration of the Flutter app.
 It also passes the service worker settings to use the flutter service worker,
 along with the service worker version.
 
-## The `onEntrypointLoaded` callback
+## `onEntrypointLoaded` 콜백 {:#the-onentrypointloaded-callback}
 
 You can also pass an `onEntrypointLoaded` callback into the `load` API in order
 to perform custom logic at different parts of the initialization process.
@@ -210,7 +211,7 @@ The initialization process is split into the following stages:
 [embedded-mode]: {{site.docs}}/platform-integration/web/embedding-flutter-web/#embedded-mode
 [js-promise]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise
 
-## Example: Display a progress indicator
+## 예: 진행률 표시기 표시 {:#example-display-a-progress-indicator}
 
 To give the user of your application feedback
 during the initialization process,
@@ -234,7 +235,7 @@ _flutter.loader.load({
 });
 ```
 
-## Upgrade an older project
+## 이전 프로젝트 업그레이드 {:#upgrade-an-older-project}
 
 If your project was created in Flutter 3.21 or earlier, you can create a new
 `index.html` file with the latest initialization template by running

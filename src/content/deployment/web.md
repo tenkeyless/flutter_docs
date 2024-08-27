@@ -1,36 +1,30 @@
 ---
-title: Build and release a web app
-description: How to prepare for and release a web app.
-short-title: Web
+# title: Build and release a web app
+title: 웹 앱 빌드 및 릴리스
+# description: How to prepare for and release a web app.
+description: 웹 앱을 준비하고 출시하는 방법.
+# short-title: Web
+short-title: 웹
 ---
 
-During a typical development cycle,
-you test an app using `flutter run -d chrome`
-(for example) at the command line.
-This builds a _debug_ version of your app.
+일반적인 개발 주기 동안, 명령줄에서 `flutter run -d chrome`(예시)을 사용하여 앱을 테스트합니다. 
+이렇게 하면, 앱의 _debug_ 버전이 빌드됩니다.
 
-This page helps you prepare a _release_ version
-of your app and covers the following topics:
+이 페이지에서는 앱의 _release_ 버전을 준비하는 데 도움이 되며 다음 주제를 다룹니다.
 
-* [Building the app for release](#building-the-app-for-release)
-* [Deploying to the web](#deploying-to-the-web)
-* [Deploying to Firebase Hosting](#deploying-to-firebase-hosting)
-* [Handling images on the web](#handling-images-on-the-web)
-* [Choosing a web renderer](#choosing-a-web-renderer)
-* [Minification](#minification)
+* [릴리스를 위한 앱 빌드](#building-the-app-for-release)
+* [웹에 배포](#deploying-to-the-web)
+* [Firebase Hosting 호스팅에 배포](#deploying-to-firebase-hosting)
+* [웹에서 이미지 처리](#handling-images-on-the-web)
+* [빌드 모드 및 렌더러 선택](#choosing-a-build-mode-and-a-renderer)
+* [최소화(Minification)](#minification)
 
-## Building the app for release
+## 릴리스를 위한 앱 빌드 {:#building-the-app-for-release}
 
-Build the app for deployment using the
-`flutter build web` command.
-You can also choose which renderer to use
-by using the `--web-renderer` option (See [Web renderers][]).
-This generates the app, including the assets,
-and places the files into the `/build/web`
-directory of the project.
+`flutter build web` 명령을 사용하여 배포용 앱을 빌드합니다. 
+이렇게 하면 assets을 포함한 앱이 생성되고, 해당 파일이 프로젝트의 `/build/web` 디렉터리에 저장됩니다.
 
-The release build of a simple app has the
-following structure:
+간단한 앱의 릴리스 빌드는 다음과 같은 구조를 갖습니다.
 
 ```plaintext
 /build/web
@@ -51,9 +45,7 @@ following structure:
   canvaskit
     canvaskit.js
     canvaskit.wasm
-    profiling
-      canvaskit.js
-      canvaskit.wasm
+    <other files>
   favicon.png
   flutter.js
   flutter_service_worker.js
@@ -63,125 +55,114 @@ following structure:
   version.json
 ```
 
-:::note
-The `canvaskit` directory and its contents are only present when the
-CanvasKit renderer is selected—not when the HTML renderer is selected.
-:::
+<!-- :::note
+`canvaskit` 디렉토리와 그 내용은 CanvasKit 렌더러가 선택된 경우에만 존재하며, 
+HTML 렌더러가 선택된 경우에는 존재하지 않습니다.
+::: -->
 
-Launch a web server (for example,
-`python -m http.server 8000`,
-or by using the [dhttpd][] package),
-and open the /build/web directory. Navigate to
-`localhost:8000` in your browser
-(given the python SimpleHTTPServer example)
-to view the release version of your app.
+웹 서버를 시작하고(예: `python -m http.server 8000` 또는 [dhttpd][] 패키지 사용), 
+/build/web 디렉토리를 엽니다. 
+브라우저에서 `localhost:8000`으로 이동하여(python SimpleHTTPServer 예제의 경우), 앱의 릴리스 버전을 확인하세요.
 
-## Deploying to the web
+## 웹에 배포 {:#deploying-to-the-web}
 
-When you are ready to deploy your app,
-upload the release bundle
-to Firebase, the cloud, or a similar service.
-Here are a few possibilities, but there are
-many others:
+앱을 배포할 준비가 되면, 릴리스 번들을 Firebase, 클라우드 또는 유사한 서비스에 업로드합니다. 
+다음은 몇 가지 가능성이지만, 그 외에도 많은 가능성이 있습니다.
 
-* [Firebase Hosting][]
-* [GitHub Pages][]
-* [Google Cloud Hosting][]
+* [Firebase 호스팅][Firebase Hosting]
+* [GitHub 페이지][GitHub Pages]
+* [Google 클라우드 호스팅][Google Cloud Hosting]
 
-## Deploying to Firebase Hosting
-You can use the Firebase CLI to build and release your Flutter app with Firebase
-Hosting.
+## Firebase Hosting 호스팅에 배포 {:#deploying-to-firebase-hosting}
 
-### Before you begin
-To get started, [install or update][install-firebase-cli] the Firebase CLI:
+Firebase 호스팅으로 Firebase CLI를 사용하여 Flutter 앱을 빌드하고 릴리스할 수 있습니다.
+
+### 시작하기 전에 {:#before-you-begin}
+
+시작하려면, Firebase CLI를 [설치 또는 업데이트][install-firebase-cli]하세요.
 
 ```console
 npm install -g firebase-tools
 ```
 
-### Initialize Firebase
+### Firebase 초기화 {:#initialize-firebase}
 
-1. Enable the web frameworks preview to the [Firebase framework-aware CLI][]:
+1. [Firebase 프레임워크 인식 CLI][Firebase framework-aware CLI]에 웹 프레임워크 미리 보기를 활성화합니다.:
 
     ```console
     firebase experiments:enable webframeworks
     ```
 
-2. In an empty directory or an existing Flutter project, run the initialization
-command:
+2. 빈 디렉토리나 기존 Flutter 프로젝트에서, 초기화 명령을 실행합니다.:
 
     ```console
     firebase init hosting
     ```
 
-3. Answer `yes` when asked if you want to use a web framework.
+1. 웹 프레임워크를 사용할지 묻는 질문에 `yes`라고 대답합니다.
 
-4. If you're in an empty directory,
-    you'll be asked to choose your web framework. Choose `Flutter Web`.
+2. 빈 디렉토리에 있는 경우, 웹 프레임워크를 선택하라는 메시지가 표시됩니다. `Flutter Web`을 선택합니다.
 
-5. Choose your hosting source directory; this could be an existing flutter app.
+3. 호스팅 소스 디렉토리를 선택합니다. 기존 Flutter 앱일 수 있습니다.
 
-6. Select a region to host your files.
+4. 파일을 호스팅할 지역(region)을 선택합니다.
 
-7. Choose whether to set up automatic builds and deploys with GitHub.
+5. GitHub에서 자동 빌드 및 배포를 설정할지 여부를 선택합니다.
 
-8. Deploy the app to Firebase Hosting:
+6. Firebase Hosting에 앱 배포:
 
     ```console
     firebase deploy
     ```
 
-    Running this command automatically runs `flutter build web --release`,
-    so you don't have to build your app in a separate step.
+    이 명령을 실행하면, `flutter build web --release`가 자동으로 실행되므로, 
+    별도의 단계에서 앱을 빌드할 필요가 없습니다.
 
-To learn more, visit the official [Firebase Hosting][] documentation for
-Flutter on the web.
+자세한 내용은 웹에서 Flutter에 대한 공식 [Firebase Hosting][] 문서를 참조하세요.
 
-## Handling images on the web
+## 웹에서 이미지 처리 {:#handling-images-on-the-web}
 
-The web supports the standard `Image` widget to display images.
-By design, web browsers run untrusted code without harming the host computer.
-This limits what you can do with images compared to mobile and desktop platforms.
+웹은 이미지를 표시하기 위한 표준 `Image` 위젯을 지원합니다. 
+설계상, 웹 브라우저는 호스트 컴퓨터에 해를 끼치지 않고, 신뢰할 수 없는 코드를 실행합니다. 
+이는 모바일 및 데스크톱 플랫폼에 비해 이미지로 할 수 있는 작업을 제한합니다.
 
-For more information, see [Displaying images on the web][].
+자세한 내용은 [웹에서 이미지 표시][Displaying images on the web]를 참조하세요.
 
-## Choosing a web renderer
+## 빌드 모드 및 렌더러 선택 {:choosing-a-build-mode-and-a-renderer}
 
-By default, the `flutter build` and `flutter run` commands
-use the `auto` choice for the web renderer. This means that
-your app runs with the HTML renderer on mobile browsers and
-CanvasKit on desktop browsers. We recommend this combination
-to optimize for the characteristics of each platform.
+Flutter 웹은 두 가지 빌드 모드(default와 WebAssembly)와, 두 가지 렌더러(`canvaskit`과 `skwasm`)를 제공합니다.
 
-For more information, see [Web renderers][].
+자세한 내용은 [웹 렌더러][Web renderers]를 참조하세요.
 
-## Minification
+## 최소화(Minification) {:#minification}
 
-Minification is handled for you when you
-create a release build.
+앱 시작을 개선하기 위해 컴파일러는 사용하지 않는 코드(_트리 셰이킹_ 이라고 함)를 제거하고, 
+코드 심볼의 이름을 더 짧은 문자열로 변경하여(예: `AlignmentGeometryTween`을 `ab`와 비슷한 이름으로 변경), 
+컴파일된 코드의 크기를 줄입니다. 
+이 두 가지 최적화 중 어느 것이 적용되는지는 빌드 모드에 따라 달라집니다.
 
-| Type of web app build | Code minified? | Tree shaking performed? |
+| 웹 앱 빌드 타입 | 코드가 최소화되나요? | 트리 쉐이킹이 수행되나요? |
 |-----------------------|----------------|-------------------------|
-| debug                 | No             | No                      |
-| profile               | No             | Yes                     |
-| release               | Yes            | Yes                     |
+| debug | 아니요 | 아니요 |
+| profile | 아니요 | 예 |
+| release | 예 | 예 |
 
-## Embedding a Flutter app into an HTML page
+{:.table .table-striped}
 
-See [Embedding Flutter web][].
+## HTML 페이지에 Flutter 앱 임베딩하기 {:#embedding-a-flutter-app-into-an-html-page}
+
+[Flutter 웹 임베딩][Embedding Flutter web]을 참조하세요.
 
 [Embedding Flutter web]: /platform-integration/web/embedding-flutter-web
 
-## PWA Support
+## PWA 지원 {:#pwa-support}
 
-As of release 1.20, the Flutter template for web apps includes support
-for the core features needed for an installable, offline-capable PWA app.
-Flutter-based PWAs can be installed in the same way as any other web-based
-PWA; the settings signaling that your Flutter app is a PWA are provided by
-`manifest.json`, which is produced by `flutter create` in the `web` directory.
+릴리스 1.20부터, 웹 앱용 Flutter 템플릿에는 설치 가능하고, 오프라인이 가능한 PWA 앱에 필요한, 핵심 기능에 대한 지원이 포함됩니다. 
+Flutter 기반 PWA는 다른 웹 기반 PWA와 같은 방식으로 설치할 수 있습니다. 
+Flutter 앱이 PWA임을 나타내는 설정은 `manifest.json`에서 제공하는데, 
+이 설정은 `web` 디렉터리의 `flutter create`에서 생성됩니다.
 
-PWA support remains a work in progress,
-so please [give us feedback][] if you see something that doesn't look right.
+PWA 지원은 진행 중인 작업입니다. 예상대로 작동하지 않는 것이 보이면 [피드백을 보내주세요][give us feedback].
 
 [dhttpd]: {{site.pub}}/packages/dhttpd
 [Displaying images on the web]: /platform-integration/web/web-images

@@ -1,5 +1,5 @@
 
-## Other Resources
+## 기타 리소스 {:#other-resources}
 
 To learn more about C interoperability, check out these videos:
 

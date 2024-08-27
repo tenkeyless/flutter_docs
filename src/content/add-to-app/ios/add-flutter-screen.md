@@ -1,12 +1,15 @@
 ---
-title: Add a Flutter screen to an iOS app
-short-title: Add a Flutter screen
-description: Learn how to add a single Flutter screen to your existing iOS app.
+# title: Add a Flutter screen to an iOS app
+title: iOS 앱에 Flutter 화면 추가
+# short-title: Add a Flutter screen
+short-title: Flutter 화면 추가
+# description: Learn how to add a single Flutter screen to your existing iOS app.
+description: 기존 iOS 앱에 단일 Flutter 화면을 추가하는 방법을 알아보세요.
 ---
 
-This guide describes how to add a single Flutter screen to an existing iOS app.
+이 가이드에서는 기존 iOS 앱에 단일 Flutter 화면을 추가하는 방법을 설명합니다.
 
-## Start a FlutterEngine and FlutterViewController
+## FlutterEngine 및 FlutterViewController 시작 {:#start-a-flutterengine-and-flutterviewcontroller}
 
 To launch a Flutter screen from an existing iOS app, you start a
 [`FlutterEngine`][] and a [`FlutterViewController`][].
@@ -35,7 +38,7 @@ See [Loading sequence and performance][]
 for more analysis on the latency and memory
 trade-offs of pre-warming an engine.
 
-### Create a FlutterEngine
+### FlutterEngine 만들기 {:#create-a-flutterengine}
 
 Where you create a `FlutterEngine` depends on your host app.
 
@@ -143,7 +146,7 @@ exposed as a property, on app startup in the app delegate.
 {% endtab %}
 {% endtabs %}
 
-### Show a FlutterViewController with your FlutterEngine
+### FlutterEngine으로 FlutterViewController 표시 {:#show-a-flutterviewcontroller-with-your-flutterengine}
 
 {% tabs "darwin-framework" %}
 {% tab "SwiftUI" %}
@@ -269,7 +272,7 @@ would run when calling `run` on the
 `FlutterEngine` created in the `AppDelegate`.
 :::
 
-### _Alternatively_ - Create a FlutterViewController with an implicit FlutterEngine
+### _대안으로_ - implicit FlutterEngine을 사용하여 FlutterViewController를 만듭니다. {:#alternatively-create-a-flutterviewcontroller-with-an-implicit-flutterengine}
 
 As an alternative to the previous example, you can let the
 `FlutterViewController` implicitly create its own `FlutterEngine` without
@@ -346,7 +349,7 @@ func showFlutter() {
 See [Loading sequence and performance][]
 for more explorations on latency and memory usage.
 
-## Using the FlutterAppDelegate
+## FlutterAppDelegate 사용하기 {:#using-the-flutterappdelegate}
 
 Letting your application's `UIApplicationDelegate` subclass
 `FlutterAppDelegate` is recommended but not required.
@@ -358,7 +361,7 @@ The `FlutterAppDelegate` performs functions such as:
 * Keeping the Flutter connection open 
   in debug mode when the phone screen locks.
 
-### Creating a FlutterAppDelegate subclass
+### FlutterAppDelegate 서브클래스 생성 {:#creating-a-flutterappdelegate-subclass}
 Creating a subclass of the `FlutterAppDelegate` in UIKit apps was shown 
 in the [Start a FlutterEngine and FlutterViewController section][]. 
 In a SwiftUI app, you can create a subclass of the 
@@ -430,7 +433,7 @@ struct ContentView: View {
 }
 ```
 
-### If you can't directly make FlutterAppDelegate a subclass
+### FlutterAppDelegate를 직접 하위 클래스로 만들 수 없는 경우 {:#if-you-cant-directly-make-flutterappdelegate-a-subclass}
 
 If your app delegate can't directly make `FlutterAppDelegate` a subclass,
 make your app delegate implement the `FlutterAppLifeCycleProvider`
@@ -620,14 +623,14 @@ performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult result))comp
 {% endtab %}
 {% endtabs %}
 
-## Launch options
+## 시작 옵션 {:#launch-options}
 
 The examples demonstrate running Flutter using the default launch settings.
 
 In order to customize your Flutter runtime,
 you can also specify the Dart entrypoint, library, and route.
 
-### Dart entrypoint
+### Dart 진입점 {:#dart-entrypoint}
 
 Calling `run` on a `FlutterEngine`, by default,
 runs the `main()` Dart function
@@ -648,7 +651,7 @@ void myOtherEntrypoint() { ... };
 ```
 :::
 
-### Dart library
+### Dart 라이브러리 {:#dart-library}
 
 In addition to specifying a Dart function, you can specify an entrypoint
 function in a specific file.
@@ -674,7 +677,7 @@ flutterEngine.run(withEntrypoint: "myOtherEntrypoint", libraryURI: "other_file.d
 {% endtabs %}
 
 
-### Route
+### Route {:#route}
 
 Starting in Flutter version 1.22, an initial route can be set for your Flutter
 [`WidgetsApp`][] when constructing the FlutterEngine or the
@@ -743,7 +746,7 @@ call [`SystemNavigator.pop()`][].
 
 See [Navigation and routing][] for more about Flutter's routes.
 
-### Other
+### 기타 {:#other}
 
 The previous example only illustrates a few ways to customize
 how a Flutter instance is initiated. Using [platform channels][],

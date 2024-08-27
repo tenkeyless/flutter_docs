@@ -1,5 +1,5 @@
 
-## Configure Android development
+## Android 개발 구성 {:#configure-android-development}
 
 {% case include.devos %}
 {% when 'Windows' -%}
@@ -13,7 +13,7 @@
    {% assign prompt='$' %}
 {% endcase -%}
 
-### Configure the Android toolchain in Android Studio
+### Android Studio에서 Android 툴체인 구성 {:#configure-the-android-toolchain-in-android-studio}
 
 {% render docs/help-link.md, location:'android-studio', section:'#android-setup' %}
 
@@ -113,7 +113,7 @@ Otherwise, you can skip to the [next section][check-dev].
 {% endtab %}
 {% endtabs %}
 
-### Configure your target Android device
+### 대상 Android 기기 구성 {:#configure-your-target-android-device}
 
 {% tabs "android-emulator-or-not" %}
 {% tab "Virtual device" %}
@@ -130,7 +130,7 @@ Otherwise, you can skip to the [next section][check-dev].
 
 {% if include.attempt == 'first' %}
 
-### Agree to Android licenses
+### Android 라이센스에 동의하기 {:#agree-to-android-licenses}
 
 {% render docs/help-link.md, location:'android-licenses', section:'#android-setup' %}
 
@@ -158,7 +158,7 @@ agree to the licenses of the Android SDK platform.
 1. Before agreeing to the terms of each license,
    read each with care.
 
-#### Troubleshooting licensing issues
+#### 라이센스 문제 해결 {:#troubleshooting-licensing-issues}
 
 <details>
 <summary>How to fix the error of finding Java install</summary>

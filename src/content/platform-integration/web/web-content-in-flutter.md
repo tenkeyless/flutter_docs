@@ -1,19 +1,21 @@
 ---
-title: Embedding web content into a Flutter web app
-short-title: Web content in Flutter
-description: Learn how to load and display images on the web.
+# title: Embedding web content into a Flutter web app
+title: Flutter 웹 앱에 웹 콘텐츠 임베드하기
+# short-title: Web content in Flutter
+short-title: Flutter의 웹 콘텐츠
+# description: Learn how to load and display images on the web.
+description: 웹에 이미지를 로드하고 표시하는 방법을 알아보세요.
 ---
 
-In some cases, Flutter web applications need to embed web content not
-rendered by Flutter. For example, embedding a `google_maps_flutter` view
-(which uses the Google Maps JavaScript SDK) or a `video_player`
-(which uses a standard `video` element).
+어떤 경우에는, Flutter 웹 애플리케이션이 Flutter에서 렌더링되지 않은 웹 콘텐츠를 임베드해야 합니다. 
+예를 들어, `google_maps_flutter` 뷰(Google Maps JavaScript SDK 사용) 또는 
+`video_player`(표준 `video` 요소 사용)를 임베드합니다.
 
-Flutter web can render arbitrary web content within the boundaries of a `Widget`,
-and the primitives used to implement the example packages mentioned previously,
-are available to all Flutter web applications.
+Flutter 웹은 `Widget`의 경계 내에서 임의의 웹 콘텐츠를 렌더링할 수 있으며, 
+이전에 언급한 예제 패키지를 구현하는 데 사용된 primitives는, 
+모든 Flutter 웹 애플리케이션에서 사용할 수 있습니다.
 
-## `HtmlElementView`
+## `HtmlElementView` {:#htmlelementview}
 
 The `HtmlElementView` Flutter widget reserves a space in the layout to be
 filled with any HTML Element. It has two constructors:
@@ -21,7 +23,7 @@ filled with any HTML Element. It has two constructors:
 * `HtmlElementView.fromTagName`.
 * `HtmlElementView` and `registerViewFactory`.
 
-### `HtmlElementView.fromTagName`
+### `HtmlElementView.fromTagName` {:#htmlelementview-fromtagname}
 
 The [`HtmlElementView.fromTagName` constructor][] creates an HTML Element from
 its `tagName`, and provides an `onElementCreated` method to configure that
@@ -48,7 +50,7 @@ check out Dart's [JS Interoperability][] documentation.
 [`HTMLVideoElement` class]: {{site.pub}}/documentation/web/latest/web/HTMLVideoElement-extension-type.html
 [`package:web`]: {{site.pub-pkg}}/web
 
-### `HtmlElementView` and `registerViewFactory`
+### `HtmlElementView` and `registerViewFactory` {:#htmlelementview-and-registerviewfactory}
 
 If you need more control over generating the HTML code you inject, you can use
 the primitives that Flutter uses to implement the `fromTagName` constructor. In
@@ -67,7 +69,7 @@ For more details about this approach, check out
 
 [`HtmlElementView` widget]: {{site.api}}/flutter/widgets/HtmlElementView-class.html
 
-## `package:webview_flutter`
+## `package:webview_flutter` {:#package-webview_flutter}
 
 Embedding a full HTML page inside a Flutter app is such a common feature, that
 the Flutter team offers a plugin to do so:

@@ -1,6 +1,8 @@
 ---
-title: Create a typing indicator
-description: How to implement a typing indicator.
+# title: Create a typing indicator
+title: 타이핑 표시기 만들기
+# description: How to implement a typing indicator.
+description: 타이핑 표시기를 구현하는 방법.
 js:
   - defer: true
     url: /assets/js/inject_dartpad.js
@@ -10,17 +12,15 @@ js:
 
 {% include docs/deprecated.md %}
 
-Modern chat apps display indicators when other users
-are actively typing responses. These indicators help
-prevent rapid and conflicting responses between you
-and the other person. In this recipe, you build a
-speech bubble typing indicator that animates in and out of view.
+최신 채팅 앱은 다른 사용자가 적극적으로 응답을 입력할 때 표시기를 표시합니다. 
+이러한 표시기는 사용자와 다른 사람 간의 빠르고 상충되는 응답을 방지하는 데 도움이 됩니다. 
+이 레시피에서는, 뷰 안팎으로 애니메이션이 적용되는 말풍선 입력 표시기를 빌드합니다.
 
-The following animation shows the app's behavior:
+다음 애니메이션은 앱의 동작을 보여줍니다.
 
 ![The typing indicator is turned on and off](/assets/images/docs/cookbook/effects/TypingIndicator.gif){:.site-mobile-screenshot}
 
-## Define the typing indicator widget
+## 타이핑 표시기 위젯 정의 {:#define-the-typing-indicator-widget}
 
 The typing indicator exists within its own widget so that
 it can be used anywhere in your app. As with any widget
@@ -62,7 +62,7 @@ class _TypingIndicatorState extends State<TypingIndicator> {
 }
 ```
 
-## Make room for the typing indicator
+## 타이핑 표시기를 위한 공간 마련 {:#make-room-for-the-typing-indicator}
 
 The typing indicator doesn't occupy any space when it
 isn't displayed. Therefore, the indicator needs to grow
@@ -185,7 +185,7 @@ rebuilding the entire tree just to change the height
 of the `SizedBox` widget wastes CPU cycles.
 :::
 
-## Animate the speech bubbles
+## 말풍선에 애니메이션 적용 {:#animate-the-speech-bubbles}
 
 The typing indicator displays three speech bubbles.
 The first two bubbles are small and round. The third
@@ -426,7 +426,7 @@ class StatusBubble extends StatelessWidget {
 }
 ```
 
-## Animate the flashing circles
+## 깜빡이는 원을 애니메이션하기 {:#animate-the-flashing-circles}
 
 Within the large speech bubble, the typing indicator
 displays three small circles that flash repeatedly.
@@ -655,7 +655,7 @@ Congratulations! You now have a typing indicator that lets users
 know when someone else is typing. The indicator animates in and out,
 and displays a repeating animation while the other user is typing.
 
-## Interactive example
+## 상호 작용 예제 {:#interactive-example}
 
 Run the app:
 

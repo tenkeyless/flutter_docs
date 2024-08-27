@@ -1,29 +1,28 @@
 ---
-title: Breaking changes and migration guides
-short-title: Breaking changes
-description: A list of migration guides for breaking changes in Flutter.
+# title: Breaking changes and migration guides
+title: 주요 변경 사항 및 마이그레이션 가이드
+# short-title: Breaking changes
+short-title: 주요 변경 사항
+# description: A list of migration guides for breaking changes in Flutter.
+description: Flutter의 중요한 변경 사항에 대한 마이그레이션 가이드 리스트입니다.
 ---
 
-As described in the [breaking change policy][],
-on occasion we publish guides
-for migrating code across a breaking change.
+[주요 변경 사항 정책][breaking change policy]에 설명된 대로, 
+가끔씩 주요 변경 사항에 따라 코드를 마이그레이션하기 위한 가이드를 게시합니다.
 
-To be notified about future breaking changes,
-join the groups [Flutter announce][] and [Dart announce][].
+주요 변경 사항에 대한 알림을 받으려면, 
+[Flutter 발표][Flutter announce] 및 [Dart 발표][Dart announce] 그룹에 가입하세요.
 
-When facing Dart errors after upgrading Flutter,
-consider using the [`dart fix`][] command
-to automatically migrate your code.
-Not every breaking change is supported in this way,
-but many are.
+Flutter를 업그레이드한 후 Dart 오류가 발생하면, [`dart fix`][] 명령을 사용하여, 
+코드를 자동으로 마이그레이션하는 것을 고려하세요. 
+모든 주요 변경 사항이 이런 방식으로 지원되는 것은 아니지만, 많은 변경 사항이 지원됩니다.
 
-To avoid being broken by future versions of Flutter,
-consider submitting your tests to our [test registry].
+향후 Flutter 버전에서 문제가 발생하는 것을 방지하려면, 
+테스트를 [테스트 레지스트리][test registry]에 제출하는 것을 고려하세요.
 
-## Breaking changes by release
+## 릴리스별 주요 변경 사항 {:#breaking-changes-by-release}
 
-The following guides are available. They are sorted by
-release, and listed in alphabetical order:
+다음 가이드를 이용할 수 있습니다. 출시별로 정렬되어 있으며, 알파벳순으로 나열되어 있습니다.
 
 [breaking change policy]: /release/compatibility-policy
 [Flutter announce]: {{site.groups}}/forum/#!forum/flutter-announce
@@ -31,23 +30,23 @@ release, and listed in alphabetical order:
 [`dart fix`]: /tools/flutter-fix
 [test registry]: {{site.github}}/flutter/tests
 
-### Not yet released to stable
+### 아직 stable로 출시되지 않음 {:#not-yet-released-to-stable}
 
-* [Remove invalid parameters for `InputDecoration.collapsed`][]
-* [Stop generating `AssetManifest.json`][]
-* [Deprecate `TextField.canRequestFocus`][]
+* [`InputDecoration.collapsed`에 대한 잘못된 매개변수 제거][Remove invalid parameters for `InputDecoration.collapsed`]
+* [`AssetManifest.json` 생성 중지][Stop generating `AssetManifest.json`]
+* [`TextField.canRequestFocus` Deprecate 됨][Deprecate `TextField.canRequestFocus`]
 
 [Remove invalid parameters for `InputDecoration.collapsed`]: /release/breaking-changes/input-decoration-collapsed
 [Stop generating `AssetManifest.json`]: /release/breaking-changes/asset-manifest-dot-json
 [Deprecate `TextField.canRequestFocus`]: /release/breaking-changes/can-request-focus
 
 <a id="released-in-flutter-324" aria-hidden="true"></a>
-### Released in Flutter 3.24
+### Flutter 3.24에서 릴리즈 {:#released-in-flutter-3-24}
 
-* [Navigator's page APIs breaking change][]
-* [Generic types in `PopScope`][]
-* [Deprecate `ButtonBar` in favor of `OverflowBar`][]
-* [New APIs for Android plugins that render to a `Surface`][]
+* [네비게이터 페이지 API의 주요 변경 사항][Navigator's page APIs breaking change]
+* [`PopScope`의 제네릭 타입][Generic types in `PopScope`]
+* [Deprecate `ButtonBar`하고, `ButtonBar`를 `OverflowBar`로 대체][Deprecate `ButtonBar` in favor of `OverflowBar`]
+* [`Surface`로 렌더링하는 Android 플러그인을 위한 새로운 API][New APIs for Android plugins that render to a `Surface`]
 
 [Navigator's page APIs breaking change]: /release/breaking-changes/navigator-and-page-api
 [Generic types in `PopScope`]: /release/breaking-changes/popscope-with-result
@@ -55,14 +54,14 @@ release, and listed in alphabetical order:
 [New APIs for Android plugins that render to a `Surface`]: /release/breaking-changes/android-surface-plugins
 
 <a id="released-in-flutter-322" aria-hidden="true"></a>
-### Released in Flutter 3.22
+### Flutter 3.22에서 릴리즈 {:#released-in-flutter-3-22}
 
-* [Deprecated API removed after v3.19][]
-* [Rename `MaterialState` to `WidgetState`][]
-* [Introduce new `ColorScheme` roles][]
-* [Dropping support for Android KitKat][]
-* [Nullable `PageView.controller`][]
-* [Rename `MemoryAllocations` to `FlutterMemoryAllocations`][]
+* [v3.19 이후 Deprecated API 삭제][Deprecated API removed after v3.19]
+* [`MaterialState`를 `WidgetState`로 이름 변경][Rename `MaterialState` to `WidgetState`]
+* [새로운 `ColorScheme` 역할 도입][Introduce new `ColorScheme` roles]
+* [Android KitKat 지원 중단][Dropping support for Android KitKat]
+* [Nullable `PageView.controller`][Nullable `PageView.controller`]
+* [`MemoryAllocations`를 `FlutterMemoryAllocations`로 이름 변경][Rename `MemoryAllocations` to `FlutterMemoryAllocations`]
 
 [Deprecated API removed after v3.19]: /release/breaking-changes/3-19-deprecations
 [Rename `MaterialState` to `WidgetState`]: /release/breaking-changes/material-state
@@ -72,13 +71,13 @@ release, and listed in alphabetical order:
 [Rename `MemoryAllocations` to `FlutterMemoryAllocations`]: /release/breaking-changes/flutter-memory-allocations
 
 <a id="released-in-flutter-319" aria-hidden="true"></a>
-### Released in Flutter 3.19
+### Flutter 3.19에서 릴리즈 {:#released-in-flutter-3-19}
 
-* [Deprecated API removed after v3.16][]
-* [Migrate RawKeyEvent/RawKeyboard system to KeyEvent/HardwareKeyboard system][]
-* [Deprecate imperative apply of Flutter's Gradle plugins][]
-* [Default multitouch scrolling][]
-* [Accessibility traversal order of tooltip changed][]
+* [v3.16 이후 Deprecated API 제거][Deprecated API removed after v3.16]
+* [RawKeyEvent/RawKeyboard 시스템을 KeyEvent/HardwareKeyboard 시스템으로 마이그레이션][Migrate RawKeyEvent/RawKeyboard system to KeyEvent/HardwareKeyboard system]
+* [Flutter의 Gradle 플러그인의 필수 적용 Deprecate 처리][Deprecate imperative apply of Flutter's Gradle plugins]
+* [기본 멀티터치 스크롤링][Default multitouch scrolling]
+* [도구 설명의 접근성 트래버설 순서 변경][Accessibility traversal order of tooltip changed]
 
 [Deprecated API removed after v3.16]: /release/breaking-changes/3-16-deprecations
 [Migrate RawKeyEvent/RawKeyboard system to KeyEvent/HardwareKeyboard system]: /release/breaking-changes/key-event-migration
@@ -87,21 +86,21 @@ release, and listed in alphabetical order:
 [Accessibility traversal order of tooltip changed]: /release/breaking-changes/tooltip-semantics-order
 
 <a id="released-in-flutter-316" aria-hidden="true"></a>
-### Released in Flutter 3.16
+### Flutter 3.16에서 릴리즈 {:#released-in-flutter-3-16}
 
-* [Migrating to Material 3][]
-* [Migrate ShortcutActivator and ShortcutManager to KeyEvent system][]
-* [The `ThemeData.useMaterial3` property is now set to true by default][]
-* [Deprecated API removed after v3.13][]
-* [Customize tabs alignment using the new `TabBar.tabAlignment` property][]
-* [Deprecate `textScaleFactor` in favor of `TextScaler`][]
-* [Android 14 nonlinear font scaling enabled][]
-* [Deprecate `describeEnum` and update `EnumProperty` to be type strict][]
-* [Deprecated just-in-time navigation pop APIs for Android Predictive Back][]
-* [Deprecated `Paint.enableDithering`][]
-* [Updated default text styles for menus][]
-* [Windows: External windows should notify Flutter engine of lifecycle changes][]
-* [Windows build path changed to add the target architecture][]
+* [Material 3으로 마이그레이션][Migrating to Material 3]
+* [ShortcutActivator와 ShortcutManager를 KeyEvent 시스템으로 마이그레이션][Migrate ShortcutActivator and ShortcutManager to KeyEvent system]
+* [`ThemeData.useMaterial3` 속성이 이제 기본적으로 true로 설정됨][The `ThemeData.useMaterial3` property is now set to true by default]
+* [v3.13 이후 Deprecated API 제거][Deprecated API removed after v3.13]
+* [새로운 `TabBar.tabAlignment` 속성을 사용하여 탭 정렬 커스터마이즈][Customize tabs alignment using the new `TabBar.tabAlignment` property]
+* [`textScaleFactor`를 Deprecate 처리 및 `textScaleFactor`를 `TextScaler`로 대체][Deprecate `textScaleFactor` in favor of `TextScaler`]
+* [Android 14 비선형 글꼴 크기 조정 활성화][Android 14 nonlinear font scaling enabled]
+* [`describeEnum` Deprecate 처리 및 `EnumProperty`를 타입 strict 으로 업데이트][Deprecate `describeEnum` and update `EnumProperty` to be type strict]
+* [Android Predictive Back을 위한 Just-in-Time 탐색 팝 API를 Deprecated 처리][Deprecated just-in-time navigation pop APIs for Android Predictive Back]
+* [`Paint.enableDithering`을 Deprecated 처리][Deprecated `Paint.enableDithering`]
+* [메뉴의 기본 텍스트 스타일 업데이트][Updated default text styles for menus]
+* [Windows: 외부 창에서 Flutter 엔진에 수명 주기 변경 사항을 알려야 함][Windows: External windows should notify Flutter engine of lifecycle changes]
+* [대상 아키텍처를 추가하기 위해 Windows 빌드 경로가 변경][Windows build path changed to add the target architecture]
 
 [Migrating to Material 3]: /release/breaking-changes/material-3-migration
 [Migrate ShortcutActivator and ShortcutManager to KeyEvent system]: /release/breaking-changes/shortcut-key-event-migration
@@ -118,7 +117,7 @@ release, and listed in alphabetical order:
 [Windows build path changed to add the target architecture]: /release/breaking-changes/windows-build-architecture
 
 <a id="released-in-flutter-313" aria-hidden="true"></a>
-### Released in Flutter 3.13
+### Flutter 3.13에서 릴리즈 {:#released-in-flutter-3-13}
 
 * [Added missing `dispose()` for some disposable objects in Flutter][]
 * [Deprecated API removed after v3.10][]
@@ -141,7 +140,7 @@ release, and listed in alphabetical order:
 [Updated `Checkbox.fillColor` behavior]: /release/breaking-changes/checkbox-fillColor
 
 <a id="released-in-flutter-310" aria-hidden="true"></a>
-### Released in Flutter 3.10
+### Flutter 3.10에서 릴리즈 {:#released-in-flutter-3-10}
 
 * [Dart 3 changes in Flutter v3.10 and later][]
 * [Deprecated API removed after v3.7][]
@@ -160,7 +159,7 @@ release, and listed in alphabetical order:
 ["Zone mismatch" message]: /release/breaking-changes/zone-errors
 
 <a id="released-in-flutter-37" aria-hidden="true"></a>
-### Released in Flutter 3.7
+### Flutter 3.7에서 릴리즈 {:#released-in-flutter-3-7}
 
 * [Deprecated API removed after v3.3][]
 * [Replaced parameters for customizing context menus with a generic widget builder][]
@@ -179,7 +178,7 @@ release, and listed in alphabetical order:
 [Migrate a Windows project to support dark title bars]: /release/breaking-changes/windows-dark-mode
 
 <a id="released-in-flutter-33" aria-hidden="true"></a>
-### Released in Flutter 3.3
+### Flutter 3.3에서 릴리즈 {:#released-in-flutter-3-3}
 
 * [Adding ImageProvider.loadBuffer][]
 * [Default PrimaryScrollController on Desktop][]
@@ -191,7 +190,7 @@ release, and listed in alphabetical order:
 [Trackpad gestures can trigger GestureRecognizer]: /release/breaking-changes/trackpad-gestures
 [Migrate a Windows project to set version information]: /release/breaking-changes/windows-version-information
 
-### Released in Flutter 3
+### Flutter 3에서 릴리즈 {:#released-in-flutter-3}
 
 * [Deprecated API removed after v2.10][]
 * [Migrate useDeleteButtonTooltip to deleteButtonTooltipMessage of Chips][]
@@ -202,7 +201,7 @@ release, and listed in alphabetical order:
 [Migrate useDeleteButtonTooltip to deleteButtonTooltipMessage of Chips]: /release/breaking-changes/chip-usedeletebuttontooltip-migration
 
 <a id="released-in-flutter-210" aria-hidden="true"></a>
-### Released in Flutter 2.10
+### Flutter 2.10에서 릴리즈 {:#released-in-flutter-2-10}
 
 * [Deprecated API removed after v2.5][]
 * [Raw images on Web uses correct origin and colors][]
@@ -215,7 +214,7 @@ release, and listed in alphabetical order:
 [Scribble Text Input Client]: /release/breaking-changes/scribble-text-input-client
 
 <a id="released-in-flutter-25" aria-hidden="true"></a>
-### Released in Flutter 2.5
+### Flutter 2.5에서 릴리즈 {:#released-in-flutter-2-5}
 
 * [Default drag scrolling devices][]
 * [Deprecated API removed after v2.2][]
@@ -239,7 +238,7 @@ release, and listed in alphabetical order:
 [Using HTML slots to render platform views in the web]: /release/breaking-changes/platform-views-using-html-slots-web
 [Migrate a Windows project to the idiomatic run loop]: /release/breaking-changes/windows-run-loop
 
-### Reverted change in 2.2
+### 2.2에서 변경사항 되돌림 {:#reverted-change-in-2-2}
 
 The following breaking change was reverted in release 2.2:
 
@@ -250,13 +249,13 @@ The following breaking change was reverted in release 2.2:
 [Network Policy on iOS and Android]: /release/breaking-changes/network-policy-ios-android
 
 <a id="released-in-flutter-22" aria-hidden="true"></a>
-### Released in Flutter 2.2
+### Flutter 2.2에서 릴리즈 {:#released-in-flutter-2-2}
 
 * [Default Scrollbars on Desktop][]
 
 [Default Scrollbars on Desktop]: /release/breaking-changes/default-desktop-scrollbars
 
-### Released in Flutter 2
+### Flutter 2에서 릴리즈 {:#released-in-flutter-2}
 
 * [Added BuildContext parameter to TextEditingController.buildTextSpan][]
 * [Android ActivityControlSurface attachToActivity signature change][]
@@ -285,7 +284,7 @@ The following breaking change was reverted in release 2.2:
 [Transition of platform channel test interfaces to flutter_test package]: /release/breaking-changes/mock-platform-channels
 
 <a id="released-in-flutter-122" aria-hidden="true"></a>
-### Released in Flutter 1.22
+### Flutter 1.22에서 릴리즈 {:#released-in-flutter-1-22}
 
 * [Android v1 embedding app and plugin creation deprecation][]
 * [Cupertino icons 1.0.0][]
@@ -297,7 +296,7 @@ The following breaking change was reverted in release 2.2:
 [The new Form, FormField auto-validation API]: /release/breaking-changes/form-field-autovalidation-api
 
 <a id="released-in-flutter-120" aria-hidden="true"></a>
-### Released in Flutter 1.20
+### Flutter 1.20에서 릴리즈 {:#released-in-flutter-1-20}
 
 * [Actions API revision][]
 * [Adding TextInputClient.currentAutofillScope property][]
@@ -326,7 +325,7 @@ The following breaking change was reverted in release 2.2:
 [The Route Transition record and Transition delegate updates]: /release/breaking-changes/route-transition-record-and-transition-delegate
 
 <a id="released-in-flutter-117" aria-hidden="true"></a>
-### Released in Flutter 1.17
+### Flutter 1.17에서 릴리즈 {:#released-in-flutter-1-17}
 
 * [Adding 'linux' and 'windows' to TargetPlatform enum][]
 * [Annotations return local position relative to object][]

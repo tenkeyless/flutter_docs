@@ -1,17 +1,16 @@
 ---
-title: Flutter for React Native developers
-description: Learn how to apply React Native developer knowledge when building Flutter apps.
+# title: Flutter for React Native developers
+title: React Native 개발자를 위한 Flutter
+# description: Learn how to apply React Native developer knowledge when building Flutter apps.
+description: Flutter 앱을 만들 때 React Native 개발자 지식을 적용하는 방법을 알아보세요.
 ---
 
 <?code-excerpt path-base="get-started/flutter-for/react_native_devs"?>
 
-This document is for React Native (RN) developers looking to apply their
-existing RN knowledge to build mobile apps with Flutter. If you understand
-the fundamentals of the RN framework then you can use this document as a
-way to get started learning Flutter development.
+이 문서는 기존 RN 지식을 적용하여 Flutter로 모바일 앱을 빌드하려는 React Native(RN) 개발자를 위한 것입니다. 
+RN 프레임워크의 기본 사항을 이해한다면 이 문서를 Flutter 개발을 배우는 방법으로 사용할 수 있습니다.
 
-This document can be used as a cookbook by jumping around and finding
-questions that are most relevant to your needs.
+이 문서는 돌아다니며 필요에 가장 적합한 질문을 찾아 쿡북으로 사용할 수 있습니다.
 
 ## Introduction to Dart for JavaScript Developers (ES6)
 

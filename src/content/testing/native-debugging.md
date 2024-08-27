@@ -1,49 +1,41 @@
 ---
-title: Use a native language debugger
-short-title: debuggers
-description: How to connect a native debugger to your running Flutter app.
+# title: Use a native language debugger
+title: 네이티브 언어 디버거 사용
+# short-title: debuggers
+short-title: 디버거
+# description: How to connect a native debugger to your running Flutter app.
+description: 실행 중인 Flutter 앱에 네이티브 디버거를 연결하는 방법.
 ---
 
 <?code-excerpt path-base="testing/native_debugging"?>
 
 :::note
-This guide presumes you understand general debugging,
-have installed Flutter and git, and have familiarity
-with the Dart language as well as one of the following
-languages: Java, Kotlin, Swift, or Objective-C.
+이 가이드를 이해하려면 일반적인 디버깅을 이해하고, Flutter와 git을 설치했으며, 
+Dart 언어와 Java, Kotlin, Swift 또는 Objective-C 중 하나에 익숙해야 합니다.
 :::
 
-If you write Flutter apps only with Dart code,
-you can debug your code using your IDE's debugger.
-The Flutter team recommends VS Code.
+Dart 코드로만 Flutter 앱을 작성하는 경우, IDE의 디버거를 사용하여 코드를 디버깅할 수 있습니다. Flutter 팀은 VS Code를 권장합니다.
 
-If you write a platform-specific plugin or
-use platform-specific libraries, you can debug
-that portion of your code with a native debugger.
+플랫폼별 플러그인을 작성하거나, 플랫폼별 라이브러리를 사용하는 경우, 네이티브 디버거로 해당 코드 부분을 디버깅할 수 있습니다.
 
-- To debug iOS or macOS code written in Swift or Objective-C,
-  you can use Xcode.
-- To debug Android code written in Java or Kotlin,
-  you can use Android Studio.
-- To debug Windows code written in C++, you can use Visual Studio.
+- Swift 또는 Objective-C로 작성된 iOS 또는 macOS 코드를 디버깅하려면, Xcode를 사용할 수 있습니다.
+- Java 또는 Kotlin으로 작성된 Android 코드를 디버깅하려면, Android Studio를 사용할 수 있습니다.
+- C++로 작성된 Windows 코드를 디버깅하려면, Visual Studio를 사용할 수 있습니다.
 
-This guide shows you how you can connect _two_
-debuggers to your Dart app, one for Dart, and one for the native code.
+이 가이드에서는 Dart 앱에 _두 개_ 의 디버거를 연결하는 방법을 보여줍니다. 
+하나는 Dart용이고, 다른 하나는 네이티브 코드용입니다.
 
-## Debug Dart code
+## Dart 코드 디버그 {:#debug-dart-code}
 
-This guide describes how to use VS Code to debug your Flutter app.
-You can also use your preferred IDE with the
-Flutter and Dart plugins installed and configured.
+이 가이드에서는 VS Code를 사용하여 Flutter 앱을 디버깅하는 방법을 설명합니다. 
+Flutter 및 Dart 플러그인이 설치 및 구성된 선호하는 IDE를 사용할 수도 있습니다.
 
-## Debug Dart code using VS Code
+## VS Code를 사용하여 Dart 코드 디버그 {:#debug-dart-code-using-vs-code}
 
-The following procedure explains how to use the Dart debugger
-with the default sample Flutter app.
-The featured components in VS Code work and appear when
-debugging your own Flutter project as well.
+다음 절차에서는 기본 샘플 Flutter 앱에서 Dart 디버거를 사용하는 방법을 설명합니다. 
+VS Code의 추천 구성 요소는 작동하며, Flutter 프로젝트를 디버깅할 때도 나타납니다.
 
-1. Create a basic Flutter app.
+1. 기본 Flutter 앱을 만듭니다.
 
     ```console
     $ flutter create my_app
@@ -72,37 +64,32 @@ debugging your own Flutter project as well.
     $ cd my_app
     ```
 
-1. Open the `lib\main.dart` file in the Flutter app using
-   VS Code.
+2. VS Code를 사용하여 Flutter 앱에서 `lib\main.dart` 파일을 엽니다.
 
-1. Click the bug icon
-   (![VS Code's bug icon to trigger the debugging mode of a Flutter app](/assets/images/docs/testing/debugging/vscode-ui/icons/debug.png)).
-   This opens the following panes in VS Code:
+3. 버그 아이콘(![Flutter 앱의 디버깅 모드를 트리거하는 VS Code의 버그 아이콘](/assets/images/docs/testing/debugging/vscode-ui/icons/debug.png))을 클릭합니다. 
+   그러면 VS Code에서 다음 창이 열립니다.
 
-   - **Debug**
-   - **Debug Console**
-   - **Widget Inspector**
+   - **Debug (디버그)**
+   - **Debug Console (디버그 콘솔)**
+   - **Widget Inspector (위젯 검사기)**
 
-   The first time you run the debugger takes the longest.
+   디버거를 처음 실행할 때 가장 오래 걸립니다.
 
 {% comment %}
    ![VS Code window with debug panes opened](/assets/images/docs/testing/debugging/vscode-ui/screens/vscode-debugger.png){:width="100%"}
 {% endcomment %}
 
-1. Test the debugger.
+1. 디버거를 테스트합니다.
 
-   a. In `main.dart`, click on this line:
+   a. `main.dart`에서, 이 줄을 클릭합니다. 
 
       ```dart
       _counter++;
       ```
 
-   b. Press <kbd>Shift</kbd> + <kbd>F9</kbd>.
-      This adds a breakpoint where the
-      `_counter` variable increments.
+   b. <kbd>Shift</kbd> + <kbd>F9</kbd>를 누릅니다. 이렇게 하면 `_counter` 변수가 증가하는 곳에 중단점이 추가됩니다.
 
-   c. In the app, click the **+** button
-      to increment the counter. The app pauses.
+   c. 앱에서, **+** 버튼을 클릭하여 카운터를 증가시킵니다. 앱이 일시 중지됩니다.
 
 {% comment %}
       ![Flutter test app paused](/assets/images/docs/testing/debugging/native/macos/basic-app.png){:width="50%"}
@@ -113,88 +100,85 @@ debugging your own Flutter project as well.
       </div>
 {% endcomment %}
 
-    d. At this point, VS Code displays:
+   d. 이 시점에서, VS Code는 다음을 표시합니다.
 
-      - In the **Editor Groups**:
-        - The highlighted breakpoint in `main.dart`
-        - The widget hierarchy for the Flutter app
-          in the **Widget Tree** of the **Widget Inspector** 
-      - In the **side bar**:
-        - The state of the app in the **Call Stack** section
-        - The value of the `this` local variable in the **Variables** section
-      - In the **panel**:
-        - The log of the Flutter app in the **Debug console**
+      - **편집기 그룹(Editor Groups)** 에서:
+        - `main.dart`의 강조 표시된 중단점
+        - **위젯 검사기(Widget Inspector)** 의 **위젯 트리(Widget Tree)** 에 있는 Flutter 앱의 위젯 계층 구조
+      - **사이드 바**에서:
+        - **호출 스택(Call Stack)** 섹션의 앱 상태
+        - **변수(Variables)** 섹션의 `this` 로컬 변수 값
+      - **패널**에서:
+        - **디버그 콘솔**의 Flutter 앱 로그
 
 {% comment %}
       ![VS Code window with Flutter app paused](/assets/images/docs/testing/debugging/vscode-ui/screens/vscode-debugger-paused.png){:width="100%"}
 {% endcomment %}
 
-### VS Code Flutter debugger
+### VS Code Flutter 디버거 {:#vs-code-flutter-debugger}
 
-The Flutter plugin for VS Code adds a number of components
-to the VS Code user interface.
+VS Code용 Flutter 플러그인은 VS Code 사용자 인터페이스에 여러 구성 요소를 추가합니다.
 
-#### Changes to VS Code interface
+#### VS Code 인터페이스 변경 사항 {:#changes-to-vs-code-interface}
 
-When launched, the Flutter debugger adds debugging tools to the
-VS Code interface.
+Flutter 디버거가 실행되면, VS 코드 인터페이스에 디버깅 도구를 추가합니다.
 
-The following screenshot and table explain the purpose of each tool.
+다음 스크린샷과 표는 각 도구의 목적을 설명합니다.
 
 ![VS Code with the Flutter plugin UI additions](/assets/images/docs/testing/debugging/vscode-ui/screens/debugger-parts.png)
 
-| Highlight Color in Screenshot | Bar, Panel, or Tab  | Contents                                                                          |
+| 스크린샷의 하이라이트 색상 | Bar, Panel 또는 Tab  | 내용                                                                          |
 |-------------------------------|---------------------|-----------------------------------------------------------------------------------|
-| **Yellow**                    | Variables           | List of current values of variables in the Flutter app                            |
-|                               | Watch               | List of items you chose to track in the Flutter app                               |
-|                               | Call Stack          | Stack of active subroutines in the Flutter app                                    |
-|                               | Breakpoints         | List of exceptions and set breakpoints that you set                               |
-| **Green**                     | `<Flutter files>`   | Files that you are editing                                                        |
-| **Pink**                      | Widget Inspector    | Hierarchy of widgets in the running Flutter app                                   |
-| **Blue**                      | Layout Explorer     | Visual of how Flutter placed the widget you selected in the Widget Inspector      |
-|                               | Widget Details Tree | List of properties of the widget selected in the Widget Inspector                 |
-| **Orange**                    | Problems            | List of issues the Dart analyzer found in the current Dart file                   |
-|                               | Output              | Response that the Flutter app returns when building an app                        |
-|                               | Debug Console       | Logs or error messages that the Flutter app generates while debugging             |
-|                               | Terminal            | System shell prompt contained in VS Code                                          |
+| **Yellow**                    | Variables           | Flutter 앱의 변수의 현재 값 리스트                            |
+|                               | Watch               | Flutter 앱에서 추적하도록 선택한 아이템 리스트     |
+|                               | Call Stack          | Flutter 앱의 활성 서브루틴 스택                                    |
+|                               | Breakpoints         | 설정한 예외 및 중단점 리스트                   |
+| **Green**                     | `<Flutter files>`   | 편집 중인 파일  |
+| **Pink**                      | Widget Inspector    | 실행 중인 Flutter 앱의 위젯 계층 구조                    |
+| **Blue**                      | Layout Explorer     | 위젯 검사기에서 선택한 위젯을 Flutter가 배치한 방식을 시각적으로 보여줍니다.  |
+|                               | Widget Details Tree | 위젯 검사기에서 선택된 위젯의 속성 리스트      |
+| **Orange**                    | Problems            | Dart 분석기가 현재 Dart 파일에서 발견한 문제 리스트            |
+|                               | Output              | Flutter 앱을 빌드할 때 반환되는 응답            |
+|                               | Debug Console       | 디버깅하는 동안 Flutter 앱이 생성하는 로그 또는 오류 메시지    |
+|                               | Terminal            | VS Code에 포함된 시스템 셸 프롬프트           |
 
 {:.table .table-striped}
 
-To change where the panel (in **orange**) appears in VS Code,
-go to **View** > **Appearance** > **Panel Position**.
+VS Code에서 패널(**주황색**)이 나타나는 위치를 변경하려면, 
+**View** > **모Appearance양** > **Panel Position**로 이동합니다.
 
-#### VS Code Flutter debugging toolbar
+#### VS Code Flutter 디버깅 툴바 {:#vs-code-flutter-debugging-toolbar}
 
-The toolbar allows you to debug using any debugger.
-You can step in, out, and over Dart statements, hot reload, or resume the app.
+툴바를 사용하면 어떤 디버거를 사용하든, 디버깅할 수 있습니다. 
+Dart 문장을 step in, out, over하고, 핫 리로드하거나 앱을 재개할 수 있습니다.
 
 ![Flutter debugger toolbar in VS Code](/assets/images/docs/testing/debugging/vscode-ui/screens/debug-toolbar.png)
 
-| Icon                                                | Action                | Default keyboard shortcut                             |
+| 아이콘                                                | 액션                | 디폴트 키보드 단축키                             |
 |-----------------------------------------------------|-----------------------|-------------------------------------------------------|
-| {% render docs/vscode-flutter-bar/play.md %}        | Start or Resume       | <kbd>F5</kbd>                                         |
-| {% render docs/vscode-flutter-bar/pause.md %}       | Pause                 | <kbd>F6</kbd>                                         |
+| {% render docs/vscode-flutter-bar/play.md %}        | 시작 또는 재개       | <kbd>F5</kbd>                                         |
+| {% render docs/vscode-flutter-bar/pause.md %}       | 일시 정지                 | <kbd>F6</kbd>                                         |
 | {% render docs/vscode-flutter-bar/step-over.md %}   | Step Over             | <kbd>F10</kbd>                                        |
 | {% render docs/vscode-flutter-bar/step-into.md %}   | Step Into             | <kbd>F11</kbd>                                        |
 | {% render docs/vscode-flutter-bar/step-out.md %}    | Step Out              | <kbd>Shift</kbd> + <kbd>F11</kbd>                     |
-| {% render docs/vscode-flutter-bar/hot-reload.md %}  | Hot Reload            | <kbd>Ctrl</kbd> + <kbd>F5</kbd>                       |
-| {% render docs/vscode-flutter-bar/hot-restart.md %} | Hot Restart           | <kbd>Shift</kbd> + <kbd>Special</kbd> + <kbd>F5</kbd> |
-| {% render docs/vscode-flutter-bar/stop.md %}        | Stop                  | <kbd>Shift</kbd> + <kbd>F5</kbd>                      |
-| {% render docs/vscode-flutter-bar/inspector.md %}   | Open Widget Inspector |                                                       |
+| {% render docs/vscode-flutter-bar/hot-reload.md %}  | 핫 리로드            | <kbd>Ctrl</kbd> + <kbd>F5</kbd>                       |
+| {% render docs/vscode-flutter-bar/hot-restart.md %} | 핫 재시작           | <kbd>Shift</kbd> + <kbd>Special</kbd> + <kbd>F5</kbd> |
+| {% render docs/vscode-flutter-bar/stop.md %}        | 멈추기                  | <kbd>Shift</kbd> + <kbd>F5</kbd>                      |
+| {% render docs/vscode-flutter-bar/inspector.md %}   | 위젯 검사기 열기 |                        |
 
 {:.table .table-striped}
 
-## Update test Flutter app
+## Flutter 앱 테스트 업데이트 {:#update-test-flutter-app}
 
-For the remainder of this guide, you need to update the
-test Flutter app. This update adds native code to debug.
+이 가이드의 나머지 부분에서는, 테스트 Flutter 앱을 업데이트해야 합니다. 
+이 업데이트는 디버깅을 위한 네이티브 코드를 추가합니다.
 
-1. Open the `lib/main.dart` file using your preferred IDE.
+1. 선호하는 IDE를 사용하여 `lib/main.dart` 파일을 엽니다.
 
-1. Replace the contents of `main.dart` with the following code.
+1. `main.dart`의 내용을 다음 코드로 바꿉니다.
 
     <details>
-    <summary>Expand to see Flutter code for this example</summary>
+    <summary>이 예제의 Flutter 코드를 보려면 확장하세요.</summary>
 
     ```dart title="lib/main.dart"
     // Copyright 2023 The Flutter Authors. All rights reserved.
@@ -304,8 +288,7 @@ test Flutter app. This update adds native code to debug.
 
     </details>
 
-1. To add the `url_launcher` package as a dependency,
-   run `flutter pub add`:
+2. `url_launcher` 패키지를 종속성으로 추가하려면, `flutter pub add`를 실행하세요.
 
     ```console
     $ flutter pub add url_launcher
@@ -332,10 +315,10 @@ test Flutter app. This update adds native code to debug.
     Changed 10 dependencies!
     ```
 
-1. To check what changed with the codebase:
+3. 코드베이스에서 어떤 변경이 이루어졌는지 확인하려면:
 
    {: type="a"}
-   1. In Linux or macOS, run this `find` command.
+   1. Linux 또는 macOS에서는, 이 `find` 명령을 실행합니다.
 
       ```console
       $ find ./ -mmin -120 
@@ -354,7 +337,7 @@ test Flutter app. This update adds native code to debug.
       ./windows/flutter/generated_plugin_registrant.cc
       ./windows/flutter/generated_plugins.cmake
       ```
-   1. In Windows, run this command in the command prompt.
+   2. Windows의 경우, 명령 프롬프트에서 이 명령을 실행합니다.
 
       ```powershell
       Get-ChildItem C:\dev\example\ -Rescurse | Where-Object {$_.LastWriteTime -gt (Get-Date).AddDays(-1)}
@@ -403,100 +386,90 @@ test Flutter app. This update adds native code to debug.
                       8/1/2025   9:15 AM                generated_plugins.cmake
       ```
 
-Installing `url_launcher` added config files and code files
-for all target platforms in the Flutter app directory.
+`url_launcher`를 설치하면, Flutter 앱 디렉토리의 모든 대상 플랫폼에 대한 구성 파일과 코드 파일이 추가됩니다.
 
-## Debug Dart and native language code at the same time
+## 동시에 Dart와 네이티브 언어 코드 디버깅 {:#debug-dart-and-native-language-code-at-the-same-time}
 
-This section explains how to debug the Dart code in your Flutter app
-and any native code with its regular debugger.
-This capability allows you to leverage Flutter's hot reload
-when editing native code.
+이 섹션에서는 Flutter 앱의 Dart 코드와 모든 네이티브 코드를 일반 디버거로 디버깅하는 방법을 설명합니다. 
+이 기능을 사용하면 네이티브 코드를 편집할 때, Flutter의 핫 리로드를 활용할 수 있습니다.
 
-### Debug Dart and Android code using Android Studio
+### Android Studio를 사용하여 Dart 및 Android 코드 디버그 {:#debug-dart-and-android-code-using-android-studio}
 
-To debug native Android code, you need a Flutter app that contains
-Android code. In this section, you learn how to connect
-the Dart, Java, and Kotlin debuggers to your app.
-You don't need VS Code to debug both Dart and Android code.
-This guide includes the VS Code instructions to be consistent
-with the Xcode and Visual Studio guides.
+네이티브 Android 코드를 디버깅하려면, Android 코드가 포함된 Flutter 앱이 필요합니다. 
+이 섹션에서는, Dart, Java 및 Kotlin 디버거를 앱에 연결하는 방법을 알아봅니다. 
+Dart와 Android 코드를 모두 디버깅하는 데 VS Code가 필요하지 않습니다. 
+이 가이드에는 Xcode 및 Visual Studio 가이드와 일관성을 유지하기 위한 VS Code 지침이 포함되어 있습니다.
 
-These section uses the same example Flutter `url_launcher` app created
-in [Update test Flutter app](#update-test-flutter-app).
+이 섹션에서는 [테스트 Flutter 앱 업데이트](#update-test-flutter-app)에서 만든 동일한, 
+예제 Flutter `url_launcher` 앱을 사용합니다.
 
 {% include docs/debug/debug-flow-android.md %}
 
-### Debug Dart and iOS code using Xcode
+### Xcode를 사용하여 Dart 및 iOS 코드 디버그 {:#debug-dart-and-ios-code-using-xcode}
 
-To debug iOS code, you need a Flutter app that contains iOS code.
-In this section, you learn to connect two debuggers to your app:
-Flutter via VS Code and Xcode. You need to run both VS Code and Xcode.
+iOS 코드를 디버깅하려면, iOS 코드가 포함된 Flutter 앱이 필요합니다. 
+이 섹션에서는, 앱에 두 개의 디버거를 연결하는 방법을 알아봅니다. 
+VS Code와 Xcode를 통한 Flutter입니다. 
+VS Code와 Xcode를 모두 실행해야 합니다.
 
-These section uses the same example Flutter `url_launcher` app created
-in [Update test Flutter app](#update-test-flutter-app).
+이 섹션에서는 [테스트 Flutter 앱 업데이트](#update-test-flutter-app)에서 만든 동일한 예제 Flutter `url_launcher` 앱을 사용합니다.
 
 {% include docs/debug/debug-flow-ios.md %}
 
-### Debug Dart and macOS code using Xcode
+### Xcode를 사용하여 Dart 및 macOS 코드 디버그 {:#debug-dart-and-macos-code-using-xcode}
 
-To debug macOS code, you need a Flutter app that contains macOS code.
-In this section, you learn to connect two debuggers to your app:
-Flutter via VS Code and Xcode. You need to run both VS Code and Xcode.
+macOS 코드를 디버깅하려면, macOS 코드가 포함된 Flutter 앱이 필요합니다. 
+이 섹션에서는, 앱에 두 개의 디버거를 연결하는 방법을 알아봅니다. 
+VS Code와 Xcode를 통한 Flutter입니다. 
+VS Code와 Xcode를 모두 실행해야 합니다.
 
-These section uses the same example Flutter `url_launcher` app created
-in [Update test Flutter app](#update-test-flutter-app).
+이 섹션에서는 [Update test Flutter app](#update-test-flutter-app)에서 만든 동일한 예제 Flutter `url_launcher` 앱을 사용합니다.
 
 {% include docs/debug/debug-flow-macos.md %}
 
-### Debug Dart and C++ code using Visual Studio
+### Visual Studio를 사용하여 Dart 및 C++ 코드 디버그 {:#debug-dart-and-c-code-using-visual-studio}
 
-To debug C++ code, you need a Flutter app that contains C++ code.
-In this section, you learn to connect two debuggers to your app:
-Flutter via VS Code and Visual Studio.
-You need to run both VS Code and Visual Studio.
+C++ 코드를 디버깅하려면, C++ 코드가 포함된 Flutter 앱이 필요합니다. 
+이 섹션에서는, VS Code와 Visual Studio를 통한 Flutter라는 두 개의 디버거를 앱에 연결하는 방법을 알아봅니다. 
+VS Code와 Visual Studio를 모두 실행해야 합니다.
 
-These section uses the same example Flutter `url_launcher` app created
-in [Update test Flutter app](#update-test-flutter-app).
+이 섹션에서는 [Update test Flutter app](#update-test-flutter-app)에서 만든 동일한 예제 Flutter `url_launcher` 앱을 사용합니다.
 
 {% include docs/debug/debug-flow-windows.md %}
 
-## Resources
+## 리소스 {:#resources}
 
-Check out the following resources on debugging Flutter, iOS, Android,
-macOS and Windows:
+Flutter, iOS, Android, macOS 및 Windows 디버깅에 대한 다음 리소스를 확인하세요.
 
-### Flutter
+### Flutter {:#flutter}
 
-- [Debugging Flutter apps][]
-- [Flutter inspector][] and the [DevTools][] docs
-- [Performance profiling][]
+- [Flutter 앱 디버깅][Debugging Flutter apps]
+- [Flutter 검사기][Flutter inspector] 및 [DevTools][] 문서
+- [성능 프로파일링][Performance profiling]
 
 [Debugging Flutter apps]: /testing/debugging
 [Performance profiling]: /perf/ui-performance
 
-### Android
+### Android {:#android}
 
-You can find the following debugging resources on
-[developer.android.com][].
+다음 디버깅 리소스는 [developer.android.com][]에서 찾을 수 있습니다.
 
-- [Debug your app][]
-- [Android Debug Bridge (adb)][]
+- [앱 디버깅][Debug your app]
+- [Android 디버그 브리지(adb)][Android Debug Bridge (adb)]
 
-### iOS and macOS
+### iOS 및 macOS {:#ios-and-macos}
 
-You can find the following debugging resources on
-[developer.apple.com][].
+다음 디버깅 리소스는 [developer.apple.com][]에서 찾을 수 있습니다.
 
-- [Debugging][]
-- [Instruments Help][]
+- [디버깅][Debugging]
+- [Instruments 도움말][Instruments Help]
 
-### Windows
+### Windows {:#windows}
 
-You can find debugging resources on [Microsoft Learn][].
+[Microsoft Learn][]에서 디버깅 리소스를 찾을 수 있습니다.
 
-- [Visual Studio Debugger][]
-- [Learn to debug C++ code using Visual Studio][]
+- [Visual Studio Debugger][Visual Studio Debugger]
+- [Visual Studio를 사용하여 C++ 코드 디버깅 방법 알아보기][Learn to debug C++ code using Visual Studio]
 
 [Android Debug Bridge (adb)]: {{site.android-dev}}/studio/command-line/adb
 [Debug your app]: {{site.android-dev}}/studio/debug

@@ -1,61 +1,54 @@
 ---
-title: Performance
-description: Evaluating the performance of your app from several angles.
+# title: Performance
+title: 성능
+# description: Evaluating the performance of your app from several angles.
+description: 다양한 각도에서 앱의 성능을 평가합니다.
 ---
 
-{% ytEmbed 'PKGguGUwSYE', 'Flutter performance tips | Flutter in Focus' %}
+{% ytEmbed 'PKGguGUwSYE', 'Flutter 성능 팁 | Flutter in Focus' %}
 
 :::note
-If your app has a performance issue and you are
-trying to debug it, check out the DevTool's page
-on [Using the Performance view][].
+앱에 성능 문제가 있고 이를 디버깅하려는 경우, 
+DevTools의 [성능 보기 사용][Using the Performance view] 페이지를 확인하세요.
 :::
 
 [Using the Performance view]: /tools/devtools/performance
 
-What is performance? Why is performance important? How do I improve performance?
+성능이란 무엇인가요? 성능이 중요한 이유는 무엇인가요? 성능을 개선하려면 어떻게 해야 할까요?
 
-Our goal is to answer those three questions (mainly the third one), and
-anything related to them. This document should serve as the single entry
-point or the root node of a tree of resources that addresses any questions
-that you have about performance.
+저희의 목표는 이 세 가지 질문(주로 세 번째 질문)과 이와 관련된 모든 것에 답하는 것입니다. 
+이 문서는 성능에 대한 모든 질문을 다루는 리소스 트리의 단일 진입점 또는 루트 노드 역할을 해야 합니다.
 
-The answers to the first two questions are mostly philosophical,
-and not as helpful to many developers who visit this page with specific
-performance issues that need to be solved.
-Therefore, the answers to those
-questions are in the [appendix](/perf/appendix).
+처음 두 질문에 대한 답변은 대부분 철학적이며, 
+해결해야 할 특정 성능 문제가 있는 이 페이지를 방문하는 많은 개발자에게는 도움이 되지 않습니다. 
+따라서, 이러한 질문에 대한 답변은 [부록](/perf/appendix)에 있습니다.
 
-To improve performance, you first need metrics: some measurable numbers to
-verify the problems and improvements.
-In the [metrics](/perf/metrics) page,
-you'll see which metrics are currently used,
-and which tools and APIs are available to get the metrics.
+성능을 개선하려면, 먼저 메트릭이 필요합니다. 
+문제와 개선 사항을 검증하기 위한 측정 가능한 숫자입니다. 
+[메트릭](/perf/metrics) 페이지에서, 
+현재 사용 중인 메트릭과 메트릭을 가져오는 데 사용할 수 있는 도구 및 API를 확인할 수 있습니다.
 
-There is a list of [Frequently asked questions](/perf/faq),
-so you can find out if the questions you have or the problems you're having
-were already answered or encountered, and whether there are existing solutions.
-(Alternatively, you can check the Flutter GitHub issue database using the
-[performance][performance] label.)
+[자주 묻는 질문](/perf/faq) 리스트가 있어서, 
+질문이나 문제가 이미 답변되었는지 또는 발생했는지, 그리고 기존 솔루션이 있는지 확인할 수 있습니다. 
+(또는, [성능][performance] 레이블을 사용하여, 
+Flutter GitHub 문제 데이터베이스를 확인할 수 있습니다.)
 
-Finally, the performance issues are divided into four categories. They
-correspond to the four labels that are used in the Flutter GitHub issue
-database: "[perf: speed][speed]", "[perf: memory][memory]",
-"[perf: app size][size]", "[perf: energy][energy]".
+마지막으로, 성능 문제는 네 가지 범주로 나뉩니다. 
+이는 Flutter GitHub 문제 데이터베이스에서 사용되는 네 가지 레이블인, 
+"[성능: 속도][속도]", "[성능: 메모리][메모리]", "[성능: 앱 크기][크기]", "[성능: 에너지][에너지]"에 해당합니다.
 
-The rest of the content is organized using those four categories.
+나머지 콘텐츠는 이 네 가지 범주를 사용하여 구성됩니다.
 
 {% comment %}
 Let's put "speed" (rendering) first as it's the most popular performance issue
 category.
 {% endcomment -%}
 
-## Speed
+## 속도 {:#speed}
 
-Are your animations janky (not smooth)? Learn how to
-evaluate and fix rendering issues.
+애니메이션이 janky합니까(부드럽지 않음)? 렌더링 문제를 평가하고 수정하는 방법을 알아보세요.
 
-[Improving rendering performance](/perf/rendering-performance)
+[렌더링 성능 향상](/perf/rendering-performance)
 
 {% comment %}
 Do your apps take a long time to open? We'll also cover the startup speed issue
@@ -72,12 +65,11 @@ TODO(<https://github.com/flutter/website/issues/8249>): Reintroduce this article
 
 {% endcomment -%}
 
-## App size
+## 앱 크기 {:#app-size}
 
-How to measure your app's size. The smaller the size,
-the quicker it is to download.
+앱 크기를 측정하는 방법. 크기가 작을수록, 다운로드 속도가 빨라집니다.
 
-[Measuring your app's size][]
+[앱 크기 측정][Measuring your app's size]
 
 {% comment %}
 

@@ -1,42 +1,40 @@
 ---
-title: Add a Flutter Fragment to an Android app
-short-title: Add a Flutter Fragment
-description: Learn how to add a Flutter Fragment to your existing Android app.
+# title: Add a Flutter Fragment to an Android app
+title: Android 앱에 Flutter Fragment 추가
+# short-title: Add a Flutter Fragment
+short-title: Flutter Fragment 추가
+# description: Learn how to add a Flutter Fragment to your existing Android app.
+description: 기존 Android 앱에 Flutter Fragment를 추가하는 방법을 알아보세요.
 ---
 
 <img src='/assets/images/docs/development/add-to-app/android/add-flutter-fragment/add-flutter-fragment_header.png'
 class="mw-100" alt="Add Flutter Fragment Header">
 
-This guide describes how to add a Flutter `Fragment` to an existing
-Android app.  In Android, a [`Fragment`][] represents a modular
-piece of a larger UI. A `Fragment` might be used to present
-a sliding drawer, tabbed content, a page in a `ViewPager`,
-or it might simply represent a normal screen in a
-single-`Activity` app. Flutter provides a [`FlutterFragment`][]
-so that developers can present a Flutter experience any place
-that they can use a regular `Fragment`.
+이 가이드에서는 기존 Android 앱에 Flutter `Fragment`를 추가하는 방법을 설명합니다. 
+Android에서, [`Fragment`][]는 더 큰 UI의 모듈식 부분을 나타냅니다. 
+`Fragment`는 슬라이딩 서랍, 탭 콘텐츠, `ViewPager`의 페이지를 표시하는 데 사용될 수 있으며, 
+단일 `Activity` 앱에서 일반 화면을 나타낼 수도 있습니다. 
+Flutter는 개발자가 일반 `Fragment`를 사용할 수 있는 모든 위치에서 
+Flutter 경험을 제공할 수 있도록 [`FlutterFragment`][]를 제공합니다.
 
-If an `Activity` is equally applicable for your application needs,
-consider [using a `FlutterActivity`][] instead of a
-`FlutterFragment`, which is quicker and easier to use.
+`Activity`가 애플리케이션 요구 사항에 동일하게 적용되는 경우, 
+`FlutterFragment` 대신 [`FlutterActivity`][]를 사용하는 것이, 
+더 빠르고 사용하기 쉽습니다.
 
-`FlutterFragment` allows developers to control the following
-details of the Flutter experience within the `Fragment`:
+`FlutterFragment`를 사용하면, 개발자가 `Fragment` 내에서 Flutter 경험의 다음 세부 사항을 제어할 수 있습니다.
 
- * Initial Flutter route
- * Dart entrypoint to execute
- * Opaque vs translucent background
- * Whether `FlutterFragment` should control its surrounding `Activity`
- * Whether a new [`FlutterEngine`][] or a cached `FlutterEngine` should be used
+* 초기 Flutter 경로
+* 실행할 Dart 진입점
+* 불투명(Opaque) 배경 vs 반투명(translucent) 배경
+* `FlutterFragment`가 주변 `Activity`를 제어해야 하는지 여부
+* 새 [`FlutterEngine`][] 또는 캐시된 `FlutterEngine`을 사용해야 하는지 여부
 
-`FlutterFragment` also comes with a number of calls that
-must be forwarded from its surrounding `Activity`.
-These calls allow Flutter to react appropriately to OS events.
+`FlutterFragment`에는 주변 `Activity`에서 전달해야 하는 여러 호출도 함께 제공됩니다. 
+이러한 호출을 통해 Flutter는 OS 이벤트에 적절하게 대응할 수 있습니다.
 
-All varieties of `FlutterFragment`, and its requirements,
-are described in this guide.
+이 가이드에서는 모든 종류의 `FlutterFragment`와 해당 요구 사항을 설명합니다.
 
-## Add a `FlutterFragment` to an `Activity` with a new `FlutterEngine`
+## 새로운 `FlutterEngine`을 사용하여 `Activity`에 `FlutterFragment` 추가 {:#add-a-flutterfragment-to-an-activity-with-a-new-flutterengine}
 
 The first thing to do to use a `FlutterFragment` is to add it to a host
 `Activity`.
@@ -282,7 +280,7 @@ initialized and rendered the first time.
 Most of this time overhead can be avoided by using
 a cached, pre-warmed `FlutterEngine`, which is discussed next.
 
-## Using a pre-warmed `FlutterEngine`
+## 미리 예열된(pre-warmed) `FlutterEngine` 사용 {:#using-a-pre-warmed-flutterengine}
 
 By default, a `FlutterFragment` creates its own instance
 of a `FlutterEngine`, which requires non-trivial warm-up time.
@@ -353,11 +351,11 @@ By providing a pre-warmed `FlutterEngine`,
 as previously shown, your app renders the
 first Flutter frame as quickly as possible.
 
-#### Initial route with a cached engine
+#### 캐시된 엔진을 사용한 초기 경로 {:#initial-route-with-a-cached-engine}
 
 {% include docs/add-to-app/android-initial-route-cached-engine.md %}
 
-## Display a splash screen
+## 시작 화면 표시 {:#display-a-splash-screen}
 
 The initial display of Flutter content requires some wait time,
 even if a pre-warmed `FlutterEngine` is used.
@@ -367,7 +365,7 @@ display of a splash screen (also known as "launch screen") until Flutter
 renders its first frame. For instructions about how to show a launch
 screen, see the [splash screen guide][].
 
-## Run Flutter with a specified initial route
+## 지정된 초기 경로로 Flutter 실행 {:#run-flutter-with-a-specified-initial-route}
 
 An Android app might contain many independent Flutter experiences,
 running in different `FlutterFragment`s, with different
@@ -407,7 +405,7 @@ chose an initial route. The initial route can be chosen explicitly when
 pre-warming a `FlutterEngine`.
 :::
 
-## Run Flutter from a specified entrypoint
+## 지정된 진입점에서 Flutter 실행 {:#run-flutter-from-a-specified-entrypoint}
 
 Similar to varying initial routes, different
 `FlutterFragment`s might want to execute different
@@ -452,7 +450,7 @@ The Dart entrypoint can be chosen explicitly when pre-warming
 a `FlutterEngine`.
 :::
 
-## Control `FlutterFragment`'s render mode
+## `FlutterFragment`의 렌더 모드 제어 {:#control-flutterfragments-render-mode}
 
 `FlutterFragment` can either use a `SurfaceView` to render its
 Flutter content, or it can use a `TextureView`.
@@ -505,7 +503,7 @@ FlutterFragment flutterFragment = FlutterFragment.withCachedEngine("my_engine_id
 Using the configuration shown, the resulting `FlutterFragment`
 renders its UI to a `TextureView`.
 
-## Display a `FlutterFragment` with transparency
+## 투명도를 사용하여 `FlutterFragment` 표시 {:#display-a-flutterfragment-with-transparency}
 
 By default, `FlutterFragment` renders with an opaque background,
 using a `SurfaceView`. (See "Control `FlutterFragment`'s render
@@ -570,7 +568,7 @@ FlutterFragment flutterFragment = FlutterFragment.withCachedEngine("my_engine_id
 {% endtab %}
 {% endtabs %}
 
-## The relationship between `FlutterFragment` and its `Activity`
+## `FlutterFragment`와 그것의 `Activity`의 관계 {:#the-relationship-between-flutterfragment-and-its-activity}
 
 Some apps choose to use `Fragment`s as entire Android screens.
 In these apps, it would be reasonable for a `Fragment` to

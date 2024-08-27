@@ -1,6 +1,8 @@
 ---
-title: Handle taps
-description: How to handle tapping and dragging.
+# title: Handle taps
+title: 탭 다루기
+# description: How to handle tapping and dragging.
+description: 탭과 드래그를 다루는 방법.
 js:
   - defer: true
     url: /assets/js/inject_dartpad.js
@@ -8,35 +10,31 @@ js:
 
 <?code-excerpt path-base="cookbook/gestures/handling_taps/"?>
 
-You not only want to display information to users,
-you want users to interact with your app.
-Use the [`GestureDetector`][] widget to respond
-to fundamental actions, such as tapping and dragging.
+사용자에게 정보를 표시할 뿐만 아니라, 사용자가 앱과 상호 작용하기를 원합니다. 
+탭 및 드래그와 같은 기본 동작에 응답하려면, [`GestureDetector`][] 위젯을 사용하세요.
 
 :::note
-To learn more, watch this short Widget of the Week video on
-the `GestureDetector` widget:
+자세한 내용을 알아보려면, `GestureDetector` 위젯에 대한 이 짧은 주간 위젯 비디오를 시청하세요.
 
-{% ytEmbed 'WhVXkCFPmK4', 'GestureDetector | Flutter widget of the week' %}
+{% ytEmbed 'WhVXkCFPmK4', 'GestureDetector | 이번 주의 Flutter 위젯' %}
 :::
 
-This recipe shows how to make a custom button that shows
-a snackbar when tapped with the following steps:
+이 레시피는 다음 단계에 따라 탭하면 스낵바를 표시하는 커스텀 버튼을 만드는 방법을 보여줍니다.
 
-  1. Create the button.
-  2. Wrap it in a `GestureDetector` that an `onTap()` callback.
+  1. 버튼을 만듭니다.
+  2. `GestureDetector`에 래핑하여 `onTap()` 콜백을 실행합니다.
 
 <?code-excerpt "lib/main.dart (GestureDetector)" replace="/return //g;/^\);$/)/g"?>
 ```dart
-// The GestureDetector wraps the button.
+// GestureDetector는 버튼을 래핑합니다.
 GestureDetector(
-  // When the child is tapped, show a snackbar.
+  // child를 탭하면, 스낵바를 보여줍니다.
   onTap: () {
     const snackBar = SnackBar(content: Text('Tap'));
 
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   },
-  // The custom button
+  // 커스텀 버튼
   child: Container(
     padding: const EdgeInsets.all(12),
     decoration: BoxDecoration(
@@ -48,16 +46,15 @@ GestureDetector(
 )
 ```
 
-## Notes
+## Notes {:#notes}
 
-  1. For information on adding the Material ripple effect to your
-     button, see the [Add Material touch ripples][] recipe.
-  2. Although this example creates a custom button,
-     Flutter includes a handful of button implementations, such as:
-     [`ElevatedButton`][], [`TextButton`][], and
-     [`CupertinoButton`][].
+  1. 버튼에 Material 리플 효과를 추가하는 방법에 대한 자세한 내용은 
+     [Material 터치 리플 추가][Add Material touch ripples] 레시피를 참조하세요.
+  2. 이 예제에서는 커스텀 버튼을 만들지만, 
+     Flutter에는 [`ElevatedButton`][], [`TextButton`][], [`CupertinoButton`][]과 같은 
+     몇 가지 버튼 구현이 포함되어 있습니다.
 
-## Interactive example
+## 상호 작용 예제 {:#interactive-example}
 
 <?code-excerpt "lib/main.dart"?>
 ```dartpad title="Flutter tap handling hands-on example in DartPad" run="true"
@@ -102,15 +99,15 @@ class MyButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // The GestureDetector wraps the button.
+    // GestureDetector는 버튼을 래핑합니다.
     return GestureDetector(
-      // When the child is tapped, show a snackbar.
+      // child를 탭하면, 스낵바를 보여줍니다.
       onTap: () {
         const snackBar = SnackBar(content: Text('Tap'));
 
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
       },
-      // The custom button
+      // 커스텀 버튼
       child: Container(
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(

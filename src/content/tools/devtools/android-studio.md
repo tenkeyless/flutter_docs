@@ -1,23 +1,25 @@
 ---
-title: Run DevTools from Android Studio
+# title: Run DevTools from Android Studio
+title: Android Studio에서 DevTools 실행
+# description: Learn how to launch and use DevTools from Android Studio.
 description: Learn how to launch and use DevTools from Android Studio.
 ---
 
-## Install the Flutter plugin
+## Flutter 플러그인 설치 {:#install-the-flutter-plugin}
 
 Add the Flutter plugin if you don't already have it installed.
 This can be done using the normal **Plugins** page in the IntelliJ
 and Android Studio settings. Once that page is open,
 you can search the marketplace for the Flutter plugin.
 
-## Start an app to debug
+## 디버깅 할 앱 시작 {:#start-an-app-to-debug}
 
 To open DevTools, you first need to run a Flutter app.
 This can be accomplished by opening a Flutter project,
 ensuring that you have a device connected,
 and clicking the **Run** or **Debug** toolbar buttons.
 
-## Launch DevTools from the toolbar/menu
+## 툴바/메뉴에서 DevTools 실행 {:#launch-devtools-from-the-toolbarmenu}
 
 Once an app is running,
 you can start DevTools using one of the following techniques:
@@ -30,7 +32,7 @@ you can start DevTools using one of the following techniques:
 
 ![screenshot of Open DevTools button](/assets/images/docs/tools/devtools/android_studio_open_devtools.png){:width="100%"}
 
-## Launch DevTools from an action
+## Action에서 DevTools 실행 {:#launch-devtools-from-an-action}
 
 You can also open DevTools from an IntelliJ action.
 Open the **Find Action...** dialog

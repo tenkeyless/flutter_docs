@@ -1,6 +1,8 @@
 ---
-title: Play and pause a video
-description: How to use the video_player plugin.
+# title: Play and pause a video
+title: 비디오 재생 및 일시 정지
+# description: How to use the video_player plugin.
+description: video_player 플러그인을 사용하는 방법.
 js:
   - defer: true
     url: /assets/js/inject_dartpad.js
@@ -8,54 +10,47 @@ js:
 
 <?code-excerpt path-base="cookbook/plugins/play_video/"?>
 
-Playing videos is a common task in app development,
-and Flutter apps are no exception. To play videos,
-the Flutter team provides the [`video_player`][] plugin.
-You can use the `video_player` plugin to play videos
-stored on the file system, as an asset, or from the internet.
+비디오 재생은 앱 개발에서 일반적인 작업이며, Flutter 앱도 예외는 아닙니다. 
+비디오를 재생하기 위해, Flutter 팀은 [`video_player`][] 플러그인을 제공합니다. 
+`video_player` 플러그인을 사용하면 파일 시스템, asset 또는 인터넷에 저장된 비디오를 재생할 수 있습니다.
 
 :::warning
-At this time,
-the `video_player` plugin doesn't work on Linux and Windows.
-To learn more, check out the [`video_player`][] package.
+현재 `video_player` 플러그인은 Linux와 Windows에서 작동하지 않습니다. 
+자세한 내용은 [`video_player`][] 패키지를 확인하세요.
 :::
 
-On iOS, the `video_player` plugin makes use of
-[`AVPlayer`][] to handle playback. On Android,
-it uses [`ExoPlayer`][].
+iOS에서, `video_player` 플러그인은 재생을 처리하기 위해 [`AVPlayer`][]를 사용합니다. 
+Android에서는, [`ExoPlayer`][]를 사용합니다.
 
-This recipe demonstrates how to use the `video_player` package to stream a
-video from the internet with basic play and pause controls using
-the following steps:
+이 레시피는 다음 단계를 사용하여 기본 재생 및 일시 정지 컨트롤을 사용하여, 
+인터넷에서 비디오를 스트리밍하는 `video_player` 패키지를 사용하는 방법을 보여줍니다.
 
-  1. Add the `video_player` dependency.
-  2. Add permissions to your app.
-  3. Create and initialize a `VideoPlayerController`.
-  4. Display the video player.
-  5. Play and pause the video.
+  1. `video_player` 종속성을 추가합니다.
+  2. 앱에 권한을 추가합니다.
+  3. `VideoPlayerController`를 만들고 초기화합니다.
+  4. 비디오 플레이어를 표시합니다.
+  5. 비디오를 재생하고 일시 정지합니다.
 
-## 1. Add the `video_player` dependency
+## 1. `video_player` 종속성 추가 {:#1-add-the-video_player-dependency}
 
-This recipe depends on one Flutter plugin: `video_player`. 
-First, add this dependency to your project.
+이 레시피는 하나의 Flutter 플러그인인 `video_player`에 의존합니다.
+먼저, 이 종속성을 프로젝트에 추가합니다.
 
-To add the `video_player` package as a dependency, run `flutter pub add`:
+`video_player` 패키지를 종속성으로 추가하려면 `flutter pub add`를 실행합니다.
 
 ```console
 $ flutter pub add video_player
 ```
 
-## 2. Add permissions to your app
+## 2. 앱에 권한 추가 {:#2-add-permissions-to-your-app}
 
-Next, update your `android` and `ios` configurations to ensure
-that your app has the correct permissions to stream videos
-from the internet.
+다음으로, 앱이 인터넷에서 비디오를 스트리밍할 수 있는 올바른 권한이 있는지 확인하기 위해
+`android` 및 `ios` 구성을 업데이트합니다.
 
 ### Android
 
-Add the following permission to the `AndroidManifest.xml` file just after the
-`<application>` definition. The `AndroidManifest.xml` file is found at
-`<project root>/android/app/src/main/AndroidManifest.xml`.
+`AndroidManifest.xml` 파일의 `<application>` 정의 바로 뒤에 다음 권한을 추가합니다. 
+`AndroidManifest.xml` 파일은 `<project root>/android/app/src/main/AndroidManifest.xml`에서 찾을 수 있습니다.
 
 ```xml
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
@@ -69,8 +64,7 @@ Add the following permission to the `AndroidManifest.xml` file just after the
 
 ### iOS
 
-For iOS, add the following to the `Info.plist` file found at
-`<project root>/ios/Runner/Info.plist`.
+iOS의 경우, `<project root>/ios/Runner/Info.plist`에 있는 `Info.plist` 파일에 다음을 추가합니다.
 
 ```xml
 <key>NSAppTransportSecurity</key>
@@ -81,48 +75,40 @@ For iOS, add the following to the `Info.plist` file found at
 ```
 
 :::warning
-The `video_player` plugin can only play asset videos in iOS simulators.
-You must test network-hosted videos on physical iOS devices.
+`video_player` 플러그인은 iOS 시뮬레이터에서만 asset 비디오를 재생할 수 있습니다.
+실제 iOS 기기에서는 네트워크 호스팅 비디오를 테스트해야 합니다.
 :::
 
 ### macOS
 
-If you use network-based videos, 
-[add the `com.apple.security.network.client` entitlement][mac-entitlement].
+네트워크 기반 비디오를 사용하는 경우, [`com.apple.security.network.client` 권한(entitlement)][mac-entitlement]을 추가하세요.
 
 ### Web
 
-Flutter web does **not** support `dart:io`,
-so avoid using the `VideoPlayerController.file` constructor for the plugin.
-Using this constructor attempts to create a`VideoPlayerController.file`
-that throws an `UnimplementedError`.
+Flutter 웹은 `dart:io`를 **지원하지 않으므로**, 플러그인에 `VideoPlayerController.file` 생성자를 사용하지 마세요.
+이 생성자를 사용하면 `UnimplementedError`를 throw하는 `VideoPlayerController.file`을 만들려고 시도합니다.
 
-Different web browsers might have different video-playback capabilities,
-such as supported formats or autoplay.
-Check the [video_player_web] package for more web-specific information.
+다른 웹 브라우저는, 지원되는 형식이나 자동 재생과 같이, 비디오 재생 기능이 다를 수 있습니다. 
+웹에 대한 자세한 내용은 [video_player_web][] 패키지를 확인하세요.
 
-The `VideoPlayerOptions.mixWithOthers` option can't be implemented in web,
-at least at the moment. If you use this option in web it will be silently ignored.
+`VideoPlayerOptions.mixWithOthers` 옵션은 적어도 현재로서는 웹에서 구현할 수 없습니다. 
+웹에서 이 옵션을 사용하면 자동으로 무시됩니다.
 
-## 3. Create and initialize a `VideoPlayerController`
+## 3.`VideoPlayerController` 생성 및 초기화{:#3-create-and-initialize-a-videoplayercontroller}
 
-Now that you have the `video_player` plugin installed with the correct
-permissions, create a `VideoPlayerController`. The
-`VideoPlayerController` class allows you to connect to different types of
-videos and control playback.
+이제 올바른 권한으로 `video_player` 플러그인을 설치했으므로, `VideoPlayerController`를 만듭니다.
+`VideoPlayerController` 클래스를 사용하면 다양한 타입의 비디오에 연결하고 재생을 제어할 수 있습니다.
 
-Before you can play videos, you must also `initialize` the controller.
-This establishes the connection to the video and prepare the
-controller for playback.
+비디오를 재생하기 전에, 컨트롤러를 `initialize`해야 합니다. 
+이렇게 하면 비디오에 대한 연결이 설정되고 재생을 위해 컨트롤러가 준비됩니다.
 
-To create and initialize the `VideoPlayerController` do the following:
+`VideoPlayerController`를 만들고 초기화하려면, 다음을 수행합니다.
 
-  1. Create a `StatefulWidget` with a companion `State` class
-  2. Add a variable to the `State` class to store the `VideoPlayerController`
-  3. Add a variable to the `State` class to store the `Future` returned from
-  `VideoPlayerController.initialize`
-  4. Create and initialize the controller in the `initState` method
-  5. Dispose of the controller in the `dispose` method
+  1. 동반 `State` 클래스와 함께 `StatefulWidget`을 만듭니다.
+  2. `VideoPlayerController`를 저장할 변수를 `State` 클래스에 추가합니다.
+  3. `VideoPlayerController.initialize`에서 반환된 `Future`를 저장할 변수를 `State` 클래스에 추가합니다.
+  4. `initState` 메서드에서 컨트롤러를 만들고 초기화합니다.
+  5. `dispose` 메서드에서 컨트롤러를 삭제합니다.
 
 <?code-excerpt "lib/main_step3.dart (VideoPlayerScreen)"?>
 ```dart
@@ -141,9 +127,9 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   void initState() {
     super.initState();
 
-    // Create and store the VideoPlayerController. The VideoPlayerController
-    // offers several different constructors to play videos from assets, files,
-    // or the internet.
+    // VideoPlayerController를 생성하고 저장합니다. 
+    // VideoPlayerController는 assets, 파일 또는 인터넷에서 
+    // 비디오를 재생하기 위한 여러 가지 생성자를 제공합니다.
     _controller = VideoPlayerController.networkUrl(
       Uri.parse(
         'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4',
@@ -155,7 +141,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
 
   @override
   void dispose() {
-    // Ensure disposing of the VideoPlayerController to free up resources.
+    // VideoPlayerController를 삭제하여 리소스를 확보하세요.
     _controller.dispose();
 
     super.dispose();
@@ -163,47 +149,43 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // Complete the code in the next step.
+    // 다음 단계에서 코드를 완성합니다.
     return Container();
   }
 }
 ```
 
-## 4. Display the video player
+## 4. 비디오 플레이어 표시 {:#4-display-the-video-player}
 
-Now, display the video. The `video_player` plugin provides the
-[`VideoPlayer`][] widget to display the video initialized by
-the `VideoPlayerController`.
-By default, the `VideoPlayer` widget takes up as much space as possible.
-This often isn't ideal for videos because they are meant
-to be displayed in a specific aspect ratio, such as 16x9 or 4x3.
+이제, 비디오를 표시합니다. 
+`video_player` 플러그인은 `VideoPlayerController`에서 초기화된 비디오를 표시하는 
+[`VideoPlayer`][] 위젯을 제공합니다. 
+기본적으로, `VideoPlayer` 위젯은 가능한 한 많은 공간을 차지합니다. 
+이는 비디오가, 16x9 또는 4x3과 같이, 특정 종횡비로 표시되도록 되어 있기 때문에, 비디오에 이상적이지 않은 경우가 많습니다.
 
-Therefore, wrap the `VideoPlayer` widget in an [`AspectRatio`][]
-widget to ensure that the video has the correct proportions.
+따라서, `VideoPlayer` 위젯을 [`AspectRatio`][] 위젯으로 래핑하여 비디오의 비율이 올바른지 확인합니다.
 
-Furthermore, you must display the `VideoPlayer` widget after the
-`_initializeVideoPlayerFuture()` completes. Use `FutureBuilder` to
-display a loading spinner until the controller finishes initializing.
-Note: initializing the controller does not begin playback.
+또한, `_initializeVideoPlayerFuture()`가 완료된 후에 `VideoPlayer` 위젯을 표시해야 합니다. 
+`FutureBuilder`를 사용하여 컨트롤러가 초기화를 완료할 때까지 로딩 스피너를 표시합니다. 
+참고: 컨트롤러를 초기화해도 재생이 시작되지 않습니다.
 
 <?code-excerpt "lib/main.dart (FutureBuilder)" replace="/body: //g;/^\),$/)/g"?>
 ```dart
-// Use a FutureBuilder to display a loading spinner while waiting for the
-// VideoPlayerController to finish initializing.
+// VideoPlayerController가 초기화를 완료할 때까지 
+// 로딩 스피너를 표시하려면 FutureBuilder를 사용합니다.
 FutureBuilder(
   future: _initializeVideoPlayerFuture,
   builder: (context, snapshot) {
     if (snapshot.connectionState == ConnectionState.done) {
-      // If the VideoPlayerController has finished initialization, use
-      // the data it provides to limit the aspect ratio of the video.
+      // VideoPlayerController가 초기화를 완료하면, 
+      // 제공된 데이터를 사용하여 비디오의 종횡비를 제한합니다.
       return AspectRatio(
         aspectRatio: _controller.value.aspectRatio,
-        // Use the VideoPlayer widget to display the video.
+        // VideoPlayer 위젯을 사용하여 비디오를 표시하세요.
         child: VideoPlayer(_controller),
       );
     } else {
-      // If the VideoPlayerController is still initializing, show a
-      // loading spinner.
+      // VideoPlayerController가 아직 초기화 중이면, 로딩 스피너를 표시합니다.
       return const Center(
         child: CircularProgressIndicator(),
       );
@@ -212,43 +194,39 @@ FutureBuilder(
 )
 ```
 
-## 5. Play and pause the video
+## 5. 비디오를 재생하고 일시 정지 {:#5-play-and-pause-the-video}
 
-By default, the video starts in a paused state. To begin playback,
-call the [`play()`][] method provided by the `VideoPlayerController`.
-To pause playback, call the [`pause()`][] method.
+기본적으로, 비디오는 일시 정지 상태에서 시작합니다. 
+재생을 시작하려면, `VideoPlayerController`에서 제공하는 [`play()`][] 메서드를 호출합니다. 
+재생을 일시 정지하려면, [`pause()`][] 메서드를 호출합니다.
 
-For this example,
-add a `FloatingActionButton` to your app that displays a play
-or pause icon depending on the situation.
-When the user taps the button,
-play the video if it's currently paused,
-or pause the video if it's playing.
+이 예에서는, 상황에 따라 재생 또는 일시 정지 아이콘을 표시하는 `FloatingActionButton`을 앱에 추가합니다. 
+사용자가 버튼을 탭하면, 현재 일시 정지된 경우 비디오를 재생하고, 재생 중인 경우 비디오를 일시 정지합니다.
 
 <?code-excerpt "lib/main.dart (FAB)" replace="/^floatingActionButton: //g;/^\),$/)/g"?>
 ```dart
 FloatingActionButton(
   onPressed: () {
-    // Wrap the play or pause in a call to `setState`. This ensures the
-    // correct icon is shown.
+    // 재생 또는 일시 정지를 `setState` 호출로 래핑합니다. 
+    // 이렇게 하면 올바른 아이콘이 표시됩니다.
     setState(() {
-      // If the video is playing, pause it.
+      // 동영상이 재생 중이면 일시 정지하세요.
       if (_controller.value.isPlaying) {
         _controller.pause();
       } else {
-        // If the video is paused, play it.
+        // 동영상이 일시 정지되어 있으면 재생하세요.
         _controller.play();
       }
     });
   },
-  // Display the correct icon depending on the state of the player.
+  // 플레이어의 상태에 따라 올바른 아이콘을 표시합니다.
   child: Icon(
     _controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
   ),
 )
 ```
 
-## Complete example
+## 완성된 예제 {:#complete-example}
 
 <?code-excerpt "lib/main.dart"?>
 ```dartpad title="Flutter video player hands-on example in DartPad" run="true"
@@ -286,25 +264,25 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   void initState() {
     super.initState();
 
-    // Create and store the VideoPlayerController. The VideoPlayerController
-    // offers several different constructors to play videos from assets, files,
-    // or the internet.
+    // VideoPlayerController를 생성하고 저장합니다. 
+    // VideoPlayerController는 assets, 파일 또는 인터넷에서 
+    // 비디오를 재생하기 위한 여러 가지 생성자를 제공합니다.
     _controller = VideoPlayerController.networkUrl(
       Uri.parse(
         'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4',
       ),
     );
 
-    // Initialize the controller and store the Future for later use.
+    // 컨트롤러를 초기화하고 나중에 사용할 수 있도록 Future를 저장합니다.
     _initializeVideoPlayerFuture = _controller.initialize();
 
-    // Use the controller to loop the video.
+    // 컨트롤러를 사용하여 비디오를 반복합니다.
     _controller.setLooping(true);
   }
 
   @override
   void dispose() {
-    // Ensure disposing of the VideoPlayerController to free up resources.
+    // VideoPlayerController를 삭제하여 리소스를 확보하세요.
     _controller.dispose();
 
     super.dispose();
@@ -316,22 +294,21 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
       appBar: AppBar(
         title: const Text('Butterfly Video'),
       ),
-      // Use a FutureBuilder to display a loading spinner while waiting for the
-      // VideoPlayerController to finish initializing.
+      // VideoPlayerController가 초기화를 완료할 때까지 
+      // 로딩 스피너를 표시하려면 FutureBuilder를 사용합니다.
       body: FutureBuilder(
         future: _initializeVideoPlayerFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
-            // If the VideoPlayerController has finished initialization, use
-            // the data it provides to limit the aspect ratio of the video.
+            // VideoPlayerController가 초기화를 완료하면, 
+            // 제공된 데이터를 사용하여 비디오의 종횡비를 제한합니다.
             return AspectRatio(
               aspectRatio: _controller.value.aspectRatio,
-              // Use the VideoPlayer widget to display the video.
+              // VideoPlayer 위젯을 사용하여 비디오를 표시하세요.
               child: VideoPlayer(_controller),
             );
           } else {
-            // If the VideoPlayerController is still initializing, show a
-            // loading spinner.
+            // VideoPlayerController가 아직 초기화 중이면, 로딩 스피너를 표시합니다.
             return const Center(
               child: CircularProgressIndicator(),
             );
@@ -340,19 +317,19 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // Wrap the play or pause in a call to `setState`. This ensures the
-          // correct icon is shown.
+          // 재생 또는 일시 정지를 `setState` 호출로 래핑합니다. 
+          // 이렇게 하면 올바른 아이콘이 표시됩니다.
           setState(() {
-            // If the video is playing, pause it.
+            // 동영상이 재생 중이면 일시 정지하세요.
             if (_controller.value.isPlaying) {
               _controller.pause();
             } else {
-              // If the video is paused, play it.
+              // 동영상이 일시 정지되어 있으면 재생하세요.
               _controller.play();
             }
           });
         },
-        // Display the correct icon depending on the state of the player.
+        // 플레이어의 상태에 따라 올바른 아이콘을 표시합니다.
         child: Icon(
           _controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
         ),

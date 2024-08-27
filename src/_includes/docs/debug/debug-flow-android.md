@@ -1,16 +1,14 @@
 :::note
-If you want to use the [GNU Project Debugger][] to debug the
-Flutter engine running within an Android app process,
-check out [`flutter_gdb`][].
+Android 앱 프로세스 내에서 실행되는 Flutter 엔진을 디버깅하기 위해, 
+[GNU Project Debugger][]를 사용하려면, [`flutter_gdb`][]를 확인하세요.
 :::
 
 [GNU Project Debugger]: https://www.sourceware.org/gdb/
 [`flutter_gdb`]: {{site.repo.engine}}/blob/main/sky/tools/flutter_gdb
 
-#### Build the Android version of the Flutter app in the Terminal
+#### 터미널에서 Flutter 앱의 Android 버전 빌드 {:#build-the-android-version-of-the-flutter-app-in-the-terminal}
 
-To generate the needed Android platform dependencies,
-run the `flutter build` command.
+필요한 Android 플랫폼 종속성을 생성하려면, `flutter build` 명령을 실행하세요.
 
 ```console
 flutter build appbundle --debug
@@ -23,24 +21,24 @@ Running Gradle task 'bundleDebug'...                               27.1s
 
 
 {% tabs %}
-{% tab "Start from VS Code" %}
+{% tab "VS Code로 시작하기" %}
 
-#### Start debugging with VS Code first {:#from-vscode-to-android-studio}
+#### 먼저 VS Code로 디버깅 시작하기 {:#from-vscode-to-android-studio}
 
-If you use VS Code to debug most of your code, start with this section.
+VS Code를 사용하여 대부분의 코드를 디버깅하는 경우, 이 섹션부터 시작하세요.
 
 {% include docs/debug/debug-flow-vscode-as-start.md %}
 
-#### Attach to the Flutter process in Android Studio
+#### Android Studio에서 Flutter 프로세스에 연결 {:#attach-to-the-flutter-process-in-android-studio}
 
 {% include docs/debug/debug-android-attach-process.md %}
 
 {% endtab %}
-{% tab "Start from Android Studio" %}
+{% tab "Android Studio로 시작하기" %}
 
-#### Start debugging with Android Studio first {:#from-android-studio}
+#### 먼저 Android Studio로 디버깅 시작하기 {:#from-android-studio}
 
-If you use Android Studio to debug most of your code, start with this section.
+Android Studio를 사용하여 대부분의 코드를 디버깅하는 경우, 이 섹션부터 시작하세요.
 
 {% include docs/debug/debug-flow-androidstudio-as-start.md %}
 

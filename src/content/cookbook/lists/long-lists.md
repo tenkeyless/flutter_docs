@@ -1,6 +1,8 @@
 ---
-title: Work with long lists
-description: Use ListView.builder to implement a long or infinite list.
+# title: Work with long lists
+title: 긴 리스트로 작업하기
+# description: Use ListView.builder to implement a long or infinite list.
+description: ListView.builder를 사용하여 길거나 무한한 리스트를 구현합니다.
 js:
   - defer: true
     url: /assets/js/inject_dartpad.js
@@ -8,34 +10,29 @@ js:
 
 <?code-excerpt path-base="cookbook/lists/long_lists/"?>
 
-The standard [`ListView`][] constructor works well
-for small lists. To work with lists that contain
-a large number of items, it's best to use the
-[`ListView.builder`][] constructor.
+표준 [`ListView`][] 생성자는 작은 리스트에 적합합니다. 
+많은 수의 아이템이 포함된 리스트를 사용하려면, [`ListView.builder`][] 생성자를 사용하는 것이 가장 좋습니다.
 
-In contrast to the default `ListView` constructor, which requires
-creating all items at once, the `ListView.builder()` constructor
-creates items as they're scrolled onto the screen.
+모든 아이템을 한 번에 만들어야 하는, 기본 `ListView` 생성자와 달리, 
+`ListView.builder()` 생성자는 아이템이 화면으로 스크롤될 때 아이템을 만듭니다.
 
-## 1. Create a data source
+## 1. 데이터 소스 생성 {:#1-create-a-data-source}
 
-First, you need a data source. For example, your data source
-might be a list of messages, search results, or products in a store.
-Most of the time, this data comes from the internet or a database.
+먼저, 데이터 소스가 필요합니다. 
+예를 들어, 데이터 소스는 메시지 리스트, 검색 결과 또는 매장의 제품일 수 있습니다. 
+대부분의 경우, 이 데이터는 인터넷이나 데이터베이스에서 제공됩니다.
 
-For this example, generate a list of 10,000 Strings using the
-[`List.generate`][] constructor.
+이 예에서는, [`List.generate`][] 생성자를 사용하여 10,000개의 문자열 리스트를 생성합니다.
 
 <?code-excerpt "lib/main.dart (Items)" replace="/^items: //g"?>
 ```dart
 List<String>.generate(10000, (i) => 'Item $i'),
 ```
 
-## 2. Convert the data source into widgets
+## 2. 데이터 소스를 위젯으로 변환 {:#2-convert-the-data-source-into-widgets}
 
-To display the list of strings, render each String as a widget
-using `ListView.builder()`.
-In this example, display each String on its own line.
+문자열 리스트를 표시하려면, `ListView.builder()`를 사용하여 각 문자열을 위젯으로 렌더링합니다. 
+이 예에서는, 각 문자열을 개별 줄에 표시합니다.
 
 <?code-excerpt "lib/main.dart (ListView)" replace="/^body: //g;/^\),$/)/g"?>
 ```dart
@@ -52,7 +49,7 @@ ListView.builder(
 )
 ```
 
-## Interactive example
+## 상호 작용 예제 {:#interactive-example}
 
 <?code-excerpt "lib/main.dart"?>
 ```dartpad title="Flutter create long list hands-on example in DartPad" run="true"
@@ -98,18 +95,18 @@ class MyApp extends StatelessWidget {
 }
 ```
 
-## Children's extent
+## 자식들의 범위 (Children's extent) {:#childrens-extent}
 
-To specify each item's extent, you can use either [`prototypeItem`][], [`itemExtent`][],
-or [`itemExtentBuilder`][].
+각 아이템의 범위를 지정하려면, 
+[`prototypeItem`][], [`itemExtent`][] 또는 [`itemExtentBuilder`][]를 사용할 수 있습니다.
 
-Specifying either is more efficient than letting the children determine their own extent
-because the scrolling machinery can make use of the foreknowledge of the children's
-extent to save work, for example when the scroll position changes drastically.
+둘 중 하나를 지정하는 것이 자식이 스스로 범위를 결정하도록 하는 것보다 효율적입니다. 
+스크롤링 기계가 자식의 범위에 대한 사전 지식을 활용하여 작업을 절약할 수 있기 때문입니다. 
+예를 들어, 스크롤 위치가 크게 변경될 때 말입니다.
 
-Use [`prototypeItem`][] or [`itemExtent`][] if your list has items of fixed size.
+리스트에 고정된 크기의 아이템이 있는 경우, [`prototypeItem`][] 또는 [`itemExtent`][]를 사용합니다.
 
-Use [`itemExtentBuilder`][] if your list has items of different sizes.
+리스트에 크기가 다른 아이템이 있는 경우, [`itemExtentBuilder`][]를 사용합니다.
 
 <noscript>
   <img src="/assets/images/docs/cookbook/long-lists.gif" alt="Long Lists Demo" class="site-mobile-screenshot" />

@@ -1,18 +1,16 @@
-1. Click the **Attach debugger to Android process** button.
+1. **Attach debugger to Android process** 버튼을 클릭합니다. 
    (![Tiny green bug superimposed with a light grey arrow](/assets/images/docs/testing/debugging/native/android-studio/attach-process-button.png))
 
     :::tip
-    If this button doesn't appear in the **Projects** menu bar, verify that
-    you opened Flutter _application_ project but _not a Flutter plugin_.
+    이 버튼이 **Projects** 메뉴 막대에 나타나지 않으면, 
+    Flutter _애플리케이션_ 프로젝트를 열었지만, _Flutter 플러그인은 열지 않았는지_ 확인하세요.
     :::
 
-1. The **process** dialog displays one entry for each connected device.
-   Select **show all processes** to display available processes for each
-   device.
+2. **process** 대화 상자는 연결된 각 장치에 대해 하나의 항목을 표시합니다. 
+   각 장치에 대해 사용 가능한 프로세스를 표시하려면, **show all processes**를 선택합니다.
 
-1. Choose the process to which you want to attach.
-   For this guide, select the `com.example.my_app` process
-   using the **Emulator Pixel_5_API_33**.
+3. 연결하려는 프로세스를 선택합니다. 
+   이 가이드에서는, **Emulator Pixel_5_API_33**을 사용하여 `com.example.my_app` 프로세스를 선택합니다.
 
 {% comment %}
 
@@ -33,9 +31,9 @@
    </div>
 {% endcomment %}
 
-1. Locate the tab for **Android Debugger** in the **Debug** pane.
+1. **Debug** 창에서 **Android Debugger** 탭을 찾으세요.
 
-1. In the **Project** pane, expand
+2. **Project** 창에서, 다음을 확장하세요.
    **my_app_android** <span aria-label="and then">></span>
    **android** <span aria-label="and then">></span>
    **app** <span aria-label="and then">></span>
@@ -44,8 +42,7 @@
    **java** <span aria-label="and then">></span>
    **io.flutter plugins**.
 
-1. Double click **GeneratedProjectRegistrant** to open the
-   Java code in the **Edit** pane.
+3. **GeneratedProjectRegistrant**를 두 번 클릭하여 **Edit** 창에서 Java 코드를 엽니다.
 
 {% comment %}
    !['The Android Project view highlighting the GeneratedPluginRegistrant.java file.'](/assets/images/docs/testing/debugging/native/android-studio/debug-open-java-code.png){:width="100%"}
@@ -56,10 +53,9 @@
    </div>
 {% endcomment %}
 
-At the end of this procedure, both the Dart and Android debuggers interact
-with the same process.
-Use either, or both, to set breakpoints, examine stack, resume execution
-and the like. In other words, debug!
+이 절차가 끝나면 Dart와 Android 디버거는 모두 동일한 프로세스와 상호 작용합니다. 
+둘 중 하나 또는 둘 다를 사용하여 중단점을 설정하고, 스택을 검사하고, 실행을 재개하는 등의 작업을 수행합니다. 
+즉, 디버그하세요!
 
 {% comment %}
 ![The Dart debug pane with two breakpoints set in `lib/main.dart`](/assets/images/docs/testing/debugging/native/dart-debugger.png){:width="100%"}

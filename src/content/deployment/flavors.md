@@ -1,155 +1,142 @@
 ---
-title: Create flavors of a Flutter app
-short-title: Flavors
+# title: Create flavors of a Flutter app
+title: Flutter 앱의 플레이버 만들기
+# short-title: Flavors
+short-title: 플레이버(Flavors)
+# description: >
+#   How to create build flavors specific to different
+#   release types or development environments.
 description: >
-  How to create build flavors specific to different
-  release types or development environments.
+  다양한 릴리스 타입이나 개발 환경에 맞는 빌드 플레이버를 만드는 방법.
 ---
 
-## What are flavors
+## 플레이버란 무엇인가요? {:#what-are-flavors}
 
-Have you ever wondered how to set up different environments in your Flutter app?
-Flavors (known as _build configurations_ in iOS and macOS), allow you (the developer) to
-create separate environments for your app using the same code base.
-For example, you might have one flavor for your full-fledged production app,
-another as a limited "free" app, another for testing experimental features, and so on.
+Flutter 앱에서 다양한 환경을 설정하는 방법에 대해 궁금해 본 적이 있나요? 
+플레이버(iOS 및 macOS에서 _빌드 구성(build configurations)_ 이라고 함)를 사용하면, 
+개발자가 동일한 코드 베이스를 사용하여 앱에 대해 별도의 환경을 만들 수 있습니다. 
+예를 들어, 본격적인 프로덕션 앱에 대한 플레이버 하나, 
+제한된 "무료" 앱으로 다른 플레이버 하나, 실험적 기능을 테스트하는 플레이버 하나 등을 사용할 수 있습니다.
 
-Say you want to make both free and paid versions of your Flutter app.
-You can use flavors to set up both app versions
-without writing two separate apps.
-For example, the free version of the app has basic functionality and ads.
-In contrast, the paid version has basic app functionality, extra features,
-different styles for paid users, and no ads.
+Flutter 앱의 무료 및 유료 버전을 모두 만들고 싶다고 가정해 보겠습니다. 
+두 개의 별도 앱을 작성하지 않고도, 플레이버를 사용하여 두 앱 버전을 설정할 수 있습니다. 
+예를 들어, 앱의 무료 버전에는 기본 기능과 광고가 있습니다. 
+반면, 유료 버전에는 기본 앱 기능, 추가 기능, 유료 사용자를 위한 다양한 스타일, 광고 없음이 있습니다.
 
-You also might use flavors for feature development.
-If you've built a new feature and want to try it out,
-you could set up a flavor to test it out.
-Your production code remains unaffected
-until you're ready to deploy your new feature.
+기능 개발에도 플레이버를 사용할 수 있습니다. 
+새 기능을 빌드하고 시도해 보고 싶다면, 플레이버를 설정하여 테스트할 수 있습니다. 
+새 기능을 배포할 준비가 될 때까지, 프로덕션 코드는 영향을 받지 않습니다.
 
-Flavors let you define compile-time configurations
-and set parameters that are read at runtime to customize
-your app's behavior.
+플레이버를 사용하면 컴파일 타임 구성을 정의하고, 
+런타임에 읽히는 매개변수를 설정하여 앱의 동작을 커스터마이즈 할 수 있습니다.
 
-This document guides you through setting up Flutter flavors for iOS, macOS, and Android.
+이 문서는 iOS, macOS 및 Android용 Flutter 플레이버를 설정하는 방법을 안내합니다.
 
-## Environment set up
+## 환경 설정 {:#environment-set-up}
 
-Prerequisites:
+필수 조건:
 
-* Xcode installed
-* An existing Flutter project
+* Xcode 설치
+* 기존 Flutter 프로젝트
 
-To set up flavors in iOS and macOS, you'll define build configurations in Xcode.
+iOS 및 macOS에서 플레이버를 설정하려면, Xcode에서 빌드 구성을 정의합니다.
 
-## Creating flavors in iOS and macOS
+## iOS 및 macOS에서 플레이버 만들기 {:#creating-flavors-in-ios-and-macos}
 
 <ol>
 <li>
 
-Open your project in Xcode.
+Xcode에서 프로젝트를 엽니다.
 
 </li>
 <li>
 
-Select **Product** > **Scheme** > **New Scheme** from the menu to
-add a new `Scheme`.
+메뉴에서 **Product** > **Scheme** > **New Scheme**을 선택하여 새 `Scheme`을 추가합니다.
 
-* A scheme describes how Xcode runs different actions.
-  For the purposes of this guide, the example _flavor_ and _scheme_ are
-  named `free`.
-  The build configurations in the `free` scheme
-  have the `-free` suffix.
+* 스킴은 Xcode가 다양한 작업을 실행하는 방식을 설명합니다. 
+  이 가이드의 목적을 위해, 예제 _flavor_ 와 _scheme_ 은 `free`로 명명되었습니다. 
+  `free` 스킴의 빌드 구성에는 `-free` 접미사가 붙습니다.
 
 </li>
 <li>
 
-Duplicate the build configurations to differentiate between the
-default configurations that are already available and the new configurations
-for the `free` scheme.
+이미 사용 가능한 기본 구성과 `free` 스키마의 새 구성을 구분하기 위해, 빌드 구성을 복제합니다.
 
-* Under the **Info** tab at the end of the **Configurations** dropdown list,
-  click the plus button and duplicate
-  each configuration name (Debug, Release, and Profile).
-  Duplicate the existing configurations, once for each environment.
+* **Configurations** 드롭다운 리스트의 끝에 있는 **Info** 탭에서, 더하기 버튼을 클릭하고, 
+  각 구성 이름(Debug, Release 및 Profile)을 복제합니다. 각 환경에 대해 한 번씩 기존 구성을 복제합니다.
 
 ![Step 3 Xcode image](/assets/images/docs/flavors/step3-ios-build-config.png){:width="100%"}
 
 :::note
-Your configurations should be based on your **Debug.xconfig** or **Release.xcconfig**
-file, not the **Pods-Runner.xcconfigs**. You can check this by expanding the configuration names.
+구성(configurations)은 **Pods-Runner.xcconfigs**가 아닌, 
+**Debug.xconfig** 또는 **Release.xcconfig** 파일을 기반으로 해야 합니다. 
+구성 이름을 확장하여 확인할 수 있습니다.
 :::
 
 </li>
 <li>
 
-To match the free flavor, add `-free`
-at the end of each new configuration name.
+free 플레이버와 맞추려면, 각각의 새로운 구성 이름 끝에 `-free`를 추가합니다.
 
 </li>
 <li>
 
-Change the `free` scheme to match the build configurations already created.
+`free` 스킴을 이미 생성된 빌드 구성과 일치하도록 변경합니다.
 
-* In the **Runner** project, click **Manage Schemes…** and a pop up window opens.
-* Double click the free scheme. In the next step
-  (as shown in the screenshot), you'll modify each scheme
-  to match its free build configuration:
+* **Runner** 프로젝트에서, **Manage Schemes…** 를 클릭하면 팝업 창이 열립니다.
+* free 스킴을 두 번 클릭합니다. 
+  다음 단계(스크린샷에 표시된 대로)에서, 각 스킴을 수정하여 free 빌드 구성과 일치시킵니다.
 
 ![Step 5 Xcode image](/assets/images/docs/flavors/step-5-ios-scheme-free.png){:width="100%"}
 
 </li>
 </ol>
 
-## Using flavors in iOS and macOS
+## iOS 및 macOS에서 플레이버 사용 {:#using-flavors-in-ios-and-macos}
 
-Now that you've set up your free flavor,
-you can, for example, add different product bundle identifiers per flavor.
-A _bundle identifier_ uniquely identifies your application.
-In this example, we set the **Debug-free** value to equal
-`com.flavor-test.free`.
+이제 free 플레이버를 설정했으므로, 예를 들어, 플레이버마다 다른 제품 번들 식별자를 추가할 수 있습니다. 
+_번들 식별자_ 는 애플리케이션을 고유하게 식별합니다. 
+이 예에서, 우리는 **Debug-free** 값을 `com.flavor-test.free`와 같게 설정합니다.
 
 <ol>
 <li>
 
-Change the app bundle identifier to differentiate between schemes.
-In **Product Bundle Identifier**, append `.free` to each -free scheme value.
+앱 번들 식별자를 변경하여 스키마를 구분합니다.
+**Product Bundle Identifier**에서, 각 -free 스키마 값에 `.free`를 추가합니다.
 
 ![Step 1 using flavors image.](/assets/images/docs/flavors/step-1-using-flavors-free.png){:width="100%"}
 
 </li>
 <li>
 
-In the **Build Settings**, set the **Product Name** value to match each flavor.
-For example, add Debug Free.
+**Build Settings**에서, **Product Name** 값을 각 플레이버와 일치하도록 설정합니다. 
+예를 들어, Debug Free를 추가합니다.
 
 ![Step 2 using flavors image.](/assets/images/docs/flavors/step-2-using-flavors-free.png){:width="100%"}
 
 </li>
 <li>
 
-Add the display name to **Info.plist**. Update the **Bundle Display Name**
-value to `$(PRODUCT_NAME)`.
+**Info.plist**에 표시 이름을 추가합니다. 
+**Bundle Display Name** 값을 `$(PRODUCT_NAME)`로 업데이트합니다.
 
 ![Step 3 using flavors image.](/assets/images/docs/flavors/step3-using-flavors.png){:width="100%"}
 
 </li>
 </ol>
 
-Now you have set up your flavor by making a `free` scheme
-in Xcode and setting the build configurations for that scheme.
+이제 Xcode에서 `free` 스킴을 만들고, 해당 스킴에 대한 빌드 구성을 설정하여 플레이버를 설정했습니다.
 
-For more information, skip to the [Launching your app flavors][]
-section at the end of this document.
+자세한 내용은, 이 문서의 끝에 있는 [앱 플레이버 시작][Launching your app flavors] 섹션으로 건너뛰세요.
 
-### Plugin configurations
+### 플러그인 구성 {:#plugin-configurations}
 
-If your app uses a Flutter plugin, you need to update
-`ios/Podfile` (if developing for iOS) and `macos/Podfile` (if developing for macOS).
+앱이 Flutter 플러그인을 사용하는 경우, 
+`ios/Podfile`(iOS용으로 개발하는 경우) 및 `macos/Podfile`(macOS용으로 개발하는 경우)을 업데이트해야 합니다.
 
-1. In `ios/Podfile` and `macos/Podfile`, change the default for
-   **Debug**, **Profile**, and **Release**
-   to match the Xcode build configurations for the `free` scheme.
+1. `ios/Podfile` 및 `macos/Podfile`에서, 
+   `free` 스킴에 대한 Xcode 빌드 구성과 일치하도록,
+   **Debug**, **Profile** 및 **Release**의 기본값을 변경합니다.
 
 ```ruby
 project 'Runner', {
@@ -159,24 +146,20 @@ project 'Runner', {
 }
 ```
 
-## Using flavors in Android
+## Android에서 플레이버 사용 {:#using-flavors-in-android}
 
-Setting up flavors in Android can be done in your project's
-**build.gradle** file.
+Android에서 플레이버를 설정하는 작업은 프로젝트의 **build.gradle** 파일에서 수행할 수 있습니다.
 
-1. Inside your Flutter project,
-   navigate to **android**/**app**/**build.gradle**.
+1. Flutter 프로젝트 내에서, **android**/**app**/**build.gradle**로 이동합니다.
 
-2. Create a [`flavorDimension`][] to group your added product flavors.
-   Gradle doesn't combine product flavors that share the same `dimension`.
+1. 추가한 제품 플레이버를 그룹화하기 위해 [`flavorDimension`][]을 만듭니다. 
+   Gradle은 동일한 `dimension`을 공유하는 제품 플레이버를 결합하지 않습니다.
 
-3. Add a `productFlavors` object with the desired flavors along
-   with values for **dimension**, **resValue**,
-   and **applicationId** or **applicationIdSuffix**.
+2. 원하는 플레이버와 함께 다음의 값을 포함하는 `productFlavors` 객체를 추가합니다.
+   **dimension**, **resValue**, **applicationId** 또는 **applicationIdSuffix** 
 
-   * The name of the application for each build is located in **resValue**.
-   * If you specify a **applicationIdSuffix** instead of a **applicationId**,
-     it is appended to the "base" application id.
+   * 각 빌드의 애플리케이션 이름은 **resValue**에 있습니다.
+   * **applicationId** 대신 **applicationIdSuffix**를 지정하면, "base" 애플리케이션 ID에 추가됩니다.
 
 {% tabs "android-build-language" %}
 {% tab "Kotlin" %}
@@ -219,18 +202,17 @@ android {
 
 [`flavorDimension`]: {{site.android-dev}}/studio/build/build-variants#flavor-dimensions
 
-## Setting up launch configurations
+## 시작(launch) 구성 설정 {:#setting-up-launch-configurations}
 
-Next, add a **launch.json** file; this allows you to run the command
-`flutter run --flavor [environment name]`.
+다음으로, **launch.json** 파일을 추가합니다. 
+이렇게 하면, `flutter run --flavor [environment name]` 명령을 실행할 수 있습니다.
 
-In VSCode, set up the launch configurations as follows:
+VSCode에서, 다음과 같이 실행 구성을 설정합니다.
 
-1. In the root directory of your project, add a folder called **.vscode**.
-2. Inside the **.vscode** folder, create a file named **launch.json**.
-3. In the **launch.json** file, add a configuration object for each flavor.
-   Each configuration has a **name**, **request**, **type**, **program**,
-   and **args** key.
+1. 프로젝트의 루트 디렉토리에, **.vscode**라는 폴더를 추가합니다.
+2. **.vscode** 폴더 내부에, **launch.json**이라는 파일을 만듭니다.
+3. **launch.json** 파일에서, 각 플레이버에 대한 구성 객체를 추가합니다. 
+   각 구성에는 **name**, **request**, **type**, **program**, **args** 키가 있습니다.
 
 ```json
 {
@@ -248,39 +230,33 @@ In VSCode, set up the launch configurations as follows:
 }
 ```
 
-You can now run the terminal command
-`flutter run --flavor free` or you can set up a run
-configuration in your IDE.
+이제 터미널 명령어 `flutter run --flavor free`를 실행하거나 IDE에서 실행 구성을 설정할 수 있습니다.
 
 {% comment %}
 TODO: When available, add an app sample.
 {% endcomment -%}
 
-## Launching your app flavors
+## 앱 플레이버 출시 {:#launching-your-app-flavors}
 
-1. Once the flavors are set up, modify the Dart code in
-**lib** / **main.dart** to consume the flavors.
-2. Test the setup using `flutter run --flavor free`
-at the command line, or in your IDE.
+1. 플레이버가 설정되면, **lib** / **main.dart**에 있는 Dart 코드를 수정하여 플레이버를 사용합니다.
+2. 명령줄이나 IDE에서 `flutter run --flavor free`를 사용하여 설정을 테스트합니다.
 
-For examples of build flavors for [iOS][], [macOS][], and [Android][],
-check out the integration test samples in the [Flutter repo][].
+[iOS][], [macOS][], [Android][]에 대한 빌드 플레이버의 예는, 
+[Flutter repo][]에서 통합 테스트 샘플을 확인하세요.
 
-## Retrieving your app's flavor at runtime
+## 런타임에 앱의 플레이버 검색 {:#retrieving-your-apps-flavor-at-runtime}
 
-From your Dart code, you can use the [`appFlavor`][] API to determine what
-flavor your app was built with.
+Dart 코드에서, [`appFlavor`][] API를 사용하여 앱이 어떤 플레이버로 빌드되었는지 확인할 수 있습니다.
 
-## Conditionally bundling assets based on flavor
+## 플레이버에 따라 assets을 조건부로 번들링 {:#conditionally-bundling-assets-based-on-flavor}
 
-If you aren't familiar with how to add assets to your app, see
-[Adding assets and images][].
+앱에 assets을 추가하는 방법을 잘 모르는 경우, [자산 및 이미지 추가][Adding assets and images]를 참조하세요.
 
-If you have assets that are only used in a specific flavor in your app, you can
-configure them to only be bundled into your app when building for that flavor.
-This prevents your app bundle size from being bloated by unused assets.
+앱에서 특정 플레이버에서만 사용되는 assets이 있는 경우, 
+해당 플레이버를 빌드할 때만 앱에 번들로 포함되도록 구성할 수 있습니다. 
+이렇게 하면 사용하지 않는 assets으로 인해 앱 번들 크기가 커지는 것을 방지할 수 있습니다.
 
-Here is an example:
+다음은 예입니다.
 
 ```yaml
 flutter:
@@ -294,24 +270,21 @@ flutter:
         - premium
 ```
 
-In this example, files within the `assets/common/` directory will always be bundled
-when app is built during `flutter run` or `flutter build`. Files within the
-`assets/free/` directory are bundled _only_ when the `--flavor` option is set
-to `free`. Similarly, files within the `assets/premium` directory are
-bundled _only_ if `--flavor` is set to `premium`.
+이 예에서, `assets/common/` 디렉토리 내의 파일은 `flutter run` 또는 `flutter build` 중에 앱이 빌드될 때 항상 번들로 묶입니다. 
+`assets/free/` 디렉토리 내의 파일은 `--flavor` 옵션이 `free`로 설정된 경우에만 번들로 묶입니다. 
+마찬가지로, `assets/premium` 디렉토리 내의 파일은 `--flavor`가 `premium`으로 설정된 경우에만 번들로 묶입니다.
 
-## More information
+## 더 많은 정보 {:#more-information}
 
-For more information on creating and using flavors, check out
-the following resources:
+플레이버 생성 및 사용에 대한 자세한 내용은 다음 리소스를 확인하세요.
 
-* [Build flavors in Flutter (Android and iOS) with different Firebase projects per flavor Flutter Ready to Go][]
-* [Flavoring Flutter Applications (Android & iOS)][]
-* [Flutter Flavors Setup with multiple Firebase Environments using FlutterFire and Very Good CLI][]
+* [플레이버당 다른 Firebase 프로젝트로 Flutter(Android 및 iOS)에서 플레이버 빌드 Flutter Ready to Go][Build flavors in Flutter (Android and iOS) with different Firebase projects per flavor Flutter Ready to Go]
+* [Flutter 애플리케이션 플레이버(Android 및 iOS)][Flavoring Flutter Applications (Android & iOS)]
+* [FlutterFire 및 Very Good CLI를 사용하여 여러 Firebase 환경에서 Flutter 플레이버 설정][Flutter Flavors Setup with multiple Firebase Environments using FlutterFire and Very Good CLI]
 
-### Packages
+### 패키지 {:#packages}
 
-For packages that support creating flavors, check out the following:
+플레이버 생성을 지원하는 패키지는 다음을 확인하세요.
 
 * [`flutter_flavor`][]
 * [`flutter_flavorizr`][]

@@ -1,94 +1,77 @@
 ---
-title: Staggered animations
-description: How to write a staggered animation in Flutter.
-short-title: Staggered
+# title: Staggered animations
+title: 단계적(Staggered) 애니메이션
+# description: How to write a staggered animation in Flutter.
+description: Flutter에서 단계적 애니메이션을 작성하는 방법.
+short-title: 단계적(Staggered)
 ---
 
-:::secondary What you'll learn
-* A staggered animation consists of sequential or overlapping
-    animations.
-* To create a staggered animation, use multiple `Animation` objects.
-* One `AnimationController` controls all of the `Animation`s.
-* Each `Animation` object specifies the animation during an `Interval`.
-* For each property being animated, create a `Tween`.
+:::secondary 학습할 내용
+* 단계적(Staggered) 애니메이션은 순차적이거나 겹치는 애니메이션으로 구성됩니다.
+* 단계적 애니메이션을 만들려면, 여러 개의 `Animation` 객체를 사용합니다.
+* 하나의 `AnimationController`가 모든 `Animation`을 제어합니다.
+* 각 `Animation` 객체는 `Interval` 동안 애니메이션을 지정합니다.
+* 애니메이션을 적용하는 각 속성에 대해, `Tween`을 만듭니다.
 :::
 
-:::tip Terminology
-If the concept of tweens or tweening is new to you, see the
-[Animations in Flutter tutorial][].
+:::tip 용어
+tweens 또는 tweening 개념이 생소하다면 [Flutter 튜토리얼의 애니메이션][Animations in Flutter tutorial]을 참조하세요.
 :::
 
-Staggered animations are a straightforward concept: visual changes
-happen as a series of operations, rather than all at once.
-The animation might be purely sequential, with one change occurring after
-the next, or it might partially or completely overlap. It might also
-have gaps, where no changes occur.
+단계적(Staggered) 애니메이션은 간단한 개념입니다. 시각적 변화는 한꺼번에 일어나는 것이 아니라, 일련의 작업으로 일어납니다. 
+애니메이션은 순전히 순차적일 수 있으며, 한 가지 변화가 다음 변화 이후에 발생하거나, 부분적으로 또는 완전히 겹칠 수 있습니다. 
+또한, 변화가 발생하지 않는 갭이 있을 수도 있습니다.
 
-This guide shows how to build a staggered animation in Flutter.
+이 가이드는 Flutter에서 단계적 애니메이션을 빌드하는 방법을 보여줍니다.
 
-:::secondary Examples
-This guide explains the basic_staggered_animation example.
-You can also refer to a more complex example,
-staggered_pic_selection.
+:::secondary 예제
+이 가이드에서는 basic_staggered_animation 예제를 설명합니다. 
+더 복잡한 예제인, staggered_pic_selection도 참조할 수 있습니다.
 
 [basic_staggered_animation][]
-: Shows a series of sequential and overlapping animations
-  of a single widget. Tapping the screen begins an animation
-  that changes opacity, size, shape, color, and padding.
+: 단일 위젯의 연속적이고 겹치는 일련의 애니메이션을 보여줍니다. 
+  화면을 탭하면 불투명도, 크기, 모양, 색상 및 패딩을 변경하는 애니메이션이 시작됩니다.
 
 [staggered_pic_selection][]
-: Shows deleting an image from a list of images displayed
-  in one of three sizes. This example uses two
-  [animation controllers][]: one for image selection/deselection,
-  and one for image deletion. The selection/deselection
-  animation is staggered. (To see this effect,
-  you might need to increase the `timeDilation` value.)
-  Select one of the largest images&mdash;it shrinks as it
-  displays a checkmark inside a blue circle.
-  Next, select one of the smallest images&mdash;the
-  large image expands as the checkmark disappears.
-  Before the large image has finished expanding,
-  the small image shrinks to display its checkmark.
-  This staggered behavior is similar to what you might
-  see in Google Photos.
+: 세 가지 크기 중 하나로 표시된 이미지 리스트에서 이미지를 삭제하는 것을 보여줍니다. 
+  이 예제에서는 두 개의 [animation controller][]를 사용합니다. 
+  (1) 하나는 이미지 선택/선택 해제용이고, (2) 다른 하나는 이미지 삭제용입니다. 
+  선택/선택 해제 애니메이션은 단계적입니다. (이 효과를 보려면, `timeDilation` 값을 늘려야 할 수도 있습니다.) 
+  가장 큰 이미지 중 하나를 선택합니다. 파란색 원 안에 체크 표시가 표시되면서 축소됩니다. 
+  그런 다음, 가장 작은 이미지 중 하나를 선택합니다. 체크 표시가 사라지면서 큰 이미지가 확장됩니다. 
+  큰 이미지가 확장을 완료하기 전에, 작은 이미지가 축소되어 체크 표시가 표시됩니다. 
+  이러한 단계적 동작은 Google Photos에서 볼 수 있는 것과 비슷합니다.
 :::
 
-The following video demonstrates the animation performed by
-basic_staggered_animation:
+다음 비디오는 basic_staggered_animation이 수행하는 애니메이션을 보여줍니다.
 
-{% ytEmbed '0fFvnZemmh8', 'Staggered animation example', true %}
+{% ytEmbed '0fFvnZemmh8', '단계적 애니메이션 예제', true %}
 
-In the video, you see the following animation of a single widget,
-which begins as a bordered blue square with slightly rounded corners.
-The square runs through changes in the following order:
+비디오에서, 모서리가 약간 둥근 테두리가 있는 파란색 사각형으로 시작하는, 단일 위젯의 다음 애니메이션을 볼 수 있습니다. 
+사각형은 다음 순서로 변경됩니다.
 
-1. Fades in
-1. Widens
-1. Becomes taller while moving upwards
-1. Transforms into a bordered circle
-1. Changes color to orange
+1. 페이드 인
+2. 넓어짐
+3. 위로 이동하면서 더 높아짐
+4. 테두리가 있는 원으로 변형
+5. 색상이 주황색으로 변경
 
-After running forward, the animation runs in reverse.
+앞으로 실행한 후, 애니메이션은 역순으로 실행됩니다.
 
-:::secondary New to Flutter?
-This page assumes you know how to create a layout using Flutter's
-widgets.  For more information, see [Building Layouts in Flutter][].
+:::secondary Flutter를 처음 사용하시나요?
+이 페이지에서는 Flutter 위젯을 사용하여 레이아웃을 만드는 방법을 알고 있다고 가정합니다. 
+자세한 내용은 [Flutter에서 레이아웃 구축][Building Layouts in Flutter]을 참조하세요.
 :::
 
-## Basic structure of a staggered animation
+## 단계적 애니메이션의 기본 구조 {:#basic-structure-of-a-staggered-animation}
 
-:::secondary What's the point?
-* All of the animations are driven by the same
-    [`AnimationController`][].
-* Regardless of how long the animation lasts in real time,
-    the controller's values must be between 0.0 and 1.0, inclusive.
-* Each animation has an [`Interval`][]
-    between 0.0 and 1.0, inclusive.
-* For each property that animates in an interval, create a
-    [`Tween`][]. The `Tween` specifies the start and end
-    values for that property.
-* The `Tween` produces an [`Animation`][]
-    object that is managed by the controller.
+:::secondary 요점은 무엇인가요?
+* 모든 애니메이션은 동일한 [`AnimationController`][]에 의해 구동됩니다.
+* 애니메이션이 실시간으로 얼마나 오래 지속되든, 컨트롤러의 값은 0.0~1.0 사이여야 합니다.
+* 각 애니메이션에는 0.0~1.0 사이의 [`Interval`][]이 있습니다.
+* 간격으로 애니메이션을 적용하는 각 속성에 대해 [`Tween`][]을 만듭니다. 
+  * `Tween`은 해당 속성의 시작 및 종료 값을 지정합니다.
+* `Tween`은 컨트롤러가 관리하는 [`Animation`][] 객체를 생성합니다.
 :::
 
 {% comment %}
@@ -99,40 +82,31 @@ inner container around and an `Opacity` widget that's
 used to fade everything in and out.
 {% endcomment %}
 
-The following diagram shows the `Interval`s used in the
-[basic_staggered_animation][] example.
-You might notice the following characteristics:
+다음 다이어그램은 [basic_staggered_animation][] 예제에서 사용된 `Interval`을 보여줍니다. 
+다음과 같은 특징이 눈에 띄실 수 있습니다.
 
-* The opacity changes during the first 10% of the timeline.
-* A tiny gap occurs between the change in opacity,
-  and the change in width.
-* Nothing animates during the last 25% of the timeline.
-* Increasing the padding makes the widget appear to rise upward.
-* Increasing the border radius to 0.5,
-  transforms the square with rounded corners into a circle.
-* The padding and height changes occur during
-  the same exact interval, but they don't have to.
+* 불투명도는 타임라인의 처음 10% 동안 변경됩니다.
+* 불투명도의 변화와 너비의 변화 사이에 작은 간격이 발생합니다.
+* 타임라인의 마지막 25% 동안은 아무것도 애니메이션화되지 않습니다.
+* 패딩을 늘리면 위젯이 위로 올라가는 것처럼 보입니다.
+* 테두리 반경을 0.5로 늘리면, 모서리가 둥근 사각형이 원으로 변환됩니다.
+* 패딩과 높이의 변화는 정확히 같은 간격 동안 발생하지만 반드시 그럴 필요는 없습니다.
 
 ![Diagram showing the interval specified for each motion](/assets/images/docs/ui/animations/StaggeredAnimationIntervals.png)
 
-To set up the animation:
+애니메이션을 설정하려면:
 
-* Create an `AnimationController` that manages all of the
-  `Animations`.
-* Create a `Tween` for each property being animated.
-  * The `Tween` defines a range of values.
-  * The `Tween`'s `animate` method requires the
-    `parent` controller, and produces an `Animation`
-    for that property.
-* Specify the interval on the `Animation`'s `curve` property.
+* 모든 `Animations`를 관리하는 `AnimationController`를 만듭니다.
+* 애니메이션을 적용하는 각 속성에 대해 `Tween`을 만듭니다.
+  * `Tween`은 값 범위를 정의합니다.
+  * `Tween`의 `animate` 메서드는 `parent` 컨트롤러를 필요로 하며, 해당 속성에 대해 `Animation`을 생성합니다.
+* `Animation`의 `curve` 속성에 간격을 지정합니다.
 
-When the controlling animation's value changes,
-the new animation's value changes, triggering the UI to update.
+제어하는 애니메이션의 값이 변경되면, 새 애니메이션의 값이 변경되어, UI가 업데이트됩니다.
 
-The following code creates a tween for the `width` property.
-It builds a [`CurvedAnimation`][],
-specifying an eased curve. See [`Curves`][] for
-other available pre-defined animation curves.
+다음 코드는 `width` 속성에 대한 트윈을 만듭니다. 
+[`CurvedAnimation`][]을 빌드하여 완화된 곡선(eased curve)을 지정합니다. 
+사용 가능한 다른 사전 정의된 애니메이션 곡선은 [`Curves`][]를 참조하세요.
 
 ```dart
 width = Tween<double>(
@@ -150,10 +124,8 @@ width = Tween<double>(
 ),
 ```
 
-The `begin` and `end` values don't have to be doubles.
-The following code builds the tween for the `borderRadius` property
-(which controls the roundness of the square's corners),
-using `BorderRadius.circular()`.
+`begin`과 `end` 값은 double일 필요가 없습니다. 
+다음 코드는 `borderRadius` 속성(사각형 모서리의 둥글기를 제어)에 대한 트윈을 `BorderRadius.circular()`를 사용하여 빌드합니다.
 
 ```dart
 borderRadius = BorderRadiusTween(
@@ -171,43 +143,32 @@ borderRadius = BorderRadiusTween(
 ),
 ```
 
-### Complete staggered animation
+### 단계적 애니메이션 완성 {:#complete-staggered-animation}
 
-Like all interactive widgets, the complete animation consists
-of a widget pair: a stateless and a stateful widget.
+모든 상호 작용 위젯과 마찬가지로, 완전한 애니메이션은 위젯 쌍으로 구성됩니다. stateless 위젯과 stateful 위젯입니다.
 
-The stateless widget specifies the `Tween`s,
-defines the `Animation` objects, and provides a `build()` function
-responsible for building the animating portion of the widget tree.
+stateless 위젯은 `Tween`을 지정하고, `Animation` 객체를 정의하고, 
+위젯 트리의 애니메이션 부분을 빌드하는 `build()` 함수를 제공합니다.
 
-The stateful widget creates the controller, plays the animation,
-and builds the non-animating portion of the widget tree.
-The animation begins when a tap is detected anywhere in the screen.
+stateful 위젯은 컨트롤러를 생성하고, 애니메이션을 재생하고, 위젯 트리의 애니메이션이 아닌 부분을 빌드합니다. 
+애니메이션은 화면의 어느 곳에서나 탭이 감지되면 시작됩니다.
 
-[Full code for basic_staggered_animation's main.dart][]
+[basic_staggered_animation의 main.dart에 대한 전체 코드][Full code for basic_staggered_animation's main.dart]
 
-### Stateless widget: StaggerAnimation
+### Stateless 위젯: StaggerAnimation {:#stateless-widget-staggeranimation}
 
-In the stateless widget, `StaggerAnimation`,
-the `build()` function instantiates an
-[`AnimatedBuilder`][]&mdash;a general purpose widget for building
-animations. The `AnimatedBuilder`
-builds a widget and configures it using the `Tweens`' current values.
-The example creates a function named `_buildAnimation()` (which performs
-the actual UI updates), and assigns it to its `builder` property.
-AnimatedBuilder listens to notifications from the animation controller,
-marking the widget tree dirty as values change.
-For each tick of the animation, the values are updated,
-resulting in a call to `_buildAnimation()`.
+stateless 위젯인 `StaggerAnimation`에서, `build()` 함수는 (애니메이션을 빌드하기 위한 범용 위젯인) [`AnimatedBuilder`][]를 인스턴스화합니다. 
+`AnimatedBuilder`는 위젯을 빌드하고 `Tweens`의 현재 값을 사용하여 구성합니다. 
+이 예제에서는 `_buildAnimation()`(실제 UI 업데이트를 수행)이라는 함수를 생성하고, `builder` 속성에 할당합니다. 
+AnimatedBuilder는 애니메이션 컨트롤러의 알림을 수신하여, 값이 변경되면 위젯 트리를 더티(dirty)로 표시합니다. 
+애니메이션의 각 틱에 대해 값이 업데이트되어, `_buildAnimation()`이 호출됩니다.
 
 ```dart
 [!class StaggerAnimation extends StatelessWidget!] {
   StaggerAnimation({super.key, required this.controller}) :
 
-    // Each animation defined here transforms its value during the subset
-    // of the controller's duration defined by the animation's interval.
-    // For example the opacity animation transforms its value during
-    // the first 10% of the controller's duration.
+    // 여기에 정의된 각 애니메이션은 애니메이션 interval로 정의된 컨트롤러 duration의 subset 동안 값을 변환합니다. 
+    // 예를 들어, opacity 애니메이션은 컨트롤러 duration의 처음 10% 동안 값을 변환합니다.
 
     [!opacity = Tween<double>!](
       begin: 0.0,
@@ -223,7 +184,7 @@ resulting in a call to `_buildAnimation()`.
       ),
     ),
 
-    // ... Other tween definitions ...
+    // ... 기타 tween 정의 ...
     );
 
   [!final AnimationController controller;!]
@@ -234,9 +195,8 @@ resulting in a call to `_buildAnimation()`.
   [!final Animation<BorderRadius?> borderRadius;!]
   [!final Animation<Color?> color;!]
 
-  // This function is called each time the controller "ticks" a new frame.
-  // When it runs, all of the animation's values will have been
-  // updated to reflect the controller's current value.
+  // 이 함수는 컨트롤러가 새 프레임을 "틱"할 때마다 호출됩니다. 
+  // 실행되면, 모든 애니메이션 값이 컨트롤러의 현재 값을 반영하도록 업데이트됩니다.
   [!Widget _buildAnimation(BuildContext context, Widget? child)!] {
     return Container(
       padding: padding.value,
@@ -269,13 +229,12 @@ resulting in a call to `_buildAnimation()`.
 }
 ```
 
-### Stateful widget: StaggerDemo
+### Stateful 위젯: StaggerDemo {:#stateful-widget-staggerdemo}
 
-The stateful widget, `StaggerDemo`, creates the `AnimationController`
-(the one who rules them all), specifying a 2000 ms duration. It plays
-the animation, and builds the non-animating portion of the widget tree.
-The animation begins when a tap is detected in the screen.
-The animation runs forward, then backward.
+stateful 위젯인 `StaggerDemo`는 `AnimationController`(모든 것을 지배하는 컨트롤러)를 생성하여, 2000ms duration을 지정합니다. 
+애니메이션을 재생하고, 위젯 트리의 애니메이션이 아닌 부분을 빌드합니다. 
+애니메이션은 화면에서 탭이 감지되면 시작됩니다. 
+애니메이션은 앞으로 실행된 다음, 뒤로 실행됩니다.
 
 ```dart
 [!class StaggerDemo extends StatefulWidget!] {
@@ -304,13 +263,13 @@ class _StaggerDemoState extends State<StaggerDemo>
       [!await _controller.forward().orCancel;!]
       [!await _controller.reverse().orCancel;!]
     } on TickerCanceled {
-      // The animation got canceled, probably because it was disposed of.
+      // 애니메이션은 취소되었는데, 아마도 폐기되었기 때문일 겁니다.
     }
   }
 
   @override
   [!Widget build(BuildContext context)!] {
-    timeDilation = 10.0; // 1.0 is normal animation speed.
+    timeDilation = 10.0; // 1.0은 일반적인 애니메이션 속도입니다.
     return Scaffold(
       appBar: AppBar(
         title: const Text('Staggered Animation'),

@@ -1,35 +1,35 @@
 ---
-title: Adding an iOS App Clip target
-description: How to add an iOS App Clip target to your Flutter project.
+# title: Adding an iOS App Clip target
+title: iOS 앱 클립 대상 추가
+# description: How to add an iOS App Clip target to your Flutter project.
+description: Flutter 프로젝트에 iOS 앱 클립 대상을 추가하는 방법.
 ---
 
 :::important
-Targeting iOS 16 increases the uncompressed IPA payload size limit
-to 15MB. Depending on the size of your app, you might hit the limit. ([#71098][]).
+iOS 16을 타겟팅하면 압축되지 않은 IPA 페이로드 크기 제한이 15MB로 늘어납니다. 
+앱 크기에 따라 제한에 도달할 수 있습니다. ([#71098][]).
 :::
 
-This guide describes how to manually add another
-Flutter-rendering iOS App Clip target to your
-existing Flutter project or [add-to-app][] project.
+이 가이드에서는 기존 Flutter 프로젝트나 [add-to-app][] 프로젝트에, 
+다른 Flutter 렌더링 iOS 앱 클립 대상을 수동으로 추가하는 방법을 설명합니다.
 
 [#71098]: {{site.repo.flutter}}/issues/71098
 [add-to-app]: /add-to-app
 
 :::warning
-This is an advanced guide and is best intended
-for audience with a working knowledge of iOS development.
+이 가이드는 고급 가이드이며 iOS 개발에 대한 실무 지식이 있는 독자를 대상으로 합니다.
 :::
 
-To see a working sample, see the [App Clip sample][] on GitHub.
+실제 샘플을 보려면 GitHub의 [앱 클립 샘플][App Clip sample]을 참조하세요.
 
 [App Clip sample]: {{site.repo.samples}}/tree/main/ios_app_clip
 
-## Step 1 - Open project
+## 1단계 - 프로젝트 열기 {:#step-1-open-project}
 
 Open your iOS Xcode project, such as
 `ios/Runner.xcworkspace` for full-Flutter apps.
 
-## Step 2 - Add an App Clip target
+## 2단계 - 앱 클립 대상 추가 {:#step-2-add-an-app-clip-target}
 
 **2.1**
 
@@ -75,7 +75,7 @@ Drag **Embedded App Clips** to above **Thin Binary**.
 {% render docs/app-figure.md, image:"development/platform-integration/ios-app-clip/embedded-app-clips.png" %}
 
 <a id="step-3"></a>
-## Step 3 - Remove unneeded files
+## 3단계 - 불필요한 파일 제거 {:#step-3-remove-unneeded-files}
 
 **3.1**
 
@@ -105,7 +105,7 @@ Delete the entire dictionary entry for
 
 {% render docs/app-figure.md, image:"development/platform-integration/ios-app-clip/scene-manifest.png" %}
 
-## Step 4 - Share build configurations
+## 4단계 - 빌드 구성 공유 {:#step-4-share-build-configurations}
 
 This step isn't necessary for add-to-app projects
 since add-to-app projects have their custom build
@@ -139,9 +139,9 @@ In the App Clip group's `Info.plist` file, set:
 * `Build version string (short)` to `$(FLUTTER_BUILD_NAME)`
 * `Bundle version` to `$(FLUTTER_BUILD_NUMBER)`
 
-## Step 5 - Share code and assets
+## 5단계 - 코드 및 assets 공유 {:#step-5-share-code-and-assets}
 
-### Option 1 - Share everything
+### 옵션 1 - 모든 것을 공유 {:#option-1-share-everything}
 
 Assuming the intent is to show the same Flutter UI
 in the standard app as in the App Clip,
@@ -156,7 +156,7 @@ checkbox group.
 
 {% render docs/app-figure.md, image:"development/platform-integration/ios-app-clip/add-target-membership.png" %}
 
-### Option 2 - Customize Flutter launch for App Clip
+### 옵션 2 - 앱 클립을 위한 Flutter 실행 커스터마이즈 {:#option-2-customize-flutter-launch-for-app-clip}
 
 In this case,
 do not delete everything listed in [Step 3](#step-3).
@@ -167,7 +167,7 @@ For example to show a [custom Flutter route][].
 [custom Flutter route]: /add-to-app/ios/add-flutter-screen#route
 [iOS add-to-app APIs]: /add-to-app/ios/add-flutter-screen
 
-## Step 6 - Add App Clip associated domains
+## 6단계 - 앱 클립 관련 도메인 추가 {:#step-6-add-app-clip-associated-domains}
 
 This is a standard step for App Clip development.
 See the [official Apple documentation][].
@@ -209,7 +209,7 @@ created for the main app.
 
 {% render docs/app-figure.md, image:"development/platform-integration/ios-app-clip/main-app-entitlements-setting.png" %}
 
-## Step 7 - Integrate Flutter
+## 7단계 - Flutter 통합 {:#step-7-integrate-flutter}
 
 These steps are not necessary for add-to-app.
 
@@ -270,7 +270,7 @@ the same as the main app target's build phases.
 This ensures that your Flutter app and engine are embedded
 into the App Clip bundle.
 
-## Step 8 - Integrate plugins
+## 8단계 - 플러그인 통합 {:#step-8-integrate-plugins}
 
 **8.1**
 
@@ -335,7 +335,7 @@ cd ios
 pod install
 ```
 
-## Run
+## 실행 {:#run}
 
 You can now run your App Clip target from Xcode by
 selecting your App Clip target from the scheme drop-down,
@@ -349,7 +349,7 @@ also consult Apple's doc on
 
 [testing]: {{site.apple-dev}}/documentation/app_clips/testing_your_app_clip_s_launch_experience
 
-## Debugging, hot reload
+## 디버깅, 핫 리로드 {:#debugging-hot-reload}
 
 Unfortunately `flutter attach` cannot auto-discover
 the Flutter session in an App Clip due to

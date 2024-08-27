@@ -1,8 +1,10 @@
 ---
-title: Layouts in Flutter
-short-title: Layout
-description: Learn how Flutter's layout mechanism works and how to build a layout.
-diff2html: true
+# title: Layouts in Flutter
+title: Flutter의 레이아웃
+# short-title: Layout
+short-title: 레이아웃
+# description: Learn how Flutter's layout mechanism works and how to build a layout.
+description: Flutter의 레이아웃 메커니즘이 작동하는 방식과 레이아웃을 구축하는 방법을 알아보세요.
 ---
 
 {% assign api = site.api | append: '/flutter' -%}
@@ -12,23 +14,20 @@ diff2html: true
 
 <style>dl, dd { margin-bottom: 0; }</style>
 
-:::secondary What's the point?
-* Widgets are classes used to build UIs.
-* Widgets are used for both layout and UI elements.
-* Compose simple widgets to build complex widgets.
+:::secondary 요점은 무엇인가요?
+* 위젯은 UI를 빌드하는 데 사용되는 클래스입니다.
+* 위젯은 레이아웃과 UI 요소 모두에 사용됩니다.
+* 간단한 위젯을 구성하여, 복잡한 위젯을 빌드합니다.
 :::
 
-The core of Flutter's layout mechanism is widgets.
-In Flutter, almost everything is a widget&mdash;even
-layout models are widgets. The images, icons,
-and text that you see in a Flutter app are all widgets.
-But things you don't see are also widgets,
-such as the rows, columns, and grids that arrange,
-constrain, and align the visible widgets.
+Flutter 레이아웃 메커니즘의 핵심은 위젯입니다. 
+Flutter에서는, 거의 모든 것이 위젯입니다. (심지어 레이아웃 모델도 위젯입니다.) 
+Flutter 앱에서 보이는 이미지, 아이콘, 텍스트는 모두 위젯입니다. 
+하지만 보이지 않는 것도 위젯입니다. 
+예를 들어, 행, 열, (보이는 위젯을 배치하고 제한하며, 정렬하는) 그리드가 있습니다.
 
-You create a layout by composing widgets to build more complex widgets.
-For example, the first screenshot below shows 3 icons with a label
-under each one:
+위젯을 구성하여, 더 복잡한 위젯을 빌드하여 레이아웃을 만듭니다. 
+예를 들어, 아래 첫 번째 스크린샷은 각각 아래에 레이블이 있는 3개의 아이콘을 보여줍니다.
 
 <div class="row mb-4">
   <div class="col-12 text-center">
@@ -37,67 +36,54 @@ under each one:
   </div>
 </div>
 
-The second screenshot displays the visual layout, showing a row of
-3 columns where each column contains an icon and a label.
+두 번째 스크린샷은 시각적 레이아웃을 보여줍니다. 
+각 열에 아이콘과 레이블이 포함된 3개 열의 행이 표시됩니다.
 
 :::note
-Most of the screenshots in this tutorial are displayed with
-`debugPaintSizeEnabled` set to `true` so you can see the visual layout.
-For more information, see
-[Debugging layout issues visually][], a section in
-[Using the Flutter inspector][].
+이 튜토리얼의 스크린샷 대부분은 `debugPaintSizeEnabled`를 `true`로 설정하여 표시되므로, 시각적 레이아웃을 볼 수 있습니다. 자세한 내용은, [Flutter 인스펙터 사용][Using the Flutter inspector]의 섹션인 [시각적으로 레이아웃 이슈 디버깅][Debugging layout issues visually]을 참조하세요.
 :::
 
-Here's a diagram of the widget tree for this UI:
+이 UI의 위젯 트리 다이어그램은 다음과 같습니다.
 
 <img src='/assets/images/docs/ui/layout/sample-flutter-layout.png' class="mw-100 text-center" alt="Node tree">
 
-Most of this should look as you might expect, but you might be wondering
-about the containers (shown in pink). [`Container`][] is a widget class
-that allows you to customize its child widget. Use a `Container` when
-you want to add padding, margins, borders, or background color,
-to name some of its capabilities.
+대부분은 예상대로 보일 것이지만, 컨테이너(분홍색으로 표시)에 대해 궁금할 수 있습니다. 
+[`Container`][]는 자식 위젯을 커스터마이즈 할 수 있는 위젯 클래스입니다. 
+패딩, 여백, 테두리 또는 배경색을 추가하려는 경우, `Container`를 사용하여, 일부 기능을 지정할 수 있습니다.
 
-In this example, each [`Text`][] widget is placed in a `Container`
-to add margins. The entire [`Row`][] is also placed in a
-`Container` to add padding around the row.
+이 예에서, 각 [`Text`][] 위젯은 여백을 추가하기 위해 `Container`에 배치됩니다. 
+전체 [`Row`][]도 행 주위에 패딩을 추가하기 위해 `Container`에 배치됩니다.
 
-The rest of the UI in this example is controlled by properties.
-Set an [`Icon`][]'s color using its `color` property.
-Use the `Text.style` property to set the font, its color, weight, and so on.
-Columns and rows have properties that allow you to specify how their
-children are aligned vertically or horizontally, and how much space
-the children should occupy.
+이 예에서 나머지 UI는 속성으로 제어됩니다. 
+`color` 속성을 사용하여 [`Icon`][]의 색상을 설정합니다. 
+`Text.style` 속성을 사용하여 글꼴, 색상, 두께 등을 설정합니다. 
+열과 행에는 자식이 수직 또는 수평으로 정렬되는 방식과, 자식이 차지해야 하는 공간의 양을 지정할 수 있는 속성이 있습니다.
 
-## Lay out a widget
+## 위젯 레이아웃 {:#lay-out-a-widget}
 
-How do you lay out a single widget in Flutter? This section
-shows you how to create and display a simple widget.
-It also shows the entire code for a simple Hello World app.
+Flutter에서 단일 위젯을 어떻게 배치하나요? 
+이 섹션에서는 간단한 위젯을 만들고 표시하는 방법을 보여줍니다. 
+또한 간단한 Hello World 앱의 전체 코드도 보여줍니다.
 
-In Flutter, it takes only a few steps to put text, an icon,
-or an image on the screen.
+Flutter에서는, 몇 단계만 거치면 텍스트, 아이콘 또는 이미지를 화면에 배치할 수 있습니다.
 
-### 1. Select a layout widget
+### 1. 레이아웃 위젯 선택 {:#1-select-a-layout-widget}
 
-Choose from a variety of [layout widgets][] based
-on how you want to align or constrain the visible widget,
-as these characteristics are typically passed on to the
-contained widget.
+표시되는 위젯을 정렬하거나 제한하는 방법에 따라 다양한 [레이아웃 위젯][layout widgets] 중에서 선택하세요. 
+이러한 특성은 일반적으로 포함된 위젯으로 전달됩니다.
 
-This example uses [`Center`][] which centers its content
-horizontally and vertically.
+이 예에서는 [`Center`][]를 사용하여 콘텐츠를 수평 및 수직으로 가운데에 배치합니다.
 
-### 2. Create a visible widget
+### 2. 눈에 보이는 위젯 만들기 {:#2-create-a-visible-widget}
 
-For example, create a [`Text`][] widget:
+예를 들어, [`Text`][] 위젯을 만듭니다.
 
 <?code-excerpt "layout/base/lib/main.dart (text)" replace="/child: //g"?>
 ```dart
 Text('Hello World'),
 ```
 
-Create an [`Image`][] widget:
+[`Image`][] 위젯을 만듭니다.
 
 <?code-excerpt "layout/lakes/step5/lib/main.dart (image-asset)" remove="/width|height/"?>
 ```dart
@@ -107,7 +93,7 @@ return Image.asset(
 );
 ```
 
-Create an [`Icon`][] widget:
+[`Icon`][] 위젯을 만듭니다.
 
 <?code-excerpt "layout/lakes/step5/lib/main.dart (icon)"?>
 ```dart
@@ -117,18 +103,16 @@ Icon(
 ),
 ```
 
-### 3. Add the visible widget to the layout widget
+### 3. 레이아웃 위젯에 보이는 위젯 추가 {:#3-add-the-visible-widget-to-the-layout-widget}
 
 <?code-excerpt path-base="layout/base"?>
 
-All layout widgets have either of the following:
+모든 레이아웃 위젯에는 다음 중 하나가 있습니다.
 
-* A `child` property if they take a single child&mdash;for example,
-  `Center` or `Container`
-* A `children` property if they take a list of widgets&mdash;for example,
-  `Row`, `Column`, `ListView`, or `Stack`.
+* 단일 자식을 취하는 경우, `child` 속성 (예: `Center` 또는 `Container`)
+* 위젯 리스트를 취하는 경우, `children` 속성 (예: `Row`, `Column`, `ListView` 또는 `Stack`)
 
-Add the `Text` widget to the `Center` widget:
+`Text` 위젯을 `Center` 위젯에 추가합니다.
 
 <?code-excerpt "lib/main.dart (centered-text)" replace="/body: //g"?>
 ```dart
@@ -137,19 +121,16 @@ const Center(
 ),
 ```
 
-### 4. Add the layout widget to the page
+### 4. 페이지에 레이아웃 위젯 추가 {:#4-add-the-layout-widget-to-the-page}
 
-A Flutter app is itself a widget, and most widgets have a [`build()`][]
-method. Instantiating and returning a widget in the app's `build()` method
-displays the widget.
+Flutter 앱 자체가 위젯이고, 대부분의 위젯에는 [`build()`][] 메서드가 있습니다. 
+앱의 `build()` 메서드에서 위젯을 인스턴스화하고 반환하면 위젯이 표시됩니다.
 
-#### Material apps
+#### Material 앱 {:#material-apps}
 
-For a `Material` app, you can use a [`Scaffold`][] widget;
-it provides a default banner, background color,
-and has API for adding drawers, snack bars, and bottom sheets.
-Then you can add the `Center` widget directly to the `body`
-property for the home page.
+`Material` 앱의 경우, [`Scaffold`][] 위젯을 사용할 수 있습니다. 
+여기에는 기본 배너, 배경색을 제공하고, drawers, 스낵바, 바텀 시트를 추가하기 위한 API가 있습니다. 
+그런 다음, `Center` 위젯을 홈 페이지의 `body` 속성에 직접 추가할 수 있습니다.
 
 <?code-excerpt path-base="layout/base"?>
 <?code-excerpt "lib/main.dart (my-app)"?>
@@ -176,34 +157,26 @@ class MyApp extends StatelessWidget {
 ```
 
 :::note
-The [Material library][] implements widgets that follow [Material
-Design][] principles. When designing your UI, you can exclusively use
-widgets from the standard [widgets library][], or you can use
-widgets from the Material library. You can mix widgets from both
-libraries, you can customize existing widgets,
-or you can build your own set of custom widgets.
+[Material 라이브러리][Material library]는 [Material Design][] 원칙을 따르는 위젯을 구현합니다. 
+UI를 디자인할 때, 
+표준 [위젯 라이브러리][widgets library]의 위젯만 사용하거나, Material 라이브러리의 위젯을 사용할 수 있습니다. 
+두 라이브러리의 위젯을 혼합하거나, 기존 위젯을 커스터마이즈하거나 커스텀 위젯 세트를 직접 빌드할 수 있습니다.
 :::
 
-#### Cupertino apps
+#### Cupertino 앱 {:#cupertino-apps}
 
-To create a `Cupertino` app, use `CupertinoApp` and [`CupertinoPageScaffold`][] widgets.
+`Cupertino` 앱을 만들려면, `CupertinoApp` 및 [`CupertinoPageScaffold`][] 위젯을 사용하세요.
 
-Unlike `Material`, it doesn't provide a default banner or background color.
-You need to set these yourself.
+`Material`과 달리, 기본 배너나 배경색을 제공하지 않습니다. 직접 설정해야 합니다.
 
-* To set default colors, pass in a configured [`CupertinoThemeData`][]
-  to your app's `theme` property.
-* To add an iOS-styled navigation bar to the top of your app, add a
-  [`CupertinoNavigationBar`][] widget to the `navigationBar`
-  property of your scaffold.
-  You can use the colors that [`CupertinoColors`][] provides to
-  configure your widgets to match iOS design.
+* 기본 색상을 설정하려면, 구성된 [`CupertinoThemeData`][]를 앱의 `theme` 속성에 전달합니다.
+* 앱 상단에 iOS 스타일의 네비게이션 바를 추가하려면, 
+  [`CupertinoNavigationBar`][] 위젯을 scaffold의 `navigationBar` 속성에 추가합니다. 
+  [`CupertinoColors`][]가 제공하는 색상을 사용하여 위젯을 iOS 디자인과 일치하도록 구성할 수 있습니다.
+* 앱의 body를 레이아웃 하려면, 
+  scaffold의 `child` 속성을 `Center` 또는 `Column`과 같이 원하는 위젯을 값으로 설정합니다.
 
-* To lay out the body of your app, set the `child` property of your scaffold
-  with the desired widget as its value, like `Center` or `Column`.
-
-To learn what other UI components you can add, check out the
-[Cupertino library][].
+추가할 수 있는 다른 UI 구성 요소를 알아보려면, [Cupertino 라이브러리][Cupertino library]를 확인하세요.
 
 <?code-excerpt "lib/cupertino.dart (my-app)"?>
 ```dart
@@ -238,12 +211,9 @@ class MyApp extends StatelessWidget {
 ```
 
 :::note
-The [Cupertino library][] implements widgets that follow
-[Apple's Human Interface Guidelines for iOS][].
-When designing your UI, you can use
-widgets from the standard [widgets library][], or the Cupertino library.
-You can mix widgets from both libraries, you can customize existing widgets,
-or you can build your own set of custom widgets.
+[Cupertino 라이브러리][Cupertino library]는 [iOS용 Apple의 휴먼 인터페이스 가이드라인][Apple's Human Interface Guidelines for iOS]을 따르는 위젯을 구현합니다. 
+UI를 디자인할 때, 표준 [위젯 라이브러리][widgets library] 또는 Cupertino 라이브러리의 위젯을 사용할 수 있습니다. 
+두 라이브러리의 위젯을 혼합하거나 기존 위젯을 커스터마이즈하거나, 커스텀 위젯 세트를 직접 빌드할 수 있습니다.
 :::
 
 [`CupertinoColors`]: {{api}}/cupertino/CupertinoColors-class.html
@@ -251,10 +221,9 @@ or you can build your own set of custom widgets.
 [`CupertinoNavigationBar`]: {{api}}/cupertino/CupertinoNavigationBar-class.html
 [Apple's Human Interface Guidelines for iOS]: {{site.apple-dev}}/design/human-interface-guidelines/designing-for-ios
 
-#### Non-Material apps
+#### Non-Material 앱 {:#non-material-apps}
 
-For a non-Material app, you can add the `Center` widget to the app's
-`build()` method:
+Material이 아닌 앱의 경우, 앱의 `build()` 메서드에 `Center` 위젯을 추가할 수 있습니다.
 
 <?code-excerpt path-base="layout/non_material"?>
 <?code-excerpt "lib/main.dart (my-app)"?>
@@ -281,20 +250,19 @@ class MyApp extends StatelessWidget {
 }
 ```
 
-By default, a non-Material app doesn't include an `AppBar`, title,
-or background color. If you want these features in a non-Material app,
-you have to build them yourself. This app changes the background
-color to white and the text to dark grey to mimic a Material app.
+기본적으로 non-Material 앱에는 `AppBar`, 제목 또는 배경색이 포함되지 않습니다. 
+non-Material 앱에서 이러한 기능을 원하면 직접 빌드해야 합니다. 
+이 앱은 Material 앱을 모방하기 위해 배경색을 흰색으로, 텍스트를 진한 회색으로 변경합니다.
 
 <div class="row">
 <div class="col-md-6">
 
-  That's it! When you run the app, you should see _Hello World_.
+  그게 다입니다! 앱을 실행하면 _Hello World_ 가 표시되어야 합니다.
 
-  App source code:
+  앱 소스 코드:
 
-  * [Material app]({{examples}}/layout/base)
-  * [Non-Material app]({{examples}}/layout/non_material)
+  * [Material 앱]({{examples}}/layout/base)
+  * [Non-Material 앱]({{examples}}/layout/non_material)
 
 </div>
 <div class="col-md-6">
@@ -304,67 +272,61 @@ color to white and the text to dark grey to mimic a Material app.
 
 <hr>
 
-## Lay out multiple widgets vertically and horizontally
+## 여러 위젯을 수직 및 수평으로 레이아웃 {:#lay-out-multiple-widgets-vertically-and-horizontally}
 
 <?code-excerpt path-base=""?>
 
-One of the most common layout patterns is to arrange
-widgets vertically or horizontally. You can use a
-`Row` widget to arrange widgets horizontally,
-and a `Column` widget to arrange widgets vertically.
+가장 일반적인 레이아웃 패턴 중 하나는 위젯을 수직 또는 수평으로 배열하는 것입니다. 
+`Row` 위젯을 사용하여 위젯을 수평으로 배열하고, 
+`Column` 위젯을 사용하여 위젯을 수직으로 배열할 수 있습니다.
 
-:::secondary What's the point?
-* `Row` and `Column` are two of the most commonly used layout patterns.
-* `Row` and `Column` each take a list of child widgets.
-* A child widget can itself be a `Row`, `Column`,
-    or other complex widget.
-* You can specify how a `Row` or `Column` aligns its children,
-    both vertically and horizontally.
-* You can stretch or constrain specific child widgets.
-* You can specify how child widgets use the `Row`'s or
-    `Column`'s available space.
+:::secondary 요점은 무엇인가요?
+* `Row`와 `Column`은 가장 일반적으로 사용되는 두 가지 레이아웃 패턴입니다.
+* `Row`와 `Column`은 각각 자식 위젯 리스트를 취합니다.
+* 자식 위젯 자체는 `Row`, `Column` 또는 기타 복잡한 위젯이 될 수 있습니다.
+* `Row` 또는 `Column`이 자식을, 수직 및 수평으로, 정렬하는 방법을 지정할 수 있습니다.
+* 특정 자식 위젯을 늘리거나(stretch) 제한(constrain)할 수 있습니다.
+* 자식 위젯이 `Row` 또는 `Column`의 사용 가능한 공간을 사용하는 방법을 지정할 수 있습니다.
 :::
 
-To create a row or column in Flutter, you add a list of children
-widgets to a [`Row`][] or [`Column`][] widget. In turn,
-each child can itself be a row or column, and so on.
-The following example shows how it is possible to nest rows or
-columns inside of rows or columns.
+Flutter에서 행이나 열을 만들려면, 
+[`Row`][] 또는 [`Column`][] 위젯에 자식 위젯 리스트를 추가합니다. 
+그러면, 각 자식이 행이나 열이 될 수 있습니다. 
+다음 예에서는 행이나 열 안에 행이나 열을 중첩하는 방법을 보여줍니다.
 
-This layout is organized as a `Row`. The row contains two children:
-a column on the left, and an image on the right:
+이 레이아웃은 `Row`로 구성됩니다. 
+행에는 두 개의 자식이 있습니다. : 왼쪽에 열이 있고 오른쪽에 이미지가 있습니다.
 
 <img src='/assets/images/docs/ui/layout/pavlova-diagram.png' class="mw-100"
     alt="Screenshot with callouts showing the row containing two children">
 
-The left column's widget tree nests rows and columns.
+왼쪽 열의 위젯 트리는 행과 열을 중첩합니다.
 
 <img src='/assets/images/docs/ui/layout/pavlova-left-column-diagram.png' class="mw-100"
     alt="Diagram showing a left column broken down to its sub-rows and sub-columns">
 
-You'll implement some of Pavlova's layout code in
-[Nesting rows and columns](#nesting-rows-and-columns).
+[행과 열 중첩](#nesting-rows-and-columns)에서 Pavlova의 레이아웃 코드 중 일부를 구현해 보겠습니다.
 
 :::note
-`Row` and `Column` are basic primitive widgets for horizontal
-and vertical layouts&mdash;these low-level widgets allow for maximum
-customization. Flutter also offers specialized, higher level widgets
-that might be sufficient for your needs. For example,
-instead of `Row` you might prefer [`ListTile`][],
-an easy-to-use widget with properties for leading and trailing icons,
-and up to 3 lines of text.  Instead of Column, you might prefer
-[`ListView`][], a column-like layout that automatically scrolls
-if its content is too long to fit the available space.
-For more information, see [Common layout widgets][].
+`Row`와 `Column`은 가로 및 세로 레이아웃을 위한 기본적인 primitive 위젯입니다. 
+이러한 낮은 레벨 위젯은 최대한의 커스터마이즈를 허용합니다. 
+
+Flutter는 또한 귀하의 요구 사항에 충분할 수 있는 전문화된 높은 레벨 위젯을 제공합니다. 
+
+예를 들어, 
+
+* `Row` 대신 (leading 및 trailing 아이콘과 최대 3줄의 텍스트에 대한 속성이 있는 사용하기 쉬운 위젯인) [`ListTile`][]을 선호할 수 있습니다. 
+* `Column` 대신 (콘텐츠가 사용 가능한 공간에 맞지 않을 때 자동으로 스크롤되는 컬럼과 비슷한 레이아웃인) [`ListView`][]를 선호할 수 있습니다. 
+
+자세한 내용은 [일반적인 레이아웃 위젯][Common layout widgets]을 참조하세요.
 :::
 
-### Aligning widgets
+### 위젯 정렬 {:#aligning-widgets}
 
-You control how a row or column aligns its children using the
-`mainAxisAlignment` and `crossAxisAlignment` properties.
-For a row, the main axis runs horizontally and the cross axis runs
-vertically. For a column, the main axis runs vertically and the cross
-axis runs horizontally.
+`mainAxisAlignment` 및 `crossAxisAlignment` 속성을 사용하여, 
+행 또는 열이 자식을 정렬하는 방식을 제어합니다. 
+행(Row)의 경우, 메인 축은 수평으로, 교차 축은 수직으로 실행됩니다. 
+열(Column)의 경우, 메인 축은 수직으로, 교차 축은 수평으로 실행됩니다.
 
 <div class="mb-2 text-center">
   <img src='/assets/images/docs/ui/layout/row-diagram.png' class="mb-2 mw-100"
@@ -373,24 +335,20 @@ axis runs horizontally.
       alt="Diagram showing the main axis and cross axis for a column">
 </div>
 
-The [`MainAxisAlignment`][] and [`CrossAxisAlignment`][]
-enums offer a variety of constants for controlling alignment.
+[`MainAxisAlignment`][] 및 [`CrossAxisAlignment`][] 열거형은 정렬을 제어하기 위한 다양한 상수를 제공합니다.
 
 :::note
-When you add images to your project,
-you need to update the `pubspec.yaml` file to access
-them&mdash;this example uses `Image.asset` to display
-the images.  For more information, see this example's
-[`pubspec.yaml` file][] or [Adding assets and images][].
-You don't need to do this if you're referencing online
-images using `Image.network`.
+프로젝트에 이미지를 추가할 때는, `pubspec.yaml` 파일을 업데이트하여 액세스해야 합니다. 
+이 예에서는, `Image.asset`을 사용하여 이미지를 표시합니다. 
+
+자세한 내용은 이 예의 [`pubspec.yaml` 파일][`pubspec.yaml` file] 또는 [assets 및 이미지 추가][Adding assets and images]를 참조하세요. 
+
+`Image.network`를 사용하여 온라인 이미지를 참조하는 경우 이 작업을 수행할 필요가 없습니다.
 :::
 
-In the following example, each of the 3 images is 100 pixels wide.
-The render box (in this case, the entire screen)
-is more than 300 pixels wide, so setting the main axis
-alignment to `spaceEvenly` divides the free horizontal
-space evenly between, before, and after each image.
+다음 예에서, 3개 이미지의 각각은 100픽셀 너비입니다. 
+렌더 박스(이 경우, 전체 화면)는 300픽셀 너비가 넘으므로, 
+메인 축 정렬을 `spaceEvenly`로 설정하면, 각 이미지 사이, 이전, 이후에 비어 있는 수평 공간이 균등하게 나뉩니다.
 
 <div class="row">
 <div class="col-lg-8">
@@ -415,11 +373,10 @@ space evenly between, before, and after each image.
 </div>
 </div>
 
-Columns work the same way as rows. The following example shows a column
-of 3 images, each is 100 pixels high. The height of the render box
-(in this case, the entire screen) is more than 300 pixels, so
-setting the main axis alignment to `spaceEvenly` divides the free vertical
-space evenly between, above, and below each image.
+열은 행과 같은 방식으로 작동합니다. 
+다음 예는 각각 100픽셀 높이의 3개 이미지의 열을 보여줍니다. 
+렌더 박스의 높이(이 경우 전체 화면)는 300픽셀 이상이므로, 
+메인 축 정렬을 `spaceEvenly`로 설정하면, 각 이미지 사이, 위, 아래에 비어있는 수직 공간이 균등하게 나뉩니다.
 
 <div class="row">
 <div class="col-lg-8">
@@ -436,7 +393,7 @@ space evenly between, above, and below each image.
   );
   ```
 
-  **App source:** [row_column]({{examples}}/layout/row_column)
+  **앱 소스:** [row_column]({{examples}}/layout/row_column)
 
 </div>
 <div class="col-lg-4 text-center">
@@ -445,18 +402,16 @@ space evenly between, above, and below each image.
 </div>
 </div>
 
-### Sizing widgets
+### 위젯 크기 조정 {:#sizing-widgets}
 
-When a layout is too large to fit a device, a yellow
-and black striped pattern appears along the affected edge.
-Here is an [example][sizing] of a row that is too wide:
+레이아웃이 장치에 맞지 않을 만큼 너무 큰 경우, 
+영향을 받는 가장자리를 따라 노란색과 검은색 줄무늬 패턴이 나타납니다. 
+너무 넓은 행의 [예][sizing]는 다음과 같습니다.
 
 <img src='/assets/images/docs/ui/layout/layout-too-large.png' class="mw-100 text-center" alt="Overly-wide row">
 
-Widgets can be sized to fit within a row or column by using the
-[`Expanded`][] widget. To fix the previous example where the
-row of images is too wide for its render box,
-wrap each image with an `Expanded` widget.
+위젯은 [`Expanded`][] 위젯을 사용하여, 행이나 열에 맞게 크기를 조정될 수 있습니다. 
+이미지 행이 렌더 상자에 비해 너무 넓은 이전 예를 수정하려면, 각 이미지를 `Expanded` 위젯으로 래핑합니다.
 
 <div class="row">
 <div class="col-lg-8">
@@ -484,15 +439,14 @@ wrap each image with an `Expanded` widget.
   <img src='/assets/images/docs/ui/layout/row-expanded-2-visual.png' class="mw-100"
       alt="Row of 3 images that are too wide, but each is constrained to take only 1/3 of the space">
 
-  **App source:** [sizing]({{examples}}/layout/sizing)
+  **앱 소스:** [sizing]({{examples}}/layout/sizing)
 </div>
 </div>
 
-Perhaps you want a widget to occupy twice as much space as its
-siblings. For this, use the `Expanded` widget `flex` property,
-an integer that determines the flex factor for a widget.
-The default flex factor is 1. The following code sets
-the flex factor of the middle image to 2:
+위젯이 형제 위젯보다 두 배나 많은 공간을 차지하기를 원할 수도 있습니다. 
+이를 위해, `Expanded` 위젯 `flex` 속성을 사용합니다. 
+이 속성은 위젯의 flex 계수를 결정하는 정수입니다. 기본 flex 계수는 1입니다. 
+다음 코드는 가운데 이미지의 flex 계수를 2로 설정합니다.
 
 <div class="row">
 <div class="col-lg-8">
@@ -521,18 +475,17 @@ the flex factor of the middle image to 2:
   <img src='/assets/images/docs/ui/layout/row-expanded-visual.png' class="mw-100"
       alt="Row of 3 images with the middle image twice as wide as the others">
 
-  **App source:** [sizing]({{examples}}/layout/sizing)
+  **앱 소스:** [sizing]({{examples}}/layout/sizing)
 </div>
 </div>
 
 [sizing]: {{examples}}/layout/sizing
 
-### Packing widgets
+### 위젯 포장 {:#packing-widgets}
 
-By default, a row or column occupies as much space along its main axis
-as possible, but if you want to pack the children closely together,
-set its `mainAxisSize` to `MainAxisSize.min`. The following example
-uses this property to pack the star icons together.
+기본적으로, 행이나 열은 메인 축을 따라 가능한 한 많은 공간을 차지하지만, 
+자식을 서로 가깝게 패킹하려면 `mainAxisSize`를 `MainAxisSize.min`으로 설정합니다. 
+다음 예에서는 이 속성을 사용하여 별 아이콘을 함께 패킹합니다.
 
 <div class="row">
 <div class="col-lg-8">
@@ -556,30 +509,27 @@ uses this property to pack the star icons together.
   <img src='/assets/images/docs/ui/layout/packed.png' class="border mw-100"
       alt="Row of 5 stars, packed together in the middle of the row">
 
-  **App source:** [pavlova]({{examples}}/layout/pavlova)
+  **앱 소스:** [pavlova]({{examples}}/layout/pavlova)
 </div>
 </div>
 
-### Nesting rows and columns
+### 행과 열 중첩 {:#nesting-rows-and-columns}
 
-The layout framework allows you to nest rows and columns
-inside of rows and columns as deeply as you need.
-Let's look at the code for the outlined
-section of the following layout:
+레이아웃 프레임워크를 사용하면 행과 열을 필요한 만큼 깊이로 행과 열 안에 중첩할 수 있습니다. 
+다음 레이아웃의 윤곽이 그려진 섹션에 대한 코드를 살펴보겠습니다.
 
 <img src='/assets/images/docs/ui/layout/pavlova-large-annotated.png' class="border mw-100 text-center"
     alt="Screenshot of the pavlova app, with the ratings and icon rows outlined in red">
 
-The outlined section is implemented as two rows. The ratings row contains
-five stars and the number of reviews. The icons row contains three
-columns of icons and text.
+개요 섹션은 두 행으로 구현됩니다. 
+평점 행에는 별 5개와 리뷰 수가 포함됩니다. 
+아이콘 행에는 아이콘과 텍스트의 세 열이 포함됩니다.
 
-The widget tree for the ratings row:
+평점 행의 위젯 트리:
 
 <img src='/assets/images/docs/ui/layout/widget-tree-pavlova-rating-row.png' class="mw-100 text-center" alt="Ratings row widget tree">
 
-The `ratings` variable creates a row containing a smaller row
-of 5-star icons, and text:
+`ratings` 변수는 5개 별 아이콘과 텍스트로 구성된 작은 행을 생성합니다.
 
 <?code-excerpt "layout/pavlova/lib/main.dart (ratings)" replace="/ratings/[!$&!]/g"?>
 ```dart
@@ -616,18 +566,15 @@ final [!ratings!] = Container(
 ```
 
 :::tip
-To minimize the visual confusion that can result from
-heavily nested layout code, implement pieces of the UI
-in variables and functions.
+중첩된 레이아웃 코드로 인해 발생할 수 있는 시각적 혼란을 최소화하려면, UI 부분을 변수와 함수로 구현하세요.
 :::
 
-The icons row, below the ratings row, contains 3 columns;
-each column contains an icon and two lines of text,
-as you can see in its widget tree:
+평가 행 아래의 아이콘 행에는 3개의 열이 있습니다. 
+각 열에는 아이콘과 두 줄의 텍스트가 포함되어 있습니다. 위젯 트리에서 확인할 수 있습니다.
 
 <img src='/assets/images/docs/ui/layout/widget-tree-pavlova-icon-row.png' class="mw-100 text-center" alt="Icon widget tree">
 
-The `iconList` variable defines the icons row:
+`iconList` 변수는 아이콘 행을 정의합니다.
 
 <?code-excerpt "layout/pavlova/lib/main.dart (icon-list)" replace="/iconList/[!$&!]/g"?>
 ```dart
@@ -640,8 +587,8 @@ const descTextStyle = TextStyle(
   height: 2,
 );
 
-// DefaultTextStyle.merge() allows you to create a default text
-// style that is inherited by its child and all subsequent children.
+// DefaultTextStyle.merge()를 사용하면, 
+// 자식과 그 이후의 모든 자식에게 상속되는 기본 텍스트 스타일을 만들 수 있습니다.
 final [!iconList!] = DefaultTextStyle.merge(
   style: descTextStyle,
   child: Container(
@@ -676,8 +623,7 @@ final [!iconList!] = DefaultTextStyle.merge(
 );
 ```
 
-The `leftColumn` variable contains the ratings and icons rows,
-as well as the title and text that describes the Pavlova:
+`leftColumn` 변수에는 평점과 아이콘 행, 그리고 Pavlova를 설명하는 제목과 텍스트가 포함되어 있습니다.
 
 <?code-excerpt "layout/pavlova/lib/main.dart (left-column)" replace="/leftColumn/[!$&!]/g"?>
 ```dart
@@ -694,15 +640,14 @@ final [!leftColumn!] = Container(
 );
 ```
 
-The left column is placed in a `SizedBox` to constrain its width.
-Finally, the UI is constructed with the entire row (containing the
-left column and the image) inside a `Card`.
+왼쪽 열은 너비를 제한하기 위해 `SizedBox`에 배치됩니다. 
+마지막으로, UI는 `Card` 안에 전체 행(왼쪽 열과 이미지 포함)으로 구성됩니다.
 
-The [Pavlova image][] is from [Pixabay][].
-You can embed an image from the net using `Image.network()` but,
-for this example, the image is saved to an images directory in the project,
-added to the [pubspec file][], and accessed using `Images.asset()`.
-For more information, see [Adding assets and images][].
+[Pavlova 이미지][Pavlova image]는 [Pixabay][]에서 가져왔습니다. 
+`Image.network()`를 사용하여 네트에서 이미지를 임베드할 수 있지만, 
+이 예에서는 이미지가 프로젝트의 이미지 디렉토리에 저장되고, 
+[pubspec 파일][pubspec file]에 추가되고, `Images.asset()`을 사용하여 액세스됩니다. 
+자세한 내용은 [assets자산 및 이미지 추가][Adding assets and images]를 참조하세요.
 
 <?code-excerpt "layout/pavlova/lib/main.dart (body)"?>
 ```dart
@@ -727,71 +672,55 @@ body: Center(
 ```
 
 :::tip
-The Pavlova example runs best horizontally on a wide device,
-such as a tablet.  If you are running this example in the iOS simulator,
-you can select a different device using the **Hardware > Device** menu.
-For this example, we recommend the iPad Pro.
-You can change its orientation to landscape mode using
-**Hardware > Rotate**. You can also change the size of the
-simulator window (without changing the number of logical pixels)
-using **Window > Scale**.
+Pavlova 예제는, 태블릿과 같은, 넓은 기기에서 수평으로 실행하는 것이 가장 좋습니다. 
+iOS 시뮬레이터에서 이 예제를 실행하는 경우, **Hardware > Device** 메뉴를 사용하여 다른 기기를 선택할 수 있습니다. 
+이 예제에서는, iPad Pro를 권장합니다. **Hardware > Rotate**을 사용하여 가로 모드로 방향을 변경할 수 있습니다. 
+**Window > Scale**을 사용하여, 시뮬레이터 창의 크기를 변경할 수도 있습니다. (논리적 픽셀 수는 변경하지 않음)
 :::
 
-**App source:** [pavlova]({{examples}}/layout/pavlova)
+**앱 소스:** [pavlova]({{examples}}/layout/pavlova)
 
 [Pavlova image]: https://pixabay.com/en/photos/pavlova
 [Pixabay]: https://pixabay.com/en/photos/pavlova
 
 <hr>
 
-## Common layout widgets
+## 일반적인 레이아웃 위젯 {:#common-layout-widgets}
 
-Flutter has a rich library of layout widgets.
-Here are a few of those most commonly used.
-The intent is to get you up and running as quickly as possible,
-rather than overwhelm you with a complete list.
-For information on other available widgets,
-refer to the [Widget catalog][],
-or use the Search box in the [API reference docs][].
-Also, the widget pages in the API docs often make suggestions
-about similar widgets that might better suit your needs.
+Flutter에는 풍부한 레이아웃 위젯 라이브러리가 있습니다. 
+가장 일반적으로 사용되는 몇 가지를 소개합니다. 
+전체 리스트로 사용자를 압도하는 것보다 가능한 한 빨리 시작하고 실행하도록 하는 것이 목적입니다. 
+사용 가능한 다른 위젯에 대한 정보는, 
+[위젯 카탈로그][Widget catalog]를 참조하거나 [API 참조 문서][API reference docs]의 검색 상자를 사용하세요. 
+또한, API 문서의 위젯 페이지에서는 종종 사용자의 요구 사항에 더 잘 맞는 유사한 위젯에 대한 제안을 제공합니다.
 
-The following widgets fall into two categories: standard widgets
-from the [widgets library][], and specialized widgets from the
-[Material library][]. Any app can use the widgets library but
-only Material apps can use the Material Components library.
+다음 위젯은 (1) [위젯 라이브러리][widgets library]의 표준 위젯과 (2) [Material 라이브러리][Material library]의 특수 위젯의 두 가지 카테고리로 나뉩니다. 
+모든 앱은 위젯 라이브러리를 사용할 수 있지만, Material 앱만 Material Components 라이브러리를 사용할 수 있습니다.
 
-### Standard widgets
+### 표준 위젯 {:#standard-widgets}
 
-* [`Container`](#container): Adds padding, margins, borders,
-  background color, or other decorations to a widget.
-* [`GridView`](#gridview): Lays widgets out as a scrollable grid.
-* [`ListView`](#listview): Lays widgets out as a scrollable list.
-* [`Stack`](#stack): Overlaps a widget on top of another.
+* [`Container`](#container): 위젯에 패딩, 여백, 테두리, 배경색 또는 기타 장식을 추가합니다.
+* [`GridView`](#gridview): 위젯을 scrollable 그리드로 배치합니다.
+* [`ListView`](#listview): 위젯을 scrollable 리스트로 배치합니다.
+* [`Stack`](#stack): 위젯을 다른 위젯 위에 겹칩니다.
 
-### Material widgets
+### Material 위젯 {:#material-widgets}
 
-* [`Card`](#card): Organizes related info into a box with
-  rounded corners and a drop shadow.
-* [`ListTile`](#listtile): Organizes up to 3 lines of text,
-  and optional leading and trailing icons, into a row.
+* [`Card`](#card): 둥근 모서리와 드롭 섀도우가 있는 상자에 관련 정보를 조직합니다.
+* [`ListTile`](#listtile): 최대 3줄의 텍스트와 선택 사항으로 leading 및 trailing 아이콘을 행으로 조직합니다.
 
-### Container
+### Container {:#container}
 
-Many layouts make liberal use of [`Container`][]s to separate
-widgets using padding, or to add borders or margins.
-You can change the device's background by placing the
-entire layout into a `Container` and changing its background
-color or image.
+많은 레이아웃은 패딩을 사용하여, 위젯을 분리하거나 테두리나 여백을 추가하기 위해, [`Container`][]를 자유롭게 사용합니다. 
+전체 레이아웃을 `Container`에 넣고, 배경색이나 이미지를 변경하여, 장치의 배경을 변경할 수 있습니다.
 
 <div class="row">
 <div class="col-lg-6">
-  <h4>Summary (Container)</h4>
+  <h4>요약 (Container)</h4>
 
-* Add padding, margins, borders
-* Change background color or image
-* Contains a single child widget, but that child can be a Row,
-    Column, or even the root of a widget tree
+* 패딩, 여백, 테두리 추가
+* 배경색 또는 이미지 변경
+* 단일 자식 위젯을 포함하지만, 해당 자식은 행, 열 또는 위젯 트리의 루트일 수 있음
 
 </div>
 <div class="col-lg-6 text-center">
@@ -801,11 +730,10 @@ color or image.
 </div>
 </div>
 
-#### Examples (Container)
+#### 예제 (Container) {:#examples-container}
 
-This layout consists of a column with two rows, each containing
-2 images. A [`Container`][] is used to change the background color
-of the column to a lighter grey.
+이 레이아웃은 두 개의 행이 있는 열로 구성되며, 각 행에는 두 개의 이미지가 들어 있습니다. 
+[`Container`][]는 열의 배경색을 더 밝은 회색으로 변경하는 데 사용됩니다.
 
 <div class="row">
 <div class="col-lg-7">
@@ -834,8 +762,7 @@ of the column to a lighter grey.
 </div>
 </div>
 
-A `Container` is also used to add a rounded border and margins
-to each image:
+`Container`는 각 이미지에 둥근 테두리와 여백을 추가하는 데에도 사용됩니다.
 
 <?code-excerpt "layout/container/lib/main.dart (row)" replace="/\bContainer/[!$&!]/g;"?>
 ```dart
@@ -858,63 +785,54 @@ Widget _buildImageRow(int imageIndex) => Row(
     );
 ```
 
-You can find more `Container` examples in the [tutorial][].
+더 많은 `Container` 예제는 [튜토리얼][tutorial]에서 확인할 수 있습니다.
 
-**App source:** [container]({{examples}}/layout/container)
+**앱 소스:** [container]({{examples}}/layout/container)
 
 <hr>
 
-### GridView
+### GridView {:#gridview}
 
-Use [`GridView`][] to lay widgets out as a two-dimensional
-list. `GridView` provides two pre-fabricated lists,
-or you can build your own custom grid. When a `GridView`
-detects that its contents are too long to fit the render box,
-it automatically scrolls.
+위젯을 2차원 리스토로 배치하려면, [`GridView`][]를 사용합니다. 
+`GridView`는 두 개의 사전 제작된 리스트를 제공하거나, 커스텀 그리드를 직접 빌드할 수 있습니다. 
+`GridView`가 콘텐츠가 렌더 상자에 맞지 않을 만큼 길다는 것을 감지하면, 자동으로 스크롤합니다.
 
-#### Summary (GridView)
+#### 요약 (GridView) {:#summary-gridview}
 
-* Lays widgets out in a grid
-* Detects when the column content exceeds the render box
-  and automatically provides scrolling
-* Build your own custom grid, or use one of the provided grids:
-  * `GridView.count` allows you to specify the number of columns
-  * `GridView.extent` allows you to specify the maximum pixel
-  width of a tile
+* 그리드에 위젯을 배치합니다.
+* 열 내용이 렌더 상자를 초과하면 감지하고 자동으로 스크롤을 제공합니다.
+* 커스텀 그리드를 빌드하거나, 제공된 그리드 중 하나를 사용합니다.
+  * `GridView.count`를 사용하면 열 수를 지정할 수 있습니다.
+  * `GridView.extent`를 사용하면 타일의 최대 픽셀 너비를 지정할 수 있습니다.
 {% comment %}
-* Use `MediaQuery.of(context).orientation` to create a grid
-  that changes its layout depending on whether the device
-  is in landscape or portrait mode.
+* `MediaQuery.of(context).orientation`을 사용하여, 
+  기기가 가로 모드인지 세로 모드인지에 따라 레이아웃이 변경되는 그리드를 만듭니다.
 {% endcomment %}
 
 :::note
-When displaying a two-dimensional list where it's important which
-row and column a cell occupies (for example,
-it's the entry in the "calorie" column for the "avocado" row), use
-[`Table`][] or [`DataTable`][].
+셀이 어느 행과 열을 차지하는지 중요한 2차원 리스트를 표시하는 경우,
+(예: "아보카도" 행의 경우 "칼로리" 열의 항목), 
+[`Table`][] 또는 [`DataTable`][]을 사용합니다.
 :::
 
-#### Examples (GridView)
+#### 예제 (GridView) {:#examples-gridview}
 
 <div class="row">
 <div class="col-lg-6">
   <img src='/assets/images/docs/ui/layout/gridview-extent.png' class="mw-100 text-center" alt="A 3-column grid of photos">
 
-  Uses `GridView.extent` to create a grid with tiles a maximum
-  150 pixels wide.
+  `GridView.extent`를 사용하여 최대 150픽셀 너비의 타일로 구성된 그리드를 만듭니다.
 
-  **App source:** [grid_and_list]({{examples}}/layout/grid_and_list)
+  **앱 소스:** [grid_and_list]({{examples}}/layout/grid_and_list)
 </div>
 <div class="col-lg-6">
   <img src='/assets/images/docs/ui/layout/gridview-count-flutter-gallery.png' class="mw-100 text-center"
       alt="A 2 column grid with footers">
 
-  Uses `GridView.count` to create a grid that's 2 tiles
-  wide in portrait mode, and 3 tiles wide in landscape mode.
-  The titles are created by setting the `footer` property for
-  each [`GridTile`][].
+  `GridView.count`를 사용하여 세로 모드에서는 2타일, 가로 모드에서는 3타일 너비의 그리드를 만듭니다. 
+  제목은 각 [`GridTile`][]에 대해 `footer` 속성을 설정하여 만듭니다.
 
-  **Dart code:** 
+  **Dart 코드:** 
   [`grid_list_demo.dart`]({{examples}}/layout/gallery/lib/grid_list_demo.dart)
 </div>
 </div>
@@ -928,51 +846,45 @@ Widget _buildGrid() => [!GridView!].extent(
     crossAxisSpacing: 4,
     children: _buildGridTileList(30));
 
-// The images are saved with names pic0.jpg, pic1.jpg...pic29.jpg.
-// The List.generate() constructor allows an easy way to create
-// a list when objects have a predictable naming pattern.
+// 이미지는 pic0.jpg, pic1.jpg...pic29.jpg 라는 이름으로 저장됩니다. 
+// List.generate() 생성자는 객체에 예측 가능한 명명 패턴이 있을 때, 
+// 리스트를 쉽게 만들 수 있는 방법을 제공합니다.
 List<Container> _buildGridTileList(int count) => List.generate(
     count, (i) => Container(child: Image.asset('images/pic$i.jpg')));
 ```
 
 <hr>
 
-### ListView
+### ListView {:#listview}
 
-[`ListView`][], a column-like widget, automatically
-provides scrolling when its content is too long for
-its render box.
+열 형태의 위젯인, [`ListView`][]는, 렌더 상자에 비해 콘텐츠가 너무 길면 자동으로 스크롤 기능을 제공합니다.
 
-#### Summary (ListView)
+#### 요약 (ListView) {:#summary-listview}
 
-* A specialized [`Column`][] for organizing a list of boxes
-* Can be laid out horizontally or vertically
-* Detects when its content won't fit and provides scrolling
-* Less configurable than `Column`, but easier to use and
-  supports scrolling
+* 상자 리스트를 구성하기 위한 특수화된 [`Column`][]
+* 가로 또는 세로로 배치 가능
+* 콘텐츠가 맞지 않을 때 감지하고 스크롤 제공
+* `Column`보다 구성이 덜 가능하지만, 사용하기 쉽고 스크롤 지원
 
-#### Examples (ListView)
+#### 예제 (ListView) {:#examples-listview}
 
 <div class="row">
 <div class="col-lg-6">
   <img src='/assets/images/docs/ui/layout/listview.png' class="border mw-100 text-center"
       alt="ListView containing movie theaters and restaurants">
 
-  Uses `ListView` to display a list of businesses using
-  `ListTile`s. A `Divider` separates the theaters from
-  the restaurants.
+  `ListView`를 사용하여 `ListTile`들을 사용하여 사업체 리스트를 표시합니다. 
+  `Divider`는 극장과 레스토랑을 구분합니다.
 
-  **App source:** [grid_and_list]({{examples}}/layout/grid_and_list)
+  **앱 소스:** [grid_and_list]({{examples}}/layout/grid_and_list)
 </div>
 <div class="col-lg-6">
   <img src='/assets/images/docs/ui/layout/listview-color-gallery.png' class="border mw-100 text-center"
       alt="ListView containing shades of blue">
 
-  Uses `ListView` to display the [`Colors`][] from
-  the [Material 2 Design palette][]
-  for a particular color family.
+  `ListView`를 사용하여 특정 색상 패밀리에 대한 [Material 2 Design 팔레트][Material 2 Design palette]의 [`Colors`][]를 표시합니다.
 
-  **Dart code:**
+  **Dart 코드:**
   [`colors_demo.dart`]({{examples}}/layout/gallery/lib/colors_demo.dart)
 </div>
 </div>
@@ -1016,40 +928,35 @@ ListTile _tile(String title, String subtitle, IconData icon) {
 
 <hr>
 
-### Stack
+### Stack {:#stack}
 
-Use [`Stack`][] to arrange widgets on top of a base
-widget&mdash;often an image. The widgets can completely
-or partially overlap the base widget.
+[`Stack`][]을 사용하여 기본 위젯(종종 이미지) 위에 위젯을 배열합니다. 
+위젯은 기본 위젯과 완전히 또는 부분적으로 겹칠 수 있습니다.
 
-#### Summary (Stack)
+#### 요약 (Stack) {:#summary-stack}
 
-* Use for widgets that overlap another widget
-* The first widget in the list of children is the base widget;
-  subsequent children are overlaid on top of that base widget
-* A `Stack`'s content can't scroll
-* You can choose to clip children that exceed the render box
+* 다른 위젯과 겹치는 위젯에 사용
+* 자식 리스트에서 첫 번째 위젯은 베이스 위젯입니다. 이후 자식은 해당 기본 위젯 위에 겹쳐집니다.
+* `Stack`의 콘텐츠는 스크롤할 수 없습니다.
+* 렌더 상자를 초과하는 자식을 clip 할 수 있습니다.
 
-#### Examples (Stack)
+#### 예제 (Stack) {:#examples-stack}
 
 <div class="row">
 <div class="col-lg-7">
   <img src='/assets/images/docs/ui/layout/stack.png' class="mw-100 text-center" width="200px" alt="Circular avatar image with a label">
 
-  Uses `Stack` to overlay a `Container`
-  (that displays its `Text` on a translucent
-  black background) on top of a `CircleAvatar`.
-  The `Stack` offsets the text using the `alignment` property and
-  `Alignment`s.
+  `Stack`을 사용하여 `Container`(반투명한 검은색 배경에 `Text`를 표시함)를 `CircleAvatar` 위에 오버레이합니다.
+  `Stack`은 `alignment` 속성과 `Alignment`를 사용하여 텍스트를 오프셋합니다.
 
-  **App source:** [card_and_stack]({{examples}}/layout/card_and_stack)
+  **앱 소스:** [card_and_stack]({{examples}}/layout/card_and_stack)
 </div>
 <div class="col-lg-5">
   <img src='/assets/images/docs/ui/layout/stack-flutter-gallery.png' class="mw-100 text-center" alt="An image with a icon overlaid on top">
 
-  Uses `Stack` to overlay an icon on top of an image.
+  `Stack`을 사용하여 이미지 위에 아이콘을 오버레이합니다.
 
-  **Dart code:**
+  **Dart 코드:**
   [`bottom_navigation_demo.dart`]({{examples}}/layout/gallery/lib/bottom_navigation_demo.dart)
 </div>
 </div>
@@ -1084,56 +991,46 @@ Widget _buildStack() {
 
 <hr>
 
-### Card
+### Card {:#card}
 
-A [`Card`][], from the [Material library][],
-contains related nuggets of information and can
-be composed from almost any widget, but is often used with
-[`ListTile`][]. `Card` has a single child,
-but its child can be a column, row, list, grid,
-or other widget that supports multiple children.
-By default, a `Card` shrinks its size to 0 by 0 pixels.
-You can use [`SizedBox`][] to constrain the size of a card.
+[Material 라이브러리][Material library]의 [`Card`][]에는, 관련 정보가 들어 있으며 거의 ​​모든 위젯에서 구성할 수 있지만, 종종 [`ListTile`][]과 함께 사용됩니다. 
+`Card`에는 자식이 하나 있지만, 자식은 열, 행, 리스트, 그리드 또는 여러 자식을 지원하는 다른 위젯일 수 있습니다. 
+기본적으로 `Card`는 크기를 0x0픽셀로 줄입니다. 
+[`SizedBox`][]를 사용하여 카드의 크기를 제한할 수 있습니다.
 
-In Flutter, a `Card` features slightly rounded corners
-and a drop shadow, giving it a 3D effect.
-Changing a `Card`'s `elevation` property allows you to control
-the drop shadow effect. Setting the elevation to 24,
-for example, visually lifts the `Card` further from the
-surface and causes the shadow to become more dispersed.
-For a list of supported elevation values, see [Elevation][] in the
-[Material guidelines][Material Design].
-Specifying an unsupported value disables the drop shadow entirely.
+Flutter에서, `Card`는 약간 둥근 모서리와 그림자가 있어 3D 효과를 줍니다. 
+`Card`의 `elevation` 속성을 변경하면, 그림자 효과를 제어할 수 있습니다. 
+예를 들어, 높이를 24로 설정하면, `Card`가 표면에서 더 멀리 들리고 그림자가 더 분산됩니다. 
+지원되는 높이 값 리스트는 [Material 가이드라인][Material Design]의 [Elevation][]을 참조하세요. 
+지원되지 않는 값을 지정하면 그림자 기능이 완전히 비활성화됩니다.
 
-#### Summary (Card)
+#### 요약 (Card) {:#summary-card}
 
-* Implements a [Material card][]
-* Used for presenting related nuggets of information
-* Accepts a single child, but that child can be a `Row`,
-  `Column`, or other widget that holds a list of children
-* Displayed with rounded corners and a drop shadow
-* A `Card`'s content can't scroll
-* From the [Material library][]
+* [Material card][] 구현
+* 관련 정보 덩어리를 표시하는 데 사용
+* 단일 자식을 허용하지만, 해당 자식은 `Row`, `Column` 또는 자식 리스트를 보유하는 다른 위젯일 수 있음
+* 모서리를 둥글게(rounded corners) 하고 그림자(drop shadow)를 드리워 표시 
+* `Card`의 콘텐츠는 스크롤할 수 없음
+* [Material 라이브러리][Material library]에서 옴
 
-#### Examples (Card)
+#### 예제 (Card) {:#examples-card}
 
 <div class="row">
 <div class="col-lg-6">
   <img src='/assets/images/docs/ui/layout/card.png' class="mw-100 text-center" alt="Card containing 3 ListTiles">
 
-  A `Card` containing 3 ListTiles and sized by wrapping
-  it with a `SizedBox`. A `Divider` separates the first
-  and second `ListTiles`.
+  3개의 ListTiles를 포함하고 `SizedBox`로 감싸서 크기를 조정한 `Card`. 
+  `Divider`는 첫 번째와 두 번째 `ListTiles`를 구분합니다.
 
-  **App source:** [card_and_stack]({{examples}}/layout/card_and_stack)
+  **앱 소스:** [card_and_stack]({{examples}}/layout/card_and_stack)
 </div>
 <div class="col-lg-6">
   <img src='/assets/images/docs/ui/layout/card-flutter-gallery.png' class="mw-100 text-center"
       alt="Tappable card containing an image and multiple forms of text">
 
-  A `Card` containing an image and text.
+  이미지와 텍스트가 담긴 `Card`.
 
-  **Dart code:**
+  **Dart 코드:**
   [`cards_demo.dart`]({{examples}}/layout/gallery/lib/cards_demo.dart)
 </div>
 </div>
@@ -1184,95 +1081,87 @@ Widget _buildCard() {
 
 <hr>
 
-### ListTile
+### ListTile {:#listtile}
 
-Use [`ListTile`][], a specialized row widget from the
-[Material library][], for an easy way to create a row
-containing up to 3 lines of text and optional leading
-and trailing icons. `ListTile` is most commonly used in
-[`Card`][] or [`ListView`][], but can be used elsewhere.
+[Material 라이브러리][Material library]의 특수 행 위젯인 [`ListTile`][]을 사용하면, 
+최대 3줄의 텍스트와 선택적으로 leading 및 trailing 아이콘을 포함하는 행을 쉽게 만들 수 있습니다. 
+`ListTile`은 [`Card`][] 또는 [`ListView`][]에서 가장 일반적으로 사용되지만, 다른 곳에서도 사용할 수 있습니다.
 
-#### Summary (ListTile)
+#### 요약 (ListTile) {:#summary-listtile}
 
-* A specialized row that contains up to 3 lines of text and
-  optional icons
-* Less configurable than `Row`, but easier to use
-* From the [Material library][]
+* 최대 3줄의 텍스트와 선택적인 아이콘을 포함하는 특수 행
+* `Row`보다 구성이 덜 가능하지만, 사용하기 더 쉬움
+* [Material 라이브러리][Material library]에서 옴
 
-#### Examples (ListTile)
+#### 예제 (ListTile) {:#examples-listtile}
 
 <div class="row">
 <div class="col-lg-6">
   <img src='/assets/images/docs/ui/layout/card.png' class="mw-100 text-center" alt="Card containing 3 ListTiles">
 
-  A `Card` containing 3 `ListTile`s.
+  3개의 `ListTile`을 포함하는 `Card`.
 
-  **App source:** [card_and_stack]({{examples}}/layout/card_and_stack)
+  **앱 소스:** [card_and_stack]({{examples}}/layout/card_and_stack)
 </div>
 <div class="col-lg-6">
   <img src='/assets/images/docs/ui/layout/listtile-flutter-gallery.png' class="border mw-100 text-center" height="200px"
       alt="4 ListTiles, each containing a leading avatar">
 
-  Uses `ListTile` with leading widgets.
+  leading 위젯과 함께 `ListTile`을 사용합니다.
 
-  **Dart code:**
+  **Dart 코드:**
   [`list_demo.dart`]({{examples}}/layout/gallery/lib/list_demo.dart)
 </div>
 </div>
 
 <hr>
 
-## Constraints
+## 제약 {:#constraints}
 
-To fully understand Flutter's layout system, you need
-to learn how Flutter positions and sizes
-the components in a layout. For more information,
-see [Understanding constraints][].
+Flutter의 레이아웃 시스템을 완전히 이해하려면, 
+Flutter가 레이아웃에서 구성 요소를 어떻게 배치하고 크기를 지정하는지 알아야 합니다. 
+자세한 내용은 [제약 조건 이해][Understanding constraints]를 참조하세요.
 
-## Videos
+## 비디오 {:#videos}
 
-The following videos, part of the
-[Flutter in Focus][] series,
-explain `Stateless` and `Stateful` widgets.
+다음 비디오는 [Flutter in Focus][] 시리즈의 일부로, `Stateless` 및 `Stateful` 위젯을 설명합니다.
 
 {% ytEmbed 'wE7khGHVkYY', 'How to create stateless widgets', true %}
 
 {% ytEmbed 'AqCMFXEmf3w', 'How and when stateful widgets are best used', true %}
 
-[Flutter in Focus playlist]({{site.yt.playlist}}PLjxrf2q8roU2HdJQDjJzOeO6J3FoFLWr2)
+[Flutter in Focus 플레이리스트]({{site.yt.playlist}}PLjxrf2q8roU2HdJQDjJzOeO6J3FoFLWr2)
 
 ---
 
-Each episode of the
-[Widget of the Week series]({{site.yt.playlist}}PLjxrf2q8roU23XGwz3Km7sQZFTdB996iG)
-focuses on a widget. Several of them includes layout widgets.
+[Widget of the Week 시리즈]({{site.yt.playlist}}PLjxrf2q8roU23XGwz3Km7sQZFTdB996iG)의 각 에피소드는 위젯에 초점을 맞춥니다. 
+그 중 몇몇은 레이아웃 위젯을 포함합니다.
 
 {% ytEmbed 'b_sQ9bMltGU', 'Introducing widget of the week', true %}
 
-[Flutter Widget of the Week playlist]({{site.yt.playlist}}PLjxrf2q8roU23XGwz3Km7sQZFTdB996iG)
+[Flutter Widget of the Week 플레이리스트]({{site.yt.playlist}}PLjxrf2q8roU23XGwz3Km7sQZFTdB996iG)
 
-## Other resources
+## 기타 리소스 {:#other-resources}
 
-The following resources might help when writing layout code.
+다음 리소스는 레이아웃 코드를 작성할 때 도움이 될 수 있습니다.
 
-[Layout tutorial][]
-: Learn how to build a layout.
+[레이아웃 튜토리얼][Layout tutorial]
+: 레이아웃을 빌드하는 방법을 알아보세요.
 
-[Widget catalog][]
-: Describes many of the widgets available in Flutter.
+[위젯 카탈로그][Widget catalog]
+: Flutter에서 사용할 수 있는 많은 위젯을 설명합니다.
 
-[HTML/CSS Analogs in Flutter][]
-: For those familiar with web programming,
-  this page maps HTML/CSS functionality to Flutter features.
+[Flutter의 HTML/CSS 아날로그][HTML/CSS Analogs in Flutter]
+: 웹 프로그래밍에 익숙한 사람들을 위해, 이 페이지는 HTML/CSS 기능을 Flutter 기능에 매핑합니다.
 
-[API reference docs][]
-: Reference documentation for all of the Flutter libraries.
+[API 참조 문서][API reference docs]
+: 모든 Flutter 라이브러리에 대한 참조 문서.
 
-[Adding assets and images][]
-: Explains how to add images and other assets to your app's package.
+[assets 및 이미지 추가][Adding assets and images]
+: 앱 패키지에 이미지 및 기타 assets을 추가하는 방법을 설명합니다.
 
-[Zero to One with Flutter][]
-: One person's experience writing his first Flutter app.
+[Flutter로 Zero to One][Zero to One with Flutter]
+: 첫 번째 Flutter 앱을 작성한 한 사람의 경험.
 
 [Cupertino library]: {{api}}/cupertino/cupertino-library.html
 [`CupertinoPageScaffold`]: {{api}}/cupertino/CupertinoPageScaffold-class.html

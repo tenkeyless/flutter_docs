@@ -1,125 +1,104 @@
 ---
-title: Impeller rendering engine
-description: What is Impeller and how to enable it?
+# title: Impeller rendering engine
+title: Impeller 렌더링 엔진
+# description: What is Impeller and how to enable it?
+description: Impeller란 무엇이고 어떻게 활성화하나요?
 ---
 
-## What is Impeller?
+## Impeller란? {:#what-is-impeller}
 
-Impeller provides a new rendering runtime for Flutter.
-The Flutter team's believes this solves Flutter's
-[early-onset jank][] issue.
-Impeller precompiles a [smaller, simpler set of shaders][]
-at Engine-build time so they don't compile at runtime.
+Impeller는 Flutter에 새로운 렌더링 런타임을 제공합니다. 
+Flutter 팀은 이것이 Flutter의 [초기 시작 jank(early-onset jank)][early-onset jank] 문제를 해결한다고 믿습니다. 
+Impeller는 엔진 빌드 시간에 [더 작고 간단한 셰이더 세트][smaller, simpler set of shaders]를 사전 컴파일하므로 런타임에 컴파일되지 않습니다.
 
 [early-onset jank]: {{site.repo.flutter}}/projects/188
 [smaller, simpler set of shaders]: {{site.repo.flutter}}/issues/77412
 
-For a video introduction to Impeller, check out the following
-talk from Google I/O 2023.
+Impeller에 대한 소개 영상을 보려면, Google I/O 2023에서 있었던 다음 강연을 확인하세요.
 
-{% ytEmbed 'vd5NqS01rlA', 'Introducing Impeller, Flutter\'s new rendering engine' %}
+{% ytEmbed 'vd5NqS01rlA', 'Flutter의 새로운 렌더링 엔진 Impeller를 소개합니다.' %}
 
-Impeller has the following objectives:
+Impeller의 목표는 다음과 같습니다.
 
-* **Predictable performance**:
-  Impeller compiles all shaders and reflection offline at build time.
-  It builds all pipeline state objects upfront.
-  The engine controls caching and caches explicitly.
-* **Instrumentable**:
-  Impeller tags and labels all graphics resources,
-  such as textures and buffers.
-  It can capture and persist animations to disk without affecting
-  per-frame rendering performance.
-* **Portable**:
-  Flutter doesn't tie Impeller to a specific client-rendering API.
-  You can author shaders once and convert them to backend-specific
-  formats, as necessary.
-* **Leverages modern graphics APIs**:
-  Impeller uses, but doesn't depend on, features available in
-  modern APIs like Metal and Vulkan.
-* **Leverages concurrency**:
-  Impeller can distribute single-frame workloads across multiple
-  threads, if necessary.
+* **예측 가능한 성능 (Predictable performance)**:
+  Impeller는 빌드 시 모든 셰이더와 리플렉션을 오프라인으로 컴파일합니다.
+  모든 파이프라인 상태 객체를 미리 빌드합니다.
+  엔진은 캐싱을 제어하고 명시적으로 캐시합니다.
+* **계측 가능 (Instrumentable)**:
+  Impeller는 (텍스처 및 버퍼와 같은) 모든 그래픽 리소스에 태그를 지정하고, 레이블을 지정합니다.
+  프레임당 렌더링 성능에 영향을 미치지 않고, 애니메이션을 캡처하여, 디스크에 유지할 수 있습니다.
+* **이식 가능 (Portable)**:
+  Flutter는 Impeller를 특정 클라이언트 렌더링 API에 연결하지 않습니다.
+  필요에 따라 셰이더를 한 번 작성하여 백엔드별 형식으로 변환할 수 있습니다.
+* **최신 그래픽 API 활용 (Leverages modern graphics APIs)**:
+  Impeller는 Metal 및 Vulkan과 같은 최신 API에서 사용할 수 있는 기능을 사용하지만, 이에 의존하지 않습니다.
+* **동시성 활용 (Leverages concurrency)**:
+  필요한 경우 Impeller는 단일 프레임 워크로드를 여러 스레드에 분산할 수 있습니다.
 
-## Availability
+## 유효성 {:#availability}
 
-Where can you use Impeller?
+임펠러는 어디에서 사용할 수 있나요?
 
-### iOS
+### iOS {:#ios}
 
-Flutter **enables Impeller by default** on iOS.
+Flutter는 iOS에서 **기본적으로 Impeller를 활성화합니다.**
 
-* To _disable_ Impeller on iOS when debugging,
-  pass `--no-enable-impeller` to the `flutter run` command.
+* 디버깅 시 iOS에서 Impeller를 _비활성화_ 하려면, `--no-enable-impeller`를 `flutter run` 명령에 전달합니다.
 
   ```console
   flutter run --no-enable-impeller
   ```
 
-* To _disable_ Impeller on iOS when deploying your app,
-  add the following tags under the top-level `<dict>` tag in your
-  app's `Info.plist` file.
+* 앱을 배포할 때 iOS에서 Impeller를 비활성화하려면, 앱의 `Info.plist` 파일에 있는 최상위 `<dict>` 태그 아래에 다음 태그를 추가합니다.
 
   ```xml
     <key>FLTEnableImpeller</key>
     <false />
   ```
 
-The team continues to improve iOS support.
-If you encounter performance or fidelity issues
-with Impeller on iOS,
-file an issue in the [GitHub tracker][file-issue].
-Prefix the issue title with `[Impeller]` and
-include a small reproducible test case.
+팀은 iOS 지원을 계속 개선하고 있습니다. 
+iOS에서 Impeller에 성능이나 충실도 문제(fidelity issues)가 발생하면, [GitHub 추적기][file-issue]에 문제를 제출하세요. 
+문제 제목 앞에 `[Impeller]`를 접두사로 붙이고, 재현 가능한 작은 테스트 사례를 포함하세요.
 
 [file-issue]: {{site.repo.flutter}}/issues/new/choose
 
-### macOS
+### macOS {:#macos}
 
-As of the 3.19 release,
-you can try out Impeller for macOS behind a flag.
-In a future release, the ability to opt-out of
-using Impeller will be removed.
+3.19 릴리스부터, 플래그 뒤에 macOS용 Impeller를 사용해 볼 수 있습니다. 
+향후 릴리스에서는, Impeller 사용을 옵트아웃하는 기능이 제거됩니다.
 
-To enable Impeller on macOS when debugging,
-pass `--enable-impeller` to the `flutter run` command.
+디버깅 시 macOS에서 Impeller를 활성화하려면, `--enable-impeller`를 `flutter run` 명령에 전달합니다.
 
 ```console
 flutter run --enable-impeller
 ```
 
-To enable Impeller on macOS when deploying your app,
-add the following tags under the top-level
-`<dict>` tag in your app's `Info.plist` file.
+앱을 배포할 때 macOS에서 Impeller를 활성화하려면, 앱의 `Info.plist` 파일에 있는 최상위 `<dict>` 태그 아래에 다음 태그를 추가합니다.
 
 ```xml
   <key>FLTEnableImpeller</key>
   <true />
 ```
 
-### Android
+### Android {:#android}
 
-As of the 3.22 release, Impeller on Android with Vulkan
-is a release candidate. On devices that don't support Vulkan,
-Impeller will fallback to the the legacy OpenGL renderer. No
-action on your part is necessary for this fallback behavior.
-Consider trying Impeller on Android before it becomes the default
-on stable, you can explicitly opt into it.
+3.22 릴리스부터, Vulkan이 있는 Android의 Impeller는 릴리스 후보입니다. 
+Vulkan을 지원하지 않는 기기에서, Impeller는 레거시 OpenGL 렌더러로 폴백합니다. 
+이 폴백 동작에 대해 사용자가 아무런 조치를 취할 필요는 없습니다. 
+stable 버전에서 기본이 되기 전에 Android에서 Impeller를 사용해 보는 것을 고려하세요. 
+명시적으로 선택할 수 있습니다.
 
-:::secondary Does your device support Vulkan?
-You can determine whether your Android device
-supports Vulkan at [checking for Vulkan support][vulkan].
+:::secondary 귀하의 기기가 Vulkan을 지원합니까?
+귀하의 Android 기기가 Vulkan을 지원하는지 여부는 [Vulkan 지원 확인][vulkan]에서 확인할 수 있습니다.
 :::
 
-To try out Impeller on Vulkan-capable Android devices,
-pass `--enable-impeller` to `flutter run`:
+Vulkan 지원 Android 기기에서 Impeller를 사용해 보려면 `flutter run`에 `--enable-impeller`를 전달하세요.
 
 ```console
 flutter run --enable-impeller
 ```
 
-Or, you can add the following setting to your project's
-`AndroidManifest.xml` file under the `<application>` tag:
+또는, 프로젝트의 AndroidManifest.xml 파일의 `<application>` 태그 아래에 다음 설정을 추가할 수 있습니다.
 
 ```xml
 <meta-data
@@ -129,46 +108,36 @@ Or, you can add the following setting to your project's
 
 [vulkan]: https://docs.vulkan.org/guide/latest/checking_for_support.html#_android
 
-### Bugs and issues
+### 버그 및 이슈 {:#bugs-and-issues}
 
-For the full list of Impeller's known bugs
-and missing features,
-the most up-to-date information is on the
-[Impeller project board][] on GitHub.
+Impeller의 알려진 버그와 누락된 기능의 전체 리스트는 GitHub의 [Impeller 프로젝트 보드][Impeller project board]에서 최신 정보를 확인할 수 있습니다.
 
-The team continues to improve Impeller support.
-If you encounter performance or fidelity issues
-with Impeller on any platform,
-file an issue in the [GitHub tracker][file-issue].
-Prefix the issue title with `[Impeller]` and
-include a small reproducible test case.
+팀은 Impeller 지원을 지속적으로 개선하고 있습니다. 
+모든 플랫폼에서 Impeller의 성능 또는 충실도 문제(fidelity issues)가 발생하면, [GitHub 추적기][file-issue]에서 문제를 제출하세요. 
+문제 제목 앞에 `[Impeller]`를 붙이고 재현 가능한 작은 테스트 사례를 포함하세요.
 
-Please include the following information when
-submitting an issue for Impeller:
+Impeller에 대한 문제를 제출할 때 다음 정보를 포함하세요.
 
-* The device you are running on,
-  including the chip information.
-* Screenshots or recordings of any visible issues.
-* An [export of the performance trace][].
-  Zip the file and attach it to the GitHub issue.
+* 칩 정보를 포함한, 실행 중인 장치.
+* 눈에 보이는 문제의 스크린샷 또는 녹화.
+* [성능 추적 내보내기][export of the performance trace]. 파일을 압축하여 GitHub 문제에 첨부하세요.
 
 [export of the performance trace]:/tools/devtools/performance#import-and-export
 [Impeller project board]: {{site.github}}/orgs/flutter/projects/21
 
-## Architecture
+## 아키텍처 {:#architecture}
 
-To learn more details about Impeller's design and architecture,
-check out the [README.md][] file in the source tree.
+Impeller의 디자인과 아키텍처에 대한 자세한 내용을 알아보려면, 소스 트리의 [README.md][] 파일을 확인하세요.
 
 [README.md]: {{site.repo.engine}}/blob/main/impeller/README.md
 
-## Additional information
+## 추가 정보 {:#additional-information}
 
-* [Frequently asked questions]({{site.repo.engine}}/blob/main/impeller/docs/faq.md)
-* [Impeller's coordinate system]({{site.repo.engine}}/blob/main/impeller/docs/coordinate_system.md)
-* [How to set up Xcode for GPU frame captures with metal]({{site.repo.engine}}/blob/main/impeller/docs/xcode_frame_capture.md)
-* [Learning to read GPU frame captures]({{site.repo.engine}}/blob/main/impeller/docs/read_frame_captures.md)
-* [How to enable metal validation for command line apps]({{site.repo.engine}}/blob/main/impeller/docs/metal_validation.md)
-* [How Impeller works around the lack of uniform buffers in Open GL ES 2.0]({{site.repo.engine}}/blob/main/impeller/docs/ubo_gles2.md)
-* [Guidance for writing efficient shaders]({{site.repo.engine}}/blob/main/impeller/docs/shader_optimization.md)
-* [How color blending works in Impeller]({{site.repo.engine}}/blob/main/impeller/docs/blending.md)
+* [자주 묻는 질문]({{site.repo.engine}}/blob/main/impeller/docs/faq.md)
+* [Impeller의 좌표계(coordinate system)]({{site.repo.engine}}/blob/main/impeller/docs/coordinate_system.md)
+* [Metal로 GPU 프레임 캡처를 위한 Xcode 설정 방법]({{site.repo.engine}}/blob/main/impeller/docs/xcode_frame_capture.md)
+* [GPU 프레임 캡처를 읽는 방법]({{site.repo.engine}}/blob/main/impeller/docs/read_frame_captures.md)
+* [명령줄 앱에 대한 Metal 검증을 활성화하는 방법]({{site.repo.engine}}/blob/main/impeller/docs/metal_validation.md)
+* [Impeller가 균일한 버퍼가 부족한 문제를 해결하는 방법 Open GL ES 2.0]({{site.repo.engine}}/blob/main/impeller/docs/ubo_gles2.md)
+* [효율적인 셰이더를 작성하기 위한 가이드]({{site.repo.engine}}/blob/main/impeller/docs/shader_optimization.md)
+* [Impeller에서 색상 블렌딩이 작동하는 방식]({{site.repo.engine}}/blob/main/impeller/docs/blending.md)

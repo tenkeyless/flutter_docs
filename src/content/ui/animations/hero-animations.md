@@ -1,290 +1,228 @@
 ---
-title: Hero animations
-description: How to animate a widget to fly between two screens.
+# title: Hero animations
+title: Hero 애니메이션
+# description: How to animate a widget to fly between two screens.
+description: 두 화면 사이를 이동하도록 위젯을 애니메이션으로 표시하는 방법.
 short-title: Hero
 ---
 
-:::secondary What you'll learn
-* The _hero_ refers to the widget that flies between screens.
-* Create a hero animation using Flutter's Hero widget.
-* Fly the hero from one screen to another.
-* Animate the transformation of a hero's shape from circular to
-    rectangular while flying it from one screen to another.
-* The Hero widget in Flutter implements a style of animation
-    commonly known as _shared element transitions_ or
-    _shared element animations._
+:::secondary 학습할 내용
+* _hero_ 는 화면 사이를 날아다니는 위젯을 말합니다.
+* Flutter의 Hero 위젯을 사용하여 hero 애니메이션을 만듭니다.
+* hero를 한 화면에서 다른 화면으로 날아다닙니다.
+* hero의 모양이 원형에서 직사각형으로 변형되는 것을 애니메이션으로 표현하면서, 한 화면에서 다른 화면으로 날아다닙니다.
+* Flutter의 Hero 위젯은 _공유 요소 전환(shared element transitions)_ 또는 _공유 요소 애니메이션(shared element animations)_ 이라고 일반적으로 알려진 애니메이션 스타일을 구현합니다.
 :::
 
-You've probably seen hero animations many times. For example, a screen displays
-a list of thumbnails representing items for sale.  Selecting an item flies it to
-a new screen, containing more details and a "Buy" button. Flying an image from
-one screen to another is called a _hero animation_ in Flutter, though the same
-motion is sometimes referred to as a _shared element transition_.
+여러분은 아마도 Hero 애니메이션을 여러 번 보았을 것입니다. 
+예를 들어, 화면에 판매 중인 아이템을 나타내는 썸네일 리스트가 표시됩니다. 
+품목을 선택하면 더 자세한 내용과 "구매" 버튼이 있는 새 화면으로 이동합니다. 
+Flutter에서는 이미지를 한 화면에서 다른 화면으로 이동하는 것을 _Hero 애니메이션(hero animation)_ 이라고 하지만, 
+동일한 동작을 _공유 요소 전환(shared element transition)_ 이라고도 합니다.
 
-You might want to watch this one-minute video introducing the Hero widget:
+Hero 위젯을 소개하는 이 1분 분량의 비디오를 시청해 보세요.
 
 {% ytEmbed 'Be9UH1kXFDw', 'Hero | Flutter widget of the week' %}
 
-This guide demonstrates how to build standard hero animations, and hero
-animations that transform the image from a circular shape to a square shape
-during flight.
+이 가이드에서는 표준 Hero 애니메이션을 만드는 방법과,
+비행 중에 이미지를 원형에서 사각형 모양으로 변환하는 Hero 애니메이션을 만드는 방법을 보여줍니다.
 
-:::secondary Examples
-This guide provides examples of each hero animation style at
-the following links.
+:::secondary 예시
+이 가이드는 다음 링크에서 각 Hero 애니메이션 스타일의 예시를 제공합니다.
 
-* [Standard hero animation code][]
-* [Radial hero animation code][]
+* [표준(Standard) Hero 애니메이션 코드][Standard hero animation code]
+* [Radial Hero 애니메이션 코드][Radial hero animation code]
 ::
 
-:::secondary New to Flutter?
-This page assumes you know how to create a layout
-using Flutter's widgets. For more information, see
-[Building Layouts in Flutter][].
+:::secondary Flutter를 처음 사용하시나요?
+이 페이지에서는 Flutter 위젯을 사용하여 레이아웃을 만드는 방법을 알고 있다고 가정합니다. 
+자세한 내용은 [Flutter에서 레이아웃 구축][Building Layouts in Flutter]을 참조하세요.
 :::
 
-:::tip Terminology
-  A [_Route_][] describes a page or screen in a Flutter app.
+:::tip 용어
+[_Route_][]는 Flutter 앱의 페이지나 화면을 설명합니다.
 :::
 
-You can create this animation in Flutter with Hero widgets.
-As the hero animates from the source to the destination route,
-the destination route (minus the hero) fades into view.
-Typically, heroes are small parts of the UI, like images,
-that both routes have in common. From the user's perspective
-the hero "flies" between the routes. This guide shows how
-to create the following hero animations:
+Flutter에서 Hero 위젯을 사용하여 이 애니메이션을 만들 수 있습니다. 
+Hero가 소스에서 대상 route로 애니메이션을 적용하면, 대상 경로(Hero minus)가 사라집니다. 
+일반적으로, Hero는 두 경로가 공통적으로 가지고 있는 (이미지와 같은) UI의 작은 부분입니다. 
+사용자 관점에서 Hero는 경로 사이를 "날아다닙니다". 
+이 가이드에서는 다음 Hero 애니메이션을 만드는 방법을 보여줍니다.
 
-**Standard hero animations**<br>
+**표준(Standard) Hero 애니메이션**<br>
 
-A _standard hero animation_ flies the hero from one route to a new route,
-usually landing at a different location and with a different size.
+_표준(Standard) Hero 애니메이션_ 은 Hero를 한 경로에서 새 경로로 날리며, 일반적으로 다른 위치에 다른 크기로 착륙합니다.
 
-The following video (recorded at slow speed) shows a typical example.
-Tapping the flippers in the center of the route flies them to the
-upper left corner of a new, blue route, at a smaller size.
-Tapping the flippers in the blue route (or using the device's
-back-to-previous-route gesture) flies the flippers back to
-the original route.
+다음 비디오(느린 속도로 녹화)는 일반적인 예를 보여줍니다. 
+경로 중앙의 플리퍼를 탭하면 더 작은 크기의 새 파란색 경로의 왼쪽 상단 모서리로 날아갑니다. 
+파란색 경로의 플리퍼를 탭하거나(또는 기기의 이전 경로로 돌아가기 제스처를 사용) 플리퍼를 원래 경로로 다시 날립니다.
 
-{% ytEmbed 'CEcFnqRDfgw', 'Standard hero animation in Flutter' %}
+{% ytEmbed 'CEcFnqRDfgw', 'Flutter의 표준 Hero 애니메이션' %}
 
-**Radial hero animations**<br>
+**Radial Hero 애니메이션**<br>
 
-In _radial hero animation_, as the hero flies between routes
-its shape appears to change from circular to rectangular.
+_Radial Hero 애니메이션_ 에서 Hero가 경로 사이를 날아다닐 때, 모양이 원형에서 직사각형으로 바뀌는 것처럼 보입니다.
 
-The following video (recorded at slow speed),
-shows an example of a radial hero animation. At the start, a
-row of three circular images appears at the bottom of the route.
-Tapping any of the circular images flies that image to a new route
-that displays it with a square shape.
-Tapping the square image flies the hero back to
-the original route, displayed with a circular shape.
+다음 영상(느린 속도로 녹화)은 Radial 영웅 애니메이션의 예를 보여줍니다. 
+처음에, 경로 하단에 세 개의 원형 이미지 행이 나타납니다. 
+원형 이미지 중 하나를 탭하면 해당 이미지가 정사각형 모양으로 표시되는 새 경로로 이동합니다. 
+정사각형 이미지를, 탭하면 Hero가 원형 모양으로 표시되는 원래 경로로 돌아갑니다.
 
-{% ytEmbed 'LWKENpwDKiM', 'Radial hero animation in Flutter' %}
+{% ytEmbed 'LWKENpwDKiM', 'Flutter의 Radial Hero 애니메이션' %}
 
-Before moving to the sections specific to
-[standard](#standard-hero-animations)
-or [radial](#radial-hero-animations) hero animations,
-read [basic structure of a hero animation](#basic-structure)
-to learn how to structure hero animation code,
-and [behind the scenes](#behind-the-scenes) to understand
-how Flutter performs a hero animation.
+[표준](#standard-hero-animations) 또는 [radial](#radial-hero-animations) hero 애니메이션에 대한 섹션으로 이동하기 전에, [hero 애니메이션의 기본 구조](#basic-structure)를 읽어, hero 애니메이션 코드를 구성하는 방법을 알아보고, [비하인드 스토리](#behind-the-scenes)를 읽어 Flutter가 hero 애니메이션을 수행하는 방식을 이해하세요.
 
 <a id="basic-structure"></a>
 
-## Basic structure of a hero animation
+## hero 애니메이션의 기본 구조 {:#basic-structure-of-a-hero-animation}
 
-:::secondary What's the point?
-* Use two hero widgets in different routes but with matching tags to
-    implement the animation.
-* The Navigator manages a stack containing the app's routes.
-* Pushing a route on or popping a route from the Navigator's stack
-    triggers the animation.
-* The Flutter framework calculates a rectangle tween,
-    [`RectTween`][] that defines the hero's boundary
-    as it flies from the source to the destination route.
-    During its flight, the hero is moved to
-    an application overlay, so that it appears on top of both routes.
+:::secondary 요점은 무엇인가요?
+* 서로 다른 경로에서 두 개의 hero 위젯을 사용하지만, 태그가 일치하여 애니메이션을 구현합니다.
+* Navigator는 앱의 경로를 포함하는 스택을 관리합니다.
+* Navigator의 스택에서 경로를 푸시하거나 팝하면 애니메이션이 트리거됩니다.
+* Flutter 프레임워크는 소스에서 대상 경로로 날아갈 때, hero의 경계를 정의하는 사각형 트윈 [`RectTween`][]을 계산합니다. 
+  비행하는 동안, hero는 애플리케이션 오버레이로 이동하여, 두 경로 위에 나타납니다.
 :::
 
-:::tip Terminology
-If the concept of tweens or tweening is new to you,
-check out the [Animations in Flutter tutorial][].
+:::tip 용어
+tweens 또는 tweening의 개념이 생소하다면, [Flutter의 애니메이션 튜토리얼][Animations in Flutter tutorial]을 확인하세요.
 :::
 
-Hero animations are implemented using two [`Hero`][]
-widgets: one describing the widget in the source route,
-and another describing the widget in the destination route.
-From the user's point of view, the hero appears to be shared, and
-only the programmer needs to understand this implementation detail.
-Hero animation code has the following structure:
+Hero 애니메이션은 두 개의 [`Hero`][] 위젯을 사용하여 구현됩니다. 
+하나는 소스 경로의 위젯을 표현하고, 다른 하나는 대상 경로의 위젯을 표현합니다. 
+사용자 관점에서 Hero는 공유되는 것처럼 보이고, 프로그래머만 이 구현 세부 사항을 이해하면 됩니다. 
+Hero 애니메이션 코드는 다음과 같은 구조를 갖습니다.
 
-1. Define a starting Hero widget, referred to as the _source
-   hero_. The hero specifies its graphical representation
-   (typically an image), and an identifying tag, and is in
-   the currently displayed widget tree as defined by the source route.
-1. Define an ending Hero widget, referred to as the _destination hero_.
-   This hero also specifies its graphical representation,
-   and the same tag as the source hero.
-   It's **essential that both hero widgets are created with
-   the same tag**, typically an object that represents the
-   underlying data. For best results, the heroes should have
-   virtually identical widget trees.
-1. Create a route that contains the destination hero.
-   The destination route defines the widget tree that exists
-   at the end of the animation.
-1. Trigger the animation by pushing the destination route on the
-   Navigator's stack. The Navigator push and pop operations trigger
-   a hero animation for each pair of heroes with matching tags in
-   the source and destination routes.
+1. _소스 hero_ 라고 하는 시작 hero 위젯을 정의합니다. 
+   * hero는 그래픽 표현(일반적으로 이미지)과 식별 태그를 지정하고, 소스 경로에서 정의한 대로 현재 표시된 위젯 트리에 있습니다.
+2. _대상 hero_ 라고 하는 종료 hero 위젯을 정의합니다. 
+   * 이 hero도 그래픽 표현과 소스 hero와 동일한 태그를 지정합니다. 
+   * 두 hero 위젯을 **모두 동일한 태그로 만드는 것이 필수적입니다.** 
+     * 일반적으로 기본 데이터를 나타내는 객체입니다. 
+     * 최상의 결과를 얻으려면, hero에 사실상 동일한 위젯 트리가 있어야 합니다.
+3. 대상 hero가 포함된 경로를 만듭니다. 
+   * 대상 경로는 애니메이션 끝에 있는 위젯 트리를 정의합니다.
+4. Navigator의 스택에서 대상 경로를 푸시하여, 애니메이션을 트리거합니다. 
+   * Navigator 푸시 및 팝 작업은 
+     소스 및 대상 경로에서 일치하는 태그가 있는 각 hero 쌍에 대해 hero 애니메이션을 트리거합니다.
 
-Flutter calculates the tween that animates the Hero's bounds from
-the starting point to the endpoint (interpolating size and position),
-and performs the animation in an overlay.
+Flutter는 Hero의 경계를 시작점에서 끝점까지 애니메이션화하는 트윈을 계산하고(크기와 위치를 보간), 
+오버레이에서 애니메이션을 수행합니다.
 
-The next section describes Flutter's process in greater detail.
+다음 섹션에서는 Flutter의 프로세스를 더 자세히 설명합니다.
 
-## Behind the scenes
+## 비하인드 스토리 {:#behind-the-scenes}
 
-The following describes how Flutter performs the
-transition from one route to another.
+다음은 Flutter가 한 경로에서 다른 경로로 전환하는 방법을 설명합니다.
 
 ![Before the transition the source hero appears in the source route](/assets/images/docs/ui/animations/hero-transition-0.png)
 
-Before transition, the source hero waits in the source
-route's widget tree. The destination route does not yet exist,
-and the overlay is empty.
+전환 전에, 소스 hero는 소스 경로의 위젯 트리에서 대기합니다. 
+목적지 경로는 아직 존재하지 않으며, 오버레이는 비어 있습니다.
 
 ---
 
 ![The transition begins](/assets/images/docs/ui/animations/hero-transition-1.png)
 
-Pushing a route to the `Navigator` triggers the animation.
-At `t=0.0`, Flutter does the following:
+`Navigator`로 경로를 푸시하면 애니메이션이 트리거됩니다. `t=0.0`에서, Flutter는 다음을 수행합니다.
 
-* Calculates the destination hero's path, offscreen,
-  using the curved motion as described in the Material
-  motion spec. Flutter now knows where the hero ends up.
+* Material 모션 사양에 설명된 대로 곡선 모션을 사용하여, 화면 밖(offscreen)에서, 대상 hero의 경로를 계산합니다. 
+  Flutter는 이제 hero가 어디에서 끝나는지 알고 있습니다.
 
-* Places the destination hero in the overlay,
-  at the same location and size as the _source_ hero.
-  Adding a hero to the overlay changes its Z-order so that it
-  appears on top of all routes.
+* 오버레이에서 대상 hero를 _소스_ hero와 동일한 위치와 크기로 배치합니다. 
+  오버레이에 hero를 추가하면, Z 순서가 변경되어 모든 경로 위에 표시됩니다.
 
-* Moves the source hero offscreen.
+* 소스 hero를 화면 밖(offscreen)으로 이동합니다.
 
 ---
 
 ![The hero flies in the overlay to its final position and size](/assets/images/docs/ui/animations/hero-transition-2.png)
 
-As the hero flies, its rectangular bounds are animated using
-[Tween&lt;Rect&gt;][], specified in Hero's
-[`createRectTween`][] property.
-By default, Flutter uses an instance of
-[`MaterialRectArcTween`][], which animates the
-rectangle's opposing corners along a curved path.
-(See [Radial hero animations][] for an example
-that uses a different Tween animation.)
+hero가 날 때, 직사각형 경계는 hero의 [`createRectTween`][] 속성에서 지정된 [Tween&lt;Rect&gt;][]를 사용하여 애니메이션화됩니다. 
+기본적으로, Flutter는 [`MaterialRectArcTween`][] 인스턴스를 사용하여, 
+곡선 경로(curved path)를 따라, 직사각형의 반대 모서리를 애니메이션화합니다. 
+(다른 Tween 애니메이션을 사용하는 예는 [Radial hero 애니메이션][Radial hero animations]를 참조하세요.)
 
 ---
 
 ![When the transition is complete, the hero is moved from the overlay to the destination route](/assets/images/docs/ui/animations/hero-transition-3.png)
 
-When the flight completes:
+비행이 완료되면:
 
-* Flutter moves the hero widget from the overlay to
-  the destination route. The overlay is now empty.
+* Flutter가 오버레이에서 목적지 route로 hero 위젯을 이동합니다. 오버레이는 이제 비어 있습니다.
 
-* The destination hero appears in its final position
-  in the destination route.
+* 목적지 hero가 목적지 route의 최종 위치에 나타납니다.
 
-* The source hero is restored to its route.
+* 소스 hero가 route로 복원됩니다.
 
 ---
 
-Popping the route performs the same process,
-animating the hero back to its size
-and location in the source route.
+경로를 팝하면 동일한 프로세스가 수행되어, hero가 소스 route에서 원래 크기와 위치로 다시 애니메이션화됩니다.
 
-### Essential classes
+### 필수 클래스 {:#essential-classes}
 
-The examples in this guide use the following classes to
-implement hero animations:
+이 가이드의 예제에서는 다음 클래스를 사용하여 hero 애니메이션을 구현합니다.
 
 [`Hero`][]
-: The widget that flies from the source to the destination route.
-  Define one Hero for the source route and another for the
-  destination route, and assign each the same tag.
-  Flutter animates pairs of heroes with matching tags.
+: 소스에서 대상 경로로 날아가는 위젯입니다. 
+  소스 경로에 대해 하나의 hero를 정의하고, 대상 경로에 대해 다른 hero를 정의하고, 각각에 동일한 태그를 지정합니다. 
+  Flutter는 일치하는 태그가 있는 hero 쌍을 애니메이션화합니다.
 
 [`InkWell`][]
-: Specifies what happens when tapping the hero.
-  The `InkWell`'s `onTap()` method builds the
-  new route and pushes it to the `Navigator`'s stack.
+: hero를 탭할 때 발생하는 작업을 지정합니다. 
+  `InkWell`의 `onTap()` 메서드는 새 경로를 빌드하여, `Navigator`의 스택에 푸시합니다.
 
 [`Navigator`][]
-: The `Navigator` manages a stack of routes. Pushing a route on or
-  popping a route from the `Navigator`'s stack triggers the animation.
+: `Navigator`는 경로 스택을 관리합니다. 
+  `Navigator`의 스택에서 경로를 푸시하거나 팝하면 애니메이션이 트리거됩니다.
 
 [`Route`][]
-: Specifies a screen or page. Most apps,
-  beyond the most basic, have multiple routes.
+: 화면이나 페이지를 지정합니다. 
+  가장 기본적인 것 외에도 대부분의 앱에는 여러 경로가 있습니다.
 
-## Standard hero animations
+## 1. 표준 hero 애니메이션 {:#standard-hero-animations}
 
-:::secondary What's the point?
-* Specify a route using `MaterialPageRoute`, `CupertinoPageRoute`,
-    or build a custom route using `PageRouteBuilder`.
-    The examples in this section use MaterialPageRoute.
-* Change the size of the image at the end of the transition by
-    wrapping the destination's image in a `SizedBox`.
-* Change the location of the image by placing the destination's
-    image in a layout widget. These examples use `Container`.
+:::secondary 요점은 무엇인가요?
+* `MaterialPageRoute`, `CupertinoPageRoute`를 사용하여 경로를 지정하거나, 
+  `PageRouteBuilder`를 사용하여 커스텀 경로를 빌드합니다. 
+  이 섹션의 예에서는 MaterialPageRoute를 사용합니다.
+* 대상 이미지를 `SizedBox`로 래핑하여, 전환이 끝날 때 이미지 크기를 변경합니다.
+* 대상 이미지를 레이아웃 위젯에 배치하여 이미지 위치를 변경합니다. 
+  이 예에서는 `Container`를 사용합니다.
 :::
 
 <a id="standard-hero-animation-code"></a>
 
-:::secondary Standard hero animation code
-Each of the following examples demonstrates flying an image from one
-route to another. This guide describes the first example.
+:::secondary 표준 hero 애니메이션 코드
+다음의 각 예는 이미지를 한 경로에서 다른 경로로 비행하는 것을 보여줍니다. 이 가이드에서는 첫 번째 예를 설명합니다.
 
 [hero_animation][]
-: Encapsulates the hero code in a custom `PhotoHero` widget.
-  Animates the hero's motion along a curved path,
-  as described in the Material motion spec.
+: 커스텀 `PhotoHero` 위젯에 hero 코드를 캡슐화합니다. 
+  Material 모션 사양에 설명된 대로 곡선 경로를 따라 hero의 동작을 애니메이션화합니다.
 
 [basic_hero_animation][]
-: Uses the hero widget directly.
-  This more basic example, provided for your reference, isn't
-  described in this guide.
+: hero 위젯을 직접 사용합니다. 
+  참조용으로 제공된 보다 기본적인 이 예제는 이 가이드에서 설명하지 않습니다.
 :::
 
-### What's going on?
+### 무슨 일이 일어나고 있나요? {:#whats-going-on}
 
-Flying an image from one route to another is easy to implement
-using Flutter's hero widget. When using `MaterialPageRoute`
-to specify the new route, the image flies along a curved path,
-as described by the [Material Design motion spec][].
+Flutter의 hero 위젯을 사용하면, 이미지를 한 경로에서 다른 경로로 날아가는 것을 쉽게 구현할 수 있습니다. 
+`MaterialPageRoute`를 사용하여 새 경로를 지정하면, 
+이미지는 [Material Design 모션 사양][Material Design motion spec]에서 설명한 대로 곡선 경로(curved path)를 따라 이동합니다.
 
-[Create a new Flutter example][] and
-update it using the files from the [hero_animation][].
+[새 Flutter 예제 만들기][Create a new Flutter example]를 실행하고, [hero_animation][]의 파일을 사용하여 업데이트합니다.
 
-To run the example:
+예제를 실행하려면 다음을 수행합니다.
 
-* Tap on the home route's photo to fly the image to a new route
-  showing the same photo at a different location and scale.
-* Return to the previous route by tapping the image, or by using the
-  device's back-to-the-previous-route gesture.
-* You can slow the transition further using the `timeDilation`
-  property.
+* 홈 경로의 사진을 탭하여 다른 위치와 다른 크기로 같은 사진을 보여주는 새 경로로 이미지를 날립니다.
+* 이미지를 탭하거나, 기기의 이전 경로로 돌아가기 제스처를 사용하여, 이전 경로로 돌아갑니다.
+* `timeDilation` 속성을 사용하여 전환 속도를 더 늦출 수 있습니다.
 
-### PhotoHero class
+### PhotoHero 클래스 {:#photohero-class}
 
-The custom PhotoHero class maintains the hero,
-and its size, image, and behavior when tapped.
-The PhotoHero builds the following widget tree:
+커스텀 PhotoHero 클래스는 hero와 탭했을 때의 크기, 이미지, 동작을 유지합니다. 
+PhotoHero는 다음 위젯 트리를 빌드합니다.
 
 <div class="text-center mb-4">
 
@@ -292,7 +230,7 @@ The PhotoHero builds the following widget tree:
 
 </div>
 
-Here's the code:
+코드는 다음과 같습니다.
 
 ```dart
 class PhotoHero extends StatelessWidget {
@@ -329,34 +267,27 @@ class PhotoHero extends StatelessWidget {
 }
 ```
 
-Key information:
+주요 정보:
 
-* The starting route is implicitly pushed by `MaterialApp` when
-  `HeroAnimation` is provided as the app's home property.
-* An `InkWell` wraps the image, making it trivial to add a tap
-  gesture to the both the source and destination heroes.
-* Defining the Material widget with a transparent color
-  enables the image to "pop out" of the background as it
-  flies to its destination.
-* The `SizedBox` specifies the hero's size at the start and
-  end of the animation.
-* Setting the Image's `fit` property to `BoxFit.contain`,
-  ensures that the image is as large as possible during the
-  transition without changing its aspect ratio.
+* `HeroAnimation`이 앱의 홈 속성으로 제공되면, `MaterialApp`에서 시작 경로를 암묵적으로 푸시합니다.
+* `InkWell`은 이미지를 래핑하여, 소스 및 대상 hero에 탭 제스처를 추가하는 것을 쉽게 만듭니다.
+* Material 위젯을 투명한 색상으로 정의하면, 이미지가 대상으로 날아갈 때 배경에서 "튀어나옵니다(pop out)".
+* `SizedBox`는 애니메이션의 시작과 끝에서 hero의 크기를 지정합니다.
+* 이미지의 `fit` 속성을 `BoxFit.contain`으로 설정하면, 
+  종횡비를 변경하지 않고도 전환 중에 이미지가 가능한 한 크게 표시됩니다.
 
-### HeroAnimation class
+### HeroAnimation 클래스 {:#heroanimation-class}
 
-The `HeroAnimation` class creates the source and destination
-PhotoHeroes, and sets up the transition.
+`HeroAnimation` 클래스는 소스 및 대상 PhotoHeroes를 생성하고, 전환을 설정합니다.
 
-Here's the code:
+코드는 다음과 같습니다.
 
 ```dart
 class HeroAnimation extends StatelessWidget {
   const HeroAnimation({super.key});
 
   Widget build(BuildContext context) {
-    [!timeDilation = 5.0; // 1.0 means normal animation speed.!]
+    [!timeDilation = 5.0; // 1.0은 일반적인 애니메이션 속도를 의미합니다.!]
 
     return Scaffold(
       appBar: AppBar(
@@ -374,7 +305,7 @@ class HeroAnimation extends StatelessWidget {
                     title: const Text('Flippers Page'),
                   ),
                   body: Container(
-                    // Set background to blue to emphasize that it's a new route.
+                    // 새로운 경로라는 점을 강조하기 위해 배경을 파란색으로 설정하세요.
                     color: Colors.lightBlueAccent,
                     padding: const EdgeInsets.all(16),
                     alignment: Alignment.topLeft,
@@ -397,111 +328,83 @@ class HeroAnimation extends StatelessWidget {
 }
 ```
 
-Key information:
+주요 정보:
 
-* When the user taps the `InkWell` containing the source hero,
-  the code creates the destination route using `MaterialPageRoute`.
-  Pushing the destination route to the `Navigator`'s stack triggers
-  the animation.
-* The `Container` positions the `PhotoHero` in the destination
-  route's top-left corner, below the `AppBar`.
-* The `onTap()` method for the destination `PhotoHero`
-  pops the `Navigator`'s stack, triggering the animation
-  that flies the `Hero` back to the original route.
-* Use the `timeDilation` property to slow the transition
-  while debugging.
+* 사용자가 소스 hero가 포함된 `InkWell`을 탭하면, 코드는 `MaterialPageRoute`를 사용하여 대상 경로를 만듭니다. 
+  대상 경로를 `Navigator`의 스택으로 푸시하면, 애니메이션이 트리거됩니다.
+* `Container`는 `PhotoHero`를 대상 경로의 왼쪽 상단 모서리, `AppBar` 아래에 배치합니다.
+* 대상 `PhotoHero`의 `onTap()` 메서드는 `Navigator`의 스택을 팝하여, 
+  `Hero`를 원래 경로로 다시 날아가는 애니메이션을 트리거합니다.
+* 디버깅하는 동안 전환 속도를 늦추려면 `timeDilation` 속성을 사용합니다.
 
 ---
 
-## Radial hero animations
+## 2. Radial hero 애니메이션 {:#radial-hero-animations}
 
-:::secondary What's the point?
-* A _radial transformation_ animates a circular shape into a square
-    shape.
-* A radial _hero_ animation performs a radial transformation while
-    flying the hero from the source route to the destination route.
-* MaterialRectCenter&shy;Arc&shy;Tween defines the tween animation.
-* Build the destination route using `PageRouteBuilder`.
+:::secondary 요점은 무엇인가요?
+* _radial 변환_ 은 원형 모양을 정사각형 모양으로 애니메이션화합니다.
+* radial _hero_ 애니메이션은 hero를 소스 경로에서 대상 경로로 비행하는 동안 radial 변환을 수행합니다.
+* MaterialRectCenter&shy;Arc&shy;Tween은 트윈 애니메이션을 정의합니다.
+* `PageRouteBuilder`를 사용하여 대상 경로를 빌드합니다.
 :::
 
-Flying a hero from one route to another as it transforms
-from a circular shape to a rectangular shape is a slick
-effect that you can implement using Hero widgets.
-To accomplish this, the code animates the intersection of
-two clip shapes: a circle and a square.
-Throughout the animation, the circle clip (and the image)
-scales from `minRadius` to `maxRadius`, while the square
-clip maintains constant size. At the same time,
-the image flies from its position in the source route to its
-position in the destination route. For visual examples
-of this transition, see [Radial transformation][]
-in the Material motion spec.
+원형에서 직사각형 모양으로 변형되면서 한 경로에서 다른 경로로 hero를 날리는 것은, 
+hero 위젯을 사용하여 구현할 수 있는 멋진 효과입니다. 
+이를 달성하기 위해, 코드는 두 클립 모양인 원과 사각형의 교차점을 애니메이션화합니다. 
+애니메이션 전체에서, 원형 클립(및 이미지)은 `minRadius`에서 `maxRadius`로 확장되는 반면, 사각형 클립은 일정한 크기를 유지합니다. 
+동시에, 이미지는 소스 경로의 위치에서 대상 경로의 위치로 날아갑니다. 
+이 전환의 시각적 예는 Material 모션 사양의 [Radial 변환][Radial transformation]을 참조하세요.
 
-This animation might seem complex (and it is), but you can **customize the
-provided example to your needs.** The heavy lifting is done for you.
+이 애니메이션은 복잡해 보일 수 있지만(실제로 그렇습니다), **제공된 예를 필요에 맞게 커스터마이즈 할 수 있습니다.** 
+힘든 작업은 이미 끝났습니다.
 
 <a id="radial-hero-animation-code"></a>
 
-:::secondary Radial hero animation code
-Each of the following examples demonstrates a radial hero animation.
-This guide describes the first example.
+:::secondary Radial hero 애니메이션 코드
+다음의 각 예는 Radial hero 애니메이션을 보여줍니다. 이 가이드에서는 첫 번째 예를 설명합니다.
 
 [radial_hero_animation][]
-: A radial hero animation as described in the Material motion spec.
+: Material 모션 사양에 설명된 radial hero 애니메이션입니다.
 
 [basic_radial_hero_animation][]
-: The simplest example of a radial hero animation. The destination
-  route has no Scaffold, Card, Column, or Text.
-  This basic example, provided for your reference, isn't
-  described in this guide.
+: radial hero 애니메이션의 가장 간단한 예입니다. 
+  대상 경로에는 Scaffold, Card, Column 또는 Text가 없습니다. 
+  참조용으로 제공된 이 기본 예제는, 이 가이드에 설명되어 있지 않습니다.
 
 [radial_hero_animation_animate<wbr>_rectclip][]
-: Extends radial_hero_animation by also animating the size of the
-  rectangular clip. This more advanced example,
-  provided for your reference, isn't described in this guide.
+: 직사각형 클립의 크기를 애니메이션화하여 radial_hero_animation을 확장합니다. 
+  참조용으로 제공된 이 고급 예제는, 이 가이드에 설명되어 있지 않습니다.
 :::
 
-:::tip Pro tip
-The radial hero animation involves intersecting a round shape with
-a square shape. This can be hard to see, even when slowing
-the animation with `timeDilation`, so you might consider enabling
-the [`debugPaintSizeEnabled`][] flag during development.
+:::tip 프로 팁
+radial hero 애니메이션은 둥근 모양과 정사각형 모양을 교차하는 것을 포함합니다. 
+`timeDilation`으로 애니메이션 속도를 늦추더라도 보기 어려울 수 있으므로, 
+개발 중에 [`debugPaintSizeEnabled`][] 플래그를 활성화하는 것을 고려할 수 있습니다.
 :::
 
-### What's going on?
+### 무슨 일이 일어나고 있나요? {:#whats-going-on-1}
 
-The following diagram shows the clipped image at the beginning
-(`t = 0.0`), and the end (`t = 1.0`) of the animation.
+다음 다이어그램은 애니메이션의 시작 부분(`t = 0.0`)과 끝 부분(`t = 1.0`)의 클립된 이미지를 보여줍니다.
 
 ![Radial transformation from beginning to end](/assets/images/docs/ui/animations/radial-hero-animation.png)
 
-The blue gradient (representing the image), indicates where the clip
-shapes intersect. At the beginning of the transition,
-the result of the intersection is a circular clip ([`ClipOval`][]).
-During the transformation, the `ClipOval` scales from `minRadius`
-to `maxRadius` while the [ClipRect][] maintains a constant size.
-At the end of the transition the intersection of the circular and
-rectangular clips yield a rectangle that's the same size as the hero
-widget. In other words, at the end of the transition the image is no
-longer clipped.
+파란색 그라데이션(이미지를 나타냄)은, 클립 모양이 교차하는 위치를 나타냅니다. 
+전환이 시작될 때, 교차의 결과는 원형 클립([`ClipOval`][])입니다. 
+변환 중에, `ClipOval`은 `minRadius`에서 `maxRadius`로 확장되는 반면, [ClipRect][]는 일정한 크기를 유지합니다. 
+전환이 끝날 때, 원형 및 직사각형 클립의 교차는 hero 위젯과 같은 크기의 직사각형을 생성합니다. 
+즉, 전환이 끝날 때 이미지는 더 이상 clip 되지 않습니다.
 
-[Create a new Flutter example][] and
-update it using the files from the
-[radial_hero_animation][] GitHub directory.
+[새 Flutter 예제 만들기][Create a new Flutter example] 및 [radial_hero_animation][] GitHub 디렉토리의 파일을 사용하여 업데이트합니다.
 
-To run the example:
+예제를 실행하려면:
 
-* Tap on one of the three circular thumbnails to animate the image
-  to a larger square positioned in the middle of a new route that
-  obscures the original route.
-* Return to the previous route by tapping the image, or by using the
-  device's back-to-the-previous-route gesture.
-* You can slow the transition further using the `timeDilation`
-  property.
+* 세 개의 원형 썸네일 중 하나를 탭하여 이미지를 새로운 경로의 중앙에 위치한 더 큰 사각형으로 애니메이션화하여 원래 경로를 가립니다.
+* 이미지를 탭하거나 장치의 이전 경로로 돌아가기 제스처를 사용하여, 이전 경로로 돌아갑니다.
+* `timeDilation` 속성을 사용하여 전환 속도를 더 늦출 수 있습니다.
 
-### Photo class
+### Photo 클래스 {:#photo-class}
 
-The `Photo` class builds the widget tree that holds the image:
+`Photo` 클래스는 이미지를 보관하는 위젯 트리를 구축합니다.
 
 ```dart
 class Photo extends StatelessWidget {
@@ -513,7 +416,7 @@ class Photo extends StatelessWidget {
 
   Widget build(BuildContext context) {
     return [!Material(!]
-      // Slightly opaque color appears where the image has transparency.
+      // 이미지에 투명한 부분이 있으면 약간 불투명한 색상이 나타납니다.
       [!color: Theme.of(context).primaryColor.withOpacity(0.25),!]
       child: [!InkWell(!]
         onTap: [!onTap,!]
@@ -527,30 +430,22 @@ class Photo extends StatelessWidget {
 }
 ```
 
-Key information:
+주요 정보:
 
-* The `InkWell` captures the tap gesture.
-  The calling function passes the `onTap()` function to the
-  `Photo`'s constructor.
-* During flight, the `InkWell` draws its splash on its first
-  Material ancestor.
-* The Material widget has a slightly opaque color, so the
-  transparent portions of the image are rendered with color.
-  This ensures that the circle-to-square transition is easy to see,
-  even for images with transparency.
-* The `Photo` class does not include the `Hero` in its widget tree.
-  For the animation to work, the hero
-  wraps the `RadialExpansion` widget.
+* `InkWell`은 탭 제스처를 캡처합니다. 
+  * 호출하는 함수는 `onTap()` 함수를 `Photo`의 생성자에 전달합니다.
+* 비행 중에, `InkWell`은 첫 번째 Material 조상에 스플래시를 그립니다.
+* Material 위젯은 약간 불투명한 색상을 가지고 있으므로, 이미지의 투명한 부분은 색상으로 렌더링됩니다. 
+  * 이렇게 하면 투명한 이미지에서도, 원에서 사각형으로의 전환을 쉽게 볼 수 있습니다.
+* `Photo` 클래스는 위젯 트리에 `Hero`를 포함하지 않습니다. 
+  * 애니메이션이 작동하려면, hero가 `RadialExpansion` 위젯을 래핑합니다.
 
-### RadialExpansion class
+### RadialExpansion 클래스 {:#radialexpansion-class}
 
-The `RadialExpansion` widget, the core of the demo, builds the
-widget tree that clips the image during the transition.
-The clipped shape results from the intersection of a circular clip
-(that grows during flight),
-with a rectangular clip (that remains a constant size throughout).
+데모의 핵심인, `RadialExpansion` 위젯은, 전환 중에 이미지를 클립하는 위젯 트리를 빌드합니다. 
+클립된 모양은 원형 클립(비행 중에 커짐)과 직사각형 클립(전체적으로 일정한 크기 유지)의 교차점에서 발생합니다.
 
-To do this, it builds the following widget tree:
+이를 위해, 다음 위젯 트리를 빌드합니다.
 
 <div class="text-center mb-4">
 
@@ -558,7 +453,7 @@ To do this, it builds the following widget tree:
 
 </div>
 
-Here's the code:
+코드는 다음과 같습니다.
 
 ```dart
 class RadialExpansion extends StatelessWidget {
@@ -589,23 +484,17 @@ class RadialExpansion extends StatelessWidget {
 }
 ```
 
-Key information:
+주요 정보:
 
-* The hero wraps the `RadialExpansion` widget.
-* As the hero flies, its size changes and,
-  because it constrains its child's size,
-  the `RadialExpansion` widget changes size to match.
-* The `RadialExpansion` animation is created by two overlapping clips.
-* The example defines the tweening interpolation using
-  [`MaterialRectCenterArcTween`][].
-  The default flight path for a hero animation
-  interpolates the tweens using the corners of the heroes.
-  This approach affects the hero's aspect ratio during
-  the radial transformation, so the new flight path uses
-  `MaterialRectCenterArcTween` to interpolate the tweens using the
-  center point of each hero.
+* hero는 `RadialExpansion` 위젯을 래핑합니다.
+* hero가 날아가면서 크기가 변경되고, 자식의 크기를 제한하기 때문에 `RadialExpansion` 위젯의 크기가 일치하도록 변경됩니다.
+* `RadialExpansion` 애니메이션은 두 개의 겹치는 클립으로 만들어집니다.
+* 이 예에서는 [`MaterialRectCenterArcTween`][]을 사용하여 tweening 보간을 정의합니다. 
+  * hero 애니메이션의 기본 비행 경로는 hero의 모서리를 사용하여 트윈을 보간합니다. 
+  * 이 접근 방식은 radial 변환 중에 hero의 종횡비에 영향을 미치므로, 
+    새 비행 경로는 `MaterialRectCenterArcTween`을 사용하여 각 hero의 중심점을 사용하여 트윈을 보간합니다.
 
-  Here's the code:
+  코드는 다음과 같습니다.
 
   ```dart
   static RectTween _createRectTween(Rect? begin, Rect? end) {
@@ -613,8 +502,7 @@ Key information:
   }
   ```
 
-  The hero's flight path still follows an arc,
-  but the image's aspect ratio remains constant.
+  hero의 비행 경로는 여전히 호(arc)를 따라가지만, 이미지의 종횡비는 일정하게 유지됩니다.
 
 [Animations in Flutter tutorial]: /ui/animations/tutorial
 [basic_hero_animation]: {{site.repo.this}}/tree/{{site.branch}}/examples/_animation/basic_hero_animation/

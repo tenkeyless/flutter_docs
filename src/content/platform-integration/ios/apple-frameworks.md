@@ -1,19 +1,19 @@
 ---
-title: Leveraging Apple's system APIs and frameworks
+# title: Leveraging Apple's system APIs and frameworks
+title: Apple의 시스템 API 및 프레임워크 활용
+# description: >-
+#   Learn about Flutter plugins that offer equivalent
+#   functionalities to Apple's frameworks.
 description: >-
-  Learn about Flutter plugins that offer equivalent
-  functionalities to Apple's frameworks.
+  Apple 프레임워크와 동일한 기능을 제공하는 Flutter 플러그인에 대해 알아보세요.
 ---
 
-When you come from iOS development, you might need to find
-Flutter plugins that offer the same abilities as Apple's system
-libraries. This might include accessing device hardware or interacting
-with specific frameworks like `HealthKit` or `MapKit`.
+iOS 개발에서 온 경우, Apple의 시스템 라이브러리와 동일한 기능을 제공하는 Flutter 플러그인을 찾아야 할 수도 있습니다. 
+여기에는 기기 하드웨어에 액세스하거나 `HealthKit` 또는 `MapKit`와 같은 특정 프레임워크와 상호 작용하는 것이 포함될 수 있습니다.
 
-For an overview of how the SwiftUI framework compares to Flutter,
-see [Flutter for SwiftUI developers][].
+SwiftUI 프레임워크가 Flutter와 어떻게 비교되는지에 대한 개요는 [SwiftUI 개발자를 위한 Flutter][Flutter for SwiftUI developers]를 참조하세요.
 
-## Introducing Flutter plugins
+## Flutter 플러그인 Introducing {:#introducing-flutter-plugins}
 
 Dart calls libraries that contain platform-specific code _plugins_,
 short for "plugin package".
@@ -35,7 +35,7 @@ you can create your own or
 use platform channels directly in your project.
 To learn more, check out [Writing platform-specific code][].
 
-## Adding a plugin to your project
+## 프로젝트에 플러그인 추가하기 {:#adding-a-plugin-to-your-project}
 
 To use an Apple framework within your native project,
 import it into your Swift or Objective-C file.
@@ -50,7 +50,7 @@ You might need to change app settings or initialization logic.
 If that's needed, the package's "Readme" page on [pub.dev][]
 should provide details.
 
-### Flutter Plugins and Apple Frameworks
+### Flutter 플러그인과 Apple 프레임워크 {:#flutter-plugins-and-apple-frameworks}
 
 | Use Case                                       | Apple Framework or Class                                                              | Flutter Plugin               |
 |------------------------------------------------|---------------------------------------------------------------------------------------|------------------------------|

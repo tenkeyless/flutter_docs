@@ -1,24 +1,26 @@
 ---
-title: Flutter widget index
-description: An alphabetical list of Flutter widgets.
-short-title: Widgets
+# title: Flutter widget index
+title: Flutter Widget 인덱스
+# description: An alphabetical list of Flutter widgets.
+description: Flutter 위젯의 알파벳순 리스트입니다.
+# short-title: Widgets
+short-title: 위젯
 show_breadcrumbs: false
 ---
 
 {% assign sorted = catalog.widgets | sort:'name' -%}
 
-This is an alphabetical list of many of the widgets that
-are bundled with Flutter.
-You can also [browse widgets by category][catalog].
+이것은 Flutter와 함께 제공되는 많은 위젯의 알파벳순 리스트입니다. 
+또한 [카테고리 별 위젯 탐색][catalog]를 할 수 있습니다.
 
-You might also want to check out our Widget of the Week video series
-on the [Flutter YouTube channel]({{site.social.youtube}}). Each short
-episode features a different Flutter widget. For more video series, see
-our [videos](/resources/videos) page.
+또한 [Flutter YouTube 채널]({{site.social.youtube}})에서, 
+Widget of the Week 비디오 시리즈를 확인해 볼 수도 있습니다. 
+각 짧은 에피소드에는 다른 Flutter 위젯이 등장합니다. 
+더 많은 비디오 시리즈를 보려면, [비디오](/resources/videos) 페이지를 참조하세요.
 
-{% ytEmbed 'b_sQ9bMltGU', 'Introducing the Flutter Widget of the Week' %}
+{% ytEmbed 'b_sQ9bMltGU', 'Flutter Widget of the Week 소개' %}
 
-[Widget of the Week playlist]({{site.yt.playlist}}PLjxrf2q8roU23XGwz3Km7sQZFTdB996iG)
+[Widget of the Week 플레이리스트]({{site.yt.playlist}}PLjxrf2q8roU23XGwz3Km7sQZFTdB996iG)
 
 <div class="card-grid">
 {% for comp in sorted -%}

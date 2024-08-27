@@ -1,19 +1,19 @@
 ---
-title: Adding a splash screen to your Android app
-short-title: Splash screen
-description: Learn how to add a splash screen to your Android app.
+# title: Adding a splash screen to your Android app
+title: Android 앱에 스플래시 화면 추가
+# short-title: Splash screen
+short-title: 스플래시 화면
+# description: Learn how to add a splash screen to your Android app.
+description: Android 앱에 스플래시 화면을 추가하는 방법을 알아보세요.
 ---
 
 <img src='/assets/images/docs/development/ui/splash-screen/android-splash-screen/splash-screens_header.png'
 class="mw-100" alt="A graphic outlining the launch flow of an app including a splash screen">
 
-Splash screens (also known as launch screens) provide 
-a simple initial experience while your Android app loads. 
-They set the stage for your application, 
-while allowing time for the app engine 
-to load and your app to initialize.
+스플래시 화면(런치 화면이라고도 함)은 Android 앱이 로드되는 동안 간단한 초기 경험을 제공합니다. 
+앱 엔진이 로드되고 앱이 초기화될 시간을 허용하는 동시에, 애플리케이션의 무대를 설정합니다.
 
-## Overview
+## 개요 {:#overview}
 
 :::warning
 If you are experiencing a crash from implementing a splash screen, you
@@ -48,7 +48,7 @@ same engine throughout your app to minimize wait
 time associated with initialization of the Flutter engine.
 :::
 
-## Initializing the app
+## 앱 초기화 {:#initializing-the-app}
 
 Every Android app requires initialization time while the
 operating system sets up the app's process.
@@ -90,7 +90,7 @@ background color of the Flutter UI.
 
 [drawables]: {{site.android-dev}}/studio/write/resource-manager#import
 
-## Set up the FlutterActivity in AndroidManifest.xml
+## AndroidManifest.xml에 FlutterActivity 설정 {:#set-up-the-flutteractivity-in-androidmanifest-xml}
 
 In `AndroidManifest.xml`, set the `theme` of
 `FlutterActivity` to the launch theme. Then,
@@ -118,7 +118,7 @@ to the normal theme at the appropriate time.
 The Android app now displays the desired launch screen
 while the app initializes.
 
-## Android 12
+## Android 12 {:#android-12}
 
 To configure your launch screen on Android 12,
 check out [Android Splash Screens][].

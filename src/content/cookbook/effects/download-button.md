@@ -1,6 +1,8 @@
 ---
-title: Create a download button
-description: How to implement a download button.
+# title: Create a download button
+title: 다운로드 버튼 생성
+# description: How to implement a download button.
+description: 다운로드 버튼을 구현하는 방법.
 js:
   - defer: true
     url: /assets/js/inject_dartpad.js
@@ -8,27 +10,22 @@ js:
 
 <?code-excerpt path-base="cookbook/effects/download_button"?>
 
-Apps are filled with buttons that execute long-running behaviors.
-For example, a button might trigger a download,
-which starts a download process, receives data over time,
-and then provides access to the downloaded asset. 
-It's helpful to show the user the progress of a
-long-running process, and the button itself is a good place
-to provide this feedback. In this recipe,
-you'll build a download button that transitions through
-multiple visual states, based on the status of an app download.
+앱은 장기 실행 동작을 실행하는 버튼으로 가득 차 있습니다. 
+예를 들어, 버튼은 다운로드를 트리거하여, 다운로드 프로세스를 시작하고, 
+시간이 지남에 따라 데이터를 수신한 다음, 다운로드된 자산에 대한 액세스를 제공할 수 있습니다. 
+사용자에게 장기 실행 프로세스의 진행 상황을 보여주는 것이 유용하며, 버튼 자체는 이러한 피드백을 제공하기에 좋은 위치입니다. 
+이 레시피에서는, 앱 다운로드 상태에 따라, 여러 시각적 상태를 전환하는 다운로드 버튼을 빌드합니다.
 
-The following animation shows the app's behavior:
+다음 애니메이션은 앱의 동작을 보여줍니다.
 
 ![The download button cycles through its stages](/assets/images/docs/cookbook/effects/DownloadButton.gif){:.site-mobile-screenshot}
 
-## Define a new stateless widget
+## 새로운 stateless 위젯 정의 {:#define-a-new-stateless-widget}
 
-Your button widget needs to change its appearance over time.
-Therefore, you need to implement your button with a custom
-stateless widget. 
+버튼 위젯은 시간이 지남에 따라 모양을 변경해야 합니다. 
+따라서, 커스텀 stateless 위젯으로 버튼을 구현해야 합니다.
 
-Define a new stateless widget called `DownloadButton`.
+`DownloadButton`이라는 새 stateless 위젯을 정의합니다.
 
 <?code-excerpt "lib/stateful_widget.dart (DownloadButton)"?>
 ```dart
@@ -46,13 +43,11 @@ class DownloadButton extends StatelessWidget {
 }
 ```
 
-## Define the button's possible visual states
+## 버튼의 가능한 시각적 상태 정의 {:#define-the-buttons-possible-visual-states}
 
-The download button's visual presentation is based on a
-given download status. Define the possible states of
-the download, and then update `DownloadButton` to accept
-a `DownloadStatus` and a `Duration` for how long the button
-should take to animate from one status to another.
+다운로드 버튼의 시각적 표현은 주어진 다운로드 상태에 따라 달라집니다. 
+다운로드의 가능한 상태를 정의한 다음, `DownloadButton`을 업데이트하여, 
+`DownloadStatus`와 버튼이 한 상태에서 다른 상태로 애니메이션화되는 데 걸리는 시간인 `Duration`을 받습니다.
 
 <?code-excerpt "lib/visual_states.dart (VisualStates)"?>
 ```dart
@@ -78,54 +73,42 @@ class DownloadButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: We'll add more to this later.
+    // TODO: 나중에 더 많은 내용을 추가할 것입니다.
     return const SizedBox();
   }
 }
 ```
 
 :::note
-Each time you define a custom widget,
-you must decide whether all relevant 
-information is provided to that widget
-from its parent or if that widget orchestrates
-the application behavior within itself.
-For example, `DownloadButton` could receive the
-current `DownloadStatus` from its parent, 
-or the `DownloadButton` could orchestrate the
-download process itself within its `State` object.
-For most widgets, the best answer is to pass the relevant 
-information into the widget from its parent,
-rather than manage behavior within the widget.
-By passing in all the relevant information,
-you ensure greater reusability for the widget,
-easier testing, and easier changes to application 
-behavior in the future.
+커스텀 위젯을 정의할 때마다, 모든 관련 정보를 부모로부터 위젯에 제공할지 또는 
+위젯이 자체 내에서 애플리케이션 동작을 조율할지 결정해야 합니다. 
+
+예를 들어, `DownloadButton`은 부모로부터 현재 `DownloadStatus`를 받을 수 있고, 
+`DownloadButton`은 자체 `State` 객체 내에서 다운로드 프로세스를 조율할 수 있습니다. 
+
+대부분 위젯의 경우, 가장 좋은 답은 위젯 내에서 동작을 관리하는 대신, 
+부모로부터 위젯으로 관련 정보를 전달하는 것입니다. 
+모든 관련 정보를 전달하면, 위젯의 재사용성이 높아지고, 테스트가 쉬워지고, 
+향후 애플리케이션 동작을 쉽게 변경할 수 있습니다.
 :::
 
-## Display the button shape
+## 버튼 모양 표시 {:#display-the-button-shape}
 
-The download button changes its shape based on the download
-status. The button displays a grey, rounded rectangle during
-the `notDownloaded` and `downloaded` states.
-The button displays a transparent circle during the
-`fetchingDownload` and `downloading` states. 
+다운로드 버튼은 다운로드 상태에 따라 모양이 바뀝니다. 
+버튼은 `notDownloaded` 및 `downloaded` 상태에서, 회색의 둥근 사각형을 표시합니다. 
+버튼은 `fetchingDownload` 및 `downloading` 상태에서 투명한 원을 표시합니다.
 
-Based on the current `DownloadStatus`,
-build an `AnimatedContainer` with a 
-`ShapeDecoration` that displays a rounded
-rectangle or a circle.
+현재 `DownloadStatus`를 기반으로, 
+둥근 사각형 또는 원을 표시하는 `ShapeDecoration`이 있는 `AnimatedContainer`를 빌드합니다.
 
-Consider defining the shape's widget tree in a separated 
-`Stateless` widget so that the main `build()`
-method remains simple, allowing for the additions 
-that follow. Instead of creating a function to return a widget,
-like `Widget _buildSomething() {}`, always prefer creating a
-`StatelessWidget` or a `StatefulWidget` which is more performant. More
-considerations on this can be found in the [documentation]({{site.api}}/flutter/widgets/StatelessWidget-class.html)
-or in a dedicated video in the Flutter [YouTube channel]({{site.yt.watch}}?v=IOyq-eTRhvo).
+분리된 `Stateless` 위젯에서 모양의 위젯 트리를 정의하여 
+주요 `build()` 메서드가 단순하게 유지되고, 그에 따라 추가되는 내용이 허용되도록 합니다. 
+`Widget _buildSomething() {}`와 같이 위젯을 반환하는 함수를 만드는 대신, 
+항상 성능이 더 좋은 `StatelessWidget` 또는 `StatefulWidget`을 만드는 것을 선호합니다. 
 
-For now, the `AnimatedContainer` child is just a `SizedBox` because we will come back at it in another step.
+이에 대한 추가 고려 사항은 [문서]({{site.api}}/flutter/widgets/StatelessWidget-class.html) 또는 Flutter [YouTube 채널]({{site.yt.watch}}?v=IOyq-eTRhvo)의 전용 비디오에서 찾을 수 있습니다.
+
+지금으로서는, `AnimatedContainer` child는 단지 `SizedBox` 뿐인데, 다른 단계에서 다시 다룰 것이기 때문입니다.
 
 <?code-excerpt "lib/display.dart (Display)"?>
 ```dart
@@ -199,29 +182,21 @@ class ButtonShapeWidget extends StatelessWidget {
 }
 ```
 
-You might wonder why you need a `ShapeDecoration`
-widget for a transparent circle, given that it's invisible.
-The purpose of the invisible circle is to orchestrate
-the desired animation. The `AnimatedContainer` begins with a rounded 
-rectangle. When the `DownloadStatus` changes to `fetchingDownload`,
-the `AnimatedContainer` needs to animate from a rounded rectangle
-to a circle, and then fade out as the animation takes place.
-The only way to implement this animation is to define both
-the beginning shape of a rounded rectangle and the 
-ending shape of a circle. But, you don't want the final
-circle to be visible, so you make it transparent,
-which causes an animated fade-out.
+투명한 원이 보이지 않는데도 불구하고, `ShapeDecoration` 위젯이 필요한 이유가 궁금할 수 있습니다. 
+보이지 않는 원의 목적은 원하는 애니메이션을 조율하는 것입니다. 
+`AnimatedContainer`는 둥근 사각형으로 시작합니다. 
+`DownloadStatus`가 `fetchingDownload`로 변경되면, 
+`AnimatedContainer`는 둥근 사각형에서 원으로 애니메이션을 적용한 다음, 애니메이션이 실행되면서 페이드 아웃해야 합니다. 
+이 애니메이션을 구현하는 유일한 방법은 둥근 사각형의 시작 모양과 원의 끝 모양을 모두 정의하는 것입니다. 
+하지만, 마지막 원이 보이지 않게 하려고 하므로, 투명하게 만들어, 애니메이션 페이드 아웃을 발생시킵니다.
 
-## Display the button text
+## 버튼 텍스트 표시 {:#display-the-button-text}
 
-The `DownloadButton` displays `GET` during the
-`notDownloaded` phase, `OPEN` during the `downloaded`
-phase, and no text in between. 
+`DownloadButton`은 `notDownloaded` 단계에서 `GET`을 표시하고, 
+`downloaded` 단계에서 `OPEN`을 표시하며, 그 사이에는 텍스트가 없습니다.
 
-Add widgets to display text during each download phase,
-and animate the text's opacity in between. Add the text
-widget tree as a child of the `AnimatedContainer` in the
-button wrapper widget.
+각 다운로드 단계에서 텍스트를 표시하는 위젯을 추가하고, 그 사이에 텍스트의 불투명도를 애니메이션으로 표시합니다. 
+버튼 래퍼 위젯에서 `AnimatedContainer`의 자식으로 텍스트 위젯 트리를 추가합니다.
 
 <?code-excerpt "lib/display_text.dart (DisplayText)"?>
 ```dart
@@ -280,18 +255,14 @@ class ButtonShapeWidget extends StatelessWidget {
 }
 ```
 
-## Display a spinner while fetching download
+## 다운로드를 가져오는 동안 스피너 표시 {:#display-a-spinner-while-fetching-download}
 
-During the `fetchingDownload` phase, the `DownloadButton`
-displays a radial spinner. This spinner fades in from
-the `notDownloaded` phase and fades out to 
-the `fetchingDownload` phase. 
+`fetchingDownload` 단계 동안, `DownloadButton`은 방사형 스피너를 표시합니다. 
+이 스피너는 `notDownloaded` 단계에서 페이드 인하고, `fetchingDownload` 단계로 페이드 아웃합니다.
 
-Implement a radial spinner that sits on top of the button
-shape and fades in and out at the appropriate times.
+버튼 모양 위에 위치하고 적절한 시간에 페이드 인 및 페이드 아웃하는 방사형 스피너를 구현합니다.
 
-We have removed the `ButtonShapeWidget`'s constructor to keep the
-focus on its build method and the `Stack` widget we've added.
+`ButtonShapeWidget`의 생성자를 제거하여, 빌드 메서드와 우리가 추가한 `Stack` 위젯에 초점을 맞췄습니다.
 
 <?code-excerpt "lib/spinner.dart (Spinner)"?>
 ```dart
@@ -325,20 +296,16 @@ Widget build(BuildContext context) {
 }
 ```
 
-## Display the progress and a stop button while downloading
+## 다운로드 중 진행 상황과 중지 버튼 표시 {:#display-the-progress-and-a-stop-button-while-downloading}
 
-After the `fetchingDownload` phase is the `downloading` phase.
-During the `downloading` phase, the `DownloadButton`
-replaces the radial progress spinner with a growing
-radial progress bar. The `DownloadButton` also displays a stop 
-button icon so that the user can cancel an in-progress download.
+`fetchingDownload` 단계 다음에는 `downloading` 단계가 있습니다. 
+`downloading` 단계 동안, `DownloadButton`은 방사형 진행률 스피너를 점점 커지는 방사형 진행률 막대로 대체합니다. 
+`DownloadButton`은 또한 사용자가 진행 중인 다운로드를 취소할 수 있도록 중지 버튼 아이콘을 표시합니다.
 
-Add a progress property to the `DownloadButton` widget,
-and then update the progress display to switch to a radial
-progress bar during the `downloading` phase. 
+`DownloadButton` 위젯에 진행률 속성을 추가한 다음, 
+`downloading` 단계 동안 방사형 진행률 막대로 전환하도록 진행률 표시를 업데이트합니다.
 
-Next, add a stop button icon at the center of the
-radial progress bar.
+다음으로, 방사형 진행률 막대의 중앙에 중지 버튼 아이콘을 추가합니다.
 
 <?code-excerpt "lib/stop.dart (StopIcon)"?>
 ```dart
@@ -383,17 +350,14 @@ Widget build(BuildContext context) {
 }
 ```
 
-## Add button tap callbacks
+## 버튼 탭 콜백 추가 {:#add-button-tap-callbacks}
 
-The last detail that your `DownloadButton` needs is the
-button behavior. The button must do things when the user taps it. 
+`DownloadButton`에 필요한 마지막 세부 사항은 버튼 동작입니다. 버튼은 사용자가 탭하면 동작을 수행해야 합니다.
 
-Add widget properties for callbacks to start a download,
-cancel a download, and open a download. 
+다운로드 시작, 다운로드 취소, 다운로드 열기를 위한 콜백에 대한 위젯 속성을 추가합니다.
 
-Finally, wrap `DownloadButton`'s existing widget tree
-with a `GestureDetector` widget, and forward the
-tap event to the corresponding callback property.
+마지막으로, `DownloadButton`의 기존 위젯 트리를 `GestureDetector` 위젯으로 래핑하고, 
+탭 이벤트를 해당 콜백 속성으로 전달합니다.
 
 <?code-excerpt "lib/button_taps.dart (TapCallbacks)"?>
 ```dart
@@ -427,7 +391,7 @@ class DownloadButton extends StatelessWidget {
       case DownloadStatus.notDownloaded:
         onDownload();
       case DownloadStatus.fetchingDownload:
-        // do nothing.
+        // 아무것도 안 함.
         break;
       case DownloadStatus.downloading:
         onCancel();
@@ -442,7 +406,7 @@ class DownloadButton extends StatelessWidget {
       onTap: _onPressed,
       child: const Stack(
         children: [
-          /* ButtonShapeWidget and progress indicator */
+          /* ButtonShapeWidget 및 진행률 표시기 */
         ],
       ),
     );
@@ -450,24 +414,17 @@ class DownloadButton extends StatelessWidget {
 }
 ```
 
-Congratulations! You have a button that changes its display
-depending on which phase the button is in: not downloaded,
-fetching download, downloading, and downloaded.
-Now, the user can tap to start a download, tap to cancel an 
-in-progress download, and tap to open a completed download.
+축하합니다! 버튼이 다운로드 시작 안함(not downloaded), 다운로드 가져오는 중, 다운로드 중, 다운로드됨의 단계에 따라 
+디스플레이가 변경되는 버튼이 있습니다. 이제, 사용자는 탭하여 다운로드를 시작하고, 탭하여 진행 중인 다운로드를 취소하고, 
+탭하여 완료된 다운로드를 열 수 있습니다.
 
-## Interactive example
+## 상호 작용 예제 {:#interactive-example}
 
-Run the app:
+앱 실행:
 
-* Click the **GET** button to kick off a
-  simulated download.
-* The button changes to a progress indicator
-  to simulate an in-progress download.
-* When the simulated download is complete, the
-  button transitions to **OPEN**, to indicate
-  that the app is ready for the user
-  to open the downloaded asset.
+* **GET** 버튼을 클릭하여 시뮬레이션된 다운로드를 시작합니다.
+* 버튼이 진행 ​​중 다운로드를 시뮬레이션하기 위해, 진행률 표시기로 바뀝니다.
+* 시뮬레이션된 다운로드가 완료되면, 버튼이 **OPEN**으로 전환되어, 앱이 사용자가 다운로드된 asset을 열 준비가 되었음을 나타냅니다.
 
 <!-- start dartpad -->
 
@@ -664,42 +621,42 @@ class SimulatedDownloadController extends DownloadController
     _downloadStatus = DownloadStatus.fetchingDownload;
     notifyListeners();
 
-    // Wait a second to simulate fetch time.
+    // 읽어 오는 시간의 시뮬레이션을 위해 잠깐 기다립니다.
     await Future<void>.delayed(const Duration(seconds: 1));
 
-    // If the user chose to cancel the download, stop the simulation.
+    // 사용자가 다운로드를 취소하면, 시뮬레이션이 중지됩니다.
     if (!_isDownloading) {
       return;
     }
 
-    // Shift to the downloading phase.
+    // 다운로드 단계로 전환합니다.
     _downloadStatus = DownloadStatus.downloading;
     notifyListeners();
 
     const downloadProgressStops = [0.0, 0.15, 0.45, 0.8, 1.0];
     for (final stop in downloadProgressStops) {
-      // Wait a second to simulate varying download speeds.
+      // 다양한 다운로드 속도를 시뮬레이션하기 위해 잠시 기다립니다.
       await Future<void>.delayed(const Duration(seconds: 1));
 
-      // If the user chose to cancel the download, stop the simulation.
+      // 사용자가 다운로드를 취소하면 시뮬레이션이 중지됩니다.
       if (!_isDownloading) {
         return;
       }
 
-      // Update the download progress.
+      // 다운로드 진행 상황을 업데이트합니다.
       _progress = stop;
       notifyListeners();
     }
 
-    // Wait a second to simulate a final delay.
+    // 최종 지연을 시뮬레이션하기 위해 잠시 기다립니다.
     await Future<void>.delayed(const Duration(seconds: 1));
 
-    // If the user chose to cancel the download, stop the simulation.
+    // 사용자가 다운로드를 취소하면 시뮬레이션이 중지됩니다.
     if (!_isDownloading) {
       return;
     }
 
-    // Shift to the downloaded state, completing the simulation.
+    // 다운로드 상태로 전환하고, 시뮬레이션을 완료합니다.
     _downloadStatus = DownloadStatus.downloaded;
     _isDownloading = false;
     notifyListeners();
@@ -736,7 +693,7 @@ class DownloadButton extends StatelessWidget {
       case DownloadStatus.notDownloaded:
         onDownload();
       case DownloadStatus.fetchingDownload:
-        // do nothing.
+        // 아무것도 안 함.
         break;
       case DownloadStatus.downloading:
         onCancel();

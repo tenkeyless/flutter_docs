@@ -1,41 +1,38 @@
 ---
-title: Flutter for web developers
+# title: Flutter for web developers
+title: 웹 개발자를 위한 플러터
+# description: >-
+#   Learn how to apply Web developer knowledge when building Flutter apps.
 description: >-
-  Learn how to apply Web developer knowledge when building Flutter apps.
+  Flutter 앱을 만들 때 웹 개발자 지식을 적용하는 방법을 알아보세요.
 ---
 
 <?code-excerpt path-base="get-started/flutter-for/web_devs"?>
 
-This page is for users who are familiar with the HTML
-and CSS syntax for arranging components of an application's UI.
-It maps HTML/CSS code snippets to their Flutter/Dart code equivalents.
+이 페이지는 애플리케이션 UI의 구성 요소를 배열하기 위한 HTML 및 CSS 구문에 익숙한 사용자를 위한 것입니다. 
+HTML/CSS 코드 조각을 Flutter/Dart 코드와 매핑합니다.
 
-Flutter is a framework for building cross-platform applications
-that uses the Dart programming language.
-To understand some differences between programming with Dart
-and programming with Javascript, 
-see [Learning Dart as a JavaScript Developer][].
+Flutter는 Dart 프로그래밍 언어를 사용하는 크로스 플랫폼 애플리케이션을 빌드하기 위한 프레임워크입니다. 
+Dart로 프로그래밍하는 것과 Javascript로 프로그래밍하는 것의 차이점을 이해하려면, 
+[JavaScript 개발자로서 Dart 배우기][Learning Dart as a JavaScript Developer]를 참조하세요.
 
-One of the fundamental differences between
-designing a web layout and a Flutter layout,
-is learning how constraints work,
-and how widgets are sized and positioned.
-To learn more, see [Understanding constraints][].
+웹 레이아웃과 Flutter 레이아웃을 디자인하는 것의 근본적인 차이점 중 하나는, 
+제약 조건이 작동하는 방식과 위젯의 크기와 위치를 배우는 것입니다. 
+자세한 내용은 [제약 조건 이해][Understanding constraints]를 참조하세요.
 
-The examples assume:
+이 예제에서는 다음을 가정합니다.
 
-* The HTML document starts with `<!DOCTYPE html>`, and the CSS box model
-  for all HTML elements is set to [`border-box`][],
-  for consistency with the Flutter model.
+* HTML 문서는 `<!DOCTYPE html>`로 시작하고, 
+  모든 HTML 요소에 대한 CSS 상자 모델은, 
+  Flutter 모델과의 일관성을 위해, [`border-box`][]로 설정됩니다.
 
   ```css
   {
       box-sizing: border-box;
   }
   ```
-* In Flutter, the default styling of the 'Lorem ipsum' text
-  is defined by the `bold24Roboto` variable as follows,
-  to keep the syntax simple:
+* Flutter에서, 'Lorem ipsum' 텍스트의 기본 스타일은 구문을 간단하게 유지하기 위해, 
+  다음과 같이 `bold24Roboto` 변수에 의해 정의됩니다.
 
   <?code-excerpt "lib/main.dart (text-style)"?>
   ```dart
@@ -47,9 +44,8 @@ The examples assume:
   ```
 
 :::secondary
-How is react-style, or _declarative_, programming different from the
-traditional imperative style?
-For a comparison, see [Introduction to declarative UI][].
+React 스타일 또는 _선언적(declarative)_ 프로그래밍은 기존의 명령형 스타일과 어떻게 다릅니까? 
+비교를 위해 [선언적 UI 소개][Introduction to declarative UI]를 참조하세요.
 :::
 
 ## Performing basic layout operations

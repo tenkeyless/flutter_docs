@@ -1,18 +1,21 @@
 ---
-title: Building a web application with Flutter
-description: Instructions for creating a Flutter app for the web.
-short-title: Web development
+# title: Building a web application with Flutter
+title: Flutter로 웹 애플리케이션 구축
+# description: Instructions for creating a Flutter app for the web.
+description: 웹용 Flutter 앱을 만드는 방법.
+# short-title: Web development
+short-title: 웹 개발
 ---
 
-This page covers the following steps for getting started with web support:
+이 페이지에서는 웹 지원을 시작하기 위한 다음 단계를 다룹니다.
 
-* Configure the `flutter` tool for web support.
-* Create a new project with web support.
-* Run a new project with web support.
-* Build an app with web support.
-* Add web support to an existing project.
+* 웹 지원을 위한 `flutter` 도구 구성.
+* 웹 지원이 있는 새 프로젝트 만들기.
+* 웹 지원이 있는 새 프로젝트 실행.
+* 웹 지원이 있는 앱 빌드.
+* 기존 프로젝트에 웹 지원 추가.
 
-## Requirements
+## 요구 사항 {:#requirements}
 
 To create a Flutter app with web support,
 you need the following software:
@@ -37,12 +40,12 @@ you need the following software:
 
 For more information, see the [web FAQ][].
 
-## Create a new project with web support
+## 웹 지원으로 새 프로젝트 만들기 {:#create-a-new-project-with-web-support}
 
 You can use the following steps
 to create a new project with web support.
 
-### Set up
+### 설정 {:#set-up}
 
 Run the following commands to use the latest version of the Flutter SDK:
 
@@ -73,19 +76,19 @@ Chrome (web) • chrome • web-javascript • Google Chrome 88.0.4324.150
 
 In your IDE, you should see **Chrome (web)** in the device pulldown.
 
-### Create and run
+### 생성하고 실행 {:#create-and-run}
 
 Creating a new project with web support is no different
 than [creating a new Flutter project][] for other platforms.
 
-#### IDE
+#### IDE {:#ide}
 
 Create a new app in your IDE and it automatically
 creates iOS, Android, [desktop][], and web versions of your app.
 From the device pulldown, select **Chrome (web)**
 and run your app to see it launch in Chrome.
 
-#### Command line
+#### 명령줄 {:#command-line}
 
 To create a new app that includes web support
 (in addition to mobile support), run the following commands,
@@ -117,7 +120,7 @@ Currently, Flutter supports **hot restart**,
 but not **hot reload** in a web browser.
 :::
 
-### Build
+### 빌드 {:#build}
 
 Run the following command to generate a release build:
 
@@ -140,14 +143,13 @@ This populates a `build/web` directory
 with built files, including an `assets` directory,
 which need to be served together.
 
-You can also include `--web-renderer html`  or `--web-renderer canvaskit` to
-select between the HTML or CanvasKit renderers, respectively. For more
-information, see [Web renderers][].
+Flutter web offers multiple build modes and renderers. For more information,
+see [Web renderers][].
 
 To learn more, see
 [Build and release a web app][].
 
-## Add web support to an existing app
+## 기존 앱에 웹 지원 추가 {:#add-web-support-to-an-existing-app}
 
 To add web support to an existing project
 created using a previous version of Flutter,

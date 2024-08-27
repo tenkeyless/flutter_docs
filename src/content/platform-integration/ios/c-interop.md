@@ -1,23 +1,21 @@
 ---
-title: "Binding to native iOS code using dart:ffi"
-description: "To use C code in your Flutter program, use the dart:ffi library."
+# title: "Binding to native iOS code using dart:ffi"
+title: "dart:ffi를 사용하여 네이티브 iOS 코드에 바인딩"
+# description: "To use C code in your Flutter program, use the dart:ffi library."
+description: "Flutter 프로그램에서 C 코드를 사용하려면, dart:ffi 라이브러리를 사용하세요."
 ---
 
 <?code-excerpt path-base="platform_integration"?>
 
-Flutter mobile and desktop apps can use the
-[dart:ffi][] library to call native C APIs.
-_FFI_ stands for [_foreign function interface._][FFI]
-Other terms for similar functionality include
-_native interface_ and _language bindings._
+Flutter 모바일 및 데스크톱 앱은 [dart:ffi][] 라이브러리를 사용하여, 네이티브 C API를 호출할 수 있습니다. 
+_FFI_는 [_외부 함수 인터페이스(foreign function interface)_][FFI]의 약자입니다. 
+유사한 기능에 대한 다른 용어로는 _네이티브 인터페이스(native interface)_ 및 _언어 바인딩(language bindings)_ 이 있습니다.
 
 :::note
-This page describes using the `dart:ffi` library
-in iOS apps. For information on Android, see
-[Binding to native Android code using dart:ffi][android-ffi].
-For information in macOS, see
-[Binding to native macOS code using dart:ffi][macos-ffi].
-This feature is not yet supported for web plugins.
+이 페이지에서는 iOS 앱에서 `dart:ffi` 라이브러리를 사용하는 방법을 설명합니다. 
+Android에 대한 정보는, [dart:ffi를 사용하여 네이티브 Android 코드에 바인딩][android-ffi]를 참조하세요. 
+macOS에 대한 정보는, [dart:ffi를 사용하여 네이티브 macOS 코드에 바인딩][macos-ffi]를 참조하세요. 
+이 기능은 아직 웹 플러그인에서 지원되지 않습니다.
 :::
 
 [android-ffi]: /platform-integration/android/c-interop
@@ -25,20 +23,15 @@ This feature is not yet supported for web plugins.
 [dart:ffi]: {{site.dart.api}}/dev/dart-ffi/dart-ffi-library.html
 [FFI]: https://en.wikipedia.org/wiki/Foreign_function_interface
 
-Before your library or program can use the FFI library
-to bind to native code, you must ensure that the
-native code is loaded and its symbols are visible to Dart.
-This page focuses on compiling, packaging,
-and loading iOS native code within a Flutter plugin or app.
+라이브러리나 프로그램이 FFI 라이브러리를 사용하여, 네이티브 코드에 바인딩하려면, 
+먼저 네이티브 코드가 로드되었고, 해당 심볼이 Dart에서 볼 수 있는지 확인해야 합니다. 
+이 페이지는 Flutter 플러그인이나 앱 내에서 iOS 네이티브 코드를 컴파일, 패키징, 로드하는 데 중점을 둡니다.
 
-This tutorial demonstrates how to bundle C/C++
-sources in a Flutter plugin and bind to them using
-the Dart FFI library on iOS.
-In this walkthrough, you'll create a C function
-that implements 32-bit addition and then
-exposes it through a Dart plugin named "native_add".
+이 튜토리얼은 Flutter 플러그인에서 C/C++ 소스를 번들로 묶고, 
+iOS에서 Dart FFI 라이브러리를 사용하여 바인딩하는 방법을 보여줍니다. 
+이 연습에서는 32비트 추가를 구현한 다음, "native_add"라는 Dart 플러그인을 통해 노출하는 C 함수를 만듭니다.
 
-## Dynamic vs static linking
+## Dynamic vs static 링크 {:#dynamic-vs-static-linking}
 
 A native library can be linked into an app either
 dynamically or statically. A statically linked library
@@ -63,7 +56,7 @@ API documentation is available from the Dart dev channel:
 
 [Dart API reference documentation]: {{site.dart.api}}/dev/
 
-## Create an FFI plugin
+## FFI 플러그인 생성 {:#create-an-ffi-plugin}
 
 To create an FFI plugin called "native_add",
 do the following:
@@ -98,9 +91,9 @@ The native code is invoked from dart in `lib/native_add_bindings_generated.dart`
 
 The bindings are generated with [package:ffigen]({{site.pub-pkg}}/ffigen).
 
-## Other use cases
+## 다른 사용 사례 {:#other-use-cases}
 
-### iOS and macOS
+### iOS 및 macOS {:#ios-and-macos}
 
 Dynamically linked libraries are automatically loaded by
 the dynamic linker when the app starts. Their constituent
@@ -119,7 +112,7 @@ can be resolved using [`DynamicLibrary.executable`][] or
 [`DynamicLibrary.open`]: {{site.dart.api}}/dev/dart-ffi/DynamicLibrary/DynamicLibrary.open.html
 [`DynamicLibrary.process`]: {{site.dart.api}}/dev/dart-ffi/DynamicLibrary/DynamicLibrary.process.html
 
-#### Platform library
+#### Platform 라이브러리 {:#platform-library}
 
 To link against a platform library,
 use the following instructions:
@@ -130,14 +123,14 @@ use the following instructions:
    section.
 1. Select the system library to link against.
 
-#### First-party library
+#### 퍼스트파티 라이브러리 {:#first-party-library}
 
 A first-party native library can be included either
 as source or as a (signed) `.framework` file.
 It's probably possible to include statically linked
 archives as well, but it requires testing.
 
-#### Source code
+#### 소스 코드 {:#source-code}
 
 To link directly to source code,
 use the following instructions:
@@ -161,7 +154,7 @@ use the following instructions:
     @_cdecl("myFunctionName")
     ```
 
-#### Compiled (dynamic) library
+#### 컴파일된(동적) 라이브러리 {:#compiled-dynamic-library}
 
 To link to a compiled dynamic library,
 use the following instructions:
@@ -173,7 +166,7 @@ use the following instructions:
 1. Also add it to the **Linked Frameworks & Libraries**
    section of the target in Xcode.
 
-#### Open-source third-party library
+#### 오픈소스 타사 라이브러리 {:#open-source-third-party-library}
 
 To create a Flutter plugin that includes both
 C/C++/Objective-C _and_ Dart code,
@@ -188,7 +181,7 @@ The native code is then statically linked into
 the application binary of any app that uses
 this plugin.
 
-#### Closed-source third-party library
+#### 폐쇄형 소스 타사 라이브러리 {:#closed-source-third-party-library}
 
 To create a Flutter plugin that includes Dart
 source code, but distribute the C/C++ library
@@ -209,7 +202,7 @@ as shown in the CocoaPods example.
 
 [CocoaPods example]: {{site.github}}/CocoaPods/CocoaPods/blob/master/examples/Vendored%20Framework%20Example/Example%20Pods/VendoredFrameworkExample.podspec
 
-## Stripping iOS symbols
+## iOS 심볼 제거 {:#stripping-ios-symbols}
 
 When creating a release archive (IPA),
 the symbols are stripped by Xcode.

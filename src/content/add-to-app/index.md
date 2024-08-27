@@ -1,34 +1,55 @@
 ---
-title: Add Flutter to an existing app
-short-title: Add to app
-description: Adding Flutter as a library to an existing Android or iOS app.
+# title: Add Flutter to an existing app
+title: 기존 앱에 Flutter 추가
+# short-title: Add to app
+short-title: 앱 to 앱
+# description: Adding Flutter as a library to an existing Android or iOS app.
+description: 기존 Android 또는 iOS 앱에 Flutter를 라이브러리로 추가합니다.
 ---
 
-## Add-to-app
+## 앱 to 앱 {:#add-to-app}
 
-It's sometimes not practical to rewrite your entire application in
-Flutter all at once. For those situations,
-Flutter can be integrated into your existing
-application piecemeal, as a library or module.
-That module can then be imported into your Android or iOS
-(currently supported platforms) app to render a part of your
-app's UI in Flutter. Or, just to run shared Dart logic.
+If you are writing a new application from scratch, it is easy to [get started][]
+using Flutter. But what if you already have an app that's not written in
+Flutter, and it's impractical to start from scratch?
 
-In a few steps, you can bring the productivity and the expressiveness of
-Flutter into your own app.
+For those situations, Flutter can be integrated into your existing application
+piecemeal, as a module. This feature is known as "add-to-app". The module can be
+imported into your existing app to render part of your app using Flutter, while
+the rest can be rendered using existing technology. This method can also be used
+to run shared non-UI logic by taking advantage of Dart's portability and
+interopability with other languages.
 
-The `add-to-app` feature supports integrating multiple instances of any screen size.
-This can help scenarios such as a hybrid navigation stack with mixed
-native and Flutter screens, or a page with multiple partial-screen Flutter
-views.
+Add-to-app is currently supported on Android, iOS, and web.
 
-Having multiple Flutter instances allows each instance to maintain
-independent application and UI state while using minimal
-memory resources. See more in the [multiple Flutters][] page.
+Flutter supports two flavors of add-to-app:
 
-## Supported features
+- **Multi-engine**: supported on Android and iOS, allows running one or more
+  instances of Flutter, each rendering a widget embedded into the host
+  application. Each instance is a separate Dart program, running in isolation
+  from other programs. Having multiple Flutter instances allows each instance to
+  maintain independent application and UI state while using minimal memory
+  resources. See more in the [multiple Flutters][] page.
+- **Multi-view**: supported on the web, allows creating multiple
+  [FlutterView][]s, each rendering a widget embedded into the host application.
+  In this mode there's only one Dart program and all views and widgets can share
+  objects.
 
-### Add to Android applications
+Add-to-app supports integrating multiple Flutter views of any size, supporting
+various use-cases. Two of the most common use-cases are:
+
+* **Hybrid navigation stacks**: an app is made of multiple screens, some of
+  which are rendered by Flutter, and others by another framework. The user can
+  navigate from one screen to another freely, no matter which framework is used
+  to render the screen.
+* **Partial-screen views**: a screen in the app renders multiple widgets, some
+  of which are rendered by Flutter, and others by another framework. The user
+  can scroll and interact with any widget freely, no matter which framework is
+  used to render the widget.
+
+## 지원되는 기능 {:#supported-features}
+
+### Android 애플리케이션에 추가 {:#add-to-android-applications}
 
 {% render docs/app-figure.md, image:"development/add-to-app/android-overview.gif", alt:"Add-to-app steps on Android" %}
 
@@ -50,7 +71,7 @@ memory resources. See more in the [multiple Flutters][] page.
   using `flutter attach` from IDEs or the command line to
   connect to an app that contains Flutter.
 
-### Add to iOS applications
+### iOS 애플리케이션에 추가 {:#add-to-ios-applications}
 
 {% render docs/app-figure.md, image:"development/add-to-app/ios-overview.gif", alt:"Add-to-app steps on iOS" %}
 
@@ -72,7 +93,31 @@ See our [add-to-app GitHub Samples repository][]
 for sample projects in Android and iOS that import
 a Flutter module for UI.
 
-## Get started
+### Add to web applications
+
+Flutter는 모든 클라이언트 측 Dart 웹 프레임워크([jaspr][], [ngdart][], [over_react][] 등), 
+모든 클라이언트 측 JS 프레임워크([React][], [Angular][], [Vue.js][] 등), 
+모든 서버 측 렌더링 프레임워크([Django][], [Ruby on Rails][], [Apache Struts][] 등) 또는 
+프레임워크가 전혀 없어도(애칭으로 "[VanillaJS][]"라고 함) 기존 HTML DOM 기반 웹 앱에 추가할 수 있습니다. 
+최소 요구 사항은 기존 애플리케이션과 해당 프레임워크가 JavaScript 라이브러리 가져오기와 
+Flutter가 렌더링할 HTML 요소 생성을 지원한다는 것입니다.
+
+기존 앱에 Flutter를 추가하려면 정상적으로 빌드한 다음, 
+[임베딩 지침][embedding instructions]에 따라 Flutter 뷰를 페이지에 배치합니다.
+
+[jaspr]: https://pub.dev/packages/jaspr
+[ngdart]: https://pub.dev/packages/ngdart
+[over_react]: https://pub.dev/packages/over_react
+[React]: https://react.dev/
+[Angular]: https://angular.dev/
+[Vue.js]: https://vuejs.org/
+[Django]: https://www.djangoproject.com/
+[Ruby on Rails]: https://rubyonrails.org/
+[Apache Struts]: https://struts.apache.org/
+[VanillaJS]: http://vanilla-js.com/
+[embedding instructions]: {{site.docs}}/platform-integration/web/embedding-flutter-web#embedded-mode
+
+## 시작하기 {:#get-started}
 
 To get started, see our project integration guide for
 Android and iOS:
@@ -92,9 +137,16 @@ Android and iOS:
       </header>
     </div>
   </a>
+  <a class="card" href="/platform-integration/web/embedding-flutter-web#embedded-mode">
+    <div class="card-body">
+      <header class="card-title text-center">
+        Web
+      </header>
+    </div>
+  </a>
 </div>
 
-## API usage
+## API 사용 {:#api-usage}
 
 After Flutter is integrated into your project,
 see our API usage guides at the following links:
@@ -114,10 +166,20 @@ see our API usage guides at the following links:
       </header>
     </div>
   </a>
+  <a class="card" href="/platform-integration/web/embedding-flutter-web#manage-flutter-views-from-js">
+    <div class="card-body">
+      <header class="card-title text-center">
+        Web
+      </header>
+    </div>
+  </a>
 </div>
 
-## Limitations
+## 제한 사항 {:#limitations}
 
+Mobile limitations:
+
+* Multi-view mode is not supported (multi-engine only).
 * Packing multiple Flutter libraries into an
   application isn't supported.
 * Plugins that don't support `FlutterPlugin` might have unexpected
@@ -125,6 +187,15 @@ see our API usage guides at the following links:
   (such as assuming that a Flutter `Activity` is always present).
 * On Android, the Flutter module only supports AndroidX applications.
 
+Web limitations:
+
+* Multi-engine mode is not supported (multi-view only).
+* There's no way to completely "shutdown" the Flutter engine. The app can remove
+  all the [FlutterView][] objects and make sure all data is garbage collected
+  using normal Dart concepts. However, the engine will remain warmed up, even if
+  it's not rendering anything.
+
+[get started]: /get-started/codelab
 [add-to-app GitHub Samples repository]: {{site.repo.samples}}/tree/main/add_to_app
 [Android Archive (AAR)]: {{site.android-dev}}/studio/projects/android-library
 [Flutter plugins]: {{site.pub}}/flutter
@@ -138,3 +209,4 @@ see our API usage guides at the following links:
 [iOS Framework]: {{site.apple-dev}}/library/archive/documentation/MacOSX/Conceptual/BPFrameworks/Concepts/WhatAreFrameworks.html
 [maintained by the Flutter team]: {{site.repo.packages}}/tree/main/packages
 [multiple Flutters]: /add-to-app/multiple-flutters
+[FlutterView]: https://api.flutter.dev/flutter/dart-ui/FlutterView-class.html

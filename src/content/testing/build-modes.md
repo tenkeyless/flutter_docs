@@ -1,128 +1,102 @@
 ---
-title: Flutter's build modes
-description: Describes Flutter's build modes and when you should use debug, release, or profile mode.
+# title: Flutter's build modes
+title: Flutter 빌드 모드
+# description: Describes Flutter's build modes and when you should use debug, release, or profile mode.
+description: Flutter의 빌드 모드를 설명하고 디버그, 릴리스 또는 프로파일 모드를 사용해야 하는 경우를 설명합니다.
 ---
 
-The Flutter tooling supports three modes when compiling your app,
-and a headless mode for testing.
-You choose a compilation mode depending on where you are in
-the development cycle. Are you debugging your code? Do you
-need profiling information? Are you ready to deploy your app?
+Flutter 툴링은 앱을 컴파일할 때 세 가지 모드를 지원하고, 테스트를 위해 헤드리스 모드를 지원합니다. 
+개발 주기의 어느 단계에 있는지에 따라 컴파일 모드를 선택합니다. 
+코드를 디버깅하고 있습니까? 프로파일링 정보가 필요합니까? 앱을 배포할 준비가 되었습니까?
 
-A quick summary for when to use which mode is as follows:
+어떤 모드를 사용해야 하는지에 대한 간단한 요약은 다음과 같습니다.
 
-* Use [debug](#debug) mode during development,
-  when you want to use [hot reload][].
-* Use [profile](#profile) mode when you want to analyze
-  performance.
-* Use [release](#release) mode when you are ready to release
-  your app.
+* [핫 리로드][hot reload]를 사용하고 싶을 때, 개발 중에 [디버그](#debug) 모드를 사용합니다.
+* 성능을 분석하고 싶을 때, [프로필](#profile) 모드를 사용합니다.
+* 앱을 릴리스할 준비가 되었을 때, [릴리스](#release) 모드를 사용합니다.
 
-The rest of the page details these modes.
+나머지 페이지에서는 이러한 모드에 대해 자세히 설명합니다.
 
-* To learn about the headless testing mode,
-  refer to the engine wiki's docs on [Flutter's build modes][].
-* To learn how to detect the build mode, check out the
-  [Check for Debug/Release Mode in Flutter Apps] blog post.
+* 헤드리스 테스트 모드에 대해 알아보려면, 엔진 위키의 [Flutter의 빌드 모드][Flutter's build modes]에 대한 문서를 참조하세요.
+* 빌드 모드를 감지하는 방법을 알아보려면, [Flutter 앱에서 디버그/릴리스 모드 확인][Check for Debug/Release Mode in Flutter Apps] 블로그 게시물을 확인하세요.
 
 [Check for Debug/Release Mode in Flutter Apps]: https://retroportalstudio.medium.com/check-for-debug-release-mode-in-flutter-apps-d8d545f20da3
 
-## Debug
+## Debug {:#debug}
 
-In _debug mode_, the app is set up for debugging on the physical
-device, emulator, or simulator.
+_디버그 모드_ 에서, 앱은 물리적 장치, 에뮬레이터 또는 시뮬레이터에서 디버깅하도록 설정됩니다.
 
-Debug mode for mobile apps mean that:
+모바일 앱의 디버그 모드는 다음을 의미합니다.
 
-* [Assertions][] are enabled.
-* Service extensions are enabled.
-* Compilation is optimized for fast development and run cycles
-  (but not for execution speed, binary size, or deployment).
-* Debugging is enabled, and tools supporting source level debugging
-  (such as [DevTools][]) can connect to the process.
+* [어설션][Assertions]이 활성화됩니다.
+* 서비스 확장이 활성화됩니다.
+* 컴파일은 빠른 개발 및 실행 주기에 최적화됩니다. (실행 속도, 바이너리 크기 또는 배포에는 최적화되지 않음)
+* 디버깅이 활성화되고, 소스 레벨 디버깅을 지원하는 도구(예: [DevTools][])가 프로세스에 연결할 수 있습니다.
 
-Debug mode for a web app means that:
+웹 앱의 디버그 모드는 다음을 의미합니다.
 
-* The build is _not_ minified and tree shaking has _not_ been
-  performed.
-* The app is compiled with the [dartdevc][] compiler for
-  easier debugging.
+* 빌드가 _축소되지 않고_, 트리 셰이킹이 _수행되지_ 않습니다.
+* 앱이 더 쉬운 디버깅을 위해 [dartdevc][] 컴파일러로 컴파일됩니다.
 
-By default, `flutter run` compiles to debug mode.
-Your IDE supports this mode. Android Studio,
-for example, provides a **Run > Debug...** menu option,
-as well as a green bug icon overlaid with a small triangle
-on the project page.
+기본적으로, `flutter run`은 디버그 모드로 컴파일됩니다. IDE에서 이 모드를 지원합니다. 
+예를 들어, Android Studio는 **Run > Debug...** 메뉴 옵션과, 
+프로젝트 페이지에 작은 삼각형이 겹쳐진 녹색 버그 아이콘을 제공합니다.
 
 :::note
-* Hot reload works _only_ in debug mode.
-* The emulator and simulator execute _only_ in debug mode.
-* Application performance can be janky in debug mode.
-  Measure performance in [profile](#profile)
-  mode on an actual device.
+* 핫 리로드는 _디버그 모드에서만_ 작동합니다.
+* 에뮬레이터와 시뮬레이터는 _디버그 모드에서만_ 실행됩니다.
+* 애플리케이션 성능은 디버그 모드에서 janky 할 수 있습니다. 실제 기기에서 [profile](#profile) 모드에서 성능을 측정하세요.
 :::
 
-## Release
+## Release {:#release}
 
-Use _release mode_ for deploying the app, when you want maximum
-optimization and minimal footprint size. For mobile, release mode
-(which is not supported on the simulator or emulator), means that:
+앱을 배포할 때 최대 최적화와 최소 풋프린트 크기를 원할 때, _릴리스 모드_ 를 사용하세요. 
+모바일의 경우, 릴리스 모드(시뮬레이터나 에뮬레이터에서 지원되지 않음)는 다음을 의미합니다.
 
-* Assertions are disabled.
-* Debugging information is stripped out.
-* Debugging is disabled.
-* Compilation is optimized for fast startup, fast execution,
-  and small package sizes.
-* Service extensions are disabled.
+* 어설션이 비활성화됩니다.
+* 디버깅 정보가 제거됩니다.
+* 디버깅이 비활성화됩니다.
+* 컴파일은 빠른 시작, 빠른 실행 및 작은 패키지 크기에 최적화됩니다.
+* 서비스 확장이 비활성화됩니다.
 
-Release mode for a web app means that:
+웹 앱의 릴리스 모드는 다음을 의미합니다.
 
-* The build is minified and tree shaking has been performed.
-* The app is compiled with the [dart2js][] compiler for
-  best performance.
+* 빌드가 최소화되고 트리 셰이킹이 수행됩니다.
+* 앱은 최상의 성능을 위해 [dart2js][] 컴파일러로 컴파일됩니다.
 
-The command `flutter run --release` compiles to release mode.
-Your IDE supports this mode. Android Studio, for example,
-provides a **Run > Run...** menu option, as well as a triangular
-green run button icon on the project page.
-You can compile to release mode for a specific target
-with `flutter build <target>`. For a list of supported targets,
-use `flutter help build`.
+`flutter run --release` 명령은 릴리스 모드로 컴파일합니다. IDE는 이 모드를 지원합니다. 
+예를 들어, Android Studio는 **Run > Run...** 메뉴 옵션과, 
+프로젝트 페이지에 삼각형 녹색 실행 버튼 아이콘을 제공합니다. 
+`flutter build <target>`를 사용하여 특정 대상에 대한 릴리스 모드로 컴파일할 수 있습니다. 
+지원되는 대상 리스트는 `flutter help build`를 사용하세요.
 
-For more information, see the docs on releasing
-[iOS][] and [Android][] apps.
+자세한 내용은 [iOS][] 및 [Android][] 앱 출시에 대한 문서를 참조하세요.
 
-## Profile
+## Profile {:#profile}
 
-In _profile mode_, some debugging ability is maintained&mdash;enough
-to profile your app's performance. Profile mode is disabled on
-the emulator and simulator, because their behavior is not representative
-of real performance. On mobile, profile mode is similar to release mode,
-with the following differences:
+_프로필 모드_ 에서는, (앱의 성능을 프로파일링하기에 충분한) 일부 디버깅 기능이 유지됩니다. 
+에뮬레이터와 시뮬레이터에서는 프로필 모드가 비활성화되어 있습니다. 실제 성능을 나타내지 않기 때문입니다. 
+모바일에서, 프로필 모드는 릴리스 모드와 유사하지만, 다음과 같은 차이점이 있습니다.
 
-* Some service extensions, such as the one that enables the performance
-  overlay, are enabled.
-* Tracing is enabled, and tools supporting source-level debugging
-  (such as [DevTools][]) can connect to the process.
+* 성능 오버레이를 활성화하는 것과 같은, 일부 서비스 확장이 활성화됩니다.
+* 추적이 활성화되고, 소스 레벨 디버깅을 지원하는 도구(예: [DevTools][])가 프로세스에 연결할 수 있습니다.
 
-Profile mode for a web app means that:
+웹 앱의 프로필 모드는 다음을 의미합니다.
 
-* The build is _not_ minified but tree shaking has been performed.
-* The app is compiled with the [dart2js][] compiler.
-* DevTools can't connect to a Flutter web app running
-  in profile mode. Use Chrome DevTools to
-  [generate timeline events][] for a web app.
+* 빌드가 축소되지는 _않지만_ 트리 셰이킹이 수행됩니다.
+* 앱이 [dart2js][] 컴파일러로 컴파일되었습니다.
+* DevTools는 프로필 모드에서 실행되는 Flutter 웹 앱에 연결할 수 없습니다. 
+  Chrome DevTools를 사용하여 웹 앱의 [타임라인 이벤트 생성][generate timeline events]을 수행합니다.
 
-Your IDE supports this mode. Android Studio, for example,
-provides a **Run > Profile...** menu option.
-The command `flutter run --profile` compiles to profile mode.
+IDE가 이 모드를 지원합니다. 
+예를 들어, Android Studio는 **Run > Profile...** 메뉴 옵션을 제공합니다. 
+`flutter run --profile` 명령은 프로파일 모드로 컴파일합니다.
 
 :::note
-Use the [DevTools][] suite to profile your app's performance.
+[DevTools][] 제품군을 사용하여 앱의 성능을 프로파일링하세요.
 :::
 
-For more information on the build modes, see
-[Flutter's build modes][].
+빌드 모드에 대한 자세한 내용은 [Flutter의 빌드 모드][Flutter's build modes]를 참조하세요.
 
 
 [Android]: /deployment/android

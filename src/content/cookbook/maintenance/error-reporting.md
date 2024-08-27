@@ -1,66 +1,57 @@
 ---
-title: Report errors to a service
-description: How to keep track of errors that users encounter.
+# title: Report errors to a service
+title: 서비스에 오류 보고
+# description: How to keep track of errors that users encounter.
+description: 사용자가 겪는 오류를 추적하는 방법.
 ---
 
 <?code-excerpt path-base="cookbook/maintenance/error_reporting/"?>
 
-While one always tries to create apps that are free of bugs,
-they're sure to crop up from time to time.
-Since buggy apps lead to unhappy users and customers,
-it's important to understand how often your users
-experience bugs and where those bugs occur.
-That way, you can prioritize the bugs with the
-highest impact and work to fix them.
+버그가 없는 앱을 만들려고 항상 노력하지만, 가끔씩 버그가 생깁니다. 
+버그가 있는 앱은 사용자와 고객에게 불만을 안겨주기 때문에, 
+사용자가 버그를 얼마나 자주 경험하는지, 그리고 버그가 어디에서 발생하는지 이해하는 것이 중요합니다. 
+이렇게 하면, 가장 큰 영향을 미치는 버그를 우선 순위로 지정하고 이를 수정하기 위해 노력할 수 있습니다.
 
-How can you determine how often your users experiences bugs?
-Whenever an error occurs, create a report containing the
-error that occurred and the associated stacktrace.
-You can then send the report to an error tracking
-service, such as [Bugsnag][], [Datadog][],
-[Firebase Crashlytics][], [Rollbar][], or Sentry.
+사용자가 버그를 얼마나 자주 경험하는지 어떻게 알 수 있을까요? 
+오류가 발생할 때마다, 발생한 오류와 관련 스택 추적을 포함하는 보고서를 만듭니다. 
+그런 다음, 보고서를 [Bugsnag][], [Datadog][], [Firebase Crashlytics][], [Rollbar][] 또는 Sentry와 같은
+오류 추적 서비스로 보낼 수 있습니다.
 
-The error tracking service aggregates all of the crashes your users
-experience and groups them together. This allows you to know how often your
-app fails and where the users run into trouble.
+오류 추적 서비스는 사용자가 경험하는 모든 충돌을 집계하여 그룹화합니다. 
+이를 통해 앱이 실패하는 빈도와 사용자가 문제를 겪는 곳을 알 수 있습니다.
 
-In this recipe, learn how to report errors to the
-[Sentry][] crash reporting service using
-the following steps:
+이 레시피에서는, 다음 단계를 사용하여 [Sentry][] 충돌 보고 서비스에 오류를 보고하는 방법을 알아봅니다.
 
-  1. Get a DSN from Sentry.
-  2. Import the Flutter Sentry package
-  3. Initialize the Sentry SDK
-  4. Capture errors programmatically
+  1. Sentry에서 DSN을 받습니다.
+  2. Flutter Sentry 패키지 가져오기
+  3. Sentry SDK 초기화
+  4. 프로그래밍 방식으로 오류 캡처
 
-## 1. Get a DSN from Sentry
+## 1. Sentry에서 DSN 받기 {:#1-get-a-dsn-from-sentry}
 
-Before reporting errors to Sentry, you need a "DSN" to uniquely identify
-your app with the Sentry.io service.
+Sentry에 오류를 보고하기 전에, Sentry.io 서비스에서 앱을 고유하게 식별할 수 있는 "DSN"이 필요합니다.
 
-To get a DSN, use the following steps:
+DSN을 받으려면, 다음 단계를 따르세요.
 
-  1. [Create an account with Sentry][].
-  2. Log in to the account.
-  3. Create a new Flutter project.
-  4. Copy the code snippet that includes the DSN.
+1. [Sentry 계정 만들기][Create an account with Sentry]
+2. 계정에 로그인합니다.
+3. 새 Flutter 프로젝트를 만듭니다.
+4. DSN이 포함된 코드 조각을 복사합니다.
 
-## 2. Import the Sentry package
+## 2. Sentry 패키지 가져오기 {:#2-import-the-sentry-package}
 
-Import the [`sentry_flutter`][] package into the app.
-The sentry package makes it easier to send
-error reports to the Sentry error tracking service.
+[`sentry_flutter`][] 패키지를 앱으로 가져옵니다. 
+sentry 패키지를 사용하면 Sentry 오류 추적 서비스에 오류 보고서를 보내는 것이 더 쉬워집니다.
 
-To add the `sentry_flutter` package as a dependency,
-run `flutter pub add`:
+`sentry_flutter` 패키지를 종속성으로 추가하려면, `flutter pub add`를 실행합니다.
 
 ```console
 $ flutter pub add sentry_flutter
 ```
 
-## 3. Initialize the Sentry SDK
+## 3. Sentry SDK 초기화 {:#3-initialize-the-sentry-sdk}
 
-Initialize the SDK to capture different unhandled errors automatically:
+다양한 처리되지 않은 오류를 자동으로 캡처하기 위해 SDK를 초기화합니다.
 
 <?code-excerpt "lib/main.dart (InitializeSDK)"?>
 ```dart
@@ -75,40 +66,35 @@ Future<void> main() async {
 }
 ```
 
-Alternatively, you can pass the DSN to Flutter using the `dart-define` tag:
+또는, `dart-define` 태그를 사용하여 DSN을 Flutter에 전달할 수 있습니다.
 
 ```sh
 --dart-define SENTRY_DSN=https://example@sentry.io/example
 ```
 
-### What does that give me?
+### 그러면 나에게 무슨 도움이 되나요? {:#what-does-that-give-me}
 
-This is all you need for Sentry to
-capture unhandled errors in Dart and native layers.  
-This includes Swift, Objective-C, C, and C++ on iOS, and
-Java, Kotlin, C, and C++ on Android.
+이것이 Sentry가 Dart와 네이티브 레이어에서 처리되지 않은 오류를 캡처하는 데 필요한 전부입니다. 
+여기에는 iOS의 Swift, Objective-C, C, C++, Android의 Java, Kotlin, C, C++가 포함됩니다.
 
-## 4. Capture errors programmatically
+## 4. 프로그래밍 방식으로 오류 캡처 {:#4-capture-errors-programmatically}
 
-Besides the automatic error reporting that Sentry generates by
-importing and initializing the SDK,
-you can use the API to report errors to Sentry:
+SDK를 가져오고 초기화하여 Sentry가 생성하는 자동 오류 보고 외에도, API를 사용하여 Sentry에 오류를 보고할 수 있습니다.
 
 <?code-excerpt "lib/main.dart (CaptureException)"?>
 ```dart
 await Sentry.captureException(exception, stackTrace: stackTrace);
 ```
 
-For more information, see the [Sentry API][] docs on pub.dev.
+자세한 내용은, pub.dev의 [Sentry API][] 문서를 참조하세요.
 
-## Learn more
+## 더 알아보기 {:#learn-more}
 
-Extensive documentation about using the Sentry SDK can be found on [Sentry's site][].
+Sentry SDK 사용에 대한 자세한 문서는 [Sentry 사이트][Sentry's site]에서 확인할 수 있습니다.
 
-## Complete example
+## 예제 완성 {:#complete-example}
 
-To view a working example,
-see the [Sentry flutter example][] app.
+실제 예제를 보려면, [Sentry flutter 예제][Sentry flutter example] 앱을 참조하세요.
 
 
 [Sentry flutter example]: {{site.github}}/getsentry/sentry-dart/tree/main/flutter/example

@@ -1,40 +1,40 @@
 ---
-title: Hosting native macOS views in your Flutter app with Platform Views
-short-title: macOS platform-views
-description: Learn how to host native macOS views in your Flutter app with Platform Views.
+# title: Hosting native macOS views in your Flutter app with Platform Views
+title: Platform Views를 사용하여 Flutter 앱에서 네이티브 macOS 뷰 호스팅
+# short-title: macOS platform-views
+short-title: macOS 플랫폼 뷰
+# description: Learn how to host native macOS views in your Flutter app with Platform Views.
+description: 플랫폼 뷰를 사용하여 Flutter 앱에서 기본 macOS 뷰를 호스팅하는 방법을 알아보세요.
 ---
 
 <?code-excerpt path-base="platform_integration/platform_views"?>
 
-Platform views allow you to embed native views in a Flutter app, so you can
-apply transforms, clips, and opacity to the native view from Dart.
+플랫폼 뷰를 사용하면 Flutter 앱에 네이티브 뷰를 임베드할 수 있으므로, 
+Dart에서 네이티브 뷰에 변환, 클립 및 불투명도를 적용할 수 있습니다.
 
-This allows you, for example, to use the native web views directly inside your
-Flutter app.
+이를 통해, 예를 들어, Flutter 앱 내에서 네이티브 웹 뷰를 직접 사용할 수 있습니다.
 
 :::note
-This page discusses how to host your own native macOS views within a Flutter
-app.
-If you'd like to embed native Android views in your Flutter app,
-see [Hosting native Android views][].
-If you'd like to embed native iOS views in your Flutter app,
-see [Hosting native iOS views][].
+이 페이지에서는 Flutter 앱 내에서 자체 네이티브 macOS 뷰를 호스팅하는 방법을 설명합니다. 
+Flutter 앱에 네이티브 Android 뷰를 포함하려면, [네이티브 Android 뷰 호스팅][Hosting native Android views]을 참조하세요. 
+Flutter 앱에 네이티브 iOS 뷰를 포함하려면, [네이티브 iOS 뷰 호스팅][Hosting native iOS views]을 참조하세요.
 :::
 
 [Hosting native Android views]: /platform-integration/android/platform-views
 [Hosting native iOS views]: /platform-integration/ios/platform-views
 
-:::note Version note
-Platform view support on macOS isn't fully functional as of the current release.
-For example, gesture support isn't yet available on macOS.
-Stay tuned for a future stable release.
+:::note 버전 참고
+macOS의 플랫폼 뷰 지원은 현재 릴리스에서 완전히 작동하지 않습니다. 
+예를 들어, 제스처 지원은 아직 macOS에서 사용할 수 없습니다. 
+향후 stable 릴리스를 기대하세요.
 :::
-macOS uses Hybrid composition, which means that the native `NSView` is appended
-to the view hierarchy.
 
-To create a platform view on macOS, use the following instructions:
+macOS는 하이브리드 구성(Hybrid composition)을 사용하는데, 
+이는 네이티브 `NSView`가 뷰 계층 구조에 추가된다는 것을 의미합니다.
 
-## On the Dart side
+macOS에서 플랫폼 뷰를 만들려면, 다음 지침을 따르세요.
+
+## Dart 측에서 {:#on-the-dart-side}
 
 On the Dart side, create a `Widget` and add the build implementation, as shown
 in the following steps.
@@ -83,7 +83,7 @@ For more information, see the API docs for: [`AppKitView`][].
 
 [`AppKitView`]: {{site.api}}/flutter/widgets/AppKitView-class.html
 
-## On the platform side
+## 플랫폼 측에서 {:#on-the-platform-side}
 
 Implement the factory and the platform view. The `NativeViewFactory` creates the
 platform view, and the platform view provides a reference to the `NSView`. For
@@ -197,7 +197,7 @@ For more information, see the API docs for:
 [`FlutterPlatformViewFactory`]: {{site.api}}/ios-embedder/protocol_flutter_platform_view_factory-p.html
 [`PlatformView`]: {{site.api}}/javadoc/io/flutter/plugin/platform/PlatformView.html
 
-## Putting it together
+## 그것을 함께 넣기 {:#putting-it-together}
 
 When implementing the `build()` method in Dart,
 you can use [`defaultTargetPlatform`][]
@@ -226,7 +226,7 @@ Widget build(BuildContext context) {
 
 [`defaultTargetPlatform`]: {{site.api}}/flutter/foundation/defaultTargetPlatform.html
 
-## Performance
+## 성능 {:#performance}
 Platform views in Flutter come with performance trade-offs.
 
 For example, in a typical Flutter app, the Flutter UI is composed on a dedicated

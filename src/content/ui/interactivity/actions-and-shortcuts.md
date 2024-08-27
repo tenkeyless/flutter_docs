@@ -1,83 +1,68 @@
 ---
-title: Using Actions and Shortcuts
-description: How to use Actions and Shortcuts in your Flutter app.
+# title: Using Actions and Shortcuts
+title: 동작 및 단축키 사용
+# description: How to use Actions and Shortcuts in your Flutter app.
+description: Flutter 앱에서 액션과 단축키를 사용하는 방법.
 js:
   - defer: true
     url: /assets/js/inject_dartpad.js
 ---
 
-This page describes how to bind physical keyboard events to actions in the user
-interface. For instance, to define keyboard shortcuts in your application, this
-page is for you.
+이 페이지는 사용자 인터페이스에서 실제 키보드 이벤트를 동작에 바인딩하는 방법을 설명합니다. 
+예를 들어, 애플리케이션에서 키보드 단축키를 정의하려면, 이 페이지가 적합합니다.
 
-## Overview
+## 개요 {:#overview}
 
-For a GUI application to do anything, it has to have actions: users want to tell
-the application to _do_ something. Actions are often simple functions that
-directly perform the action (such as set a value or save a file). In a larger
-application, however, things are more complex: the code for invoking the action,
-and the code for the action itself might need to be in different places.
-Shortcuts (key bindings) might need definition at a level that knows nothing
-about the actions they invoke.
+GUI 애플리케이션이 무언가를 하려면, 액션이 있어야 합니다. 사용자는 애플리케이션에 무언가를 _하라고_ 말하고 싶어합니다. 
+액션은 종종 액션을 직접 수행하는 간단한 함수입니다. (예: 값 설정 또는 파일 저장) 
+그러나, 더 큰 애플리케이션에서는, 상황이 더 복잡합니다. 액션을 호출하는 코드와, 액션 자체의 코드가 다른 위치에 있어야 할 수 있습니다. 
+단축키(키 바인딩)는 호출하는 액션에 대해 아무것도 모르는 레벨에서 정의해야 할 수 있습니다.
 
-That's where Flutter's actions and shortcuts system comes in. It allows
-developers to define actions that fulfill intents bound to them. In this
-context, an intent is a generic action that the user wishes to perform, and an
-[`Intent`][] class instance represents these user intents in Flutter. An
-`Intent` can be general purpose, fulfilled by different actions in different
-contexts. An [`Action`][] can be a simple callback (as in the case of
-the [`CallbackAction`][]) or something more complex that integrates with entire
-undo/redo architectures (for example) or other logic.
+여기서 Flutter의 액션 및 단축키 시스템이 등장합니다. 개발자는 자신에게 바인딩된 인텐트를 충족하는 액션을 정의할 수 있습니다. 
+이 컨텍스트에서, 인텐트(intent)는 사용자가 수행하려는 일반적인 액션(generic action)이고, 
+[`Intent`][] 클래스 인스턴스는 Flutter에서 이러한 사용자 인텐트를 나타냅니다. 
+`Intent`는, 다양한 컨텍스트에서 다양한 액션으로 충족되는, 범용 목적일 수 있습니다. 
+[`Action`][]은 간단한 콜백(예: [`CallbackAction`][])일 수도 있고, 
+전체 실행 취소/재실행 아키텍처나 다른 논리를 통합하는 보다 복잡한 것일 수도 있습니다.
 
 ![Using Shortcuts Diagram][]{:width="100%"}
 
-[`Shortcuts`][] are key bindings that activate by pressing a key or combination
-of keys. The key combinations reside in a table with their bound intent. When
-the `Shortcuts` widget invokes them, it sends their matching intent to the
-actions subsystem for fulfillment.
+[`Shortcuts`][]는 키나 키 조합을 눌러 활성화되는 키 바인딩입니다. 
+키 조합은 바인딩된 인텐트가 있는 테이블에 있습니다. 
+`Shortcuts` 위젯이 이를 호출하면, 일치하는 인텐트를 실행을 위해 작업 하위 시스템으로 전송합니다.
 
-To illustrate the concepts in actions and shortcuts, this article creates a
-simple app that allows a user to select and copy text in a text field using both
-buttons and shortcuts.
+이 문서에서는 액션과 단축키의 개념을 설명하기 위해, 
+사용자가 버튼과 단축키를 모두 사용하여 텍스트 필드에서 텍스트를 선택하고 복사할 수 있는 간단한 앱을 만듭니다.
 
-### Why separate Actions from Intents?
+### 왜 Actions과 Intents를 분리해야 할까요? {:#why-separate-actions-from-intents}
 
-You might wonder: why not just map a key combination directly to an action?  Why
-have intents at all? This is because it is useful to have a separation of
-concerns between where the key mapping definitions are (often at a high level),
-and where the action definitions are (often at a low level), and because it is
-important to be able to have a single key combination map to an intended
-operation in an app, and have it adapt automatically to whichever action
-fulfills that intended operation for the focused context.
+궁금할 수도 있습니다. 왜 키 조합을 액션에 직접 매핑하지 않을까요? 왜 인텐트가 있는 걸까요? 
+이는 키 매핑 정의가 있는 곳(종종 상위 레벨)과 액션 정의가 있는 곳(종종 하위 레벨) 사이에 관심사를 분리하는 것이 유용하기 때문이며, 
+앱에서 의도한(intended) 작업에 단일 키 조합을 매핑하고, 
+초점이 맞춰진 컨텍스트에서 의도한 작업을 충족하는 액션에 자동으로 적응하는 것이 중요하기 때문입니다.
 
-For instance, Flutter has an `ActivateIntent` widget that maps each type of
-control to its corresponding version of an `ActivateAction` (and that executes
-the code that activates the control). This code often needs fairly private
-access to do its work. If the extra layer of indirection that `Intent`s provide
-didn't exist, it would be necessary to elevate the definition of the actions to
-where the defining instance of the `Shortcuts` widget could see them, causing
-the shortcuts to have more knowledge than necessary about which action to
-invoke, and to have access to or provide state that it wouldn't necessarily have
-or need otherwise. This allows your code to separate the two concerns to be more
-independent.
+예를 들어, Flutter에는 각 타입의 컨트롤을 해당 버전의 `ActivateAction`에 매핑하는 `ActivateIntent` 위젯이 있습니다.
+(그리고 컨트롤을 활성화하는 코드를 실행합니다) 
+이 코드는 종종 작업을 수행하기 위해 상당히(fairly) private 액세스가 필요합니다. 
+`Intent`가 제공하는 간접적 레이어가 없다면, 
+`Shortcuts` 위젯의 정의 인스턴스가 볼 수 있는 위치로 액션 정의를 승격(elevate)해야 하므로, 
+shortcuts이 호출할 액션에 대해 필요 이상으로 많은 지식을 갖게 되고, 
+그렇지 않으면, 반드시 필요하지 않거나 필요하지 않은 상태에 액세스하거나 제공하게 됩니다. 
+이렇게 하면 코드에서 두 가지 관심사를 분리하여 더 독립적으로 만들 수 있습니다.
 
-Intents configure an action so that the same action can serve multiple uses. An
-example of this is `DirectionalFocusIntent`, which takes a direction to move
-the focus in, allowing the `DirectionalFocusAction` to know which direction to
-move the focus. Just be careful: don't pass state in the `Intent` that applies
-to all  invocations of an `Action`: that kind of state should be passed to the
-constructor of the `Action` itself, to keep the `Intent` from needing to know
-too much.
+Intents는 동일한 액션이 여러 용도로 사용될 수 있도록 작업을 구성합니다. 
+이에 대한 예로는 `DirectionalFocusIntent`가 있는데, 
+이는 초점을 이동할 방향을 받아서, `DirectionalFocusAction`이 초점을 이동할 방향을 알 수 있도록 합니다. 
+다만 조심하세요. `Action`의 모든 호출에 적용되는 `Intent`의 상태를 전달하지 마세요. 
+그런 종류의 상태는 `Action` 자체의 생성자에 전달해야 `Intent`가 너무 많은 것을 알 필요가 없습니다.
 
-### Why not use callbacks?
+### 왜 콜백을 사용하지 않나요? {:#why-not-use-callbacks}
 
-You also might wonder: why not just use a callback instead of an `Action`
-object? The main reason is that it's useful for actions to decide whether they
-are enabled by implementing `isEnabled`. Also, it is often helpful if the key
-bindings, and the implementation of those bindings, are in different places.
+또한 궁금할 수도 있습니다. 왜 `Action` 객체 대신 콜백을 사용하지 않을까요? 
+주된 이유는 `isEnabled`를 구현하여 액션이 활성화되었는지 여부를 결정하는 데 유용하기 때문입니다. 
+또한, 키 바인딩과 해당 바인딩의 구현이 다른 위치에 있는 경우 종종 도움이 됩니다.
 
-If all you need are callbacks without the flexibility of `Actions` and
-`Shortcuts`, you can use the [`CallbackShortcuts`][] widget:
+`Actions`와 `Shortcuts`의 유연성 없이 콜백만 필요한 경우, [`CallbackShortcuts`][] 위젯을 사용할 수 있습니다.
 
 <?code-excerpt "ui/advanced/actions_and_shortcuts/lib/samples.dart (callback-shortcuts)"?>
 ```dart
@@ -106,20 +91,18 @@ Widget build(BuildContext context) {
 }
 ```
 
-## Shortcuts
+## Shortcuts {:#shortcuts}
 
-As you'll see below, actions are useful on their own, but the most common use
-case involves binding them to a keyboard shortcut. This is what the `Shortcuts`
-widget is for.
+아래에서 볼 수 있듯이, 액션은 그 자체로 유용하지만, 가장 일반적인 사용 사례는 키보드 단축키에 바인딩하는 것입니다. 
+이것이 바로 `Shortcuts` 위젯의 용도입니다.
 
-It is inserted into the widget hierarchy to define key combinations that
-represent the user's intent when that key combination is pressed. To convert
-that intended purpose for the key combination into a concrete action, the
-`Actions` widget used to map the `Intent` to an `Action`. For instance, you can
-define a `SelectAllIntent`, and bind it to your own `SelectAllAction` or to your
-`CanvasSelectAllAction`, and from that one key binding, the system invokes
-either one, depending on which part of your application has focus. Let's see how
-the key binding part works:
+이 위젯은 해당 키 조합을 눌렀을 때, 사용자의 의도(intent)를 나타내는 키 조합을 정의하기 위해, 위젯 계층에 삽입됩니다. 
+키 조합에 대한 의도된 목적을 구체적인 액션으로 변환하기 위해, 
+`Actions` 위젯은 `Intent`를 `Action`에 매핑하는 데 사용되었습니다. 
+예를 들어, `SelectAllIntent`를 정의하고, 
+이를 당신 자신의 `SelectAllAction` 또는 당신의 `CanvasSelectAllAction`에 바인딩할 수 있으며, 
+해당 키 바인딩에서 시스템은 애플리케이션의 어느 부분에 포커스가 있는지에 따라, 두 키 중 하나를 호출합니다. 
+키 바인딩 부분이 어떻게 작동하는지 살펴보겠습니다.
 
 <?code-excerpt "ui/advanced/actions_and_shortcuts/lib/samples.dart (shortcuts)"?>
 ```dart
@@ -149,37 +132,29 @@ Widget build(BuildContext context) {
 }
 ```
 
-The map given to a `Shortcuts` widget maps a `LogicalKeySet` (or a
-`ShortcutActivator`, see note below) to an `Intent` instance. The logical key
-set defines a set of one or more keys, and the intent indicates the intended
-purpose of the keypress. The `Shortcuts` widget looks up key presses in the map,
-to find an `Intent` instance, which it gives to the action's `invoke()` method.
+`Shortcuts` 위젯에 주어진 맵은 `LogicalKeySet`(또는 `ShortcutActivator`, 아래 note 참고)을 `Intent` 인스턴스에 매핑합니다. 
+논리적 키 세트는 하나 이상의 키 세트를 정의하고, 인텐트는 키 누름의 의도된 목적을 나타냅니다. 
+`Shortcuts` 위젯은 맵에서 키 누름을 조회하여, `Intent` 인스턴스를 찾은 다음, 이를 액션의 `invoke()` 메서드에 제공합니다.
 
 :::note
-`ShortcutActivator` is a replacement for `LogicalKeySet`.
-It allows for more flexible and correct activation of shortcuts.
-`LogicalKeySet` is a `ShortcutActivator`, of course, but
-there is also `SingleActivator`, which takes a single key and the
-optional modifiers to be pressed before the key.
-Then there is `CharacterActivator`, which activates a shortcut based on the
-character produced by a key sequence, instead of the logical keys themselves.
-`ShortcutActivator` is also meant to be subclassed to allow for
-custom ways of activating shortcuts from key events.
+`ShortcutActivator`는 `LogicalKeySet`의 대체품입니다. 
+단축키를 보다 유연하고 정확하게 활성화할 수 있습니다. 
+`LogicalKeySet`는 물론 `ShortcutActivator`이지만, 
+단일 키와 키 전에 눌러야 할 선택적 수정자를 취하는 `SingleActivator`도 있습니다. 
+그런 다음, 논리적 키 자체가 아닌, 키 시퀀스에서 생성된 문자를 기반으로 단축키를 활성화하는 `CharacterActivator`가 있습니다. 
+`ShortcutActivator`는 키 이벤트에서 단축키를 활성화하는 커스텀 방식을 허용하도록 하위 클래스화되도록 설계되었습니다.
 :::
 
-### The ShortcutManager
+### ShortcutManager {:#the-shortcutmanager}
 
-The shortcut manager, a longer-lived object than the `Shortcuts` widget, passes
-on key events when it receives them. It contains the logic for deciding how to
-handle the keys, the logic for walking up the tree to find other shortcut
-mappings, and maintains a map of key combinations to intents.
+`Shortcuts` 위젯보다 더 오래 지속되는 객체인, 바로가기 관리자(shortcut manager)는, 키 이벤트를 수신하면 이를 전달합니다.
+여기에는 키를 처리하는 방법을 결정하는 로직, 다른 바로가기 매핑을 찾기 위해 트리를 올라가는 로직이 포함되며, 
+인텐트에 대한 키 조합 맵을 유지 관리합니다.
 
-While the default behavior of the `ShortcutManager` is usually desirable, the
-`Shortcuts` widget takes a `ShortcutManager` that you can subclass to customize
-its functionality.
+`ShortcutManager`의 기본 동작은 일반적으로 바람직하지만(desirable), 
+`Shortcuts` 위젯은 기능을 커스터마이즈 하기 위해 하위 클래스화할 수 있는 `ShortcutManager`를 사용합니다.
 
-For example, if you wanted to log each key that a `Shortcuts` widget handled,
-you could make a `LoggingShortcutManager`:
+예를 들어, `Shortcuts` 위젯이 처리하는 각 키를 기록하려면, `LoggingShortcutManager`를 만들 수 있습니다.
 
 <?code-excerpt "ui/advanced/actions_and_shortcuts/lib/samples.dart (logging-shortcut-manager)"?>
 ```dart
@@ -195,21 +170,17 @@ class LoggingShortcutManager extends ShortcutManager {
 }
 ```
 
-Now, every time the `Shortcuts` widget handles a shortcut, it prints out the key
-event and relevant context.
+이제, `Shortcuts` 위젯이 단축키를 처리할 때마다, 키 이벤트와 관련 컨텍스트를 출력합니다.
 
-## Actions
+## Actions {:#actions}
 
-`Actions` allow for the definition of operations that the application can
-perform by invoking them with an `Intent`. Actions can be enabled or disabled,
-and receive the intent instance that invoked them as an argument to allow
-configuration by the intent.
+`Actions`는 애플리케이션이 `Intent`로 호출하여 수행할 수 있는 작업의 정의를 허용합니다. 
+Actions는 활성화 또는 비활성화할 수 있으며, 호출한 Intent 인스턴스를 인수로 수신하여, Intent로 구성할 수 있습니다.
 
-### Defining actions
+### 액션 정의하기 {:#defining-actions}
 
-Actions, in their simplest form, are just subclasses of `Action<Intent>` with an
-`invoke()` method. Here's a simple action that simply invokes a function on the
-provided model:
+가장 단순한 형태의 액션은, 단순히 `invoke()` 메서드만 있는 `Action<Intent>`의 하위 클래스입니다. 
+제공된 모델에서 함수를 호출하는 간단한 액션은 다음과 같습니다.
 
 <?code-excerpt "ui/advanced/actions_and_shortcuts/lib/samples.dart (select-all-action)"?>
 ```dart
@@ -223,15 +194,15 @@ class SelectAllAction extends Action<SelectAllIntent> {
 }
 ```
 
-Or, if it's too much of a bother to create a new class, use a `CallbackAction`:
+또는, 새로운 클래스를 만드는 것이 너무 번거롭다면, `CallbackAction`을 사용하세요.
 
 <?code-excerpt "ui/advanced/actions_and_shortcuts/lib/samples.dart (callback-action)"?>
 ```dart
 CallbackAction(onInvoke: (intent) => model.selectAll());
 ```
 
-Once you have an action, you add it to your application using the [`Actions`][]
-widget, which takes a map of `Intent` types to `Action`s:
+액션이 있으면, [`Actions`][] 위젯을 사용하여 애플리케이션에 추가합니다. 
+이 위젯은 `Intent` 타입을 `Action`으로 매핑합니다.
 
 <?code-excerpt "ui/advanced/actions_and_shortcuts/lib/samples.dart (select-all-usage)"?>
 ```dart
@@ -246,20 +217,19 @@ Widget build(BuildContext context) {
 }
 ```
 
-The `Shortcuts` widget uses the `Focus` widget's context and `Actions.invoke` to
-find which action to invoke. If the `Shortcuts` widget doesn't find a matching
-intent type in the first `Actions` widget encountered, it considers the next
-ancestor `Actions` widget, and so on, until it reaches the root of the widget
-tree, or finds a matching intent type and invokes the corresponding action.
+`Shortcuts` 위젯은 `Focus` 위젯의 컨텍스트와 `Actions.invoke`를 사용하여 호출할 액션을 찾습니다. 
+`Shortcuts` 위젯이 처음 발견한 `Actions` 위젯에서 일치하는 인텐트 타입을 찾지 못하면, 
+다음 조상 `Actions` 위젯을 고려하는 식으로, 
+위젯 트리의 루트에 도달하거나 일치하는 인텐트 타입을 찾아 해당 작업을 호출합니다.
 
-### Invoking Actions
+### 액션 호출 {:#invoking-actions}
 
-The actions system has several ways to invoke actions.  By far the most common
-way is through the use of a `Shortcuts` widget covered in the previous section,
-but there are other ways to interrogate the actions subsystem and invoke an
-action. It's possible to invoke actions that are not bound to keys.
+액션 시스템은 액션을 호출하는 여러 가지 방법을 가지고 있습니다. 
+지금까지 가장 일반적인 방법은 이전 섹션에서 다룬 `Shortcuts` 위젯을 사용하는 것이지만, 
+액션 하위 시스템을 조사하고 액션을 호출하는 다른 방법도 있습니다. 
+키에 바인딩되지 않은 액션을 호출할 수 있습니다.
 
-For instance, to find an action associated with an intent, you can use:
+예를 들어, 인텐트와 연관된 액션을 찾으려면 다음을 사용할 수 있습니다.
 
 <?code-excerpt "ui/advanced/actions_and_shortcuts/lib/samples.dart (maybe-find)"?>
 ```dart
@@ -267,13 +237,12 @@ Action<SelectAllIntent>? selectAll =
     Actions.maybeFind<SelectAllIntent>(context);
 ```
 
-This returns an `Action` associated with the `SelectAllIntent` type if one is
-available in the given `context`.  If one isn't available, it returns null. If
-an associated `Action` should always be available, then use `find` instead of
-`maybeFind`, which throws an exception when it doesn't find a matching `Intent`
-type.
+주어진 `context`에서 사용 가능한 경우, `SelectAllIntent` 타입과 연관된 `Action`을 반환합니다. 
+사용할 수 없는 경우, null을 반환합니다. 
+연관된 `Action`이 항상 사용 가능해야 하는 경우, 
+일치하는 `Intent` 타입을 찾지 못하면 예외를 throw하는 `maybeFind` 대신 `find`를 사용합니다.
 
-To invoke the action (if it exists), call:
+해당 작업을 호출하려면(존재하는 경우), 다음을 호출합니다.
 
 <?code-excerpt "ui/advanced/actions_and_shortcuts/lib/samples.dart (invoke-action)"?>
 ```dart
@@ -284,7 +253,7 @@ if (selectAll != null) {
 }
 ```
 
-Combine that into one call with the following:
+다음을 사용하여 하나의 호출로 결합합니다.
 
 <?code-excerpt "ui/advanced/actions_and_shortcuts/lib/samples.dart (maybe-invoke)"?>
 ```dart
@@ -292,14 +261,11 @@ Object? result =
     Actions.maybeInvoke<SelectAllIntent>(context, const SelectAllIntent());
 ```
 
-Sometimes you want to invoke an action as a
-result of pressing a button or another control.
-You can do this with the `Actions.handler` function.
-If the intent has a mapping to an enabled action,
-the `Actions.handler` function creates a handler closure.
-However, if it doesn't have a mapping, it returns `null`.
-This allows the button to be disabled if
-there is no enabled action that matches in the context.
+때로는 버튼이나 다른 컨트롤을 눌러서 액션을 호출하고 싶을 때가 있습니다. 
+`Actions.handler` 함수를 사용하면 됩니다. 
+인텐트에 활성화된 액션에 대한 매핑이 있는 경우, `Actions.handler` 함수는 핸들러 클로저를 만듭니다. 
+그러나, 매핑이 없는 경우, `null`을 반환합니다. 
+이렇게 하면 컨텍스트에서 일치하는 활성화된 액션이 없는 경우, 버튼을 비활성화할 수 있습니다.
 
 <?code-excerpt "ui/advanced/actions_and_shortcuts/lib/samples.dart (handler)"?>
 ```dart
@@ -322,47 +288,39 @@ Widget build(BuildContext context) {
 }
 ```
 
-The `Actions` widget only invokes actions when `isEnabled(Intent intent)`
-returns true, allowing the action to decide if the dispatcher should consider it
-for invocation.  If the action isn't enabled, then the `Actions` widget gives
-another enabled action higher in the widget hierarchy (if it exists) a chance to
-execute.
+`Actions` 위젯은 `isEnabled(Intent intent)`가 true를 반환할 때만 액션을 호출하여, 
+디스패처가 호출을 위해 액션을 고려해야 하는지 여부를 액션이 결정할 수 있도록 합니다. 
+액션이 활성화되지 않은 경우, 
+`Actions` 위젯은 위젯 계층 구조에서 더 높은 활성화된 다른 액션(존재하는 경우)에 실행할 기회를 제공합니다.
 
-The previous example uses a `Builder` because `Actions.handler` and
-`Actions.invoke` (for example) only finds actions in the provided `context`, and
-if the example passes the `context` given to the `build` function, the framework
-starts looking _above_ the current widget.  Using a `Builder` allows the
-framework to find the actions defined in the same `build` function.
+이전 예제는 `Builder`를 사용합니다. `Actions.handler`와 `Actions.invoke`(예시)는 제공된 `context`에서만 액션을 찾고, 이 예제가 `build` 함수에 제공된 `context`를 전달하면, 프레임워크가 현재 위젯 _위에서_ 찾기 시작합니다. 
+`Builder`를 사용하면 프레임워크가 동일한 `build` 함수에 정의된 액션을 찾을 수 있습니다.
 
-You can invoke an action without needing a `BuildContext`, but since the
-`Actions` widget requires a context to find an enabled action to invoke, you
-need to provide one, either by creating your own `Action` instance, or by
-finding one in an appropriate context with `Actions.find`.
+`BuildContext`가 없어도 액션을 호출할 수 있지만, `Actions` 위젯은 호출할 활성화된 액션을 찾기 위해 컨텍스트가 필요하므로, 
+직접 `Action` 인스턴스를 만들거나, `Actions.find`를 사용하여 적절한 컨텍스트에서 액션을 찾아서 제공해야 합니다.
 
-To invoke the action, pass the action to the `invoke` method on an
-`ActionDispatcher`, either one you created yourself, or one retrieved from an
-existing `Actions` widget using the `Actions.of(context)` method. Check whether
-the action is enabled before calling `invoke`. Of course, you can also just call
-`invoke` on the action itself, passing an `Intent`, but then you opt out of any
-services that an action dispatcher might provide (like logging, undo/redo, and
-so on).
+액션을 호출하려면, 직접 만든 `ActionDispatcher`의 `invoke` 메서드에 액션을 전달하거나, 
+`Actions.of(context)` 메서드를 사용하여 기존 `Actions` 위젯에서 검색한 액션을 전달합니다. 
+`invoke`를 호출하기 전에 액션이 활성화되었는지 확인합니다. 
+물론, 액션 자체에서 `invoke`를 호출하여 `Intent`를 전달할 수도 있지만, 
+그러면 액션 디스패처가 제공하는 모든 서비스(로깅, 실행 취소/다시 실행 등)를 옵트아웃합니다.
 
-### Action dispatchers
+### 액션 디스패처 (dispatchers) {:#action-dispatchers}
 
-Most of the time, you just want to invoke an action, have it do its thing, and
-forget about it. Sometimes, however, you might want to log the executed actions.
+If you want a log of all the actions invoked, however, you can create your own `LoggingActionDispatcher` to do the job:
 
-This is where replacing the default `ActionDispatcher` with a custom dispatcher
-comes in.  You pass your `ActionDispatcher` to the `Actions` widget, and it
-invokes actions from any `Actions` widgets below that one that doesn't set a
-dispatcher of its own.
+대부분의 경우, 여러분은 그저 액션을 호출하고, 액션이 그 일을 하게 한 다음, 잊어버리고 싶을 것입니다. 
+하지만, 가끔은 실행된 액션을 기록하고 싶을 수도 있습니다.
 
-The first thing `Actions` does when invoking an action is look up the
-`ActionDispatcher` and pass the action to it for invocation. If there is none,
-it creates a default `ActionDispatcher` that simply invokes the action.
+여기서 기본 `ActionDispatcher`를 커스텀 디스패처로 바꾸는 것이 등장합니다. 
+`ActionDispatcher`를 `Actions` 위젯에 전달하면, 
+디스패처를 설정하지 않은 그 위젯 아래의 모든 `Actions` 위젯에서 액션을 호출합니다.
 
-If you want a log of all the actions invoked, however, you can create your own
-`LoggingActionDispatcher` to do the job:
+`Actions`가 액션을 호출할 때 하는 첫 번째 일은, 
+`ActionDispatcher`를 찾아서 호출을 위해 액션을 전달하는 것입니다. 
+아무것도 없다면, 단순히 액션을 호출하는 기본 `ActionDispatcher`를 만듭니다.
+
+하지만 호출된 모든 액션의 로그를 원한다면, 작업을 수행하기 위해 여러분만의 `LoggingActionDispatcher`를 만들 수 있습니다.
 
 <?code-excerpt "ui/advanced/actions_and_shortcuts/lib/samples.dart (logging-action-dispatcher)"?>
 ```dart
@@ -391,7 +349,7 @@ class LoggingActionDispatcher extends ActionDispatcher {
 }
 ```
 
-Then you pass that to your top-level `Actions` widget:
+그런 다음 최상위 `Actions` 위젯에 전달합니다.
 
 <?code-excerpt "ui/advanced/actions_and_shortcuts/lib/samples.dart (logging-action-dispatcher-usage)"?>
 ```dart
@@ -415,28 +373,27 @@ Widget build(BuildContext context) {
 }
 ```
 
-This logs every action as it executes, like so:
+이렇게 하면 모든 액션이 실행될 때마다 기록됩니다.
 
 ```console
 flutter: Action invoked: SelectAllAction#906fc(SelectAllIntent#a98e3) from Builder(dependencies: _[ActionsMarker])
 ```
 
-## Putting it together
+## 함께 정리하기 {:#putting-it-together}
 
-The combination of `Actions` and `Shortcuts` is powerful: you can define generic
-intents that map to specific actions at the widget level. Here's a simple app
-that illustrates the concepts described above. The app creates a text field that
-also has "select all" and "copy to clipboard" buttons next to it. The buttons
-invoke actions to accomplish their work. All the invoked actions and
-shortcuts are logged.
+`Actions`와 `Shortcuts`의 조합은 강력합니다. 
+위젯 레벨에서 특정 액션에 매핑되는 일반적인 의도(intents)를 정의할 수 있습니다. 
+위에 설명된 개념을 보여주는 간단한 앱이 있습니다. 
+이 앱은 옆에 "모두 선택" 및 "클립보드에 복사" 버튼이 있는 텍스트 필드를 만듭니다. 
+버튼은 작업을 수행하기 위해 액션을 호출합니다. 
+호출된 모든 액션과 단축키는 기록됩니다.
 
 <?code-excerpt "ui/advanced/actions_and_shortcuts/lib/copyable_text.dart"?>
 ```dartpad title="Copyable text DartPad hands-on example" run="true"
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-/// A text field that also has buttons to select all the text and copy the
-/// selected text to the clipboard.
+/// 모든 텍스트를 선택하고 선택한 텍스트를 클립보드에 복사할 수 있는 버튼이 있는 텍스트 필드입니다.
 class CopyableTextField extends StatefulWidget {
   const CopyableTextField({super.key, required this.title});
 
@@ -493,7 +450,7 @@ class _CopyableTextFieldState extends State<CopyableTextField> {
   }
 }
 
-/// A ShortcutManager that logs all keys that it handles.
+/// 처리하는 모든 키를 기록하는 ShortcutManager입니다.
 class LoggingShortcutManager extends ShortcutManager {
   @override
   KeyEventResult handleKeypress(BuildContext context, KeyEvent event) {
@@ -505,7 +462,7 @@ class LoggingShortcutManager extends ShortcutManager {
   }
 }
 
-/// An ActionDispatcher that logs all the actions that it invokes.
+/// 호출하는 모든 액션을 기록하는 ActionDispatcher입니다.
 class LoggingActionDispatcher extends ActionDispatcher {
   @override
   Object? invokeAction(
@@ -520,14 +477,12 @@ class LoggingActionDispatcher extends ActionDispatcher {
   }
 }
 
-/// An intent that is bound to ClearAction in order to clear its
-/// TextEditingController.
+/// TextEditingController를 지우기 위해(clear) ClearAction에 바인딩되는 인텐트입니다.
 class ClearIntent extends Intent {
   const ClearIntent();
 }
 
-/// An action that is bound to ClearIntent that clears its
-/// TextEditingController.
+/// ClearIntent에 바인딩되어 TextEditingController를 지우는(clear) 액션입니다.
 class ClearAction extends Action<ClearIntent> {
   ClearAction(this.controller);
 
@@ -541,14 +496,12 @@ class ClearAction extends Action<ClearIntent> {
   }
 }
 
-/// An intent that is bound to CopyAction to copy from its
-/// TextEditingController.
+/// TextEditingController에서 복사하기 위해 CopyAction에 바인딩된 인텐트입니다.
 class CopyIntent extends Intent {
   const CopyIntent();
 }
 
-/// An action that is bound to CopyIntent that copies the text in its
-/// TextEditingController to the clipboard.
+/// TextEditingController에 있는 텍스트를 클립보드에 복사하는 CopyIntent에 바인딩된 작업입니다.
 class CopyAction extends Action<CopyIntent> {
   CopyAction(this.controller);
 
@@ -566,14 +519,12 @@ class CopyAction extends Action<CopyIntent> {
   }
 }
 
-/// An intent that is bound to SelectAllAction to select all the text in its
-/// controller.
+/// 컨트롤러에 있는 모든 텍스트를 선택하기 위해 SelectAllAction에 바인딩된 인텐트입니다.
 class SelectAllIntent extends Intent {
   const SelectAllIntent();
 }
 
-/// An action that is bound to SelectAllAction that selects all text in its
-/// TextEditingController.
+/// TextEditingController에 있는 모든 텍스트를 선택하는 SelectAllAction에 바인딩된 액션입니다.
 class SelectAllAction extends Action<SelectAllIntent> {
   SelectAllAction(this.controller);
 
@@ -591,10 +542,9 @@ class SelectAllAction extends Action<SelectAllIntent> {
   }
 }
 
-/// The top level application class.
+/// 최상위 레벨 애플리케이션 클래스.
 ///
-/// Shortcuts defined here are in effect for the whole app,
-/// although different widgets may fulfill them differently.
+/// 여기에 정의된 단축키는 전체 앱에 적용되지만, 위젯마다 다르게 구현될 수 있습니다.
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 

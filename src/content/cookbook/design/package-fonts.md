@@ -1,34 +1,30 @@
 ---
-title: Export fonts from a package
-description: How to export fonts from a package.
+# title: Export fonts from a package
+title: 패키지에서 글꼴 내보내기
+# description: How to export fonts from a package.
+description: 패키지에서 글꼴을 내보내는 방법.
 ---
 
 <?code-excerpt path-base="cookbook/design/package_fonts"?>
 
-Rather than declaring a font as part of an app,
-you can declare a font as part of a separate package.
-This is a convenient way to share the same font across
-several different projects,
-or for coders publishing their packages to [pub.dev][].
-This recipe uses the following steps:
+앱의 일부로 글꼴을 선언하는 대신, 별도의 패키지의 일부로 글꼴을 선언할 수 있습니다. 
+이는 여러 다른 프로젝트에서 동일한 글꼴을 공유하거나, [pub.dev][]에 패키지를 게시하는 코더에게 편리한 방법입니다. 
+이 레시피는 다음 단계를 사용합니다.
 
-  1. Add a font to a package.
-  2. Add the package and font to the app.
-  3. Use the font.
+  1. 패키지에 글꼴을 추가합니다.
+  2. 패키지와 글꼴을 앱에 추가합니다.
+  3. 글꼴을 사용합니다.
 
 :::note
-Check out the [google_fonts][] package for direct access
-to almost 1000 open-sourced font families.
+약 1000개의 오픈소스 글꼴 패밀리에 직접 액세스하려면, [google_fonts][] 패키지를 확인하세요.
 :::
 
-## 1. Add a font to a package
+## 1. 패키지에 글꼴 추가 {:#1-add-a-font-to-a-package}
 
-To export a font from a package, you need to import the font files into the
-`lib` folder of the package project. You can place font files directly in the
-`lib` folder or in a subdirectory, such as `lib/fonts`.
+패키지에서 글꼴을 내보내려면, 글꼴 파일을 패키지 프로젝트의 `lib` 폴더로 가져와야 합니다. 
+글꼴 파일을 `lib` 폴더나 `lib/fonts`와 같은 하위 디렉터리에 직접 넣을 수 있습니다.
 
-In this example, assume you've got a Flutter library called
-`awesome_package` with fonts living in a `lib/fonts` folder.
+이 예에서는, `lib/fonts` 폴더에 글꼴이 있는 `awesome_package`라는 Flutter 라이브러리가 있다고 가정합니다.
 
 ```plaintext
 awesome_package/
@@ -39,29 +35,24 @@ awesome_package/
       Raleway-Italic.ttf
 ```
 
-## 2. Add the package and fonts to the app
+## 2. 앱에 패키지와 글꼴 추가 {:#2-add-the-package-and-fonts-to-the-app}
 
-Now you can use the fonts in the package by
-updating the `pubspec.yaml` in the *app's* root directory.
+이제 *앱의* 루트 디렉토리에 있는 `pubspec.yaml`을 업데이트하여 패키지의 글꼴을 사용할 수 있습니다.
 
-### Add the package to the app
+### 앱에 패키지 추가 {:#add-the-package-to-the-app}
 
-To add the `awesome_package` package as a dependency,
-run `flutter pub add`:
+`awesome_package` 패키지를 종속성으로 추가하려면, `flutter pub add`를 실행하세요.
 
 ```console
 $ flutter pub add awesome_package
 ```
 
-### Declare the font assets
+### 글꼴 Asset 선언 {:#declare-the-font-assets}
 
-Now that you've imported the package, tell Flutter where to
-find the fonts from the `awesome_package`.
+이제 패키지를 가져왔으니, Flutter에 `awesome_package`에서 글꼴을 찾을 위치를 알려주세요.
 
-To declare package fonts, prefix the path to the font with
-`packages/awesome_package`.
-This tells Flutter to look in the `lib` folder
-of the package for the font.
+패키지 글꼴을 선언하려면, 글꼴 경로 앞에 `packages/awesome_package`를 접두사로 붙입니다. 
+이렇게 하면 Flutter가 패키지의 `lib` 폴더에서 글꼴을 찾게 됩니다.
 
 ```yaml
 flutter:
@@ -75,11 +66,10 @@ flutter:
 
 <a id="use" aria-hidden="true"></a>
 
-## 3. Use the font
+## 3. 글꼴 사용 {:#3-use-the-font}
 
-Use a [`TextStyle`][] to change the appearance of text.
-To use package fonts, declare which font you'd like to use and
-which package the font belongs to.
+[`TextStyle`][]을 사용하여 텍스트 모양을 변경합니다. 
+패키지 글꼴을 사용하려면, 사용하고 싶은 글꼴과 글꼴이 속한 패키지를 선언합니다.
 
 <?code-excerpt "lib/main.dart (TextStyle)"?>
 ```dart
@@ -91,12 +81,11 @@ child: Text(
 ),
 ```
 
-## Complete example
+## 예제 완성하기 {:#complete-example}
 
 ### Fonts
 
-The Raleway and RobotoMono fonts were downloaded from
-[Google Fonts][].
+Raleway 및 RobotoMono 글꼴은 [Google Fonts][]에서 다운로드되었습니다.
 
 ### `pubspec.yaml`
 
@@ -149,10 +138,10 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // The AppBar uses the app-default font.
+      // AppBar는 앱 기본 글꼴을 사용합니다.
       appBar: AppBar(title: const Text('Package Fonts')),
       body: const Center(
-        // This Text widget uses the Raleway font.
+        // 이 텍스트 위젯은 Raleway 글꼴을 사용합니다.
         child: Text(
           'Using the Raleway font from the awesome_package',
           style: TextStyle(

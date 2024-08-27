@@ -1,296 +1,197 @@
 ---
-title: Animations API overview
-short-title: API overview
-description: An overview of animation concepts.
+# title: Animations API overview
+title: 애니메이션 API 개요
+# short-title: API overview
+short-title: API 개요
+# description: An overview of animation concepts.
+description: 애니메이션 개념 개요.
 ---
 
-The animation system in Flutter is based on typed
-[`Animation`][] objects. Widgets can either
-incorporate these animations in their build
-functions directly by reading their current value and listening to their
-state changes or they can use the animations as the basis of more elaborate
-animations that they pass along to other widgets.
+Flutter의 애니메이션 시스템은 타입이 지정된 [`Animation`][] 객체를 기반으로 합니다. 
+위젯은 현재 값을 읽고 상태 변경을 수신하여 이러한 애니메이션을 빌드 함수에 직접 통합하거나, 
+애니메이션을 다른 위젯에 전달하는 보다 정교한 애니메이션의 기반으로 사용할 수 있습니다.
 
-## Animation
+## Animation {:#animation}
 
-The primary building block of the animation system is the
-[`Animation`][] class. An animation represents a value
-of a specific type that can change over the lifetime of
-the animation. Most widgets that perform an animation
-receive an `Animation` object as a parameter,
-from which they read the current value of the animation
-and to which they listen for changes to that value.
+애니메이션 시스템의 주요 빌딩 블록은 [`Animation`][] 클래스입니다. 
+애니메이션은 애니메이션의 수명 동안 변경될 수 있는 특정 타입의 값을 나타냅니다. 
+애니메이션을 수행하는 대부분의 위젯은 매개변수로 `Animation` 객체를 수신하고, 
+여기에서 애니메이션의 현재 값을 읽고 해당 값의 변경 사항을 수신합니다.
 
-### `addListener`
+### `addListener` {:#addlistener}
 
-Whenever the animation's value changes,
-the animation notifies all the listeners added with
-[`addListener`][]. Typically, a [`State`][]
-object that listens to an animation calls
-[`setState`][] on itself in its listener callback
-to notify the widget system that it needs to
-rebuild with the new value of the animation.
+애니메이션의 값이 변경될 때마다, 애니메이션은 [`addListener`][]로 추가된 모든 리스너에 알립니다. 
+일반적으로, 애니메이션을 수신하는 [`State`][] 객체는 리스너 콜백에서 자체적으로 [`setState`][]를 호출하여, 
+위젯 시스템에 애니메이션의 새 값으로 다시 빌드해야 함을 알립니다.
 
-This pattern is so common that there are two widgets
-that help widgets rebuild when animations change value:
-[`AnimatedWidget`][] and [`AnimatedBuilder`][].
-The first, `AnimatedWidget`, is most useful for
-stateless animated widgets. To use `AnimatedWidget`,
-simply subclass it and implement the [`build`][] function.
-The second, `AnimatedBuilder`, is useful for more complex widgets
-that wish to include an animation as part of a larger build function.
-To use `AnimatedBuilder`, simply construct the widget
-and pass it a `builder` function.
+이 패턴은 매우 일반적이어서 애니메이션 값이 변경될 때 위젯을 다시 빌드하는 데 도움이 되는 위젯이 두 개 있습니다. [`AnimatedWidget`][]과 [`AnimatedBuilder`][]입니다. 
+(1) 첫 번째, `AnimatedWidget`은 stateless 애니메이션 위젯에 가장 유용합니다. 
+`AnimatedWidget`을 사용하려면, 이를 서브클래싱하고 [`build`][] 함수를 구현하기만 하면 됩니다. 
+(2) 두 번째 `AnimatedBuilder`는 더 큰 빌드 함수의 일부로 애니메이션을 포함하려는 보다 복잡한 위젯에 유용합니다. 
+`AnimatedBuilder`를 사용하려면, 위젯을 구성하고 `builder` 함수를 전달하기만 하면 됩니다.
 
-### `addStatusListener`
+### `addStatusListener` {:#addstatuslistener}
 
-Animations also provide an [`AnimationStatus`][],
-which indicates how the animation will evolve over time.
-Whenever the animation's status changes,
-the animation notifies all the listeners added with
-[`addStatusListener`][]. Typically, animations start
-out in the `dismissed` status, which means they're
-at the beginning of their range. For example,
-animations that progress from 0.0 to 1.0
-will be `dismissed` when their value is 0.0.
-An animation might then run `forward` (from 0.0 to 1.0)
-or perhaps in `reverse` (from 1.0 to 0.0).
-Eventually, if the animation reaches the end of its range
-(1.0), the animation reaches the `completed` status.
+애니메이션은 또한 애니메이션이 시간이 지남에 따라 어떻게 진화할지를 나타내는 [`AnimationStatus`][]를 제공합니다. 
+애니메이션의 상태가 변경될 때마다, 애니메이션은 [`addStatusListener`][]로 추가된 모든 리스너에 알립니다. 
+일반적으로, 애니메이션은 `dismissed` 상태에서 시작하는데, 이는 애니메이션이 범위의 시작에 있음을 의미합니다. 
+예를 들어, 0.0에서 1.0으로 진행되는 애니메이션은 값이 0.0일 때 `dismissed`됩니다. 
+그런 다음, 애니메이션은 `forward`(0.0에서 1.0) 또는 `reverse`(1.0에서 0.0)로 실행될 수 있습니다. 
+결국, 애니메이션이 범위 끝(1.0)에 도달하면, 애니메이션은 `completed` 상태에 도달합니다.
 
-## Animation&shy;Controller
+## Animation&shy;Controller {:#animationcontroller}
 
-To create an animation, first create an [`AnimationController`][].
-As well as being an animation itself, an `AnimationController`
-lets you control the animation. For example,
-you can tell the controller to play the animation
-[`forward`][] or [`stop`][] the animation.
-You can also [`fling`][] animations,
-which uses a physical simulation, such as a spring,
-to drive the animation.
+애니메이션을 만들려면, 먼저 [`AnimationController`][]를 만듭니다. 
+애니메이션 자체일 뿐만 아니라, `AnimationController`는 애니메이션을 제어할 수 있게 해줍니다. 
+예를 들어, 컨트롤러에 애니메이션을 재생하도록 [`forward`][] 또는 [`stop`][]하도록 할 수 있습니다. 
+(스프링과 같은) 물리적 시뮬레이션을 사용하여, 애니메이션을 구동하는, 애니메이션을 [`fling`][]할 수도 있습니다.
 
-Once you've created an animation controller,
-you can start building other animations based on it.
-For example, you can create a [`ReverseAnimation`][]
-that mirrors the original animation but runs in the
-opposite direction (from 1.0 to 0.0).
-Similarly, you can create a [`CurvedAnimation`][]
-whose value is adjusted by a [`Curve`][].
+애니메이션 컨트롤러를 만든 후에는, 이를 기반으로 다른 애니메이션을 빌드할 수 있습니다. 
+예를 들어, 원래 애니메이션을 미러링하지만 반대 방향(1.0에서 0.0)으로 실행되는 [`ReverseAnimation`][]을 만들 수 있습니다. 
+마찬가지로, 값이 [`Curve`][]로 조정되는 [`CurvedAnimation`][]을 만들 수 있습니다.
 
-## Tweens
+## Tweens {:#tweens}
 
-To animate beyond the 0.0 to 1.0 interval, you can use a
-[`Tween<T>`][], which interpolates between its
-[`begin`][] and [`end`][] values. Many types have specific
-`Tween` subclasses that provide type-specific interpolation.
-For example, [`ColorTween`][] interpolates between colors and
-[`RectTween`][] interpolates between rects.
-You can define your own interpolations by creating
-your own subclass of `Tween` and overriding its
-[`lerp`][] function.
+0.0~1.0 간격을 넘어 애니메이션을 적용하려면, [`Tween<T>`][]을 사용할 수 있습니다. 
+이 함수는 [`begin`][]과 [`end`][] 값 사이를 보간합니다. 
+많은 타입에는 타입별 보간을 제공하는 특정 `Tween` 하위 클래스가 있습니다. 
+예를 들어, [`ColorTween`][]은 색상 사이를 보간하고, [`RectTween`][]은 사각형 사이를 보간합니다. 
+`Tween`의 하위 클래스를 직접 만들고, [`lerp`][] 함수를 재정의하여, 고유한 보간을 정의할 수 있습니다.
 
-By itself, a tween just defines how to interpolate
-between two values. To get a concrete value for the
-current frame of an animation, you also need an
-animation to determine the current state.
-There are two ways to combine a tween
-with an animation to get a concrete value:
+트윈 자체는 두 값 사이를 보간하는 방법을 정의합니다. 
+애니메이션의 현재 프레임에 대한 구체적인 값을 얻으려면, 현재 상태를 결정하는 애니메이션도 필요합니다. 
+트윈을 애니메이션과 결합하여 구체적인 값을 얻는 방법에는 두 가지가 있습니다.
 
-1. You can [`evaluate`][] the tween at the current
-   value of an animation. This approach is most useful
-   for widgets that are already listening to the animation and hence
-   rebuilding whenever the animation changes value.
+1. 애니메이션의 현재 값에서 트윈을 [`evaluate`][]할 수 있습니다. 
+   이 접근 방식은 애니메이션을 이미 듣고 있고 애니메이션 값이 변경될 때마다 다시 빌드하는 위젯에 가장 유용합니다.
 
-2. You can [`animate`][] the tween based on the animation.
-   Rather than returning a single value, the animate function
-   returns a new `Animation` that incorporates the tween.
-   This approach is most useful when you want to give the
-   newly created animation to another widget,
-   which can then read the current value that incorporates
-   the tween as well as listen for changes to the value.
+2. 애니메이션을 기반으로 트윈을 [`animate`][]할 수 있습니다. 
+   animate 함수는 단일 값을 반환하는 대신, 트윈을 통합하는 새 `Animation`을 반환합니다. 
+   이 접근 방식은 새로 만든 애니메이션을 다른 위젯에 제공하고, 
+   그런 다음, 트윈을 통합하는 현재 값을 읽고 값의 변경을 수신할 수 있는 경우에 가장 유용합니다.
 
-## Architecture
+## Architecture {:#architecture}
 
-Animations are actually built from a number of core building blocks.
+애니메이션은 실제로 여러 개의 핵심 빌딩 블록으로 구성됩니다.
 
-### Scheduler
+### Scheduler {:#scheduler}
 
-The [`SchedulerBinding`][] is a singleton class
-that exposes the Flutter scheduling primitives.
+[`SchedulerBinding`][]은 Flutter 스케줄링 primitives를 노출하는 싱글톤 클래스입니다.
 
-For this discussion, the key primitive is the frame callbacks.
-Each time a frame needs to be shown on the screen,
-Flutter's engine triggers a "begin frame" callback that
-the scheduler multiplexes to all the listeners registered using
-[`scheduleFrameCallback()`][]. All these callbacks are
-given the official time stamp of the frame, in
-the form of a `Duration` from some arbitrary epoch. Since all the
-callbacks have the same time, any animations triggered from these
-callbacks will appear to be exactly synchronised even
-if they take a few milliseconds to be executed.
+이 논의에서, 핵심 primitive는 프레임 콜백입니다. 
+프레임을 화면에 표시해야 할 때마다, Flutter 엔진은 스케줄러가 [`scheduleFrameCallback()`][]을 사용하여, 
+등록된 모든 리스너에 다중화하는(multiplexes) "프레임 시작" 콜백을 트리거합니다. 
+이러한 모든 콜백에는 임의의 에포크에서 `Duration` 형태로, 프레임의 공식 타임스탬프가 제공됩니다. 
+모든 콜백의 시간이 동일하므로, 
+이러한 콜백에서 트리거된 모든 애니메이션은 실행되는 데 몇 밀리초가 걸리더라도 정확히 동기화된 것처럼 보입니다.
 
-### Tickers
+### Tickers {:#tickers}
 
-The [`Ticker`][] class hooks into the scheduler's
-[`scheduleFrameCallback()`][]
-mechanism to invoke a callback every tick.
+[`Ticker`][] 클래스는 스케줄러의 [`scheduleFrameCallback()`][] 메커니즘에 연결하여(hooks into) 매 틱마다 콜백을 호출합니다.
 
-A `Ticker` can be started and stopped. When started,
-it returns a `Future` that will resolve when it is stopped.
+`Ticker`는 시작 및 중지할 수 있습니다. 시작되면, 중지될 때 해결(resolve)되는 `Future`를 반환합니다.
 
-Each tick, the `Ticker` provides the callback with the
-duration since the first tick after it was started. 
+각 틱에서, `Ticker`는 시작된 후 첫 번째 틱 이후의 기간(duration)을 콜백에 제공합니다.
 
-Because tickers always give their elapsed time relative to the first
-tick after they were started; tickers are all synchronised. If you
-start three tickers at different times between two ticks, they will all
-nonetheless be synchronised with the same starting time, and will
-subsequently tick in lockstep. Like people at a bus-stop,
-all the tickers wait for a regularly occurring event
-(the tick) to begin moving (counting time).
+tickers는 항상 시작된 후 첫 번째 틱을 기준으로 경과 시간(elapsed time)을 제공하므로 티커는 모두 동기화됩니다. 
+두 틱 사이에 다른 시간에 세 개의 티커를 시작하면, 모두 동일한 시작 시간으로 동기화되고, 이후에는(in lockstep) 동시에 틱합니다. 
+버스 정류장의 사람들처럼, 모든 tickers는 정기적으로 발생하는 이벤트(틱)가 움직이기 시작할 때까지 기다립니다. (시간 계산)
 
-### Simulations
+### Simulations {:#simulations}
 
-The [`Simulation`][] abstract class maps a
-relative time value (an elapsed time) to a
-double value, and has a notion of completion.
+[`Simulation`][] 추상 클래스는 상대 시간 값(경과 시간)을 double 값에 매핑하고, 완료 개념을 갖습니다.
 
-In principle simulations are stateless but in practice
-some simulations (for example,
-[`BouncingScrollSimulation`][] and
-[`ClampingScrollSimulation`][])
-change state irreversibly when queried.
+원칙적으로 시뮬레이션은 상태가 없지만, 
+실제로 일부 시뮬레이션(예: [`BouncingScrollSimulation`][] 및 [`ClampingScrollSimulation`][])은 쿼리 시 상태가 되돌릴 수 없게(irreversibly) 변경됩니다.
 
-There are [various concrete implementations][]
-of the `Simulation` class for different effects.
+다양한 효과에 대한 `Simulation` 클래스의 [다양한 구체적 구현][various concrete implementations]이 있습니다.
 
-### Animatables
+### Animatables {:#animatables}
 
-The [`Animatable`][] abstract class maps a
-double to a value of a particular type.
+[`Animatable`][] 추상 클래스는 double을 특정 타입의 값에 매핑합니다.
 
-`Animatable` classes are stateless and immutable.
+`Animatable` 클래스는 stateless 이고, 변경할 수 없습니다. (immutable)
 
-#### Tweens
-
-The [`Tween<T>`][] abstract class maps a double
-value nominally in the range 0.0-1.0 to a typed value
-(for example, a `Color`, or another double).
-It is an `Animatable`.
-
-It has a notion of an output type (`T`),
-a `begin` value and an `end` value of that type,
-and a way to interpolate (`lerp`) between the begin
-and end values for a given input value (the double nominally in
-the range 0.0-1.0).
+#### Tweens {:#tweens-1}
 
 `Tween` classes are stateless and immutable.
 
-#### Composing animatables
+[`Tween<T>`][] 추상 클래스는 명목상 0.0-1.0 범위의 double 값을 타입화된 값(예: `Color` 또는 다른 double)에 매핑합니다. 
 
-Passing an `Animatable<double>` (the parent) to an `Animatable`'s
-`chain()` method creates a new `Animatable` subclass that applies the
-parent's mapping then the child's mapping.
+`Animatable`입니다.
 
-### Curves
+출력 타입(`T`), 해당 타입의 `begin` 값 및 `end` 값, 주어진 입력 값에 대한 시작 값과 종료 값(명목상 0.0-1.0 범위의 double) 사이를 보간(`lerp`)하는 방법을 가지고 있습니다.
 
-The [`Curve`][] abstract class maps doubles
-nominally in the range 0.0-1.0 to doubles
-nominally in the range 0.0-1.0.
+`Tween` 클래스는 상태가 없고 변경할 수 없습니다.
 
-`Curve` classes are stateless and immutable.
+#### Animatables 구성하기 {:#composing-animatables}
 
-### Animations
+`Animatable<double>`(부모)을 `Animatable`의 `chain()` 메서드에 전달하면, 
+부모의 매핑을 적용한 다음 자식의 매핑을 적용하는 새로운 `Animatable` 하위 클래스가 생성됩니다.
 
-The [`Animation`][] abstract class provides a
-value of a given type, a concept of animation
-direction and animation status, and a listener interface to
-register callbacks that get invoked when the value or status change.
+### Curves {:#curves}
 
-Some subclasses of `Animation` have values that never change
-([`kAlwaysCompleteAnimation`][], [`kAlwaysDismissedAnimation`][],
-[`AlwaysStoppedAnimation`][]); registering callbacks on
-these has no effect as the callbacks are never called.
+[`Curve`][] 추상 클래스는 명목상 0.0-1.0 범위의 double을 명목상 0.0-1.0 범위의 double로 매핑합니다.
 
-The `Animation<double>` variant is special because it can be used to
-represent a double nominally in the range 0.0-1.0, which is the input
-expected by `Curve` and `Tween` classes, as well as some further
-subclasses of `Animation`.
+`Curve` 클래스는 stateless 이고, 변경할 수 없습니다. (immutable)
 
-Some `Animation` subclasses are stateless,
-merely forwarding listeners to their parents.
-Some are very stateful.
+### Animations {:#animations}
 
-#### Composable animations
+[`Animation`][] 추상 클래스는 주어진 타입의 값, 애니메이션 방향 및 애니메이션 상태의 개념, 값 또는 상태가 변경될 때 호출되는 콜백을 등록하기 위한 리스너 인터페이스를 제공합니다.
 
-Most `Animation` subclasses take an explicit "parent"
-`Animation<double>`. They are driven by that parent.
+`Animation`의 일부 하위 클래스는 절대 변경되지 않는 값을 갖습니다. ([`kAlwaysCompleteAnimation`][], [`kAlwaysDismissedAnimation`][], [`AlwaysStoppedAnimation`][]) 
+이러한 하위 클래스에 콜백을 등록해도 콜백이 호출되지 않으므로 아무런 효과가 없습니다.
 
-The `CurvedAnimation` subclass takes an `Animation<double>` class (the
-parent) and a couple of `Curve` classes (the forward and reverse
-curves) as input, and uses the value of the parent as input to the
-curves to determine its output. `CurvedAnimation` is immutable and
-stateless.
+`Animation<double>` 변형은, `Curve` 및 `Tween` 클래스와 `Animation`의 일부 하위 클래스에서 기대하는 입력인, 
+0.0-1.0 범위의 double을 나타내는 데 사용할 수 있기 때문에 특별합니다.
 
-The `ReverseAnimation` subclass takes an
-`Animation<double>` class as its parent and reverses
-all the values of the animation. It assumes the parent
-is using a value nominally in the range 0.0-1.0 and returns
-a value in the range 1.0-0.0. The status and direction of the parent
-animation are also reversed. `ReverseAnimation` is immutable and
-stateless.
+일부 `Animation` 하위 클래스는 stateless 이며, 리스너를 부모에게 전달하기만 합니다. 일부는 매우 stateful 입니다.
 
-The `ProxyAnimation` subclass takes an `Animation<double>` class as
-its parent and merely forwards the current state of that parent.
-However, the parent is mutable.
+#### 애니메이션 구성하기 {:#composable-animations}
 
-The `TrainHoppingAnimation` subclass takes two parents,
-and switches between them when their values cross.
+대부분의 `Animation` 하위 클래스는 명시적인 "부모"인 `Animation<double>`을 사용합니다. 
+이들은 해당 부모에 의해 구동됩니다.
 
-#### Animation controllers
+`CurvedAnimation` 하위 클래스는 `Animation<double>` 클래스(부모)와 몇 개의 `Curve` 클래스(forward 및 reverse 커브)를 입력으로 사용하고, 부모의 값을 커브에 대한 입력으로 사용하여 출력을 결정합니다. 
+`CurvedAnimation`은 변경 불가능(immutable)하고, stateless 입니다.
 
-The [`AnimationController`][] is a stateful
-`Animation<double>` that uses a `Ticker` to give itself life.
-It can be started and stopped. At each tick, it takes the time
-elapsed since it was started and passes it to a `Simulation` to obtain
-a value. That is then the value it reports. If the `Simulation`
-reports that at that time it has ended, then the controller stops
-itself.
+`ReverseAnimation` 하위 클래스는 `Animation<double>` 클래스를 부모로 사용하고, 애니메이션의 모든 값을 반전합니다. 
+부모가 명목상 0.0-1.0 범위의 값을 사용하고, 1.0-0.0 범위의 값을 반환한다고 가정합니다. 
+부모 애니메이션의 상태와 방향도 반전됩니다. 
+`ReverseAnimation`은 변경 불가능(immutable)하고, stateless 입니다.
 
-The animation controller can be given a lower and upper bound to
-animate between, and a duration.
+`ProxyAnimation` 하위 클래스는 `Animation<double>` 클래스를 부모로 취하고, 해당 부모의 현재 상태를 전달합니다. 
+그러나, 부모는 변경 가능(mutable)합니다. 
 
-In the simple case (using `forward()` or `reverse()`), the animation controller simply does a linear
-interpolation from the lower bound to the upper bound (or vice versa,
-for the reverse direction) over the given duration.
+`TrainHoppingAnimation` 하위 클래스는 두 부모를 취하고, 값이 교차할 때 두 부모 사이를 전환합니다.
 
-When using `repeat()`, the animation controller uses a linear
-interpolation between the given bounds over the given duration, but
-does not stop.
+#### Animation 컨트롤러 {:#animation-controllers}
 
-When using `animateTo()`, the animation controller does a linear
-interpolation over the given duration from the current value to the
-given target. If no duration is given to the method, the default
-duration of the controller and the range described by the controller's
-lower bound and upper bound is used to determine the velocity of the
-animation.
+[`AnimationController`][]는 `Ticker`를 사용하여 자체적으로 생명을 부여하는 stateful `Animation<double>`입니다. 
+시작 및 중지가 가능합니다. 각 tick에서, 시작된 이후 경과된 시간을 가져와, `Simulation`에 전달하여 값을 얻습니다. 
+그러면 보고하는 값입니다. 
+`Simulation`이 그 시점에 종료되었다고 보고하면, 컨트롤러가 자체적으로 중지됩니다.
 
-When using `fling()`, a `Force` is used to create a specific
-simulation which is then used to drive the controller.
+애니메이션 컨트롤러는 애니메이션을 적용할 하한 및 상한과 기간(duration)을 지정할 수 있습니다.
 
-When using `animateWith()`, the given simulation is used to drive the
-controller.
+간단한 경우(`forward()` 또는 `reverse()` 사용), 애니메이션 컨트롤러는 지정된 기간 동안, 
+하한에서 상한으로(또는 그 반대로, 역방향) 선형 보간을 수행합니다.
 
-These methods all return the future that the `Ticker` provides and
-which will resolve when the controller next stops or changes
-simulation.
+`repeat()`를 사용할 때, 애니메이션 컨트롤러는 지정된 기간 동안 지정된 경계 사이에서 선형 보간을 사용하지만, 중지하지는 않습니다.
 
-#### Attaching animatables to animations
+`animateTo()`를 사용할 때, 애니메이션 컨트롤러는 현재 값에서 주어진 대상까지 주어진 기간 동안 선형 보간을 수행합니다. 
+메서드에 기간이 지정되지 않은 경우, 컨트롤러의 기본 기간과 컨트롤러의 하한 및 상한으로 설명된 범위가 애니메이션의 속도를 결정하는 데 사용됩니다.
 
-Passing an `Animation<double>` (the new parent) to an `Animatable`'s
-`animate()` method creates a new `Animation` subclass that acts like
-the `Animatable` but is driven from the given parent.
+`fling()`를 사용할 때, `Force`를 사용하여 특정 시뮬레이션을 생성한 다음, 컨트롤러를 구동하는 데 사용됩니다.
 
+`animateWith()`를 사용할 때, 주어진 시뮬레이션을 사용하여, 컨트롤러를 구동합니다.
+
+이러한 메서드는 모두 `Ticker`가 제공하는 future를 반환하며, 컨트롤러가 다음에 중지되거나, 시뮬레이션이 변경될 때 해결(resolve)됩니다.
+
+#### animatables에 animations 붙이기 {:#attaching-animatables-to-animations}
+
+`Animation<double>` (새 부모)를 `Animatable`의 `animate()` 메서드에 전달하면, 
+`Animatable`처럼 작동하지만, 지정된 부모에서 구동되는 새로운 `Animation` 하위 클래스가 생성됩니다.
 
 [`addListener`]: {{site.api}}/flutter/animation/Animation/addListener.html
 [`addStatusListener`]: {{site.api}}/flutter/animation/Animation/addStatusListener.html

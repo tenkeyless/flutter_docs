@@ -1,6 +1,8 @@
 ---
-title: Add a drawer to a screen
-description: How to implement a Material Drawer.
+# title: Add a drawer to a screen
+title: 화면에 Drawer 추가
+# description: How to implement a Material Drawer.
+description: Material Drawer을 구현하는 방법.
 js:
   - defer: true
     url: /assets/js/inject_dartpad.js
@@ -8,29 +10,25 @@ js:
 
 <?code-excerpt path-base="cookbook/design/drawer"?>
 
-In apps that use Material Design,
-there are two primary options for navigation: tabs and drawers.
-When there is insufficient space to support tabs,
-drawers provide a handy alternative.
+Material Design을 사용하는 앱에서는, 네비게이션을 위한 두 가지 주요 옵션이 있습니다. 
+탭과 Drawer입니다. 탭을 지원할 공간이 충분하지 않은 경우, Drawer은 편리한 대안을 제공합니다.
 
-In Flutter, use the [`Drawer`][] widget in combination with a
-[`Scaffold`][] to create a layout with a Material Design drawer.
-This recipe uses the following steps:
+Flutter에서, [`Drawer`][] 위젯을 [`Scaffold`][]와 함께 사용하여, 
+Material Design Drawer이 있는 레이아웃을 만듭니다. 
+이 레시피는 다음 단계를 사용합니다.
 
-  1. Create a `Scaffold`.
-  2. Add a drawer.
-  3. Populate the drawer with items.
-  4. Close the drawer programmatically.
+1. `Scaffold`를 만듭니다.
+2. Drawer를 추가합니다.
+3. Drawer에 아이템을 채웁니다.
+4. Drawer를 프로그래밍 방식으로 닫습니다.
 
-## 1. Create a `Scaffold`
+## 1. `Scaffold` 생성 {:#1-create-a-scaffold}
 
-To add a drawer to the app, wrap it in a [`Scaffold`][] widget.
-The `Scaffold` widget provides a consistent visual structure to apps that
-follow the Material Design Guidelines.
-It also supports special Material Design
-components, such as Drawers, AppBars, and SnackBars.
+앱에 Drawer를 추가하려면 [`Scaffold`][] 위젯으로 래핑합니다. 
+`Scaffold` 위젯은 Material Design 가이드라인을 따르는 앱에 일관된 시각적 구조를 제공합니다. 
+또한 Drawers, AppBars, SnackBars와 같은 특수한 Material Design 구성 요소도 지원합니다.
 
-In this example, create a `Scaffold` with a `drawer`:
+이 예제에서는, `drawer`가 있는 `Scaffold`를 만듭니다.
 
 <?code-excerpt "lib/drawer.dart (DrawerStart)" replace="/null, //g"?>
 ```dart
@@ -38,16 +36,15 @@ Scaffold(
   appBar: AppBar(
     title: const Text('AppBar without hamburger button'),
   ),
-  drawer: // Add a Drawer here in the next step.
+  drawer: // 다음 단계에서는 여기에 Drawer를 추가합니다.
 );
 ```
 
-## 2. Add a drawer
+## 2. Drawer 추가 {:#2-add-a-drawer}
 
-Now add a drawer to the `Scaffold`. A drawer can be any widget,
-but it's often best to use the `Drawer` widget from the
-[material library][],
-which adheres to the Material Design spec.
+이제 `Scaffold`에 Drawer를 추가합니다. 
+Drawer는 어떤 위젯이든 될 수 있지만, 종종 [material library][]의 `Drawer` 위젯을 사용하는 것이 가장 좋습니다. 
+이 위젯은 Material Design 사양을 준수합니다.
 
 <?code-excerpt "lib/drawer.dart (DrawerEmpty)" replace="/null, //g"?>
 ```dart
@@ -56,33 +53,30 @@ Scaffold(
     title: const Text('AppBar with hamburger button'),
   ),
   drawer: Drawer(
-    child: // Populate the Drawer in the next step.
+    child: // 다음 단계에서는 Drawer를 채웁니다.
   ),
 );
 ```
 
-## 3. Populate the drawer with items
+## 3. Drawer에 아이템 채우기 {:#3-populate-the-drawer-with-items}
 
-Now that you have a `Drawer` in place, add content to it.
-For this example, use a [`ListView`][].
-While you could use a `Column` widget,
-`ListView` is handy because it allows users to scroll
-through the drawer if the
-content takes more space than the screen supports.
+`Drawer`가 제 위치에 있으므로, 이제 여기에 콘텐츠를 추가합니다. 
+이 예제에서는, [`ListView`][]를 사용합니다. 
+`Column` 위젯을 사용할 수 있지만, 
+`ListView`는 콘텐츠가 화면에서 지원하는 것보다 더 많은 공간을 차지하는 경우
+사용자가 Drawer를 스크롤할 수 있기 때문에 편리합니다.
 
-Populate the `ListView` with a [`DrawerHeader`][]
-and two [`ListTile`][] widgets.
-For more information on working with Lists,
-see the [list recipes][].
+`ListView`를 [`DrawerHeader`][]와 두 개의 [`ListTile`][] 위젯으로 채웁니다. 
+Lists로 작업하는 것에 대한 자세한 내용은 [리스트 레시피][list recipes]를 참조하세요.
 
 <?code-excerpt "lib/drawer.dart (DrawerListView)"?>
 ```dart
 Drawer(
-  // Add a ListView to the drawer. This ensures the user can scroll
-  // through the options in the drawer if there isn't enough vertical
-  // space to fit everything.
+  // Drawer에 ListView를 추가합니다. 
+  // 이렇게 하면 모든 것을 담을 수 있는 vertical 공간이 충분하지 않을 때, 
+  // 사용자가 Drawer의 옵션들을 스크롤할 수 있습니다.
   child: ListView(
-    // Important: Remove any padding from the ListView.
+    // 중요: ListView에서 패딩을 제거하세요.
     padding: EdgeInsets.zero,
     children: [
       const DrawerHeader(
@@ -94,14 +88,14 @@ Drawer(
       ListTile(
         title: const Text('Item 1'),
         onTap: () {
-          // Update the state of the app.
+          // 앱 상태를 업데이트합니다.
           // ...
         },
       ),
       ListTile(
         title: const Text('Item 2'),
         onTap: () {
-          // Update the state of the app.
+          // 앱 상태를 업데이트합니다.
           // ...
         },
       ),
@@ -110,13 +104,13 @@ Drawer(
 );
 ```
 
-## 4. Open the drawer programmatically
+## 4. Drawer를 프로그래밍 방식으로 열기 {:#4-open-the-drawer-programmatically}
 
-Typically, you don't need to write any code to open a `drawer`,
-Because when the `leading` widget is null, the default implementation in `AppBar` is `DrawerButton`.
+일반적으로, `drawer`를 여는 데 코드를 쓸 필요가 없습니다. 
+왜냐하면 `leading` 위젯이 null일 때, `AppBar`의 기본 구현은 `DrawerButton`이기 때문입니다.
 
-But if you want to have free control of the `drawer`.
-You can do this by using the `Builder` call `Scaffold.of(context).openDrawer()`.
+하지만 `drawer`를 자유롭게 제어하고 싶다면, 
+`Builder`를 사용해 `Scaffold.of(context).openDrawer()`을 호출하면 됩니다.
 
 <?code-excerpt "lib/drawer.dart (DrawerOpen)" replace="/null, //g"?>
 ```dart
@@ -135,42 +129,41 @@ Scaffold(
     ),
   ),
   drawer: Drawer(
-    child: // Populate the Drawer in the last step.
+    child: // 마지막 단계로 여기에 Drawer를 채웁니다.
   ),
 );
 ```
 
-## 5. Close the drawer programmatically
+## 5. Drawer를 프로그래밍 방식으로 닫기 {:#5-close-the-drawer-programmatically}
 
-After a user taps an item, you might want to close the drawer.
-You can do this by using the [`Navigator`][].
+사용자가 아이템을 탭한 후, 당신은 Drawer를 닫게 하고 싶을 수 있습니다. 
+[`Navigator`][]를 사용하여 이를 수행할 수 있습니다.
 
-When a user opens the drawer, Flutter adds the drawer to the navigation
-stack. Therefore, to close the drawer, call `Navigator.pop(context)`.
+사용자가 Drawer를 열면, Flutter는 Drawer를 네비게이션 스택에 추가합니다. 
+따라서, Drawer를 닫으려면, `Navigator.pop(context)`를 호출합니다.
 
 <?code-excerpt "lib/drawer.dart (CloseDrawer)"?>
 ```dart
 ListTile(
   title: const Text('Item 1'),
   onTap: () {
-    // Update the state of the app
+    // 앱 상태 업데이트
     // ...
-    // Then close the drawer
+    // 그런 다음 Drawer를 닫습니다.
     Navigator.pop(context);
   },
 ),
 ```
 
-## Interactive example
+## 상호 작용 예제 {:#interactive-example}
 
-This example shows a [`Drawer`][] as it is used within a [`Scaffold`][] widget.
-The [`Drawer`][] has three [`ListTile`][] items.
-The `_onItemTapped` function changes the selected item's index
-and displays the corresponding text in the center of the `Scaffold`.
+이 예제에서는 [`Scaffold`][] 위젯 내에서 사용되는 [`Drawer`][]를 보여줍니다. 
+[`Drawer`][]에는 세 개의 [`ListTile`][] 아이템이 있습니다. 
+`_onItemTapped` 함수는 선택한 아이템의 인덱스를 변경하고, `Scaffold` 중앙에 해당 텍스트를 표시합니다.
 
 :::note
-For more information on implementing navigation,
-check out the [Navigation][] section of the cookbook.
+네비게이션 구현에 대한 자세한 내용은
+쿡북의 [네비게이션][Navigation] 섹션을 확인하세요.
 :::
 
 <?code-excerpt "lib/main.dart"?>
@@ -247,11 +240,11 @@ class _MyHomePageState extends State<MyHomePage> {
         child: _widgetOptions[_selectedIndex],
       ),
       drawer: Drawer(
-        // Add a ListView to the drawer. This ensures the user can scroll
-        // through the options in the drawer if there isn't enough vertical
-        // space to fit everything.
+        // Drawer에 ListView를 추가합니다. 
+        // 이렇게 하면 모든 것을 담을 수 있는 vertical 공간이 충분하지 않을 때, 
+        // 사용자가 Drawer의 옵션들을 스크롤할 수 있습니다.
         child: ListView(
-          // Important: Remove any padding from the ListView.
+          // 중요: ListView에서 패딩을 제거하세요.
           padding: EdgeInsets.zero,
           children: [
             const DrawerHeader(
@@ -264,9 +257,9 @@ class _MyHomePageState extends State<MyHomePage> {
               title: const Text('Home'),
               selected: _selectedIndex == 0,
               onTap: () {
-                // Update the state of the app
+                // 앱 상태를 업데이트합니다.
                 _onItemTapped(0);
-                // Then close the drawer
+                // 그런 다음 Drawer를 닫습니다.
                 Navigator.pop(context);
               },
             ),
@@ -274,9 +267,9 @@ class _MyHomePageState extends State<MyHomePage> {
               title: const Text('Business'),
               selected: _selectedIndex == 1,
               onTap: () {
-                // Update the state of the app
+                // 앱 상태를 업데이트합니다.
                 _onItemTapped(1);
-                // Then close the drawer
+                // 그런 다음 Drawer를 닫습니다.
                 Navigator.pop(context);
               },
             ),
@@ -284,9 +277,9 @@ class _MyHomePageState extends State<MyHomePage> {
               title: const Text('School'),
               selected: _selectedIndex == 2,
               onTap: () {
-                // Update the state of the app
+                // 앱 상태를 업데이트합니다.
                 _onItemTapped(2);
-                // Then close the drawer
+                // 그런 다음 Drawer를 닫습니다.
                 Navigator.pop(context);
               },
             ),

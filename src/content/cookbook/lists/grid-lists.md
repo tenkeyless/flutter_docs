@@ -1,6 +1,8 @@
 ---
-title: Create a grid list
-description: How to implement a grid list.
+# title: Create a grid list
+title: 그리드 리스트 만들기
+# description: How to implement a grid list.
+description: 그리드 리스트를 구현하는 방법.
 js:
   - defer: true
     url: /assets/js/inject_dartpad.js
@@ -8,24 +10,21 @@ js:
 
 <?code-excerpt path-base="cookbook/lists/grid_lists"?>
 
-In some cases, you might want to display your items as a grid rather than
-a normal list of items that come one after the next.
-For this task, use the [`GridView`][] widget.
+어떤 경우에는, 아이템을 차례로 나열하는 일반적인 리스트가 아닌, 그리드로 표시하고 싶을 수 있습니다. 
+이 작업의 경우, [`GridView`][] 위젯을 사용합니다.
 
-The simplest way to get started using grids is by using the
-[`GridView.count()`][] constructor,
-because it allows you to specify how many rows or columns you'd like.
+그리드 사용을 시작하는 가장 간단한 방법은 [`GridView.count()`][] 생성자를 사용하는 것입니다. 
+이 생성자를 사용하면 원하는 행이나 열의 수를 지정할 수 있기 때문입니다.
 
-To visualize how `GridView` works,
-generate a list of 100 widgets that display their index in the list.
+`GridView`가 어떻게 작동하는지 시각화하기 위해, 리스트에 인덱스를 표시하는 100개 위젯의 리스트를 생성합니다.
 
 <?code-excerpt "lib/main.dart (GridView)" replace="/^body\: //g"?>
 ```dart
 GridView.count(
-  // Create a grid with 2 columns. If you change the scrollDirection to
-  // horizontal, this produces 2 rows.
+  // 2개의 열로 된 그리드를 만듭니다. 
+  // scrollDirection을 수평으로 변경하면, 2개의 행이 생성됩니다.
   crossAxisCount: 2,
-  // Generate 100 widgets that display their index in the List.
+  // 리스트에 인덱스를 표시하는 100개의 위젯을 생성합니다.
   children: List.generate(100, (index) {
     return Center(
       child: Text(
@@ -37,7 +36,7 @@ GridView.count(
 ),
 ```
 
-## Interactive example
+## 상호 작용 예제 {:#interactive-example}
 
 <?code-excerpt "lib/main.dart"?>
 ```dartpad title="Flutter GridView hands-on example in DartPad" run="true"
@@ -61,10 +60,10 @@ class MyApp extends StatelessWidget {
           title: const Text(title),
         ),
         body: GridView.count(
-          // Create a grid with 2 columns. If you change the scrollDirection to
-          // horizontal, this produces 2 rows.
+          // 2개의 열로 된 그리드를 만듭니다. 
+          // scrollDirection을 수평으로 변경하면, 2개의 행이 생성됩니다.
           crossAxisCount: 2,
-          // Generate 100 widgets that display their index in the List.
+          // 리스트에 인덱스를 표시하는 100개의 위젯을 생성합니다.
           children: List.generate(100, (index) {
             return Center(
               child: Text(

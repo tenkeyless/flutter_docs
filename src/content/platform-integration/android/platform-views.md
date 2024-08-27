@@ -1,36 +1,33 @@
 ---
-title: Hosting native Android views in your Flutter app with Platform Views
-short-title: Android platform-views
-description: Learn how to host native Android views in your Flutter app with Platform Views.
+# title: Hosting native Android views in your Flutter app with Platform Views
+title: Platform Views를 사용하여 Flutter 앱에서 네이티브 Android 뷰 호스팅
+# short-title: Android platform-views
+short-title: Android 플랫폼 뷰
+# description: Learn how to host native Android views in your Flutter app with Platform Views.
+description: Platform Views를 사용하여 Flutter 앱에서 네이티브 Android 뷰를 호스팅하는 방법을 알아보세요.
 ---
 
 <?code-excerpt path-base="platform_integration/platform_views"?>
 
-Platform views allow you to embed native views in a Flutter app,
-so you can apply transforms, clips, and opacity to the native view
-from Dart.
+플랫폼 뷰를 사용하면, Flutter 앱에 네이티브 뷰를 임베드할 수 있으므로, 
+Dart에서 네이티브 뷰에 변환, 클립 및 불투명도를 적용할 수 있습니다.
 
-This allows you, for example, to use the native
-Google Maps from the Android SDK
-directly inside your Flutter app.
+이를 통해, 예를 들어, Flutter 앱 내에서 Android SDK의 네이티브 Google Maps를 직접 사용할 수 있습니다.
 
 :::note
-This page discusses how to host your own native Android views
-within a Flutter app.
-If you'd like to embed native iOS views in your Flutter app,
-see [Hosting native iOS views][].
-If you'd like to embed native macOS views in your Flutter app,
-see [Hosting native macOS views][].
+이 페이지에서는 Flutter 앱 내에서 자체 네이티브 Android 뷰를 호스팅하는 방법을 설명합니다. 
+Flutter 앱에 네이티브 iOS 뷰를 포함하려면, [네이티브 iOS 뷰 호스팅][Hosting native iOS views]을 참조하세요. 
+Flutter 앱에 네이티브 macOS 뷰를 포함하려면, [네이티브 macOS 뷰 호스팅][Hosting native macOS views]을 참조하세요.
 :::
 
 [Hosting native iOS views]: /platform-integration/ios/platform-views
 [Hosting native macOS views]: /platform-integration/macos/platform-views
 
-Platform Views on Android have two implementations. They come with tradeoffs
-both in terms of performance and fidelity. 
-Platform views require Android API 23+.
+Android의 플랫폼 뷰에는 두 가지 구현이 있습니다. 
+성능과 충실도 측면에서 모두 상충이 있습니다. 
+플랫폼 뷰에는 Android API 23 이상이 필요합니다.
 
-## [Hybrid Composition](#hybrid-composition)
+## [하이브리드 구성(Composition)](#hybrid-composition) {:#hybrid-composition}
 
 Platform Views are rendered as they are normally. Flutter content is rendered into a texture.
 SurfaceFlinger composes the Flutter content and the platform views.
@@ -40,7 +37,7 @@ SurfaceFlinger composes the Flutter content and the platform views.
 * `-` FPS of application will be lower.
 * `-` Certain transformations that can be applied to Flutter widgets will not work when applied to platform views.
 
-## [Texture Layer](#texturelayerhybridcompisition) (or Texture Layer Hybrid Composition)
+## [Texture 레이어](#texturelayerhybridcompisition) (또는 Texture 레이어 하이브리드 구성) {:#texture-layer-or-texture-layer-hybrid-composition}
 
 Platform Views are rendered into a texture.
 Flutter draws the platform views (via the texture).
@@ -56,12 +53,12 @@ Flutter content is rendered directly into a Surface.
 To create a platform view on Android,
 use the following steps:
 
-## On the Dart side
+## Dart 측에서 {:#on-the-dart-side}
 
 On the Dart side, create a `Widget`
 and add one of the following build implementations.
 
-### Hybrid composition
+### 하이브리드 구성(composition) {:#hybrid-composition-1}
 
 In your Dart file,
 for example `native_view_example.dart`,
@@ -125,7 +122,7 @@ For more information, see the API docs for:
 [`PlatformViewLink`]: {{site.api}}/flutter/widgets/PlatformViewLink-class.html
 [`PlatformViewsService`]: {{site.api}}/flutter/services/PlatformViewsService-class.html
 
-### TextureLayerHybridCompisition
+### Texture 레이어 하이브리드 구성 {:#texturelayerhybridcompisition}
 
 In your Dart file,
 for example `native_view_example.dart`,
@@ -164,7 +161,7 @@ For more information, see the API docs for:
 
 [`AndroidView`]: {{site.api}}/flutter/widgets/AndroidView-class.html
 
-## On the platform side
+## 플랫폼 측에서 {:#on-the-platform-side}
 
 On the platform side, use the standard
 `io.flutter.plugin.platform` package
@@ -410,19 +407,19 @@ For more information, see the API docs for:
 Finally, modify your `build.gradle` file
 to require one of the minimal Android SDK versions:
 
-```groovy
+```kotlin
 android {
     defaultConfig {
-        minSdkVersion 19 // if using hybrid composition
-        minSdkVersion 20 // if using virtual display.
+        minSdk = 19 // if using hybrid composition
+        minSdk = 20 // if using virtual display.
     }
 }
 ```
-### Surface Views 
+### 표면 뷰 {:#surface-views}
 
 Handling SurfaceViews is problematic for Flutter and should be avoided when possible.
 
-### Manual view invalidation
+### 수동 뷰 무효화 {:#manual-view-invalidation}
 
 Certain Android Views do not invalidate themselves when their content changes.
 Some example views include `SurfaceView` and `SurfaceTexture`.
@@ -434,7 +431,7 @@ or one of its parent views.
 
 [`AndroidViewSurface`]: {{site.api}}/flutter/widgets/AndroidViewSurface-class.html
 
-### Issues 
+### 이슈 {:#issues}
 
 [Existing Platform View issues](https://github.com/flutter/flutter/issues?q=is%3Aopen+is%3Aissue+label%3A%22a%3A+platform-views%22)
 

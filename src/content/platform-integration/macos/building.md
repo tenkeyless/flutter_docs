@@ -1,15 +1,17 @@
 ---
-title: Building macOS apps with Flutter
-description: Platform-specific considerations for building for macOS with Flutter.
+# title: Building macOS apps with Flutter
+title: Flutter로 macOS 앱 빌드
+# description: Platform-specific considerations for building for macOS with Flutter.
+description: Flutter를 사용하여 macOS에서 빌드할 때 플랫폼별 고려 사항.
 toc: true
-short-title: macOS development
+# short-title: macOS development
+short-title: macOS 개발
 ---
 
-This page discusses considerations unique to building
-macOS apps with Flutter, including shell integration
-and distribution of macOS apps through the Apple Store.
+이 페이지에서는 Apple Store를 통한 macOS 앱의 셸 통합 및 배포를 포함하여, 
+Flutter를 사용하여 macOS 앱을 빌드하는 데 고유한 고려 사항에 대해 설명합니다.
 
-## Integrating with macOS look and feel
+## macOS 모양과 느낌과 통합 {:#integrating-with-macos-look-and-feel}
 
 While you can use any visual style or theme you choose
 to build a macOS app, you might want to adapt your app
@@ -32,7 +34,7 @@ pop-up buttons, and modal dialogs.
 [Cupertino]: /ui/widgets/cupertino
 [macos_ui]: {{site.pub}}/packages/macos_ui
 
-## Building macOS apps
+## macOS 앱 빌드 {:#building-macos-apps}
 
 To distribute your macOS application, you can either
 [distribute it through the macOS App Store][],
@@ -72,7 +74,7 @@ App Store.
 [on distributing an application through the App Store]: https://help.apple.com/xcode/mac/current/#/dev067853c94
 [Build and release a macOS app]: /deployment/macos
 
-## Entitlements and the App Sandbox
+## 권한(Entitlements) 및 앱 샌드박스 {:#entitlements-and-the-app-sandbox}
 
 macOS builds are configured by default to be signed,
 and sandboxed with App Sandbox.
@@ -87,7 +89,7 @@ such as the following:
 Then you must set up specific _entitlements_ in Xcode.
 The following section tells you how to do this.
 
-### Setting up entitlements
+### 권한 설정 {:#setting-up-entitlements}
 
 Managing sandbox settings is done in the
 `macos/Runner/*.entitlements` files. When editing
@@ -149,7 +151,7 @@ on the Apple Developer site.
 [Entitlements]: {{site.apple-dev}}/documentation/bundleresources/entitlements
 [`file_chooser`]: {{site.github}}/google/flutter-desktop-embedding/tree/master/plugins/file_chooser
 
-## Hardened Runtime
+## 강화된 런타임 {:#hardened-runtime}
 
 If you choose to distribute your application outside
 of the App Store, you need to notarize your application

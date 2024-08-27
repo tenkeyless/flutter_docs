@@ -1,42 +1,39 @@
 ---
-title: Create useful bug reports
+# title: Create useful bug reports
+title: 유용한 버그 보고서 작성
+# description: >
+#   Where to file bug reports and enhancement requests for 
+#   flutter and the website.
 description: >
-  Where to file bug reports and enhancement requests for 
-  flutter and the website.
+  Flutter와 웹사이트에 대한 버그 리포트와 개선 요청을 제출할 수 있는 곳입니다.
 ---
 
-The instructions in this document detail the current steps
-required to provide the most actionable bug reports for
-crashes and other bad behavior. Each step is optional but
-will greatly improve how quickly issues are diagnosed and addressed.
-We appreciate your effort in sending us as much feedback as possible.
+이 문서의 지침은 충돌 및 기타 잘못된 동작에 대한, 가장 실행 가능한 버그 보고서를 제공하는 데 필요한, 
+현재 단계를 자세히 설명합니다. 
+각 단계는 선택 사항이지만, 문제를 진단하고 해결하는 속도를 크게 개선할 것입니다. 
+가능한 한 많은 피드백을 보내주신 데 감사드립니다.
 
-## Create an issue on GitHub
+## GitHub에서 이슈 생성 {:#create-an-issue-on-github}
 
-* To report a Flutter crash or bug,
-  [create an issue in the flutter/flutter project][Flutter issue].
-* To report a problem with the website,
-  [create an issue in the flutter/website project][Website issue].
+* Flutter 크래시나 버그를 보고하려면, [flutter/flutter 프로젝트에서 이슈를 만드세요][Flutter issue].
+* 웹사이트 문제를 보고하려면, [flutter/website 프로젝트에서 문제를 만드세요][Website issue].
 
-## Provide a minimal reproducible code sample
+## 최소한의 재현 가능한 코드 샘플 제공 {:#provide-a-minimal-reproducible-code-sample}
 
-Create a minimal Flutter app that shows the problem you are facing,
-and paste it into the GitHub issue.
+문제를 보여주는 최소한의 Flutter 앱을 만들고, GitHub 이슈에 붙여넣습니다.
 
-To create it you can use `flutter create bug` command and update
-the `main.dart` file.
+이를 만들려면 `flutter create bug` 명령을 사용하고, `main.dart` 파일을 업데이트할 수 있습니다.
 
-Alternatively, you can use [DartPad][], which is capable
-of creating and running small Flutter apps.
+또는, 작은 Flutter 앱을 만들고, 실행할 수 있는 [DartPad][]를 사용할 수 있습니다.
 
-If your problem goes out of what can be placed in a single file, for example
-you have a problem with native channels, you can upload the full code of
-the reproduction into a separate repository and link it.
+문제가 단일 파일에 넣을 수 있는 범위를 벗어나는 경우(예: 네이티브 채널에 문제가 있는 경우), 
+재현의 전체 코드를 별도의 리포지토리에 업로드하고 링크하세요.
 
-## Provide some Flutter diagnostics
+If your problem goes out of what can be placed in a single file, for example you have a problem with native channels, you can upload the full code of the reproduction into a separate repository and link it.
 
-* Run `flutter doctor -v` in your project directory and paste
-  the results into the GitHub issue:
+## 약간의 Flutter 진단 제공 {:#provide-some-flutter-diagnostics}
+
+* 프로젝트 디렉토리에서 `flutter doctor -v`를 실행하고 결과를 GitHub 이슈에 붙여넣습니다.
 
 ```plaintext
 [✓] Flutter (Channel stable, 1.22.3, on Mac OS X 10.15.7 19H2, locale en-US)
@@ -71,37 +68,28 @@ the reproduction into a separate repository and link it.
     • iPhone (mobile) • 00000000-0000000000000000 • ios • iOS 14.0
 ```
 
-## Run the command in verbose mode
+## verbose 모드에서 명령 실행 {:#run-the-command-in-verbose-mode}
 
-Follow these steps only if your issue is related to the
-`flutter` tool.
+이슈가 `flutter` 도구와 관련된 경우에만 다음 단계를 따르세요.
 
-* All Flutter commands accept the `--verbose` flag.
-  If attached to the issue, the output from this command
-  might aid in diagnosing the problem.
-* Attach the results of the command to the GitHub issue.
+* 모든 Flutter 명령은 `--verbose` 플래그를 허용합니다. 
+  문제에 첨부하면, 이 명령의 출력이 문제를 진단하는 데 도움이 될 수 있습니다.
+* 명령의 결과를 GitHub 이슈에 첨부하세요.
 ![flutter verbose](/assets/images/docs/verbose_flag.png){:width="100%"}
 
-## Provide the most recent logs
+## 최신 로그 제공 {:#provide-the-most-recent-logs}
 
-* Logs for the currently connected device are accessed
-  using `flutter logs`.
-* If the crash is reproducible, clear the logs
-  (⌘ + k on Mac), reproduce the crash and copy the
-  newly generated logs into a file attached to the bug report.
-* If you are getting exceptions thrown by the framework,
-  include all the output between and including the dashed
-  lines of the first such exception.
+* 현재 연결된 기기의 로그는 `flutter logs`를 사용하여 액세스합니다.
+* 충돌이 재현 가능한 경우, 로그를 지우고(Mac에서는 ⌘ + k), 
+  크래시를 재현한 다음, 새로 생성된 로그를 버그 보고서에 첨부된 파일에 복사합니다.
+* 프레임워크에서 예외가 발생하는 경우, 첫 번째 예외의 점선과 그 사이의 모든 출력을 포함합니다.
 ![flutter logs](/assets/images/docs/logs.png){:width="100%"}
 
-## Provide the crash report
+## 충돌 보고서 제공 {:#provide-the-crash-report}
 
-* When the iOS simulator crashes,
-  a crash report is generated in `~/Library/Logs/DiagnosticReports/`.
-* When an iOS device crashes,
-  a crash report is generated in `~/Library/Logs/CrashReporter/MobileDevice`.
-* Find the report corresponding to the crash (usually the latest)
-  and attach it to the GitHub issue.
+* iOS 시뮬레이터가 충돌하면, `~/Library/Logs/DiagnosticReports/`에 충돌 보고서가 생성됩니다.
+* iOS 기기가 충돌하면, `~/Library/Logs/CrashReporter/MobileDevice`에 충돌 보고서가 생성됩니다.
+* 충돌에 해당하는 보고서(보통 최신 보고서)를 찾아 GitHub 이슈에 첨부합니다.
 ![crash report](/assets/images/docs/crash_reports.png){:width="100%"}
 
 

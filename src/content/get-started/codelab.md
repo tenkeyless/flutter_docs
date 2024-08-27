@@ -1,21 +1,22 @@
 ---
-title: Write your first Flutter app
-description: How to write an app in Flutter.
-short-title: Write your first app
+# title: Write your first Flutter app
+title: 첫 번째 Flutter 앱을 작성하기
+# description: How to write an app in Flutter.
+description: 플러터로 앱을 작성하는 방법.
+# short-title: Write your first app
+short-title: 첫 번째 앱 작성
 prev:
-  title: Test drive
+  title: 테스트 드라이브
   path: /get-started/test-drive
 next:
-  title: Learn more
+  title: 더 알아보기
   path: /get-started/learn-more
 toc: false
 ---
 
-You are now ready to start the "First Flutter app" codelab.
-In about an hour and a half,
-you will learn the basics of Flutter
-by creating an app
-that works on mobile, desktop, and web.
+이제 "첫 번째 Flutter 앱" 코드랩을 시작할 준비가 되었습니다. 
+약 1시간 30분 안에 모바일, 데스크톱, 웹에서 작동하는 앱을 만들어, 
+Flutter의 기본 사항을 배우게 됩니다.
 
 <div class="juicy-button-container">
   <img src="/assets/images/docs/get-started/codelab-goal-background.jpg" alt="The illustration of the initial and the resulting app that you will build in this codelab.">
@@ -34,15 +35,12 @@ that works on mobile, desktop, and web.
 </div>
 
 :::tip
-The codelab above walks you through writing your first Flutter
-app for all platforms &mdash; mobile, desktop and web.
-You might prefer to take
-[another codelab written specifically for the web][codelab-web].
+위의 코드랩은 모든 플랫폼(모바일, 데스크톱, 웹)에 대한 첫 번째 Flutter 앱을 작성하는 방법을 안내합니다. 
+[웹을 위해 특별히 작성된 다른 코드랩][codelab-web]을 수강하는 것이 좋습니다.
 :::
 
 [codelab-web]: /get-started/codelab-web
 
-If you prefer an instructor-led version of this codelab,
-check out the following workshop:
+이 코드랩의 강사 주도 버전을 선호하시는 경우 다음 워크숍을 확인하세요.
 
-{% ytEmbed '8sAyPDLorek', 'Building your first Flutter app - with a Codelab!' %}
+{% ytEmbed '8sAyPDLorek', 'Codelab으로 첫 번째 Flutter 앱을 만들어 보세요!' %}

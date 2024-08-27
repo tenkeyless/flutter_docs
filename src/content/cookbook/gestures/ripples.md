@@ -1,6 +1,8 @@
 ---
-title: Add Material touch ripples
-description: How to implement ripple animations.
+# title: Add Material touch ripples
+title: Material 터치 리플(ripples) 추가
+# description: How to implement ripple animations.
+description: 리플 애니메이션을 구현하는 방법.
 js:
   - defer: true
     url: /assets/js/inject_dartpad.js
@@ -8,22 +10,19 @@ js:
 
 <?code-excerpt path-base="cookbook/gestures/ripples/"?>
 
-Widgets that follow the Material Design guidelines display
-a ripple animation when tapped.
+Material Design 가이드라인을 따르는 위젯은 탭하면 리플 애니메이션을 표시합니다.
 
-Flutter provides the [`InkWell`][]
-widget to perform this effect.
-Create a ripple effect using the following steps:
+Flutter는 이 효과를 수행하기 위해 [`InkWell`][] 위젯을 제공합니다. 
+다음 단계에 따라 리플 효과를 만듭니다.
 
-  1. Create a widget that supports tap.
-  2. Wrap it in an `InkWell` widget to manage tap callbacks and
-     ripple animations.
+  1. 탭을 지원하는 위젯을 만듭니다.
+  2. `InkWell` 위젯에 래핑하여, 탭 콜백과 리플 애니메이션을 관리합니다.
 
 <?code-excerpt "lib/main.dart (InkWell)" replace="/return //g;/^\);$/)/g"?>
 ```dart
-// The InkWell wraps the custom flat button widget.
+// InkWell은 커스텀 플랫 버튼 위젯을 래핑합니다.
 InkWell(
-  // When the user taps the button, show a snackbar.
+  // 사용자가 버튼을 탭하면, 스낵바를 표시합니다.
   onTap: () {
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
       content: Text('Tap'),
@@ -36,7 +35,7 @@ InkWell(
 )
 ```
 
-## Interactive example
+## 상호 작용 예제 {:#interactive-example}
 
 <?code-excerpt "lib/main.dart"?>
 ```dartpad title="Flutter Material ripples hands-on example in DartPad" run="true"
@@ -81,9 +80,9 @@ class MyButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // The InkWell wraps the custom flat button widget.
+    // InkWell은 커스텀 플랫 버튼 위젯을 래핑합니다.
     return InkWell(
-      // When the user taps the button, show a snackbar.
+      // 사용자가 버튼을 탭하면, 스낵바를 표시합니다.
       onTap: () {
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text('Tap'),

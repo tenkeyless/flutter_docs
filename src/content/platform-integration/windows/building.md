@@ -1,16 +1,17 @@
 ---
-title: Building Windows apps with Flutter
-description: Platform-specific considerations for building for Windows with Flutter.
+# title: Building Windows apps with Flutter
+title: Flutter로 Windows 앱 빌드
+# description: Platform-specific considerations for building for Windows with Flutter.
+description: Flutter를 사용하여 Windows를 위해 빌드할 때 플랫폼별 고려 사항.
 toc: true
-short-title: Windows development
+# short-title: Windows development
+short-title: Windows 개발
 ---
 
-This page discusses considerations unique to building
-Windows apps with Flutter, including shell integration
-and distribution of Windows apps through the
-Microsoft Store on Windows.
+이 페이지에서는 Windows에서 Microsoft Store를 통한 Windows 앱의 셸 통합 및 배포를 포함하여, 
+Flutter를 사용하여 Windows 앱을 빌드하는 데 고유한 고려 사항에 대해 설명합니다.
 
-## Integrating with Windows
+## Windows와 통합 {:#integrating-with-windows}
 
 The Windows programming interface combines traditional Win32 APIs,
 COM interfaces and more modern Windows Runtime libraries.
@@ -58,7 +59,7 @@ including common packages such as [`url_launcher`], [`shared_preferences`], [`fi
 [`file_selector`]: {{site.pub-pkg}}/file_selector
 [`path_provider`]: {{site.pub-pkg}}/path_provider
 
-## Supporting Windows UI guidelines
+## Windows UI 가이드라인 지원 {:#supporting-windows-ui-guidelines}
 
 While you can use any visual style or theme you choose,
 including Material, some app authors might wish to build
@@ -85,7 +86,7 @@ that matches the rest of your app.
 [fluentui_system_icons]: {{site.pub}}/packages/fluentui_system_icons
 [bitsdojo_window]: {{site.pub}}/packages/bitsdojo_window
 
-## Customizing the Windows host application
+## Windows 호스트 애플리케이션 커스터마이즈 {:#customizing-the-windows-host-application}
 
 When you create a Windows app, Flutter generates a
 small C++ application that hosts Flutter.
@@ -147,7 +148,7 @@ To change the version number, edit the `VERSION_AS_NUMBER`
 and `VERSION_AS_STRING` properties;
 other information can be edited in the `StringFileInfo` block.
 
-## Compiling with Visual Studio
+## Visual Studio로 컴파일하기 {:#compiling-with-visual-studio}
 
 For most apps, it's sufficient to allow Flutter to
 handle the compilation process using the `flutter run`
@@ -180,7 +181,7 @@ Follow these steps:
 1. Use the toolbar to switch between Debug and Release
    configurations as appropriate.
 
-## Distributing Windows apps
+## Windows 앱 배포 {:#distributing-windows-apps}
 
 There are various approaches you can use for
 distributing your Windows application.
@@ -201,7 +202,7 @@ Here are some options:
 * Collect all of the necessary pieces
   and build your own zip file.
 
-### MSIX packaging
+### MSIX 패키징 {:#msix-packaging}
 
 [MSIX][], the new Windows application package format,
 provides a modern packaging format and installer.
@@ -220,7 +221,7 @@ see the [Desktop Photo Search][] sample.
 [msix package]: {{site.pub}}/packages/msix
 [Desktop Photo Search]: {{site.repo.samples}}/tree/main/desktop_photo_search
 
-#### Create a self-signed .pfx certificate for local testing
+#### 로컬 테스트를 위해 자체 서명된 .pfx 인증서를 만듭니다.{:#create-a-self-signed-pfx-certificate-for-local-testing}
 
 For private deployment and testing with the help
 of the MSIX installer, you need to give your application a
@@ -264,7 +265,7 @@ self-signed `.pfx` certificate.
 
 [OpenSSL]: https://slproweb.com/products/Win32OpenSSL.html
 
-### Building your own zip file for Windows
+### Windows용 당신만의 자체 zip 파일 빌드 {:#building-your-own-zip-file-for-windows}
 
 The Flutter executable, `.exe`, can be found in your
 project under `build\windows\runner\<build mode>\`.
@@ -304,7 +305,7 @@ In addition to that executable, you need the following:
 At this point if desired it would be relatively simple to
 add this folder to a Windows installer such as Inno Setup, WiX, etc.
 
-## Additional resources
+## 추가적인 자료 {:#additional-resources}
 
 To learn how to build an `.exe` using Inno Setup to distribute 
 your Flutter desktop app for Windows, check out the step-by-step 

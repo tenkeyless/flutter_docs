@@ -1,156 +1,135 @@
 ---
-title: More thoughts about performance
-description: What is performance, and why is performance important
+# title: More thoughts about performance
+title: 성능에 대한 더 많은 생각
+# description: What is performance, and why is performance important
+description: 성능이란 무엇이며, 성능이 중요한 이유는 무엇입니까?
 ---
 
-## What is performance?
+## 성능이란 무엇인가요? {:#what-is-performance}
 
-Performance is a set of quantifiable properties of a performer.
+성능은 performer의 정량화 가능한 속성 집합입니다.
 
-In this context, performance isn't the execution of an action itself;
-it's how well something or someone performs. Therefore, we use the adjective
- _performant_.
+이 컨텍스트에서, 성능은 작업 자체의 실행이 아니라, 무언가 또는 누군가가 얼마나 잘 수행하는지입니다. 
+따라서, 우리는 형용사 _performant_ 를 사용합니다.
 
-While the _how well_ part can, in general, be described in natural languages,
-in our limited scope, the focus is on something that is quantifiable as a real
-number. Real numbers include integers and 0/1 binaries as special cases.
-Natural language descriptions are still very important. For example, a news
-article that heavily criticizes Flutter's performance by just using words
-without any numbers (a quantifiable value) could still be meaningful, and it
-could have great impacts. The limited scope is chosen only because of our
-limited resources.
+_how well_ 부분은 일반적으로 자연어로 설명할 수 있지만, 
+우리의 제한된 범위에서, 초점은 실수(real number)로 정량화할 수 있는 것에 맞춰집니다. 
+실수에는 정수와 0/1 이진수가 특수한 경우로 포함됩니다. 
+자연어 설명은 여전히 ​​매우 중요합니다. 
+예를 들어, 숫자(정량화 가능한 값) 없이 단어만 사용하여 Flutter의 성능을 크게 비판하는 뉴스 기사는 여전히 의미가 있을 수 있으며 큰 영향을 미칠 수 있습니다. 
+제한된 범위는 우리의 제한된 리소스 때문에 선택되었습니다.
 
-The required quantity to describe performance is often referred to as a
-metric.
+성능을 설명하는 데 필요한 양은 종종 메트릭(metric, 지표)이라고 합니다.
 
-To navigate through countless performance issues and metrics, you can categorize
-based on performers.
+수많은 성능 문제와 메트릭을 탐색하려면, performers를 기준으로 분류할 수 있습니다.
 
-For example, most of the content on this website is about the Flutter app
-performance, where the performer is a Flutter app. Infra performance is also
-important to Flutter, where the performers are build bots and CI task runners:
-they heavily affect how fast Flutter can incorporate code changes, to improve
-the app's performance.
+Broadening the scope also allows performers to be included that traditionally are easy to ignore. Document performance is such an example. The performer could be an API doc of the SDK, and a metric could be: the percentage of readers who find the API doc useful.
 
-Here, the scope was intentionally broadened to include performance issues other
-than just app performance issues because they can share many tools regardless of
-who the performers are. For example, Flutter app performance and infra
-performance might share the same dashboard and similar alert mechanisms.
+예를 들어, 이 웹사이트의 대부분 콘텐츠는 Flutter 앱 성능에 관한 것이며, 여기서 performer는 Flutter 앱입니다. 
+인프라 성능은 Flutter에도 중요한데, 여기서 performer는 빌드 봇과 CI 작업 runners입니다. 
+이들은 Flutter가 앱의 성능을 개선하기 위해, 코드 변경 사항을 얼마나 빨리 통합할 수 있는지에 큰 영향을 미칩니다.
 
-Broadening the scope also allows performers to be included that traditionally
-are easy to ignore. Document performance is such an example. The performer
-could be an API doc of the SDK, and a metric could be: the percentage of readers
-who find the API doc useful.
+여기서, 범위(scope)는, performers가 누구이든 관계없이 많은 도구를 공유할 수 있기 때문에, 
+앱 성능 문제뿐만 아니라 다른 성능 문제도 포함하도록 의도적으로 확대되었습니다. 
+예를 들어, Flutter 앱 성능과 인프라 성능은 동일한 대시보드와 유사한 알림 메커니즘을 공유할 수 있습니다.
 
-## Why is performance important?
+범위를 확대하면 전통적으로 무시하기 쉬운 performers도 포함할 수 있습니다. 
+문서 성능이 그러한 예입니다. 
+performer는 SDK의 API 문서일 수 있으며, 메트릭은 API 문서를 유용하다고 생각하는 독자의 백분율일 수 있습니다.
 
-Answering this question is not only crucial for validating the work in
-performance, but also for guiding the performance work in order to be more
-useful. The answer to "why is performance important?" often is also the answer
-to "how is performance useful?"
+## 왜 성능이 중요한가요? {:#why-is-performance-important}
 
-Simply speaking, performance is important and useful because, in the scope,
-performance must have quantifiable properties or metrics. This implies:
-1. A performance report is easy to consume.
-2. Performance has little ambiguity.
-3. Performance is comparable and convertible.
-4. Performance is fair.
+이 질문에 답하는 것은 성능에서 작업을 검증하는 데 중요할 뿐만 아니라, 
+성능 작업을 보다 유용하게 만들기 위한 지침이기도 합니다. 
+"성능이 중요한 이유는?"에 대한 답은 종종 "성능이 어떻게 유용한가?"에 대한 답이기도 합니다.
 
-Not that non-performance, or non-measurable issues or descriptions are not
-important. They're meant to highlight the scenarios where performance can be
-more useful.
+간단히 말해서, 성능은 범위 내에서, 성능이 정량화 가능한 속성이나 지표를 가져야 하기 때문에, 중요하고 유용합니다. 이는 다음을 의미합니다.
+1. 성능 보고서는 사용하기 쉽습니다.
+2. 성능에는 모호성이 거의 없습니다.
+3. 성능은 비교 가능하고 변환 가능합니다.
+4. 성능은 공정합니다.
 
-### 1. A performance report is easy to consume
+성능이 아니거나, 측정할 수 없는 문제나 설명이 중요하지 않다는 것은 아닙니다. 
+성능이 보다 유용할 수 있는 시나리오를 강조하기 위한 것입니다.
 
-Performance metrics are numbers. Reading a number is much easier than reading a
-passage. For example, it probably takes an engineer 1 second to consume the
-performance rating as a number from 1 to 5. It probably takes the same engineer
-at least 1 minute to read the full, 500-word feedback summary.
+### 1. 성능 보고서는 사용하기 쉽습니다. {:#1-a-performance-report-is-easy-to-consume}
 
-If there are many numbers, it's easy to summarize or visualize them for quick
-consumption. For example, you can quickly consume millions of numbers by
-looking at its histogram, average, quantiles, and so on. If a metric has a
-history of thousands of data points, then you can easily plot a timeline to
-read its trend.
+성능 지표는 숫자입니다. 숫자를 읽는 것은 구절을 읽는 것보다 훨씬 쉽습니다. 
+예를 들어, 엔지니어가 성능 평가를 1에서 5까지의 숫자로 소비하는 데 1초가 걸릴 것입니다. 
+같은 엔지니어가 전체 500단어 피드백 요약을 읽는 데는 최소 1분이 걸릴 것입니다.
 
-On the other hand, having _n_ number of 500-word texts almost guarantees an
-_n_-time cost to consume those texts. It would be a daunting task to analyze
-thousands of historical descriptions, each having 500 words.
+숫자가 많으면, 요약하거나 시각화하여 빠르게 소비하기 쉽습니다. 
+예를 들어, 히스토그램, 평균, 분위수 등을 살펴보면 수백만 개의 숫자를 빠르게 소비할 수 있습니다. 
+지표에 수천 개의 데이터 포인트의 기록이 있는 경우, 추세를 읽는 타임라인을 쉽게 그릴 수 있습니다.
 
-### 2. Performance has little ambiguity
+반면에, _n_ 개의 500단어 텍스트가 있으면, 해당 텍스트를 소비하는 데, _n_ 배의 시간이 거의 보장됩니다. 
+각각 500단어가 있는 수천 개의 historical 설명을 분석하는 것은 엄청난 작업일 것입니다.
 
-Another advantage of having performance as a set of numbers is its unambiguity.
-When you want an animation to have a performance of 20 ms per frame or
-50 fps, there's little room for different interpretations about the numbers. On
-the other hand, to describe the same animation in words, someone might call it
-good, while someone else might complain that it's bad. Similarly, the same
-word or phrase could be interpreted differently by different people. You might
-interpret an OK frame rate to be 60 fps, while someone else might interpret it
-to be 30 fps.
+### 2. 성능에는 모호성이 거의 없습니다. {:#2-performance-has-little-ambiguity}
 
-Numbers can still be noisy. For example, the measured time per frame might
-be a true computation time of this frame, plus a random amount of time (noise)
-that CPU/GPU spends on some unrelated work. Hence, the metric fluctuates.
-Nevertheless, there's no ambiguity of what the number means. And, there are
-also rigorous theory and testing tools to handle such noise. For example, you
-could take multiple measurements to estimate the distribution of a random
-variable, or you could take the average of many measurements to eliminate the
-noise by [the law of large numbers][1].
+성능을 숫자 집합으로 갖는 또 다른 장점은 모호하지 않다는 것입니다. 
+애니메이션의 성능을 프레임당 20ms 또는 50fps로 설정하려는 경우, 숫자에 대한 다른 해석의 여지가 거의 없습니다. 
+반면에, 동일한 애니메이션을 단어로 설명할 때, 누군가는 좋다고 부를 수 있고, 다른 사람은 나쁘다고 불평할 수 있습니다. 
+마찬가지로, 동일한 단어나 구문도 사람마다 다르게 해석할 수 있습니다. 
+괜찮은 프레임 속도를 60fps로 해석하는 반면, 다른 사람은 30fps로 해석할 수 있습니다.
 
-### 3. Performance is comparable and convertible
+숫자는 여전히 노이즈가 있을 수 있습니다. 
+예를 들어, 프레임당 측정된 시간은 이 프레임의 실제 계산 시간과 CPU/GPU가 관련 없는 작업에 소비하는 랜덤 시간(노이즈)이 더해질 수 있습니다. 
+따라서, 메트릭은 변동합니다. 그럼에도 불구하고, 숫자가 의미하는 바에 대한 모호성은 없습니다. 
+또한, 이러한 노이즈를 처리하기 위한 엄격한 이론과 테스트 도구도 있습니다. 
+예를 들어, 확률 변수의 분포를 추정하기 위해 여러 번 측정할 수도 있고, 
+[대수의 법칙(the law of large numbers)][1]에 따라 많은 측정값의 평균을 구해 노이즈를 제거할 수도 있습니다.
 
-Performance numbers not only have unambiguous meanings, but they also have
-unambiguous comparisons. For example, there's no doubt that 5 is greater than 4.
-On the other hand, it might be subjective to figure out whether excellent is
-better or worse than superb. Similarly, could you figure out whether epic is
-better than legendary? Actually, the phrase _strongly exceeds expectations_
-could be better than _superb_ in someone's interpretation. It only becomes
-unambiguous and comparable after a definition that maps strongly exceeds
-expectations to 4 and superb to 5.
+### 3. 성능은 비교 가능하고 변환 가능합니다. {:#3-performance-is-comparable-and-convertible}
 
-Numbers are also easily convertible using formulas and functions. For example,
-60 fps can be converted to 16.67 ms per frame. A frame's rendering
-time _x_ (ms) can be converted to a binary indicator
-`isSmooth = [x <= 16] = (x <= 16 ? 1 :0)`. Such conversion can be compounded or
-chained, so you can get a large variety of quantities using a single
-measurement without any added noise or ambiguity. The converted quantity can
-then be used for further comparisons and consumption. Such conversions are
-almost impossible if you're dealing with natural languages.
+성능 수치는 명확한 의미(unambiguous meanings)를 가질 뿐만 아니라 명확한 비교도 가능합니다. 
+예를 들어, 5가 4보다 크다는 것은 의심의 여지가 없습니다. 
+반면에, excellent가 superb보다 더 좋거나 나쁜지 파악하는 것은 주관적일 수 있습니다. 
+마찬가지로, epic이 legendary보다 더 좋은지 파악할 수 있을까요? 
+사실, _strongly beyond expectation_ 이라는 문구는, 
+누군가의 해석에 따라 _superb_보다 나을 수 있습니다. 
+4에 기대치를 크게 초과하고, superb를 5에 매핑하는 정의가 나온 후에야 명확하고 비교 가능해집니다.
 
-### 4. Performance is fair
+수식과 함수를 사용하여 수치를 쉽게 변환할 수도 있습니다. 
+예를 들어, 60fps는 프레임당 16.67ms로 변환할 수 있습니다. 
+프레임의 렌더링 시간 _x_ (ms)는 이진 지표 `isSmooth = [x <= 16] = (x <= 16 ? 1 :0)`로 변환할 수 있습니다. 
+이러한 변환은 복합적(compounded)이거나 연쇄적(chained)으로 될 수 있으므로, 추가된 노이즈나 모호성 없이 단일 측정을 사용하여, 다양한 양을 얻을 수 있습니다. 
+그런 다음, 변환된 양을 추가적인 비교 및 ​​소비에 사용할 수 있습니다. 
+자연어를 다루는 경우, 이러한 변환은 거의 불가능합니다.
 
-If issues rely on verbose words to be discovered, then an unfair advantage is
-given to people who are more verbose (more willing to chat or write) or those
-who are closer to the development team, who have a larger bandwidth and lower
-cost for chatting or face-to-face meetings.
+### 4. 성능은 공정합니다. {:#4-performance-is-fair}
 
-By having the same metrics to detect problems no matter how far away or how
-silent the users are, we can treat all issues fairly. That, in turn,
-allows us to focus on the right issues that have greater impact.
+문제가 발견되기 위해 장황한 단어에 의존하는 경우, 
+더 장황한(더 기꺼이 채팅하거나 글을 쓰는) 사람이나 개발 팀에 더 가까운 사람, 
+즉 채팅이나 대면 회의에 더 큰 대역폭과 더 낮은 비용을 가진 사람에게 불공평한 이점이 주어집니다.
 
-### How to make performance useful
+사용자가 아무리 멀리 떨어져 있거나 조용하더라도 문제를 감지하는 동일한 지표를 사용하면, 
+모든 문제를 공정하게 처리할 수 있습니다. 
+그러면 더 큰 영향을 미치는 올바른 문제에 집중할 수 있습니다.
 
-The following summarizes the 4 points discussed here, from a slightly different
-perspective:
-1. Make performance metrics easy to consume. Do not overwhelm the readers with a
-   lot of numbers (or words). If there are many numbers, then try to summarize
-   them into a smaller set of numbers (for example, summarize many numbers into
-   a single average number). Only notify readers when the numbers change
-   significantly (for example, automatic alerts on spikes or regressions).
+### 성능을 유용하게 만드는 방법 {:#how-to-make-performance-useful}
 
-2. Make performance metrics as unambiguous as possible. Define the unit that the
-   number is using. Precisely describe how the number is measured. Make the
-   number easily reproducible. When there's a lot of noise, try to show the full
-   distribution, or eliminate the noise as much as possible by aggregating many
-   noisy measurements.
+여기서 논의된 4가지 사항을 약간 다른 관점에서 요약하면 다음과 같습니다.
 
-3. Make it easy to compare performance. For example, provide a timeline to
-   compare the current version with the old version. Provide ways and tools to
-   convert one metric to another. For example, if we can convert both memory
-   increase and fps drops into the number of users dropped or revenue lost in
-   dollars, then we can compare them and make an informed trade-off.
+1. 성능 지표를 이해하기 쉽게 만드세요. 
+   * 많은 숫자(또는 단어)로 독자를 압도하지 마세요. 
+   * 숫자가 많은 경우, 더 작은 숫자 집합으로 요약해 보세요.
+     (예: 많은 숫자를 하나의 평균 숫자로 요약)
+   * 숫자가 크게 변할 때만 독자에게 알리세요. 
+     (예: 급증 또는 회귀 시 자동 알림)
 
-4. Make performance metrics monitor a population that is as wide as possible,
-   so no one is left behind.
+1. 성과 지표를 가능한 한 모호하지 않게 만드세요. 
+   * 숫자에 사용되는 단위를 정의하세요. 
+   * 숫자가 측정되는 방식을 정확하게 설명하세요. 
+   * 숫자를 쉽게 재현할 수 있게 만드세요. 
+   * 노이즈가 많은 경우, 전체 분포를 표시하거나, 노이즈가 많은 측정값을 많이 모아서, 노이즈를 최대한 제거하세요.
+
+2. 성과를 쉽게 비교할 수 있게 만드세요. 
+      * 예를 들어, 현재 버전과 이전 버전을 비교할 수 있는 타임라인을 제공하세요. 
+   * 한 지표를 다른 지표로 변환하는 방법과 도구를 제공하세요. 
+     * 예를 들어, 메모리 증가와 fps 감소를 모두 사용자 감소 수 또는 손실된 수익(달러)으로 변환할 수 있다면, 
+       이를 비교하여 정보에 입각한 트레이드오프를 할 수 있습니다.
+
+3. 성과 지표를 통해 가능한 한 광범위한 인구를 모니터링하여, 누구도 소외되지 않도록 합니다.
 
 [1]: https://en.wikipedia.org/wiki/Law_of_large_numbers

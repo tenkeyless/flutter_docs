@@ -1,6 +1,8 @@
 ---
-title: Focus and text fields
-description: How focus works with text fields.
+# title: Focus and text fields
+title: 포커스 및 텍스트 필드
+# description: How focus works with text fields.
+description: 텍스트 필드에 포커스가 작동하는 방식.
 js:
   - defer: true
     url: /assets/js/inject_dartpad.js
@@ -8,28 +10,20 @@ js:
 
 <?code-excerpt path-base="cookbook/forms/focus/"?>
 
-When a text field is selected and accepting input,
-it is said to have "focus."
-Generally, users shift focus to a text field by tapping,
-and developers shift focus to a text field programmatically by
-using the tools described in this recipe.
+텍스트 필드가 선택되어 입력을 받으면, "포커스"가 있다고 합니다. 
+일반적으로, 사용자는 탭하여 텍스트 필드로 포커스를 이동하고, 
+개발자는 이 레시피에 설명된 도구를 사용하여 프로그래밍 방식으로 텍스트 필드로 포커스를 이동합니다.
 
-Managing focus is a fundamental tool for creating forms with an intuitive
-flow. For example, say you have a search screen with a text field.
-When the user navigates to the search screen,
-you can set the focus to the text field for the search term.
-This allows the user to start typing as soon as the screen
-is visible, without needing to manually tap the text field.
+포커스 관리란 직관적인 흐름으로 양식을 만드는 데 기본이 되는 도구입니다. 
+예를 들어, 텍스트 필드가 있는 검색 화면이 있다고 가정해 보겠습니다. 
+사용자가 검색 화면으로 이동하면, 검색어의 텍스트 필드로 포커스를 설정할 수 있습니다. 
+이렇게 하면 사용자가 텍스트 필드를 수동으로 탭하지 않고도, 화면이 표시되자마자 입력을 시작할 수 있습니다.
 
-In this recipe, learn how to give the focus
-to a text field as soon as it's visible,
-as well as how to give focus to a text field
-when a button is tapped.
+이 레시피에서는, 텍스트 필드가 표시되자마자 포커스를 주는 방법과, 버튼을 탭할 때 텍스트 필드에 포커스를 주는 방법을 알아봅니다.
 
-## Focus a text field as soon as it's visible
+## 텍스트 필드가 표시되면 즉시 포커스 맞추기 {:#focus-a-text-field-as-soon-as-its-visible}
 
-To give focus to a text field as soon as it's visible,
-use the `autofocus` property.
+텍스트 필드가 표시되자마자 포커스를 주려면, `autofocus` 속성을 사용합니다.
 
 ```dart
 TextField(
@@ -37,37 +31,31 @@ TextField(
 );
 ```
 
-For more information on handling input and creating text fields,
-see the [Forms][] section of the cookbook.
+입력 처리 및 텍스트 필드 생성에 대한 자세한 내용은, 쿡북의 [폼][Forms] 섹션을 참조하세요.
 
-## Focus a text field when a button is tapped
+## 버튼을 탭하면 텍스트 필드에 포커스 맞추기 {:#focus-a-text-field-when-a-button-is-tapped}
 
-Rather than immediately shifting focus to a specific text field,
-you might need to give focus to a text field at a later point in time.
-In the real world, you might also need to give focus to a specific
-text field in response to an API call or a validation error.
-In this example, give focus to a text field after the user
-presses a button using the following steps:
+특정 텍스트 필드로 바로 포커스를 옮기는 대신, 나중에 텍스트 필드에 포커스를 주어야 할 수도 있습니다. 
+현실 세계에서는, API 호출이나 검증 오류에 대한 응답으로 특정 텍스트 필드에 포커스를 주어야 할 수도 있습니다. 
+이 예에서는, 사용자가 버튼을 누른 후 다음 단계에 따라 텍스트 필드에 포커스를 줍니다.
 
-  1. Create a `FocusNode`.
-  2. Pass the `FocusNode` to a `TextField`.
-  3. Give focus to the `TextField` when a button is tapped.
+  1. `FocusNode`를 만듭니다.
+  2. `FocusNode`를 `TextField`에 전달합니다.
+  3. 버튼을 탭하면 `TextField`에 포커스를 줍니다.
 
-### 1. Create a `FocusNode`
+### 1. `FocusNode` 생성 {:#1-create-a-focusnode}
 
-First, create a [`FocusNode`][].
-Use the `FocusNode` to identify a specific `TextField` in Flutter's
-"focus tree." This allows you to give focus to the `TextField`
-in the next steps.
+먼저, [`FocusNode`][]를 만듭니다. 
+`FocusNode`를 사용하여 Flutter의 "포커스 트리"에서 특정 `TextField`를 식별합니다. 
+이렇게 하면, 다음 단계에서 `TextField`에 포커스를 줄 수 있습니다.
 
-Since focus nodes are long-lived objects, manage the lifecycle
-using a `State` object. Use the following instructions to create
-a `FocusNode` instance inside the `initState()` method of a
-`State` class, and clean it up in the `dispose()` method:
+포커스 노드는 수명이 긴 객체이므로, `State` 객체를 사용하여 수명 주기를 관리합니다. 
+다음 지침을 사용하여 `State` 클래스의 `initState()` 메서드 내에서 `FocusNode` 인스턴스를 만들고, 
+`dispose()` 메서드에서 정리합니다.
 
 <?code-excerpt "lib/starter.dart (Starter)" remove="return Container();"?>
 ```dart
-// Define a custom Form widget.
+// 커스텀 Form 위젯을 정의합니다.
 class MyCustomForm extends StatefulWidget {
   const MyCustomForm({super.key});
 
@@ -75,11 +63,11 @@ class MyCustomForm extends StatefulWidget {
   State<MyCustomForm> createState() => _MyCustomFormState();
 }
 
-// Define a corresponding State class.
-// This class holds data related to the form.
+// 해당 State 클래스를 정의합니다.
+// 이 클래스는 폼과 관련된 데이터를 보유합니다.
 class _MyCustomFormState extends State<MyCustomForm> {
-  // Define the focus node. To manage the lifecycle, create the FocusNode in
-  // the initState method, and clean it up in the dispose method.
+  // 포커스 노드를 정의합니다. 
+  // 라이프사이클을 관리하려면, initState 메서드에서 FocusNode를 만들고, dispose 메서드에서 정리합니다.
   late FocusNode myFocusNode;
 
   @override
@@ -91,7 +79,7 @@ class _MyCustomFormState extends State<MyCustomForm> {
 
   @override
   void dispose() {
-    // Clean up the focus node when the Form is disposed.
+    // Form이 삭제되면, 포커스 노드를 정리합니다.
     myFocusNode.dispose();
 
     super.dispose();
@@ -99,15 +87,14 @@ class _MyCustomFormState extends State<MyCustomForm> {
 
   @override
   Widget build(BuildContext context) {
-    // Fill this out in the next step.
+    // 다음 단계에서 이를 작성합니다.
   }
 }
 ```
 
-### 2. Pass the `FocusNode` to a `TextField`
+### 2. `FocusNode`를 `TextField`에 전달 {:#2-pass-the-focusnode-to-a-textfield}
 
-Now that you have a `FocusNode`,
-pass it to a specific `TextField` in the `build()` method.
+이제 `FocusNode`가 있으므로, `build()` 메서드에서 특정 `TextField`에 전달합니다.
 
 <?code-excerpt "lib/step2.dart (Build)"?>
 ```dart
@@ -119,22 +106,20 @@ Widget build(BuildContext context) {
 }
 ```
 
-### 3. Give focus to the `TextField` when a button is tapped
+### 3. 버튼을 탭하면 `TextField`에 포커스 주기 {:#3-give-focus-to-the-textfield-when-a-button-is-tapped}
 
-Finally, focus the text field when the user taps a floating
-action button. Use the [`requestFocus()`][] method to perform
-this task.
+마지막으로, 사용자가 플로팅 액션 버튼을 탭하면 텍스트 필드에 초점을 맞춥니다. 
+이 작업을 수행하려면, [`requestFocus()`][] 메서드를 사용합니다.
 
 <?code-excerpt "lib/step3.dart (FloatingActionButton)" replace="/^floatingActionButton\: //g"?>
 ```dart
 FloatingActionButton(
-  // When the button is pressed,
-  // give focus to the text field using myFocusNode.
+  // 버튼을 누르면, myFocusNode를 사용하여 텍스트 필드에 포커스를 둡니다.
   onPressed: () => myFocusNode.requestFocus(),
 ),
 ```
 
-## Interactive example
+## 상호 작용 예제 {:#interactive-example}
 
 <?code-excerpt "lib/main.dart"?>
 ```dartpad title="Flutter text focus hands-on example in DartPad" run="true"
@@ -154,7 +139,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
-// Define a custom Form widget.
+// 커스텀 Form 위젯을 정의합니다.
 class MyCustomForm extends StatefulWidget {
   const MyCustomForm({super.key});
 
@@ -162,11 +147,11 @@ class MyCustomForm extends StatefulWidget {
   State<MyCustomForm> createState() => _MyCustomFormState();
 }
 
-// Define a corresponding State class.
-// This class holds data related to the form.
+// 해당 State 클래스를 정의합니다.
+// 이 클래스는 폼과 관련된 데이터를 보유합니다.
 class _MyCustomFormState extends State<MyCustomForm> {
-  // Define the focus node. To manage the lifecycle, create the FocusNode in
-  // the initState method, and clean it up in the dispose method.
+  // 포커스 노드를 정의합니다. 
+  // 라이프사이클을 관리하려면, initState 메서드에서 FocusNode를 만들고, dispose 메서드에서 정리합니다.
   late FocusNode myFocusNode;
 
   @override
@@ -178,7 +163,7 @@ class _MyCustomFormState extends State<MyCustomForm> {
 
   @override
   void dispose() {
-    // Clean up the focus node when the Form is disposed.
+    // Form이 삭제되면, 포커스 노드를 정리합니다.
     myFocusNode.dispose();
 
     super.dispose();
@@ -194,12 +179,11 @@ class _MyCustomFormState extends State<MyCustomForm> {
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-            // The first text field is focused on as soon as the app starts.
+            // 첫 번째 텍스트 필드는 앱이 시작되는 즉시 포커스가 맞춰집니다.
             const TextField(
               autofocus: true,
             ),
-            // The second text field is focused on when a user taps the
-            // FloatingActionButton.
+            // 두 번째 텍스트 필드는 사용자가 FloatingActionButton을 탭할 때에 초점을 맞춥니다.
             TextField(
               focusNode: myFocusNode,
             ),
@@ -207,12 +191,11 @@ class _MyCustomFormState extends State<MyCustomForm> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        // When the button is pressed,
-        // give focus to the text field using myFocusNode.
+        // 버튼을 누르면, myFocusNode를 사용하여 텍스트 필드에 포커스를 둡니다.
         onPressed: () => myFocusNode.requestFocus(),
         tooltip: 'Focus Second Text Field',
         child: const Icon(Icons.edit),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      ), // 이 마지막 쉼표는 빌드 메서드에 대한 자동 서식을 더욱 좋게 만들어줍니다.
     );
   }
 }

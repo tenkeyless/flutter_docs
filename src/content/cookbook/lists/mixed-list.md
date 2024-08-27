@@ -1,6 +1,8 @@
 ---
-title: Create lists with different types of items
-description: How to implement a list that contains different types of assets.
+# title: Create lists with different types of items
+title: 다양한 타입의 아이템으로 리스트 만들기
+# description: How to implement a list that contains different types of assets.
+description: 다양한 타입의 애셋을 포함하는 리스트를 구현하는 방법입니다.
 js:
   - defer: true
     url: /assets/js/inject_dartpad.js
@@ -8,39 +10,36 @@ js:
 
 <?code-excerpt path-base="cookbook/lists/mixed_list/"?>
 
-You might need to create lists that display different types of content.
-For example, you might be working on a list that shows a heading
-followed by a few items related to the heading, followed by another heading,
-and so on.
+다양한 타입의 콘텐츠를 표시하는 리스트를 만들어야 할 수도 있습니다. 
+예를 들어, 제목 다음에 제목과 관련된 몇 가지 아이템이 이어지고, 
+그 다음에 다른 제목이 이어지는 리스트를 작업하고 있을 수 있습니다.
 
-Here's how you can create such a structure with Flutter:
+Flutter로 이러한 구조를 만드는 방법은 다음과 같습니다.
 
-  1. Create a data source with different types of items.
-  2. Convert the data source into a list of widgets.
+  1. 다양한 타입의 아이템이 있는 데이터 소스를 만듭니다.
+  2. 데이터 소스를 위젯 리스트로 변환합니다.
 
-## 1. Create a data source with different types of items
+## 1. 다양한 타입의 아이템을 포함하는 데이터 소스 만들기 {:#1-create-a-data-source-with-different-types-of-items}
 
-### Types of items
+### 아이템 타입 {:#types-of-items}
 
-To represent different types of items in a list, define
-a class for each type of item.
+리스트에서 다양한 타입의 아이템을 나타내려면, 각 타입의 아이템에 대한 클래스를 정의합니다.
 
-In this example, create an app that shows a header followed by five
-messages. Therefore, create three classes: `ListItem`, `HeadingItem`,
-and `MessageItem`.
+이 예에서는, 헤더와 5개의 메시지를 표시하는 앱을 만듭니다. 
+따라서, `ListItem`, `HeadingItem`, `MessageItem`의 세 가지 클래스를 만듭니다.
 
 <?code-excerpt "lib/main.dart (ListItem)"?>
 ```dart
-/// The base class for the different types of items the list can contain.
+/// 리스트에 포함될 수 있는 다양한 타입의 아이템에 대한 베이스 클래스입니다.
 abstract class ListItem {
-  /// The title line to show in a list item.
+  /// 리스트 아이템에 표시할 제목 줄입니다.
   Widget buildTitle(BuildContext context);
 
-  /// The subtitle line, if any, to show in a list item.
+  /// 리스트 아이템에 표시할, 부제 줄(있는 경우)입니다.
   Widget buildSubtitle(BuildContext context);
 }
 
-/// A ListItem that contains data to display a heading.
+/// 제목을 표시하기 위한 데이터가 포함된 ListItem입니다.
 class HeadingItem implements ListItem {
   final String heading;
 
@@ -58,7 +57,7 @@ class HeadingItem implements ListItem {
   Widget buildSubtitle(BuildContext context) => const SizedBox.shrink();
 }
 
-/// A ListItem that contains data to display a message.
+/// 메시지를 표시하기 위한 데이터가 들어있는 ListItem입니다.
 class MessageItem implements ListItem {
   final String sender;
   final String body;
@@ -73,14 +72,12 @@ class MessageItem implements ListItem {
 }
 ```
 
-### Create a list of items
+### 아이템들의 리스트 만들기 {:#create-a-list-of-items}
 
-Most of the time, you would fetch data from the internet or a local
-database and convert that data into a list of items.
+대부분의 경우, 인터넷이나 로컬 데이터베이스에서 데이터를 가져와서 해당 데이터를 아이템들의 리스트로 변환합니다.
 
-For this example, generate a list of items to work with. The list
-contains a header followed by five messages. Each message has one
-of 3 types: `ListItem`, `HeadingItem`, or `MessageItem`.
+이 예에서는, 작업할 아이템들의 리스트를 생성합니다. 리스트에는 헤더와 5개의 메시지가 포함됩니다. 
+각 메시지에는 `ListItem`, `HeadingItem` 또는 `MessageItem`의 3가지 타입 중 하나가 있습니다.
 
 <?code-excerpt "lib/main.dart (Items)" replace="/^items:/final items =/g;/^\),$/);/g"?>
 ```dart
@@ -92,22 +89,19 @@ final items = List<ListItem>.generate(
 );
 ```
 
-## 2. Convert the data source into a list of widgets
+## 2. 데이터 소스를 위젯 리스트로 변환 {:#2-convert-the-data-source-into-a-list-of-widgets}
 
-To convert each item into a widget,
-use the [`ListView.builder()`][] constructor.
+각 아이템을 위젯으로 변환하려면, [`ListView.builder()`][] 생성자를 사용합니다.
 
-In general, provide a builder function that checks for what type
-of item you're dealing with, and returns the appropriate widget
-for that type of item.
+일반적으로, 어떤 타입의 아이템을 다루고 있는지 확인하고, 해당 타입의 아이템에 적합한 위젯을 반환하는 빌더 함수를 제공합니다.
 
 <?code-excerpt "lib/main.dart (builder)" replace="/^body: //g;/^\),$/)/g"?>
 ```dart
 ListView.builder(
-  // Let the ListView know how many items it needs to build.
+  // ListView에게 작성해야 할 아이템의 수를 알려줍니다.
   itemCount: items.length,
-  // Provide a builder function. This is where the magic happens.
-  // Convert each item into a widget based on the type of item it is.
+  // 빌더 함수를 제공합니다. 여기서 마법이 일어납니다.
+  // 각 아이템을 아이템의 타입에 따라 위젯으로 변환합니다.
   itemBuilder: (context, index) {
     final item = items[index];
 
@@ -119,7 +113,7 @@ ListView.builder(
 )
 ```
 
-## Interactive example
+## 상호 작용 예제 {:#interactive-example}
 
 <?code-excerpt "lib/main.dart"?>
 ```dartpad title="Flutter create mixed lists hands-on example in DartPad" run="true"
@@ -154,10 +148,10 @@ class MyApp extends StatelessWidget {
           title: const Text(title),
         ),
         body: ListView.builder(
-          // Let the ListView know how many items it needs to build.
+          // ListView에게 작성해야 할 아이템의 수를 알려줍니다.
           itemCount: items.length,
-          // Provide a builder function. This is where the magic happens.
-          // Convert each item into a widget based on the type of item it is.
+          // 빌더 함수를 제공합니다. 여기서 마법이 일어납니다.
+          // 각 아이템을 아이템의 타입에 따라 위젯으로 변환합니다.
           itemBuilder: (context, index) {
             final item = items[index];
 
@@ -172,16 +166,16 @@ class MyApp extends StatelessWidget {
   }
 }
 
-/// The base class for the different types of items the list can contain.
+/// 리스트에 포함될 수 있는 다양한 타입의 아이템에 대한 베이스 클래스입니다.
 abstract class ListItem {
-  /// The title line to show in a list item.
+  /// 리스트 아이템에 표시할 제목 줄입니다.
   Widget buildTitle(BuildContext context);
 
-  /// The subtitle line, if any, to show in a list item.
+  /// 리스트 아이템에 표시할, 부제 줄(있는 경우)입니다.
   Widget buildSubtitle(BuildContext context);
 }
 
-/// A ListItem that contains data to display a heading.
+/// 제목을 표시하기 위한 데이터가 포함된 ListItem입니다.
 class HeadingItem implements ListItem {
   final String heading;
 
@@ -199,7 +193,7 @@ class HeadingItem implements ListItem {
   Widget buildSubtitle(BuildContext context) => const SizedBox.shrink();
 }
 
-/// A ListItem that contains data to display a message.
+/// 메시지를 표시하기 위한 데이터가 들어있는 ListItem입니다.
 class MessageItem implements ListItem {
   final String sender;
   final String body;

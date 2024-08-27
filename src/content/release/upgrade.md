@@ -1,14 +1,16 @@
 ---
-title: Upgrading Flutter
-short-title: Upgrading
-description: How to upgrade Flutter.
+# title: Upgrading Flutter
+title: Flutter 업그레이드
+# short-title: Upgrading
+short-title: 업그레이드
+# description: How to upgrade Flutter.
+description: Flutter를 업그레이드하는 방법.
 ---
 
-No matter which one of the Flutter release channels
-you follow, you can use the `flutter` command to upgrade your
-Flutter SDK or the packages that your app depends on.
+어떤 Flutter 릴리스 채널을 따르든, 
+`flutter` 명령을 사용하여 Flutter SDK 또는 앱이 사용하는 패키지를 업그레이드할 수 있습니다.
 
-## Upgrading the Flutter SDK
+## Flutter SDK 업그레이드 {:#upgrading-the-flutter-sdk}
 
 To update the Flutter SDK use the `flutter upgrade` command:
 
@@ -24,7 +26,7 @@ and want an even more recent version of the Flutter SDK,
 switch to the **beta** channel using `flutter channel beta`,
 and then run `flutter upgrade`.
 
-### Keeping informed
+### 계속 정보받기 {:#keeping-informed}
 
 We publish [migration guides][] for known breaking changes.
 
@@ -35,12 +37,12 @@ To avoid being broken by future versions of Flutter,
 consider submitting your tests to our [test registry][].
 
 
-## Switching Flutter channels
+## 플러터 채널 전환 {:#switching-flutter-channels}
 
 Flutter has two release channels:
 **stable** and **beta**.
 
-### The **stable** channel
+### **stable** 채널 {:#the-stable-channel}
 
 We recommend the **stable** channel for new users
 and for production app releases.
@@ -54,7 +56,7 @@ includes testing against the latest **stable** release.
 The latest documentation for the **stable** branch
 is at: <https://api.flutter.dev>
 
-### The **beta** channel
+### **beta** 채널 {:#the-beta-channel}
 
 The **beta** channel has the latest stable release.
 This is the most recent version of Flutter that we have heavily tested.
@@ -69,7 +71,7 @@ but updated monthly instead of quarterly.
 Indeed, when the **stable** channel is updated,
 it is updated to the latest **beta** release.
 
-### Other channels
+### 기타 채널 {:#other-channels}
 
 We currently have one other channel, **master**.
 People who [contribute to Flutter][] use this channel.
@@ -83,7 +85,7 @@ it is more likely to contain serious regressions.
 The latest documentation for the **master** branch
 is at: <https://main-api.flutter.dev>
 
-### Changing channels
+### 채널 변경 {:#changing-channels}
 
 To view your current channel, use the following command:
 
@@ -107,7 +109,7 @@ you can download it from the [Flutter SDK archive][].
 :::
 
 
-## Upgrading packages
+## 패키지 업그레이드 {:#upgrading-packages}
 
 If you've modified your `pubspec.yaml` file, or you want to update
 only the packages that your app depends upon

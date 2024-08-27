@@ -1,212 +1,166 @@
 ---
-title: Introduction to animations
-short-title: Animations
-description: How to perform animations in Flutter.
+# title: Introduction to animations
+title: 애니메이션 소개
+# short-title: Animations
+short-title: 애니메이션
+# description: How to perform animations in Flutter.
+description: Flutter에서 애니메이션을 실행하는 방법.
 ---
 
-Well-designed animations make a UI feel more intuitive,
-contribute to the slick look and feel of a polished app,
-and improve the user experience.
-Flutter's animation support makes it easy to implement a variety of
-animation types. Many widgets, especially [Material widgets][],
-come with the standard motion effects defined in their design spec,
-but it's also possible to customize these effects.
+잘 디자인된 애니메이션은 UI를 더 직관적으로 느끼게 하고, 세련된 앱의 매끄러운 모양과 느낌에 기여하며, 사용자 경험을 개선합니다. 
+Flutter의 애니메이션 지원은 다양한 애니메이션 타입을 쉽게 구현할 수 있게 해줍니다. 
+많은 위젯, 특히 [Material 위젯][Material widgets]에는 디자인 사양에 정의된 표준 모션 효과가 제공되지만, 
+이러한 효과를 커스터마이즈 할 수도 있습니다.
 
-## Choosing an approach
+## 접근 방식 선택 {:#choosing-an-approach}
 
-There are different approaches you can take when creating
-animations in Flutter. Which approach is right for you?
-To help you decide, check out the video,
-[How to choose which Flutter Animation Widget is right for you?][]
-(Also published as a [_companion article_][article1].)
+Flutter에서 애니메이션을 만들 때 취할 수 있는 다양한 접근 방식이 있습니다. 
+어떤 접근 방식이 당신에게 맞을까요? 
+결정을 돕기 위해 [어떤 Flutter 애니메이션 위젯이 당신에게 맞을까요?][How to choose which Flutter Animation Widget is right for you?] 비디오를 시청해 보세요. 
+(또한 [_companion article_][article1]로 게시됨.)
 
-{% ytEmbed 'GXIJJkq_H8g', 'How to choose which Flutter animation widget is right for your use case' %}
+{% ytEmbed 'GXIJJkq_H8g', '사용 사례에 적합한 Flutter 애니메이션 위젯을 선택하는 방법' %}
 
-(To dive deeper into the decision process,
-watch the [Animations in Flutter done right][] video,
-presented at Flutter Europe.)
+(의사 결정 과정을 더 자세히 알아보려면, Flutter Europe에서 발표한 [Flutter에서 애니메이션을 올바르게 구현하기][Animations in Flutter done right] 비디오를 시청하세요.)
 
-As shown in the video, the following
-decision tree helps you decide what approach
-to use when implementing a Flutter animation:
+비디오에서 보여지는 것처럼, 
+다음 의사 결정 트리는 Flutter 애니메이션을 구현할 때 어떤 접근 방식을 사용할지 결정하는 데 도움이 됩니다.
 
 <img src='/assets/images/docs/ui/animations/animation-decision-tree.png'
-    alt="The animation decision tree" class="mw-100">
+    alt="애니메이션 결정 트리" class="mw-100">
 
-If a pre-packaged implicit animation (the easiest animation
-to implement) suits your needs, watch
-[Animation basics with implicit animations][].
-(Also published as a [_companion article_][article2].)
+미리 패키지된 암묵적 애니메이션(구현하기 가장 쉬운 애니메이션)이 귀하의 필요에 맞는다면, 
+[암묵적 애니메이션을 사용한 애니메이션 기본 사항][Animation basics with implicit animations]을 시청하세요. (또한 [_companion article_][article2]로 게시됨.)
 
-{% ytEmbed 'IVTjpW3W33s', 'Flutter implicit animation basics' %}
+{% ytEmbed 'IVTjpW3W33s', 'Flutter 암묵적 애니메이션 기본 사항' %}
 
-To create a custom implicit animation, watch
-[Creating your own custom implicit animations with TweenAnimationBuilder][].
-(Also published as a [_companion article_][article3].)
+커스텀 암묵적 애니메이션을 만들려면, 
+[TweenAnimationBuilder로 사용자 지정 암묵적 애니메이션 만들기][Creating your own custom implicit animations with TweenAnimationBuilder]를 시청하세요. (또한 [_companion article_][article3]으로 게시됨.)
 
-{% ytEmbed '6KiPEqzJIKQ', 'Create custom implicit animations with TweenAnimationBuilder' %}
+{% ytEmbed '6KiPEqzJIKQ', 'TweenAnimationBuilder를 사용하여 커스텀 암묵적 애니메이션 만들기' %}
 
-To create an explicit animation (where you control the animation,
-rather than letting the framework control it), perhaps
-you can use one of the built-in explicit animations classes.
-For more information, watch
-[Making your first directional animations with
-built-in explicit animations][].
-(Also published as a [_companion article_][article4].)
+명시적 애니메이션(프레임워크가 제어하는 ​​대신, 애니메이션을 제어하는 ​​경우)을 만들려면, 
+빌트인 명시적 애니메이션 클래스 중 하나를 사용할 수 있습니다. 
+자세한 내용은 [내장된 명시적 애니메이션으로 첫 방향 애니메이션 만들기][Making your first directional animations with built-in explicit animations]를 시청하세요. (또한 [_companion article_][article4]로 게시됨.)
 
-{% ytEmbed 'CunyH6unILQ', 'Making your first directional animations with built-in explicit animations', true %}
+{% ytEmbed 'CunyH6unILQ', '내장된 명시적 애니메이션을 사용하여 첫 번째 방향 애니메이션 만들기', true %}
 
-If you need to build an explicit animation from scratch, watch
-[Creating custom explicit animations with
-AnimatedBuilder and AnimatedWidget][].
-(Also published as a [_companion article_][article5].)
+처음부터 명시적 애니메이션을 빌드해야 하는 경우, 
+[AnimatedBuilder 및 AnimatedWidget을 사용하여 커스텀 명시적 애니메이션 만들기][Creating custom explicit animations with AnimatedBuilder and AnimatedWidget]를 시청하세요. (또한 [_companion article_][article5]로 게시됨.)
 
-{% ytEmbed 'fneC7t4R_B0', 'Creating custom explicit animations with AnimatedBuilder and AnimatedWidget', true %}
+{% ytEmbed 'fneC7t4R_B0', 'AnimatedBuilder 및 AnimatedWidget을 사용하여 커스텀 명시적 애니메이션 만들기', true %}
 
-For a deeper understanding of just how animations work in Flutter, watch
-[Animation deep dive][].
-(Also published as a [_companion article_][article6].)
+Flutter에서 애니메이션이 어떻게 작동하는지 더 자세히 알아보려면 [애니메이션 심층 분석][Animation deep dive]을 시청하세요.
+(또한 [_companion article_][article6]로 게시됨.)
 
-{% ytEmbed 'PbcILiN8rbo', 'Take a deep dive into Flutter animation', true %}
+{% ytEmbed 'PbcILiN8rbo', 'Flutter 애니메이션에 대해 자세히 알아보세요', true %}
 
-## Codelabs, tutorials, and articles
+## 코드랩, 튜토리얼 및 글 {:#codelabs-tutorials-and-articles}
 
-The following resources are a good place to start learning
-the Flutter animation framework. Each of these documents
-shows how to write animation code.
+다음 리소스는 Flutter 애니메이션 프레임워크를 배우기 시작하기에 좋은 곳입니다. 
+이러한 각 문서는 애니메이션 코드를 작성하는 방법을 보여줍니다.
 
-* [Implicit animations codelab][]<br>
-  Covers how to use implicit animations
-  using step-by-step instructions and interactive examples.
+* [암묵적 애니메이션 코드랩][Implicit animations codelab]<br>
+  단계별 지침과 대화형 예제를 사용하여 암묵적 애니메이션을 사용하는 방법을 다룹니다.
 
-* [Animations tutorial][]<br>
-  Explains the fundamental classes in the Flutter animation package
-  (controllers, `Animatable`, curves, listeners, builders),
-  as it guides you through a progression of tween animations using
-  different aspects of the animation APIs. This tutorial shows
-  how to create your own custom explicit animations.
+* [애니메이션 튜토리얼][Animations tutorial]<br>
+  애니메이션 API의 다양한 측면을 사용하여 트윈 애니메이션의 진행을 안내하면서, 
+  Flutter 애니메이션 패키지의 기본 클래스(컨트롤러, `Animatable`, curves, 리스너, 빌더)를 설명합니다. 
+  이 튜토리얼은 사용자 지정 명시적 애니메이션을 만드는 방법을 보여줍니다.
 
-* [Zero to One with Flutter, part 1][] and [part 2][]<br>
-  Medium articles showing how to create an animated chart using tweening.
+* [Flutter를 사용한 Zero to One, 1부][Zero to One with Flutter, part 1] 및 [2부][part 2]<br>
+  트위닝을 사용하여 애니메이션 차트를 만드는 방법을 보여주는 Medium 글.
 
-* [Write your first Flutter app on the web][]<br>
-  Codelab demonstrating how to create a form
-  that uses animation to show the user's progress
-  as they fill in the fields.
+* [웹에서 첫 번째 Flutter 앱 작성][Write your first Flutter app on the web]<br>
+  사용자가 필드를 채울 때 진행 상황을 보여주는 애니메이션을 사용하는 양식을 만드는 방법을 보여주는 코드랩.
 
-## Animation types
+## Animation 타입 {:#animation-types}
 
-Generally, animations are either tween- or physics-based.
-The following sections explain what these terms mean,
-and point you to resources where you can learn more.
+일반적으로 애니메이션은 트윈 기반이거나 물리 기반입니다. 
+다음 섹션에서는 이러한 용어의 의미를 설명하고, 자세히 알아볼 수 있는 리소스를 안내합니다.
 
-### Tween animation
+### Tween 애니메이션 {:#tween-animation}
 
-Short for _in-betweening_. In a tween animation, the beginning
-and ending points are defined, as well as a timeline, and a curve
-that defines the timing and speed of the transition.
-The framework calculates how to transition from the beginning point
-to the end point.
+_in-betweening_ 의 약자입니다. 
+트윈 애니메이션에서는, 시작점과 끝점이 정의되고, 타임라인과 전환의 타이밍과 속도를 정의하는 곡선(curve)도 정의됩니다. 
+프레임워크는 시작점에서 끝점으로 전환하는 방법을 계산합니다.
 
-The documents listed above, such as the
-[Animations tutorial][], are not specifically
-about tweening, but they use tweens in their examples.
+위에 나열된 문서(예: [애니메이션 튜토리얼][Animations tutorial])는 특별히 트위닝에 대한 내용은 아니지만, 
+예제에서 트윈을 사용합니다.
 
-### Physics-based animation
+### 물리 기반 애니메이션 {:#physics-based-animation}
 
-In physics-based animation, motion is modeled to resemble real-world
-behavior. When you toss a ball, for example, where and when it lands
-depends on how fast it was tossed and how far it was from the ground.
-Similarly, dropping a ball attached to a spring falls
-(and bounces) differently than dropping a ball attached to a string.
+물리 기반 애니메이션에서, 동작은 실제 세계의 행동을 닮도록 모델링됩니다. 
+예를 들어, 공을 던질 때, 공이 어디에 언제 떨어지는지는 공을 던진 속도와 땅에서 얼마나 떨어져 있는지에 따라 달라집니다. 
+마찬가지로, 스프링에 부착된 공을 떨어뜨리는 것은, 끈에 부착된 공을 떨어뜨리는 것과 다르게 떨어집니다. (그리고 튀기도 합니다)
 
-* [Animate a widget using a physics simulation][]<br>
-  A recipe in the animations section of the Flutter cookbook.
+* [물리 시뮬레이션을 사용하여 위젯 애니메이션 만들기][Animate a widget using a physics simulation]<br>
+  Flutter 쿡북의 애니메이션 섹션에 있는 레시피입니다.
 
-* Also see the API documentation for
-  [`AnimationController.animateWith`][] and
-  [`SpringSimulation`][].
+* 또한 [`AnimationController.animateWith`][] 및 [`SpringSimulation`][]에 대한 API 문서를 참조하세요.
 
-## Pre-canned animations
+## 미리 준비된(Pre-canned) 애니메이션 {:#pre-canned-animations}
 
-If you are using Material widgets, you might check
-out the [animations package][] available on pub.dev.
-This package contains pre-built animations for
-the following commonly used patterns:
-`Container` transforms, shared axis transitions,
-fade through transitions, and fade transitions.
+Material 위젯을 사용하는 경우, pub.dev에서 제공되는 [애니메이션 패키지][animations package]를 확인해 보세요. 
+이 패키지에는 다음과 같은 일반적으로 사용되는 패턴에 대한 사전 빌드된 애니메이션이 포함되어 있습니다. 
+`Container` 변환, 공유 축 변환, 페이드 스루 변환 및 페이드 변환.
 
-## Common animation patterns
+## 일반적인 애니메이션 패턴 {:#common-animation-patterns}
 
-Most UX or motion designers find that certain
-animation patterns are used repeatedly when designing a UI.
-This section lists some of the commonly
-used animation patterns, and tells you where to learn more.
+대부분의 UX 또는 모션 디자이너는 UI를 디자인할 때 특정 애니메이션 패턴이 반복적으로 사용된다는 것을 알게 됩니다. 
+이 섹션에서는 일반적으로 사용되는 애니메이션 패턴 중 일부를 나열하고, 자세한 내용을 알아볼 수 있는 곳을 알려줍니다.
 
-### Animated list or grid
+### 애니메이션 리스트 또는 그리드 {:#animated-list-or-grid}
 
-This pattern involves animating the addition or removal of
-elements from a list or grid.
+이 패턴은 리스트나 그리드에서 요소를 추가하거나 제거하는 것을 애니메이션으로 만드는 것을 포함합니다.
 
-* [`AnimatedList` example][]<br>
-  This demo, from the [Sample app catalog][], shows how to
-  animate adding an element to a list, or removing a selected element.
-  The internal Dart list is synced as the user modifies the list using
-  the plus (+) and minus (-) buttons.
+* [`AnimatedList` 예제][`AnimatedList` example]<br>
+  [샘플 앱 카탈로그][Sample app catalog]의 ​​이 데모는 리스트에 요소를 추가하거나 선택한 요소를 제거하는 것을 애니메이션으로 만드는 방법을 보여줍니다. 
+  사용자가 더하기(+) 및 빼기(-) 버튼을 사용하여 리스트를 수정하면 내부 Dart 리스트가 동기화됩니다.
 
-### Shared element transition
+### 공유 요소 전환 {:#shared-element-transition}
 
-In this pattern, the user selects an element&mdash;often an
-image&mdash;from the page, and the UI animates the selected element
-to a new page with more detail. In Flutter, you can easily implement
-shared element transitions between routes (pages)
-using the `Hero` widget.
+이 패턴에서, 사용자는 페이지에서 요소(종종 이미지)를 선택하고, 
+UI는 선택한 요소를 더 자세한 내용이 있는 새 페이지로 애니메이션화합니다. 
+Flutter에서는, `Hero` 위젯을 사용하여 경로 routes (페이지 pages) 간에 공유된 요소 전환을 쉽게 구현할 수 있습니다.
 
-* [Hero animations][]
-  How to create two styles of Hero animations:
-  * The hero flies from one page to another while changing position
-    and size.
-  * The hero's boundary changes shape, from a circle to a square,
-    as its flies from one page to another.
+* [Hero 애니메이션][Hero animations]
+  두 가지 스타일의 Hero 애니메이션을 만드는 방법:
+  * Hero는 위치와 크기를 변경하면서, 한 페이지에서 다른 페이지로 날아갑니다.
+  * Hero의 경계는 한 페이지에서 다른 페이지로 날아가면서 원에서 사각형으로 모양이 바뀝니다.
 
-* Also see the API documentation for the
-  [`Hero`][], [`Navigator`][], and [`PageRoute`][] classes.
+* 또한 [`Hero`][], [`Navigator`][], [`PageRoute`][] 클래스에 대한 API 문서를 참조하세요.
 
-### Staggered animation
+### 단계적(Staggered) 애니메이션 {:#staggered-animation}
 
-Animations that are broken into smaller motions,
-where some of the motion is delayed.
-The smaller animations might be sequential,
-or might partially or completely overlap.
+더 작은 동작으로 나뉜 애니메이션으로, 동작 중 일부가 지연됩니다. 
+더 작은 애니메이션은 순차적일 수도 있고, 일부 또는 완전히 겹칠 수도 있습니다.
 
-* [Staggered Animations][]
+* [단계적(Staggered) 애니메이션][Staggered Animations]
 
 {% comment %}
   Save so I can remember how to add it back later.
   <img src="/assets/images/docs/ic_new_releases_black_24px.svg" alt="this doc is new!"> NEW<br>
 {% endcomment -%}
 
-## Other resources
+## 기타 리소스 {:#other-resources}
 
-Learn more about Flutter animations at the following links:
+다음 링크에서 Flutter 애니메이션에 대해 자세히 알아보세요.
 
-* [Animation samples][] from the [Sample app catalog][].
+* [애니메이션 샘플][Animation samples]은 [샘플 앱 카탈로그][Sample app catalog]에서.
 
-* [Animation recipes][] from the Flutter cookbook.
+* [애니메이션 레시피][Animation recipes]는 Flutter 쿡북에서.
 
-* [Animation videos][] from the Flutter YouTube channel.
+* [애니메이션 비디오][Animation videos]는 Flutter YouTube 채널에서.
 
-* [Animations: overview][]<br>
-  A look at some of the major classes in the
-  animations library, and Flutter's animation architecture.
+* [애니메이션: 개요][Animations: overview]<br>
+  애니메이션 라이브러리의 주요 클래스와 Flutter의 애니메이션 아키텍처를 살펴봅니다.
 
-* [Animation and motion widgets][]<br>
-  A catalog of some of the animation widgets
-  provided in the Flutter APIs.
+* [애니메이션 및 모션 위젯][Animation and motion widgets]<br>
+  Flutter API에서 제공하는 일부 애니메이션 위젯 카탈로그.
 
-* The [animation library][] in the [Flutter API documentation][]<br>
-  The animation API for the Flutter framework. This link
-  takes you to a technical overview page for the library.
+* [Flutter API 문서][Flutter API documentation]의 [애니메이션 라이브러리][animation library]<br>
+  Flutter 프레임워크의 애니메이션 API. 이 링크는 라이브러리의 기술 개요 페이지로 이동합니다.
 
 [Animate a widget using a physics simulation]: /cookbook/animation/physics-simulation
 [`AnimatedList` example]: https://flutter.github.io/samples/animations.html

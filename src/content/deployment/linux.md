@@ -1,20 +1,19 @@
 ---
-title: Build and release a Linux app to the Snap Store
-description: How to prepare for and release a Linux app to the Snap store.
+# title: Build and release a Linux app to the Snap Store
+title: Snap Store에 Linux 앱 빌드 및 릴리스
+# description: How to prepare for and release a Linux app to the Snap store.
+description: Linux 앱을 Snap Store에 출시하고 준비하는 방법.
 short-title: Linux
 ---
 
-During a typical development cycle,
-you test an app using `flutter run` at the command line,
-or by using the **Run** and **Debug**
-options in your IDE. By default,
-Flutter builds a _debug_ version of your app.
+일반적인 개발 주기 동안, 
+명령줄에서 `flutter run`을 사용하거나, 
+IDE에서 **Run** 및 **Debug** 옵션을 사용하여 앱을 테스트합니다. 
+기본적으로 Flutter는 앱의 _debug_ 버전을 빌드합니다.
 
-When you're ready to prepare a _release_ version of your app,
-for example to [publish to the Snap Store][snap],
-this page can help.
+앱의 _release_ 버전을 준비할 준비가 되면(예: [Snap Store에 게시][snap]), 이 페이지가 도움이 될 수 있습니다.
 
-## Prerequisites
+## 사전 준비 {:#prerequisites}
 
 To build and publish to the Snap Store, you need the
 following components:
@@ -23,11 +22,11 @@ following components:
 * [Snapcraft][] command line tool
 * [LXD container manager][]
 
-## Set up the build environment
+## 빌드 환경 설정 {:#set-up-the-build-environment}
 
 Use the following instructions to set up your build environment.
 
-### Install snapcraft
+### 스냅크래프트(snapcraft) 설치 {:#install-snapcraft}
 
 At the command line, run the following:
 
@@ -35,7 +34,7 @@ At the command line, run the following:
 $ sudo snap install snapcraft --classic
 ```
 
-### Install LXD
+### LXD 설치 {:#install-lxd}
 
 To install LXD, use the following command:
 
@@ -80,7 +79,7 @@ This means you need to add your username to the LXD
 $ sudo usermod -a -G lxd <your username>
 ```
 
-## Overview of snapcraft
+## 스냅크래프트(snapcraft) 개요 {:#overview-of-snapcraft}
 
 The `snapcraft` tool builds snaps based on the instructions
 listed in a `snapcraft.yaml` file.
@@ -90,7 +89,7 @@ and the [Introduction to snapcraft][].
 Additional links and information are listed at the
 bottom of this page.
 
-## Flutter snapcraft.yaml example
+## Flutter snapcraft.yaml 예제 {:#flutter-snapcraft-yaml-example}
 
 Place the YAML file in your Flutter
 project under `<project root>/snap/snapcraft.yaml`.
@@ -130,7 +129,7 @@ parts:
 
 The following sections explain the various pieces of the YAML file.
 
-### Metadata
+### Metadata {:#metadata}
 
 This section of the `snapcraft.yaml` file defines and
 describes the application. The snap version is
@@ -143,7 +142,7 @@ summary: Super Cool App
 description: Super Cool App that does everything!
 ```
 
-### Grade, confinement, and base
+### Grade, confinement 및 base {:#grade-confinement-and-base}
 
 This section defines how the snap is built.
 
@@ -170,7 +169,7 @@ grade: stable
   the version used to provide the minimal set of common libraries,
   and mounted as the root filesystem for the application at runtime.
 
-### Apps
+### Apps {:#apps}
 
 This section defines the application(s) that exist inside the snap.
 There can be one or more applications per snap. This example
@@ -234,7 +233,7 @@ dbus-super-cool-app: # adjust accordingly to your app name
   name: dev.site.super_cool_app 
 ```
 
-### Parts
+### Parts {:#parts}
 
 This section defines the sources required to
 assemble the snap.
@@ -262,7 +261,7 @@ parts:
 ```
 
 
-## Desktop file and icon
+## 데스크탑 파일 및 아이콘 {:#desktop-file-and-icon}
 
 
 Desktop entry files are used to add an application 
@@ -272,7 +271,7 @@ related search keywords and more. These files have the
 extension .desktop and follow the XDG Desktop Entry 
 Specification version 1.1.
   
-### Flutter super-cool-app.desktop example
+### Flutter super-cool-app.desktop 예제 {:#flutter-super-cool-app-desktop-example}
 
 Place the .desktop file in your Flutter project 
 under `<project root>/snap/gui/super-cool-app.desktop`.
@@ -297,7 +296,7 @@ Place your icon with .png extension in your Flutter
 project under `<project root>/snap/gui/super-cool-app.png`.
 
 
-## Build the snap
+## 스냅(snap) 빌드하기 {:#build-the-snap}
 
 Once the `snapcraft.yaml` file is complete,
 run `snapcraft` as follows from the root directory
@@ -315,14 +314,14 @@ To use the LXD container backend:
 $ snapcraft --use-lxd
 ```
 
-## Test the snap
+## 스냅 테스트하기 {:#test-the-snap}
 
 Once the snap is built, you'll have a `<name>.snap` file
 in your root project directory.
 
 $ sudo snap install ./super-cool-app_0.1.0_amd64.snap --dangerous
 
-## Publish
+## 게시하기 {:#publish}
 
 You can now publish the snap.
 The process consists of the following:
@@ -343,7 +342,7 @@ The process consists of the following:
    $ snapcraft upload --release=<channel> <file>.snap
    ```
 
-### Snap Store channels
+### Snap Store 채널 {:#snap-store-channels}
 
 The Snap Store uses channels to differentiate among
 different versions of snaps.
@@ -366,7 +365,7 @@ Each channel consists of three components:
 : Allows creation of short-lived snap
   sequences to test bug-fixes.
 
-### Snap Store automatic review
+### Snap Store 자동 리뷰 {:#snap-store-automatic-review}
 
 The Snap Store runs several automated checks against
 your snap. There might also be a manual review,
@@ -374,7 +373,7 @@ depending on how the snap was built, and if there are
 any specific security concerns. If the checks pass
 without errors, the snap becomes available in the store.
 
-## Additional resources
+## 추가 자료 {:#additional-resources}
 
 You can learn more from the following links on the
 [snapcraft.io][] site:

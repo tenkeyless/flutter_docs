@@ -1,18 +1,18 @@
 ---
-title: Debug your add-to-app module
-short-title: Debugging
-description: How to run, debug, and hot reload your add-to-app Flutter module.
+# title: Debug your add-to-app module
+title: 앱 to 앱 모듈 디버깅
+# short-title: Debugging
+short-title: 디버깅
+# description: How to run, debug, and hot reload your add-to-app Flutter module.
+description: 앱 to 앱 Flutter 모듈을 실행, 디버그, 핫 리로드하는 방법.
 ---
 
-Once you've integrated the Flutter module to your project and used
-Flutter's platform APIs to run the Flutter engine and/or UI,
-you can then build and run your Android or iOS app the same way
-you run normal Android or iOS apps.
+Flutter 모듈을 프로젝트에 통합하고, Flutter의 플랫폼 API를 사용하여 Flutter 엔진 및/또는 UI를 실행하면, 
+일반 Android 또는 iOS 앱을 실행하는 것과 같은 방식으로 Android 또는 iOS 앱을 빌드하고 실행할 수 있습니다.
 
-Flutter now powers the UI wherever your code includes
-`FlutterActivity` or `FlutterViewController`.
+Flutter는 이제 코드에 `FlutterActivity` 또는 `FlutterViewController`가 포함된 모든 곳에서 UI를 구동합니다.
 
-## Overview
+## 개요 {:#overview}
 
 You might be used to having your suite of favorite Flutter debugging tools
 available when running `flutter run` or an equivalent command from an IDE.
@@ -30,7 +30,7 @@ You can invoke `flutter attach` before starting your engine.
 The `flutter attach` command waits for the next available Dart VM that
 your engine hosts.
 
-## Debug from the Terminal
+## 터미널에서 디버그 {:#debug-from-the-terminal}
 
 To attach from the terminal, run `flutter attach`.
 To select a specific target device, add `-d <deviceId>`.
@@ -53,22 +53,22 @@ For a more detailed help message, press "h".
 To detach, press "d"; to quit, press "q".
 ```
 
-## Debug iOS extension in Xcode and VS Code
+## Xcode 및 VS Code에서 iOS 확장 프로그램 디버그 {:#debug-ios-extension-in-xcode-and-vs-code}
 
 {% include docs/debug/debug-flow-ios.md add='launch' %}
 
-## Debug Android extension in Android Studio
+## Android Studio에서 Android 확장 프로그램 디버그 {:#debug-android-extension-in-android-studio}
 
 {% include docs/debug/debug-flow-androidstudio-as-start.md %}
 
 [debugging functionalities]: /testing/debugging
 
-## Debug without USB connection {:#wireless-debugging}
+## USB 연결 없이 디버깅 {:#wireless-debugging}
 
 To debug your app over Wi-Fi on an iOS or Android device,
 use `flutter attach`.
 
-### Debug over Wi-Fi on iOS devices
+### iOS 기기에서 Wi-Fi를 통한 디버그 {:#debug-over-wi-fi-on-ios-devices}
 
 For an iOS target, complete the follow steps:
 
@@ -97,7 +97,7 @@ For an iOS target, complete the follow steps:
    {% render docs/app-figure.md, img-class:"site-mobile-screenshot border", image:"development/add-to-app/debugging/wireless-port.png",
    caption:"Arguments Passed On Launch with an IPv4 network added", width:"100%" %}
 
-#### To determine if you're on an IPv6 network
+#### IPv6 네트워크에 있는지 확인하려면 {:#to-determine-if-youre-on-an-ipv6-network}
 
 1. Open **Settings** <span aria-label="and then">></span> **Wi-Fi**.
 
@@ -111,7 +111,7 @@ For an iOS target, complete the follow steps:
 
    {% render docs/app-figure.md, img-class:"site-mobile-screenshot border", image:"development/add-to-app/ipv6.png", caption:"WiFi dialog box for macOS System Settings", width:"60%" %}
 
-### Debug over Wi-Fi on Android devices
+### Android 기기에서 Wi-Fi를 통한 디버그 {:#debug-over-wi-fi-on-android-devices}
 
 Verify your device connects to Android Studio over Wi-Fi
 as described in the [Android setup guide][].

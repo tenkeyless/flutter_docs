@@ -1,26 +1,24 @@
 ---
-title: Integrate a Flutter module into your Android project
-short-title: Integrate Flutter
-description: Learn how to integrate a Flutter module into your existing Android project.
+# title: Integrate a Flutter module into your Android project
+title: Android 프로젝트에 Flutter 모듈 통합
+# short-title: Integrate Flutter
+short-title: Flutter 통합
+# description: Learn how to integrate a Flutter module into your existing Android project.
+description: 기존 Android 프로젝트에 Flutter 모듈을 통합하는 방법을 알아보세요.
 ---
 
-Flutter can be embedded into your existing Android
-application piecemeal, as a source code Gradle
-subproject or as AARs.
+Flutter는 기존 Android 애플리케이션에 조각조각으로 임베드할 수 있으며, 
+소스 코드 Gradle subproject 또는 AAR로 임베드할 수 있습니다.
 
-The integration flow can be done using the Android Studio
-IDE with the [Flutter plugin][] or manually.
+통합 흐름은 [Flutter 플러그인][Flutter plugin]을 사용하여 Android Studio IDE를 사용하거나 수동으로 수행할 수 있습니다.
 
 :::warning
-Your existing Android app might support architectures
-such as `mips` or `x86`. Flutter currently [only supports][]
-building ahead-of-time (AOT) compiled libraries
-for `x86_64`, `armeabi-v7a`, and `arm64-v8a`.
+기존 Android 앱은 `mips` 또는 `x86`과 같은 아키텍처를 지원할 수 있습니다. 
+Flutter는 현재 `x86_64`, `armeabi-v7a` 및 `arm64-v8a`에 대한 
+사전 컴파일(ahead-of-time (AOT))된 라이브러리 빌드만 [지원][only supports]합니다.
 
-Consider using the [`abiFilters`][] Android Gradle
-Plugin API to limit the supported architectures in your APK.
-Doing this avoids a missing `libflutter.so` runtime crash,
-for example:
+APK에서 지원되는 아키텍처를 제한하려면, [`abiFilters`][] Android Gradle 플러그인 API를 사용하는 것을 고려하세요. 
+이렇게 하면 `libflutter.so` 런타임 크래시가 누락되는 것을 방지할 수 있습니다. 예를 들어, 다음과 같습니다.
 
 {% tabs "android-build-language" %}
 {% tab "Kotlin" %}
@@ -30,7 +28,7 @@ android {
     //...
     defaultConfig {
         ndk {
-            // Filter for architectures supported by Flutter
+            // Flutter에서 지원하는 아키텍처에 대한 필터
             abiFilters += listOf("armeabi-v7a", "arm64-v8a", "x86_64")
         }
     }
@@ -45,7 +43,7 @@ android {
     // ...
     defaultConfig {
         ndk {
-            // Filter for architectures supported by Flutter
+            // Flutter에서 지원하는 아키텍처에 대한 필터
             abiFilters "armeabi-v7a", "arm64-v8a", "x86_64"
         }
     }
@@ -55,17 +53,16 @@ android {
 {% endtab %}
 {% endtabs %}
 
-The Flutter engine also has an `x86_64` version.
-When using an emulator in debug Just-In-Time (JIT) mode,
-the Flutter module still runs correctly.
+Flutter 엔진에는 `x86_64` 버전도 있습니다. 
+디버그 Just-In-Time(JIT) 모드에서 에뮬레이터를 사용할 때, Flutter 모듈은 여전히 ​​올바르게 실행됩니다.
 :::
 
-## Integrate your Flutter module
+## Flutter 모듈 통합 {:#integrate-your-flutter-module}
 
 {% tabs %}
 {% tab "With Android Studio" %}
 
-### Integrate with Android Studio {:.no_toc}
+### Android Studio로 통합하기 {:#integrate-with-android-studio .no_toc}
 
 The Android Studio IDE can help integrate your Flutter module.
 Using Android Studio, you can edit both your Android and Flutter code
@@ -114,13 +111,13 @@ This shows all files without filtering.
 {% endtab %}
 {% tab "Without Android Studio" %}
 
-### Integrate without Android Studio {:.no_toc}
+### Android Studio 없이 통합하기 {:#integrate-without-android-studio .no_toc}
 
 To integrate a Flutter module with an existing Android app
 manually, without using Flutter's Android Studio plugin,
 follow these steps:
 
-#### Create a Flutter module
+#### Flutter 모듈 생성 {:#create-a-flutter-module}
 
 Let's assume that you have an existing Android app at
 `some/path/MyApp`, and that you want your Flutter
@@ -160,7 +157,7 @@ To avoid Dex merging issues, `flutter.androidPackage` should
 not be identical to your host app's package name.
 :::
 
-#### Java version requirement
+#### Java 버전 요구 사항 {:#java-version-requirement}
 
 Flutter requires your project to declare compatibility with Java 11 or later.
 
@@ -179,7 +176,7 @@ android {
 }
 ```
 
-#### Centralize repository settings
+#### 저장소 설정 중앙화 {:#centralize-repository-settings}
 
 Starting with Gradle 7, Android recommends using centralized repository
 declarations in `settings.gradle` instead of project or module level
@@ -215,7 +212,7 @@ host Android app, make the following changes.
 {% endtab %}
 {% endtabs %}
 
-## Add the Flutter module as a dependency
+## Flutter 모듈을 종속성으로 추가하기 {:#add-the-flutter-module-as-a-dependency}
 
 Add the Flutter module as a dependency of your
 existing app in Gradle. You can achieve this in two ways.
@@ -235,7 +232,7 @@ existing app in Gradle. You can achieve this in two ways.
 {% tabs %}
 {% tab "Android Archive" %}
 
-### Depend on the Android Archive (AAR) {:.no_toc}
+### Android Archive(AAR)에 의존 {:#depend-on-the-android-archive-aar .no_toc}
 
 This option packages your Flutter library as a generic local
 Maven repository composed of AARs and POMs artifacts.
@@ -311,7 +308,7 @@ dependencyResolutionManagement {
 
 <br>
 
-### Kotlin DSL based Android Project
+### Kotlin DSL 기반 Android 프로젝트 {:#kotlin-dsl-based-android-project}
 
 After an `aar` build of a Kotlin DSL-based Android project,
 follow these steps to add the flutter_module.
@@ -378,7 +375,7 @@ the `Build > Flutter > Build AAR` menu.
 {% endtab %}
 {% tab "Module source code" %}
 
-### Depend on the module's source code {:.no_toc}
+### 모듈 소스 코드에 의존 {:#depend-on-the-modules-source-code .no_toc}
 
 This option enables a one-step build for both your
 Android project and Flutter project. This option is

@@ -1,36 +1,34 @@
 ---
-title: Make authenticated requests
-description: How to fetch authorized data from a web service.
+# title: Make authenticated requests
+title: 인증된 요청 만들기
+# description: How to fetch authorized data from a web service.
+description: 웹 서비스에서 인증된 데이터를 가져오는 방법.
 ---
 
 <?code-excerpt path-base="cookbook/networking/authenticated_requests/"?>
 
-To fetch data from most web services, you need to provide
-authorization. There are many ways to do this,
-but perhaps the most common uses the `Authorization` HTTP header.
+대부분 웹 서비스에서 데이터를 가져오려면, 인증(authorization)을 제공해야 합니다. 
+이를 수행하는 방법은 여러 가지가 있지만, 아마도 가장 일반적인 방법은 `Authorization` HTTP 헤더를 사용하는 것입니다.
 
-## Add authorization headers
+## 인증(authorization) 헤더 추가 {:#add-authorization-headers}
 
-The [`http`][] package provides a
-convenient way to add headers to your requests.
-Alternatively, use the [`HttpHeaders`][]
-class from the `dart:io` library.
+[`http`][] 패키지는 요청에 헤더를 추가하는 편리한 방법을 제공합니다. 
+또는, `dart:io` 라이브러리의 [`HttpHeaders`][] 클래스를 사용하세요.
 
 <?code-excerpt "lib/main.dart (get)"?>
 ```dart
 final response = await http.get(
   Uri.parse('https://jsonplaceholder.typicode.com/albums/1'),
-  // Send authorization headers to the backend.
+  // 백엔드로 인증 헤더를 보냅니다.
   headers: {
     HttpHeaders.authorizationHeader: 'Basic your_api_token_here',
   },
 );
 ```
 
-## Complete example
+## 완성된 예제 {:#complete-example}
 
-This example builds upon the
-[Fetching data from the internet][] recipe.
+이 예제는 [인터넷에서 데이터 가져오기][Fetching data from the internet] 레시피를 기반으로 합니다.
 
 <?code-excerpt "lib/main.dart"?>
 ```dart
@@ -43,7 +41,7 @@ import 'package:http/http.dart' as http;
 Future<Album> fetchAlbum() async {
   final response = await http.get(
     Uri.parse('https://jsonplaceholder.typicode.com/albums/1'),
-    // Send authorization headers to the backend.
+    // 백엔드로 인증 헤더를 보냅니다.
     headers: {
       HttpHeaders.authorizationHeader: 'Basic your_api_token_here',
     },

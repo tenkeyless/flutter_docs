@@ -1,6 +1,8 @@
 ---
-title: Navigate to a new screen and back
-description: How to navigate between routes.
+# title: Navigate to a new screen and back
+title: 새 화면으로 이동하고 돌아가기
+# description: How to navigate between routes.
+description: 경로 간 이동 방법.
 js:
   - defer: true
     url: /assets/js/inject_dartpad.js
@@ -8,38 +10,35 @@ js:
 
 <?code-excerpt path-base="cookbook/navigation/navigation_basics"?>
 
-Most apps contain several screens for displaying different types of
-information.
-For example, an app might have a screen that displays products.
-When the user taps the image of a product, a new screen displays
-details about the product.
+대부분의 앱에는 다양한 타입의 정보를 표시하기 위한 여러 화면이 있습니다. 
+예를 들어, 앱에는 제품을 표시하는 화면이 있을 수 있습니다. 
+사용자가 제품 이미지를 탭하면, 새 화면에 제품에 대한 세부 정보가 표시됩니다.
 
-:::note Terminology
-In Flutter, _screens_ and _pages_ are called _routes_.
-The remainder of this recipe refers to routes.
+:::note 용어
+Flutter에서는 _화면(screens)_ 과 _페이지(pages)_ 를 _경로(routes)_ 라고 합니다. 
+이 레시피의 나머지 부분은 경로를 참조합니다.
 :::
 
-In Android, a route is equivalent to an Activity.
-In iOS, a route is equivalent to a ViewController.
-In Flutter, a route is just a widget.
+Android에서, 경로는 Activity와 동일합니다. 
+iOS에서, 경로는 ViewController와 동일합니다. 
+Flutter에서, 경로는 위젯일 뿐입니다.
 
-This recipe uses the [`Navigator`][] to navigate to a new route.
+이 레시피는 [`Navigator`][]를 사용하여 새 경로로 이동합니다.
 
-The next few sections show how to navigate between two routes,
-using these steps:
+다음 몇 섹션에서는 다음 단계를 사용하여, 두 경로 사이를 탐색하는 방법을 보여줍니다.
 
-  1. Create two routes.
-  2. Navigate to the second route using Navigator.push().
-  3. Return to the first route using Navigator.pop().
+1. 두 개의 경로를 만듭니다.
+2. `Navigator.push()`를 사용하여 두 번째 경로로 이동합니다.
+3. `Navigator.pop()`을 사용하여 첫 번째 경로로 돌아갑니다.
 
-## 1. Create two routes
+## 1. 두 개의 경로 만들기 {:#1-create-two-routes}
 
-First, create two routes to work with. Since this is a basic example,
-each route contains only a single button. Tapping the button on the
-first route navigates to the second route. Tapping the button on the
-second route returns to the first route.
+먼저, 작업할 두 개의 경로를 만듭니다. 
+이것은 기본적인 예이므로, 각 경로에는 하나의 버튼만 있습니다. 
+첫 번째 경로의 버튼을 탭하면, 두 번째 경로로 이동합니다. 
+두 번째 경로의 버튼을 탭하면, 첫 번째 경로로 돌아갑니다.
 
-First, set up the visual structure:
+먼저, 시각적 구조를 설정합니다.
 
 <?code-excerpt "lib/main_step1.dart (first-second-routes)"?>
 ```dart
@@ -56,7 +55,7 @@ class FirstRoute extends StatelessWidget {
         child: ElevatedButton(
           child: const Text('Open route'),
           onPressed: () {
-            // Navigate to second route when tapped.
+            // 탭하면 두 번째 경로로 이동합니다.
           },
         ),
       ),
@@ -76,7 +75,7 @@ class SecondRoute extends StatelessWidget {
       body: Center(
         child: ElevatedButton(
           onPressed: () {
-            // Navigate back to first route when tapped.
+            // 탭하면 첫 번째 경로로 돌아갑니다.
           },
           child: const Text('Go back!'),
         ),
@@ -86,21 +85,19 @@ class SecondRoute extends StatelessWidget {
 }
 ```
 
-## 2. Navigate to the second route using Navigator.push()
+## 2. Navigator.push()를 사용하여 두 번째 경로로 이동 {:#2-navigate-to-the-second-route-using-navigator-push}
 
-To switch to a new route, use the [`Navigator.push()`][]
-method. The `push()` method adds a `Route` to the stack of routes managed by
-the `Navigator`. Where does the `Route` come from?
-You can create your own, or use a [`MaterialPageRoute`][],
-which is useful because it transitions to the
-new route using a platform-specific animation.
+새 경로로 전환하려면, [`Navigator.push()`][] 메서드를 사용합니다. 
+`push()` 메서드는 `Navigator`가 관리하는 경로 스택에 `Route`를 추가합니다. 
+`Route`는 어디에서 왔을까요? 
+직접 만들거나, [`MaterialPageRoute`][]를 사용할 수 있습니다. 
+이는 플랫폼별 애니메이션을 사용하여 새 경로로 전환하기 때문에 유용합니다.
 
-In the `build()` method of the `FirstRoute` widget,
-update the `onPressed()` callback:
+`FirstRoute` 위젯의 `build()` 메서드에서, `onPressed()` 콜백을 업데이트합니다.
 
 <?code-excerpt "lib/main_step2.dart (first-route-on-pressed)" replace="/^\},$/}/g"?>
 ```dart
-// Within the `FirstRoute` widget:
+// `FirstRoute` 위젯 내부:
 onPressed: () {
   Navigator.push(
     context,
@@ -109,25 +106,23 @@ onPressed: () {
 }
 ```
 
-## 3. Return to the first route using Navigator.pop()
+## 3. Navigator.pop()를 사용하여 첫 번째 경로로 돌아가기 {:#3-return-to-the-first-route-using-navigator-pop}
 
-How do you close the second route and return to the first?
-By using the [`Navigator.pop()`][] method.
-The `pop()` method removes the current `Route` from the stack of
-routes managed by the `Navigator`.
+두 번째 경로를 닫고 첫 번째 경로로 돌아가려면 어떻게 해야 하나요? 
+[`Navigator.pop()`][] 메서드를 사용하면 됩니다. 
+`pop()` 메서드는 `Navigator`가 관리하는 경로 스택에서 현재 `Route`를 제거합니다.
 
-To implement a return to the original route, update the `onPressed()`
-callback in the `SecondRoute` widget:
+원래 경로로 돌아가는 것을 구현하려면, `SecondRoute` 위젯에서 `onPressed()` 콜백을 업데이트합니다.
 
 <?code-excerpt "lib/main_step2.dart (second-route-on-pressed)" replace="/^\},$/}/g"?>
 ```dart
-// Within the SecondRoute widget
+// SecondRoute 위젯 내부
 onPressed: () {
   Navigator.pop(context);
 }
 ```
 
-## Interactive example
+## 상호 작용 예제 {:#interactive-example}
 
 <?code-excerpt "lib/main.dart"?>
 ```dartpad title="Flutter navigation hands-on example in DartPad" run="true"
@@ -190,31 +185,27 @@ class SecondRoute extends StatelessWidget {
   <img src="/assets/images/docs/cookbook/navigation-basics.gif" alt="Navigation Basics Demo" class="site-mobile-screenshot" />
 </noscript>
 
-## Navigation with CupertinoPageRoute
+## CupertinoPageRoute를 이용한 네비게이션 {:#navigation-with-cupertinopageroute}
 
-In the previous example you learned how to navigate between screens
-using the [`MaterialPageRoute`][] from [Material Components][].
-However, in Flutter you are not limited to Material design language,
-instead, you also have access to [Cupertino][] (iOS-style) widgets.
+이전 예제에서는 [Material Components][]의 [`MaterialPageRoute`][]를 사용하여, 
+화면 간을 탐색하는 방법을 알아보았습니다. 
+그러나, Flutter에서는 Material 디자인 언어로 제한되지 않고, 
+대신, [Cupertino][](iOS 스타일) 위젯에도 액세스할 수 있습니다.
 
-Implementing navigation with Cupertino widgets follows the same steps
-as when using [`MaterialPageRoute`][], 
-but instead you use [`CupertinoPageRoute`][]
-which provides an iOS-style transition animation.
+Cupertino 위젯으로 네비게이션을 구현하는 단계는 [`MaterialPageRoute`][]를 사용할 때와 동일하지만, 
+대신, iOS 스타일 전환 애니메이션을 제공하는 [`CupertinoPageRoute`][]를 사용합니다.
 
-In the following example, these widgets have been replaced:
+다음 예제에서, 이러한 위젯은 대체되었습니다.
 
-- [`MaterialApp`][] replaced by [`CupertinoApp`].
-- [`Scaffold`][] replaced by [`CupertinoPageScaffold`][].
-- [`ElevatedButton`][] replaced by [`CupertinoButton`][].
+- [`MaterialApp`][]이 [`CupertinoApp`][]으로 대체되었습니다.
+- [`Scaffold`][]가 [`CupertinoPageScaffold`][]로 대체되었습니다.
+- [`ElevatedButton`][]이 [`CupertinoButton`][]으로 대체되었습니다.
 
-This way, the example follows the current iOS design language.
+이런 방식으로, 예제는 현재 iOS 디자인 언어를 따릅니다.
 
 :::secondary
-You don't need to replace all Material widgets with Cupertino versions
-to use [`CupertinoPageRoute`][]
-since Flutter allows you to mix and match Material and Cupertino widgets
-depending on your needs.
+Flutter에서는 필요에 따라 Material 및 Cupertino 위젯을 혼합하여 사용할 수 있으므로, 
+[`CupertinoPageRoute`][]를 사용하기 위해 모든 Material 위젯을 Cupertino 버전으로 바꿀 필요는 없습니다.
 :::
 
 <?code-excerpt "lib/main_cupertino.dart"?>

@@ -1,6 +1,8 @@
 ---
-title: Place a floating app bar above a list
-description: How to place a floating app bar above a list.
+# title: Place a floating app bar above a list
+title: 리스트 위에 떠 있는 앱 바 배치
+# description: How to place a floating app bar above a list.
+description: 리스트 위에 떠 있는 앱 바를 배치하는 방법.
 js:
   - defer: true
     url: /assets/js/inject_dartpad.js
@@ -8,93 +10,76 @@ js:
 
 <?code-excerpt path-base="cookbook/lists/floating_app_bar/"?>
 
-To make it easier for users to view a list of items,
-you might want to hide the app bar as the user scrolls down the list.
-This is especially true if your app displays a "tall"
-app bar that occupies a lot of vertical space.
+사용자가 아이템 리스트를 더 쉽게 볼 수 있도록 하기 위해, 사용자가 리스트를 아래로 스크롤할 때 앱 바를 숨기고 싶을 수 있습니다.
+특히 앱에서 많은 수직 공간을 차지하는 "높은" 앱 바를 표시하는 경우에 그렇습니다.
 
-Typically, you create an app bar by providing an `appBar` property to the
-`Scaffold` widget. This creates a fixed app bar that always remains above
-the `body` of the `Scaffold`.
+일반적으로, `Scaffold` 위젯에 `appBar` 속성을 제공하여 앱 바를 만듭니다. 
+이렇게 하면 항상 `Scaffold`의 `body` 위에 있는 고정된 앱 바가 만들어집니다.
 
-Moving the app bar from a `Scaffold` widget into a
-[`CustomScrollView`][] allows you to create an app bar
-that scrolls offscreen as you scroll through a
-list of items contained inside the `CustomScrollView`.
+앱 바를 `Scaffold` 위젯에서 [`CustomScrollView`][]로 이동하면 
+`CustomScrollView`에 포함된 아이템 리스트를 스크롤할 때 화면에서 벗어나는 앱 바를 만들 수 있습니다.
 
-This recipe demonstrates how to use a `CustomScrollView` to display a list of
-items with an app bar on top that scrolls offscreen as the user scrolls
-down the list using the following steps:
+이 레시피는 다음 단계를 사용하여 `CustomScrollView`를 사용하여 사용자가 리스트를 아래로 스크롤할 때
+화면에서 벗어나는 앱 바가 있는 아이템 리스트를 표시하는 방법을 보여줍니다.
 
-  1. Create a `CustomScrollView`.
-  2. Use `SliverAppBar` to add a floating app bar.
-  3. Add a list of items using a `SliverList`.
+1. `CustomScrollView`를 만듭니다.
+2. `SliverAppBar`를 사용하여 떠 있는 앱 바를 추가합니다.
+3. `SliverList`를 사용하여 아이템 리스트를 추가합니다.
 
-## 1. Create a `CustomScrollView`
+## 1. `CustomScrollView` 생성 {:#1-create-a-customscrollview}
 
-To create a floating app bar, place the app bar inside a
-`CustomScrollView` that also contains the list of items.
-This synchronizes the scroll position of the app bar and the list of items.
-You might think of the `CustomScrollView` widget as a `ListView`
-that allows you to mix and match different types of scrollable lists
-and widgets together.
+떠다니는 앱 바를 만들려면, 앱 바를 아이템 리스트가 포함된 `CustomScrollView` 안에 배치합니다. 
+이렇게 하면, 앱 바의 스크롤 위치와 아이템 리스트가 동기화됩니다. 
+`CustomScrollView` 위젯을 다양한 타입의 스크롤 가능한 리스트와 위젯을 함께 혼합하고 매치할 수 있는 
+`ListView`로 생각할 수 있습니다.
 
-The scrollable lists and widgets provided to the
-`CustomScrollView` are known as _slivers_. There are several types
-of slivers, such as `SliverList`, `SliverGrid`, and `SliverAppBar`.
-In fact, the `ListView` and `GridView` widgets use the `SliverList` and
-`SliverGrid` widgets to implement scrolling.
+`CustomScrollView`에 제공된 스크롤 가능한 리스트와 위젯을 _슬리버(slivers)_ 라고 합니다. 
+`SliverList`, `SliverGrid`, `SliverAppBar` 등 여러 타입의 슬리버(slivers)가 있습니다. 
+사실, `ListView`와 `GridView` 위젯은 `SliverList`와 `SliverGrid` 위젯을 사용하여 스크롤을 구현합니다.
 
-For this example, create a `CustomScrollView` that contains a
-`SliverAppBar` and a `SliverList`. In addition, remove any app bars
-that you provide to the `Scaffold` widget.
+이 예에서는, `SliverAppBar`와 `SliverList`를 포함하는 `CustomScrollView`를 만듭니다. 
+또한, `Scaffold` 위젯에 제공한 모든 앱 바를 제거합니다.
 
 <?code-excerpt "lib/starter.dart (CustomScrollView)" replace="/^return //g"?>
 ```dart
 Scaffold(
-  // No appBar property provided, only the body.
+  // appBar 속성이 제공되지 않고, body만 제공됩니다.
   body: CustomScrollView(
-      // Add the app bar and list of items as slivers in the next steps.
+      // 다음 단계에서는 앱 바와 아이템 리스트를 슬리버로 추가합니다. 
       slivers: <Widget>[]),
 );
 ```
 
-### 2. Use `SliverAppBar` to add a floating app bar
+## 2. `SliverAppBar`를 사용하여 떠 있는 앱 바 추가{:#2-use-sliverappbar-to-add-a-floating-app-bar}
 
-Next, add an app bar to the [`CustomScrollView`][].
-Flutter provides the [`SliverAppBar`][] widget which,
-much like the normal `AppBar` widget,
-uses the `SliverAppBar` to display a title,
-tabs, images and more.
+다음으로, [`CustomScrollView`][]에 앱 바를 추가합니다. 
+Flutter는 일반적인 `AppBar` 위젯과 매우 유사한 [`SliverAppBar`][] 위젯을 제공하는데, 
+이 위젯은 `SliverAppBar`를 사용하여 제목, 탭, 이미지 등을 표시합니다.
 
-However, the `SliverAppBar` also gives you the ability to create a "floating"
-app bar that scrolls offscreen as the user scrolls down the list.
-Furthermore, you can configure the `SliverAppBar` to shrink and
-expand as the user scrolls.
+그러나, `SliverAppBar`는 사용자가 리스트를 아래로 스크롤할 때,
+화면에서 스크롤되는 "플로팅" 앱 바를 만들 수 있는 기능도 제공합니다. 
+또한, 사용자가 스크롤할 때 `SliverAppBar`가 축소되거나 확장되도록 구성할 수 있습니다.
 
-To create this effect:
+이 효과를 만들려면:
 
-  1. Start with an app bar that displays only a title.
-  2. Set the `floating` property to `true`.
-     This allows users to quickly reveal the app bar when
-     they scroll up the list.
-  3. Add a `flexibleSpace` widget that fills the available
-     `expandedHeight`.
+   1. 제목만 표시하는 앱 바로 시작합니다.
+   2. `floating` 속성을 `true`로 설정합니다. 
+      이렇게 하면 사용자가 리스트를 위로 스크롤할 때, 앱 바를 빠르게 표시할 수 있습니다.
+   3. 사용 가능한 `expandedHeight`를 채우는 `flexibleSpace` 위젯을 추가합니다.
 
 <?code-excerpt "lib/step2.dart (SliverAppBar)" replace="/^body: //g;/^\),$/)/g"?>
 ```dart
 CustomScrollView(
   slivers: [
-    // Add the app bar to the CustomScrollView.
+    // CustomScrollView에 앱 바를 추가합니다.
     const SliverAppBar(
-      // Provide a standard title.
+      // 표준 제목을 제공합니다.
       title: Text(title),
-      // Allows the user to reveal the app bar if they begin scrolling
-      // back up the list of items.
+      // 사용자가 아이템 리스트를 뒤로(위쪽으로) 스크롤하기 시작하면, 앱 바를 표시할 수 있도록 허용합니다.
       floating: true,
-      // Display a placeholder widget to visualize the shrinking size.
+      // 줄어드는 크기를 시각화하기 위해 플레이스홀더 위젯을 표시합니다.
       flexibleSpace: Placeholder(),
-      // Make the initial height of the SliverAppBar larger than normal.
+      // SliverAppBar의 초기 높이를 일반보다 크게 만듭니다.
       expandedHeight: 200,
     ),
   ],
@@ -102,45 +87,38 @@ CustomScrollView(
 ```
 
 :::tip
-Play around with the
-[various properties you can pass to the `SliverAppBar` widget][],
-and use hot reload to see the results. For example, use an `Image`
-widget for the `flexibleSpace` property to create a background image that
-shrinks in size as it's scrolled offscreen.
+[`SliverAppBar` 위젯에 전달할 수 있는 다양한 속성][various properties you can pass to the `SliverAppBar` widget]을 가지고 놀고, 핫 리로드를 사용하여 결과를 확인하세요. 
+예를 들어, `flexibleSpace` 속성에 `Image` 위젯을 사용하여, 화면에서 스크롤할 때 크기가 줄어드는 배경 이미지를 만듭니다.
 :::
 
 
-### 3. Add a list of items using a `SliverList`
+## 3. `SliverList`를 사용하여 아이템 리스트 추가{:#3-add-a-list-of-items-using-a-sliverlist}
 
-Now that you have the app bar in place, add a list of items to the
-`CustomScrollView`. You have two options: a [`SliverList`][]
-or a [`SliverGrid`][].  If you need to display a list of items one after the other,
-use the `SliverList` widget.
-If you need to display a grid list, use the `SliverGrid` widget.
+이제 앱 바를 배치했으니, `CustomScrollView`에 아이템 리스트를 추가합니다. 
+두 가지 옵션이 있습니다. [`SliverList`][] 또는 [`SliverGrid`][]. 
+아이템 리스트를 차례로 표시해야 하는 경우, `SliverList` 위젯을 사용합니다. 
+그리드 리스트를 표시해야 하는 경우, `SliverGrid` 위젯을 사용합니다.
 
-The `SliverList` and `SliverGrid` widgets take one required parameter: a
-[`SliverChildDelegate`][], which provides a list
-of widgets to `SliverList` or `SliverGrid`.
-For example, the [`SliverChildBuilderDelegate`][]
-allows you to create a list of items that are built lazily as you scroll,
-just like the `ListView.builder` widget.
+`SliverList` 및 `SliverGrid` 위젯은 필수 매개변수인 [`SliverChildDelegate`][]를 사용합니다. 
+이 매개변수는 `SliverList` 또는 `SliverGrid`에 위젯 리스트를 제공합니다. 
+예를 들어, [`SliverChildBuilderDelegate`][]를 사용하면, 
+`ListView.builder` 위젯처럼, 스크롤할 때 지연해서(lazily) 작성되는 아이템 리스트를 만들 수 있습니다.
 
 <?code-excerpt "lib/main.dart (SliverList)" replace="/^\),$/)/g"?>
 ```dart
-// Next, create a SliverList
+// 다음으로, SliverList를 만듭니다.
 SliverList(
-  // Use a delegate to build items as they're scrolled on screen.
+  // 화면에서 스크롤될 때 아이템을 빌드하려면 대리자(delegate)를 사용합니다.
   delegate: SliverChildBuilderDelegate(
-    // The builder function returns a ListTile with a title that
-    // displays the index of the current item.
+    // 빌더 함수는 현재 아이템의 인덱스를 표시하는, 제목이 있는 ListTile을 반환합니다.
     (context, index) => ListTile(title: Text('Item #$index')),
-    // Builds 1000 ListTiles
+    // 1000개의 ListTiles를 빌드합니다.
     childCount: 1000,
   ),
 )
 ```
 
-## Interactive example
+## 상호 작용 예제 {:#interactive-example}
 
 <?code-excerpt "lib/main.dart"?>
 ```dartpad title="Flutter Floating AppBar hands-on example in DartPad" run="true"
@@ -158,30 +136,27 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: title,
       home: Scaffold(
-        // No appbar provided to the Scaffold, only a body with a
-        // CustomScrollView.
+        // Scaffold에 앱 바가 제공되지 않고, CustomScrollView가 있는 body만 제공됩니다.
         body: CustomScrollView(
           slivers: [
-            // Add the app bar to the CustomScrollView.
+            // CustomScrollView에 앱 바를 추가합니다.
             const SliverAppBar(
-              // Provide a standard title.
+              // 표준 제목을 제공합니다.
               title: Text(title),
-              // Allows the user to reveal the app bar if they begin scrolling
-              // back up the list of items.
+              // 사용자가 아이템 리스트를 뒤로(위쪽으로) 스크롤하기 시작하면, 앱 바를 표시할 수 있도록 허용합니다.
               floating: true,
-              // Display a placeholder widget to visualize the shrinking size.
+              // 줄어드는 크기를 시각화하기 위해 플레이스홀더 위젯을 표시합니다.
               flexibleSpace: Placeholder(),
-              // Make the initial height of the SliverAppBar larger than normal.
+              // SliverAppBar의 초기 높이를 일반보다 크게 만듭니다.
               expandedHeight: 200,
             ),
-            // Next, create a SliverList
+            // 다음으로, SliverList를 만듭니다.
             SliverList(
-              // Use a delegate to build items as they're scrolled on screen.
+              // 화면에서 스크롤될 때 아이템을 빌드하려면 대리자(delegate)를 사용합니다.
               delegate: SliverChildBuilderDelegate(
-                // The builder function returns a ListTile with a title that
-                // displays the index of the current item.
+                // 빌더 함수는 현재 아이템의 인덱스를 표시하는, 제목이 있는 ListTile을 반환합니다.
                 (context, index) => ListTile(title: Text('Item #$index')),
-                // Builds 1000 ListTiles
+                // 1000개의 ListTiles를 빌드합니다.
                 childCount: 1000,
               ),
             ),

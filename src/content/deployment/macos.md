@@ -1,228 +1,184 @@
 ---
-title: Build and release a macOS app
-description: How to release a Flutter app to the macOS App Store.
+# title: Build and release a macOS app
+title: macOS 앱 빌드 및 릴리스
+# description: How to release a Flutter app to the macOS App Store.
+description: macOS 앱 스토어에 Flutter 앱을 출시하는 방법.
 short-title: macOS
 ---
 
-This guide provides a step-by-step walkthrough of releasing a
-Flutter app to the [App Store][appstore].
+이 가이드에서는 Flutter 앱을 [App Store][appstore]에 출시하는 단계별 과정을 설명합니다.
 
-## Preliminaries
+## 예비 사항 {:#preliminaries}
 
-Before beginning the process of releasing your app,
-ensure that it meets
-Apple's [App Review Guidelines][appreview].
+앱 출시 프로세스를 시작하기 전에, 해당 앱이 Apple의 [앱 리뷰 가이드라인][appreview]을 충족하는지 확인하세요.
 
-In order to publish your app to the App Store,
-you must first enroll in the
-[Apple Developer Program][devprogram].
-You can read more about the various
-membership options in Apple's
-[Choosing a Membership][devprogram_membership] guide.
+앱을 App Store에 게시하려면, 먼저 [Apple Developer Program][devprogram]에 등록해야 합니다. 
+Apple의 [멤버십 선택][devprogram_membership] 가이드에서 다양한 멤버십 옵션에 대해 자세히 알아볼 수 있습니다.
 
-## Register your app on App Store Connect
+## App Store Connect에 앱 등록 {:#register-your-app-on-app-store-connect}
 
-Manage your app's life cycle on
-[App Store Connect][appstoreconnect_login] (formerly iTunes Connect).
-You define your app name and description, add screenshots,
-set pricing, and manage releases to the App Store and TestFlight.
+[App Store Connect][appstoreconnect_login](이전 iTunes Connect)에서 앱의 수명 주기를 관리하세요. 
+앱 이름과 설명을 정의하고, 스크린샷을 추가하고, 가격을 설정하고, App Store와 TestFlight에 대한 릴리스를 관리하세요.
 
-Registering your app involves two steps: registering a unique
-Bundle ID, and creating an application record on App Store Connect.
+앱을 등록하려면 두 단계가 필요합니다. 
+(1) unique 번들 ID를 등록하고, (2) App Store Connect에서 애플리케이션 레코드를 만드는 것입니다.
 
-For a detailed overview of App Store Connect, see the
-[App Store Connect][appstoreconnect_guide] guide.
+App Store Connect에 대한 자세한 개요는 [App Store Connect][appstoreconnect_guide] 가이드를 참조하세요.
 
-### Register a Bundle ID
+### (1) 번들 ID 등록 {:#register-a-bundle-id}
 
-Every macOS application is associated with a Bundle ID,
-a unique identifier registered with Apple.
-To register a Bundle ID for your app, follow these steps:
+모든 macOS 애플리케이션은 Apple에 등록된 unique 식별자인 번들 ID와 연관됩니다. 
+앱의 번들 ID를 등록하려면, 다음 단계를 따르세요.
 
-1. Open the [App IDs][devportal_appids] page of your developer account.
-1. Click **+** to create a new Bundle ID.
-1. Enter an app name, select **Explicit App ID**, and enter an ID.
-1. Select the services your app uses, then click **Continue**.
-1. On the next page, confirm the details and click **Register**
-   to register your Bundle ID.
+1. 개발자 계정의 [앱 ID][devportal_appids] 페이지를 엽니다.
+2. **+**를 클릭하여 새 번들 ID를 만듭니다.
+3. 앱 이름을 입력하고, **Explicit App ID**를 선택한 다음 ID를 입력합니다.
+4. 앱에서 사용하는 서비스를 선택한 다음, **Continue**을 클릭합니다.
+5. 다음 페이지에서, 세부 정보를 확인하고 **Register**을 클릭하여 번들 ID를 등록합니다.
 
-### Create an application record on App Store Connect
+### (2) App Store Connect에서 애플리케이션 레코드 만들기 {:#create-an-application-record-on-app-store-connect}
 
-Register your app on App Store Connect:
+App Store Connect에 앱을 등록하세요.
 
-1. Open [App Store Connect][appstoreconnect_login] in your browser.
-1. On the App Store Connect landing page, click **My Apps**.
-1. Click **+** in the top-left corner of the My Apps page,
-   then select **New App**.
-1. Fill in your app details in the form that appears.
-   In the Platforms section, ensure that macOS is checked.
-   Since Flutter does not currently support tvOS,
-   leave that checkbox unchecked. Click **Create**.
-1. Navigate to the application details for your app and select
-   **App Information** from the sidebar.
-1. In the General Information section, select the Bundle ID
-   you registered in the preceding step.
+1. 브라우저에서 [App Store Connect][appstoreconnect_login]을 엽니다.
+1. App Store Connect 랜딩 페이지에서 **My Apps**을 클릭합니다.
+1. My Apps 페이지의 왼쪽 상단 모서리에 있는 **+**를 클릭한 다음, **New App**을 선택합니다.
+1. 나타나는 양식에 앱 세부 정보를 입력합니다. 
+   플랫폼 섹션에서, macOS가 선택되어 있는지 확인합니다. 
+   Flutter는 현재 tvOS를 지원하지 않으므로, 해당 확인란을 선택하지 않습니다. **Create**를 클릭합니다.
+2. 앱의 애플리케이션 세부 정보로 이동하여, 사이드바에서 **App Information**를 선택합니다.
+3. General Information 섹션에서 이전 단계에서 등록한 번들 ID를 선택합니다.
 
-For a detailed overview,
-see [Add an app to your account][appstoreconnect_guide_register].
+자세한 개요는 [계정에 앱 추가][appstoreconnect_guide_register]를 참조하세요.
 
-## Review Xcode project settings
+## Xcode 프로젝트 설정 검토 {:#review-xcode-project-settings}
 
-This step covers reviewing the most important settings
-in the Xcode workspace.
-For detailed procedures and descriptions, see
-[Prepare for app distribution][distributionguide_config].
+이 단계에서는 Xcode workspace에서 가장 중요한 설정을 검토하는 것을 다룹니다. 
+자세한 절차와 설명은 [앱 배포 준비][distributionguide_config]를 참조하세요.
 
-Navigate to your target's settings in Xcode:
+Xcode에서 target의 설정으로 이동합니다.
 
-1. In Xcode, open `Runner.xcworkspace` in your app's `macos` folder.
-1. To view your app's settings, select the **Runner** project in the Xcode
-   project navigator. Then, in the main view sidebar, select the **Runner**
-   target.
-1. Select the **General** tab.
+1. Xcode에서 앱의 `macos` 폴더에서 `Runner.xcworkspace`를 엽니다.
+2. 앱 설정을 보려면 Xcode 프로젝트 탐색기에서 **Runner** 프로젝트를 선택합니다. 그런 다음 메인 뷰 사이드바에서 **Runner** 대상을 선택합니다.
+3. **General** 탭을 선택합니다.
 
-Verify the most important settings.
+가장 중요한 설정을 확인합니다.
 
-In the **Identity** section:
+**Identity** 섹션에서:
 
 `App Category`
-: The app category under which your app will be listed on the Mac App Store. This cannot be none.
+: 앱이 Mac App Store에 등록될 앱 카테고리입니다. none일 수 없습니다.
 
 `Bundle Identifier` 
-: The App ID you registered on App Store Connect.
+: App Store Connect에 등록한 앱 ID입니다.
 
-In the **Deployment info** section:
+**Deployment info** 섹션에서:
 
 `Deployment Target`
-: The minimum macOS version that your app supports.
-  Flutter supports deploying apps to macOS {{site.targetmin.macos}} and later.
+: 앱이 지원하는 최소 macOS 버전입니다. 
+  Flutter는 macOS {{site.targetmin.macos}} 이상에 앱 배포를 지원합니다.
 
-In the **Signing & Capabilities** section:
+**Signing & Capabilities** 섹션에서:
 
 `Automatically manage signing`
-: Whether Xcode should automatically manage app signing
-  and provisioning.  This is set `true` by default, which should
-  be sufficient for most apps. For more complex scenarios,
-  see the [Code Signing Guide][codesigning_guide].
+: Xcode가 앱 서명 및 프로비저닝(signing and provisioning)을 자동으로 관리해야 하는지 여부. 
+  이는 기본적으로 `true`로 설정되어 있으며, 대부분 앱에 충분해야 합니다. 
+  더 복잡한 시나리오의 경우, [코드 서명 가이드][codesigning_guide]를 참조하세요.
 
 `Team`
-: Select the team associated with your registered Apple Developer
-  account. If required, select **Add Account...**,
-  then update this setting.
+: 등록된 Apple Developer 계정과 관련된 팀을 선택하세요. 
+  필요한 경우 **Add Account...**를 선택한 다음 이 설정을 업데이트하세요.
 
-The **General** tab of your project settings should resemble
-the following:
+프로젝트 설정의 **General** 탭은 다음과 유사해야 합니다.
 
 ![Xcode Project Settings](/assets/images/docs/releaseguide/macos_xcode_settings.png){:width="100%"}
 
-For a detailed overview of app signing, see
-[Create, export, and delete signing certificates][appsigning].
+앱 서명에 대한 자세한 개요는 [서명 인증서(signing certificates) 만들기, 내보내기 및 삭제][appsigning]를 참조하세요.
 
-## Configuring the app's name, bundle identifier and copyright
+## 앱 이름, 번들 식별자 및 저작권 구성 {:#configuring-the-apps-name-bundle-identifier-and-copyright}
 
-The configuration for the product identifiers are centralized 
-in `macos/Runner/Configs/AppInfo.xcconfig`. For the app's name,
-set `PRODUCT_NAME`, for the copyright set `PRODUCT_COPYRIGHT`,
-and finally set `PRODUCT_BUNDLE_IDENTIFIER` for the app's
-bundle identifier.
+제품 식별자에 대한 구성은 `macos/Runner/Configs/AppInfo.xcconfig`에 중앙 집중화되어 있습니다. 
+앱의 이름에 대해 `PRODUCT_NAME`을 설정하고, 
+저작권에 대해 `PRODUCT_COPYRIGHT`를 설정하고, 
+마지막으로 앱의 번들 식별자에 대해 `PRODUCT_BUNDLE_IDENTIFIER`를 설정합니다.
 
-## Updating the app's version number
+## 앱 버전 번호 업데이트 {:#updating-the-apps-version-number}
 
-The default version number of the app is `1.0.0`.
-To update it, navigate to the `pubspec.yaml` file
-and update the following line:
+앱의 기본 버전 번호는 `1.0.0`입니다. 이를 업데이트하려면, `pubspec.yaml` 파일로 이동하여 다음 줄을 업데이트하세요.
 
 `version: 1.0.0+1`
 
-The version number is three numbers separated by dots,
-such as `1.0.0` in the example above, followed by an optional
-build number such as `1` in the example above, separated by a `+`.
+버전 번호는 위의 예에서 `1.0.0`과 같이 점으로 구분된 세 개의 숫자이며, 
+그 뒤에 `1`과 같이 위의 예에서와 같이 선택적 빌드 번호가 `+`로 구분되어 있습니다.
 
-Both the version and the build number can be overridden in Flutter's
-build by specifying `--build-name` and `--build-number`,
-respectively.
+버전과 빌드 번호는 모두 `--build-name`과 `--build-number`를 각각 지정하여, 
+Flutter 빌드에서 재정의할 수 있습니다.
 
-In macOS, `build-name` uses `CFBundleShortVersionString`
-while `build-number` uses `CFBundleVersion`.
-Read more about iOS versioning at [Core Foundation Keys][]
-on the Apple Developer's site.
+macOS에서 `build-name`은 `CFBundleShortVersionString`을 사용하는 반면, 
+`build-number`는 `CFBundleVersion`을 사용합니다. 
+Apple Developer 사이트의 [Core Foundation Keys][]에서 iOS 버전 관리에 대해 자세히 알아보세요.
 
-## Add an app icon
+## 앱 아이콘 추가 {:#add-an-app-icon}
 
-When a new Flutter app is created, a placeholder icon set is created.
-This step covers replacing these placeholder icons with your
-app's icons:
+새로운 Flutter 앱이 생성되면, 플레이스홀더 아이콘 세트가 생성됩니다. 
+이 단계에서는 이러한 플레이스홀더 아이콘을 앱 아이콘으로 바꾸는 것을 다룹니다.
 
-1. Review the [macOS App Icon][appicon] guidelines.
-1. In the Xcode project navigator, select `Assets.xcassets` in the
-   `Runner` folder. Update the placeholder icons with your own app icons.
-1. Verify the icon has been replaced by running your app using
-   `flutter run -d macos`.
+1. [macOS 앱 아이콘][appicon] 가이드라인을 검토합니다.
+2. Xcode 프로젝트 탐색기에서 `Runner` 폴더에서 `Assets.xcassets`를 선택합니다. 
+   플레이스홀더 아이콘을 사용자 앱 아이콘으로 업데이트합니다.
+3. `flutter run -d macos`를 사용하여 앱을 실행하여 아이콘이 바뀌었는지 확인합니다.
 
-## Create a build archive with Xcode
+## Xcode로 빌드 아카이브 만들기 {:#create-a-build-archive-with-xcode}
 
-This step covers creating a build archive and uploading
-your build to App Store Connect using Xcode.
+이 단계에서는 빌드 아카이브를 만들고, Xcode를 사용하여 App Store Connect에 빌드를 업로드하는 방법을 다룹니다.
 
-During development, you've been building, debugging, and testing
-with _debug_ builds. When you're ready to ship your app to users
-on the App Store or TestFlight, you need to prepare a _release_ build.
-At this point, you might consider [obfuscating your Dart code][]
-to make it more difficult to reverse engineer. Obfuscating
-your code involves adding a couple flags to your build command.
+개발하는 동안 _debug_ 빌드로 빌드, 디버깅 및 테스트를 수행했습니다. 
+App Store 또는 TestFlight에서 사용자에게 앱을 제공할 준비가 되면 _release_ 빌드를 준비해야 합니다. 
+이 시점에서 리버스 엔지니어링을 어렵게 만들기 위해, [Dart 코드 난독화][obfuscating your Dart code]를 고려할 수 있습니다. 
+코드 난독화에는 빌드 명령에 몇 가지 플래그를 추가하는 것이 포함됩니다.
 
-In Xcode, configure the app version and build:
+Xcode에서, 앱 버전을 구성하고 빌드합니다.
 
-1. Open `Runner.xcworkspace` in your app's `macos` folder. To do this from
-   the command line, run the following command from the base directory of your
-   application project.
+1. 앱의 `macos` 폴더에서 `Runner.xcworkspace`를 엽니다. 
+   명령줄에서 이 작업을 수행하려면, 애플리케이션 프로젝트의 베이스 디렉토리에서 다음 명령을 실행합니다.
    ```console
    open macos/Runner.xcworkspace
    ```
-1. Select **Runner** in the Xcode project navigator, then select the
-   **Runner** target in the settings view sidebar.
-1. In the Identity section, update the **Version** to the user-facing
-   version number you wish to publish.
-1. In the Identity section, update the **Build** identifier to a unique
-   build number used to track this build on App Store Connect.
-   Each upload requires a unique build number.
+2. Xcode 프로젝트 탐색기에서 **Runner**를 선택한 다음, 설정 보기 사이드바에서 **Runner** 대상을 선택합니다.
+3. Identity 섹션에서, **Version**을 게시하려는 사용자 대상(user-facing) 버전 번호로 업데이트합니다.
+4. Identity 섹션에서, **Build** 식별자를 App Store Connect에서 이 빌드를 추적하는 데 사용되는 고유한 빌드 번호로 업데이트합니다. 
+   각 업로드에는 고유한 빌드 번호가 필요합니다.
 
-Finally, create a build archive and upload it to App Store Connect:
+마지막으로, 빌드 아카이브를 만들어 App Store Connect에 업로드합니다.
 
-1. Create a release Archive of your application. From the base directory of
-   your application project, run the following.
+1. 애플리케이션의 릴리스 아카이브를 만듭니다. 애플리케이션 프로젝트의 베이스 디렉토리에서 다음을 실행합니다.
    ```console
    flutter build macos
    ```
-1. Open Xcode and select **Product > Archive** to open the archive created
-   in the previous step.
-1. Click the **Validate App** button. If any issues are reported,
-   address them and produce another build. You can reuse the same
-   build ID until you upload an archive.
-1. After the archive has been successfully validated, click
-   **Distribute App**. You can follow the status of your build in the
-   Activities tab of your app's details page on
-   [App Store Connect][appstoreconnect_login].
+2. Xcode를 열고 **Product > Archive**을 선택하여 이전 단계에서 만든 아카이브를 엽니다.
+3. **Validate App** 버튼을 클릭합니다. 
+   문제가 보고되면 해결하고 다른 빌드를 생성합니다. 
+   보관함을 업로드할 때까지 동일한 빌드 ID를 재사용할 수 있습니다.
+4. 보관함이 성공적으로 검증되면 **Distribute App**를 클릭합니다. 
+   [App Store Connect][appstoreconnect_login]에서, 
+   앱의 세부 정보 페이지의 활동 탭에서 빌드 상태를 확인할 수 있습니다.
 
-You should receive an email within 30 minutes notifying you that
-your build has been validated and is available to release to testers
-on TestFlight. At this point you can choose whether to release
-on TestFlight, or go ahead and release your app to the App Store.
+빌드가 검증되었으며 TestFlight에서 테스터에게 릴리스할 수 있다는 알림 이메일을 30분 이내에 받게 됩니다. 
+이 시점에서 TestFlight에서 릴리스할지 또는 App Store에 앱을 릴리스할지 선택할 수 있습니다.
 
-For more details, see
-[Upload an app to App Store Connect][distributionguide_upload].
+자세한 내용은 [App Store Connect에 앱 업로드][distributionguide_upload]를 참조하세요.
 
-## Create a build archive with Codemagic CLI tools
+## Codemagic CLI 도구로 빌드 아카이브 만들기 {:#create-a-build-archive-with-codemagic-cli-tools}
 
-This step covers creating a build archive and uploading
-your build to App Store Connect using Flutter build commands 
-and [Codemagic CLI Tools][codemagic_cli_tools] executed in a terminal
-in the Flutter project directory.
+이 단계에서는 빌드 아카이브를 만들고, 
+Flutter 빌드 명령과 [Codemagic CLI 도구][codemagic_cli_tools]를 사용하여, 
+빌드를 App Store Connect에 업로드하는 것을 다룹니다. 
+Flutter 프로젝트 디렉토리의 터미널에서 실행됩니다.
 
 <ol>
 <li>
 
-Install the Codemagic CLI tools:
+Codemagic CLI 도구를 설치하세요:
 
 ```bash
 pip3 install codemagic-cli-tools
@@ -231,10 +187,9 @@ pip3 install codemagic-cli-tools
 </li>
 <li>
 
-You'll need to generate an [App Store Connect API Key][appstoreconnect_api_key]
-with App Manager access to automate operations with App Store Connect. To make
-subsequent commands more concise, set the following environment variables from
-the new key: issuer id, key id, and API key file.
+App Store Connect에서 작업을 자동화하려면, 
+App Manager 액세스 권한이 있는 [App Store Connect API 키][appstoreconnect_api_key]를 생성해야 합니다. 
+후속 명령을 더 간결하게 만들려면, 새 키에서 다음 환경 변수를 설정하세요. issuer id, key id, 및 API 키 파일.
 
 ```bash
 export APP_STORE_CONNECT_ISSUER_ID=aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
@@ -245,30 +200,29 @@ export APP_STORE_CONNECT_PRIVATE_KEY=`cat /path/to/api/key/AuthKey_XXXYYYZZZ.p8`
 </li>
 <li>
 
-You need to export or create a Mac App Distribution and a Mac Installer
-Distribution certificate to perform code signing and package a build archive.
+코드 서명을 수행하고 빌드 아카이브를 패키징하려면, Mac App Distribution 및 Mac Installer Distribution 인증서를 내보내거나 만들어야 합니다.
 
-If you have existing [certificates][devportal_certificates], you can export the
-private keys by executing the following command for each certificate:
+기존 [certificates][devportal_certificates]가 있는 경우, 
+각 인증서에 대해 다음 명령을 실행하여 private 키를 내보낼 수 있습니다.
 
 ```bash
 openssl pkcs12 -in <certificate_name>.p12 -nodes -nocerts | openssl rsa -out cert_key
 ```
 
-Or you can create a new private key by executing the following command:
+또는 다음 명령을 실행하여 새로운 private 키를 생성할 수 있습니다.
 
 ```bash
 ssh-keygen -t rsa -b 2048 -m PEM -f cert_key -q -N ""
 ```
 
-Later, you can have CLI tools automatically create a new Mac App Distribution and
-Mac Installer Distribution certificate. You can use the same private key for
-each new certificate.
+나중에, CLI 도구가 자동으로 새 Mac 앱 배포 및
+Mac 설치 프로그램 배포 인증서를 만들 수 있습니다. 
+각 새 인증서에 대해 동일한 private 키를 사용할 수 있습니다.
 
 </li>
 <li>
 
-Fetch the code signing files from App Store Connect:
+App Store Connect에서 코드 서명 파일을 가져옵니다.
 
 ```bash
 app-store-connect fetch-signing-files YOUR.APP.BUNDLE_ID \
@@ -278,14 +232,14 @@ app-store-connect fetch-signing-files YOUR.APP.BUNDLE_ID \
     --create
 ```
 
-Where `cert_key` is either your exported Mac App Distribution certificate private key
-or a new private key which automatically generates a new certificate. 
+여기서 `cert_key`는 내보낸 Mac App Distribution 인증서 private 키이거나, 
+자동으로 새 인증서를 생성하는 새 private 키입니다.
 
 </li>
 <li>
 
-If you do not have a Mac Installer Distribution certificate,
-you can create a new certificate by executing the following:
+Mac Installer Distribution 인증서가 없는 경우, 
+다음을 실행하여 새 인증서를 만들 수 있습니다.
 
 ```bash
 app-store-connect certificates create \
@@ -294,12 +248,12 @@ app-store-connect certificates create \
     --save
 ```
 
-Use `cert_key` of the private key you created earlier.
+이전에 생성한 private 키의 `cert_key`를 사용하세요.
 
 </li>
 <li>
 
-Fetch the Mac Installer Distribution certificates:
+Mac Installer Distribution 인증서를 가져옵니다.
 
 ```bash
 app-store-connect certificates list \
@@ -311,25 +265,24 @@ app-store-connect certificates list \
 </li>
 <li>
 
-Set up a new temporary keychain to be used for code signing:
+코드 서명에 사용할 새 임시 키체인을 설정하세요.
 
 ```bash
 keychain initialize
 ```
 
-:::note Restore Login Keychain!
-After running `keychain initialize` you **must** run the following:<br>
+:::note 로그인 키체인 복원!
+`keychain initialise`를 실행한 후 **반드시** 다음을 실행해야 합니다:<br>
 
 `keychain use-login`
 
-This sets your login keychain as the default to avoid potential
-authentication issues with apps on your machine.
+이렇게 하면 로그인 키체인이 기본값으로 설정되어, 컴퓨터의 앱에서 잠재적인 인증 문제가 발생하지 않습니다.
 :::
 
 </li>
 <li>
 
-Now add the fetched certificates to your keychain:
+이제 가져온 인증서를 키체인에 추가하세요.
 
 ```bash
 keychain add-certificates
@@ -338,7 +291,7 @@ keychain add-certificates
 </li>
 <li>
 
-Update the Xcode project settings to use fetched code signing profiles: 
+가져온 코드 서명 프로필을 사용하도록 Xcode 프로젝트 설정을 업데이트합니다.
 
 ```bash
 xcode-project use-profiles
@@ -348,7 +301,7 @@ xcode-project use-profiles
 
 <li>
 
-Install Flutter dependencies:
+Flutter 종속성 설치:
 
 ```bash
 flutter packages pub get
@@ -357,7 +310,7 @@ flutter packages pub get
 </li>
 <li>
 
-Install CocoaPods dependencies:
+CocoaPods 종속성 설치:
 
 ```bash
 find . -name "Podfile" -execdir pod install \;
@@ -366,7 +319,7 @@ find . -name "Podfile" -execdir pod install \;
 </li>
 <li>
 
-Build the Flutter macOS project:
+Flutter macOS 프로젝트를 빌드하세요.
 
 ```bash
 flutter build macos --release
@@ -375,7 +328,7 @@ flutter build macos --release
 </li>
 <li>
 
-Package the app:
+앱을 패키징합니다:
 
 ```bash
 APP_NAME=$(find $(pwd) -name "*.app")
@@ -395,7 +348,7 @@ rm -f unsigned.pkg
 </li>
 <li>
 
-Publish the packaged app to App Store Connect:
+패키지된 앱을 App Store Connect에 게시:
 
 ```bash
 app-store-connect publish \
@@ -405,9 +358,8 @@ app-store-connect publish \
 </li>
 <li>
 
-As mentioned earlier, don't forget to set your login keychain
-as the default to avoid authentication issues
-with apps on your machine:
+앞서 언급했듯이, 로그인 키체인을 기본값으로 설정하는 것을 잊지 마세요.
+이렇게 하면 기기의 앱과 관련된 인증 문제를 피할 수 있습니다.
 
 ```bash
 keychain use-login
@@ -416,59 +368,45 @@ keychain use-login
 </li>
 </ol>
 
-## Release your app on TestFlight
+## TestFlight에서 앱 출시 {:#release-your-app-on-testflight}
 
-[TestFlight][] allows developers to push their apps
-to internal and external testers. This optional step
-covers releasing your build on TestFlight.
+[TestFlight][]를 사용하면 개발자가 앱을 내부 및 외부 테스터에게 푸시할 수 있습니다. 
+이 선택 단계는 TestFlight에서 빌드를 릴리스하는 것을 다룹니다.
 
-1. Navigate to the TestFlight tab of your app's application
-   details page on [App Store Connect][appstoreconnect_login].
-1. Select **Internal Testing** in the sidebar.
-1. Select the build to publish to testers, then click **Save**.
-1. Add the email addresses of any internal testers.
-   You can add additional internal users in the **Users and Roles**
-   page of App Store Connect,
-   available from the dropdown menu at the top of the page.
+1. [App Store Connect][appstoreconnect_login]에서 
+   앱의 애플리케이션 세부 정보 페이지의 TestFlight 탭으로 이동합니다.
+2. 사이드바에서 **Internal Testing**를 선택합니다.
+3. 테스터에게 게시할 빌드를 선택한 다음 **Save**을 클릭합니다.
+4. 모든 내부 테스터의 이메일 주소를 추가합니다. 
+   페이지 상단의 드롭다운 메뉴에서 사용할 수 있는 
+   App Store Connect의 **Users and Roles** 페이지에서 추가 내부 사용자를 추가할 수 있습니다.
 
-## Distribute to registered devices
+## 등록된 기기에 배포 {:#distribute-to-registered-devices}
 
-See [distribution guide][distributionguide_macos] 
-to prepare an archive for distribution to designated Mac computers.
+지정된 Mac 컴퓨터에 배포할 보관 파일을 준비하려면 [배포 가이드][distributionguide_macos]를 참조하세요.
 
-## Release your app to the App Store
+## App Store에 앱 출시 {:#release-your-app-to-the-app-store}
 
-When you're ready to release your app to the world,
-follow these steps to submit your app for review and
-release to the App Store:
+앱을 전 세계에 출시할 준비가 되면, 다음 단계에 따라 앱을 검토하고 App Store에 출시하기 위해 제출하세요.
 
-1. Select **Pricing and Availability** from the sidebar of your app's
-   application details page on
-   [App Store Connect][appstoreconnect_login] and complete the
-   required information.
-1. Select the status from the sidebar. If this is the first
-   release of this app, its status is
-   **1.0 Prepare for Submission**. Complete all required fields.
-1. Click **Submit for Review**.
+1. [App Store Connect][appstoreconnect_login]에서 앱의 애플리케이션 세부 정보 페이지의 사이드바에서, 
+   **Pricing and Availability**을 선택하고 필요한 정보를 입력하세요.
+2. 사이드바에서 상태를 선택하세요. 
+   이 앱의 첫 번째 릴리스인 경우 상태는 **1.0 Prepare for Submission**입니다. 모든 필수 필드를 입력하세요.
+3. **Submit for Review**을 클릭하세요.
 
-Apple notifies you when their app review process is complete.
-Your app is released according to the instructions you
-specified in the **Version Release** section.
+Apple에서 앱 검토 프로세스가 완료되면 알려드립니다. **Version Release** 섹션에서 지정한 지침에 따라 앱이 출시됩니다.
 
-For more details, see
-[Distribute an app through the App Store][distributionguide_submit].
+자세한 내용은 [App Store를 통해 앱 배포][distributionguide_submit]를 참조하세요.
 
-## Troubleshooting
+## 문제 해결 {:#troubleshooting}
 
-The [Distribute your app][distributionguide] guide provides a
-detailed overview of the process of releasing an app to the App Store.
+[앱 배포][distributionguide] 가이드는 App Store에 앱을 출시하는 과정에 대한 자세한 개요를 제공합니다.
 
-## Additional resources
+## 추가적인 자료 {:#additional-resources}
 
-To learn how to package and distribute your Flutter desktop app 
-for macOS the open source way, without using a paid Apple developer 
-account, check out the step-by-step 
-[macOS packaging guide][macos_packaging_guide].
+유료 Apple 개발자 계정을 사용하지 않고 오픈 소스 방식으로 macOS용 Flutter 데스크톱 앱을 패키징하고 배포하는 방법을 알아보려면, 
+단계별 [macOS 패키징 가이드][macos_packaging_guide]를 확인하세요.
 
 [appicon]: {{site.apple-dev}}/design/human-interface-guidelines/macos/icons-and-images/app-icon/
 [appreview]: {{site.apple-dev}}/app-store/review/

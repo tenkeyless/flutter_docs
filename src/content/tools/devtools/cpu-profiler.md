@@ -1,221 +1,165 @@
 ---
-title: Use the CPU profiler view
-description: Learn how to use the DevTools CPU profiler view.
+# title: Use the CPU profiler view
+title: CPU 프로파일러 뷰 사용
+# description: Learn how to use the DevTools CPU profiler view.
+description: DevTools CPU 프로파일러 뷰를 사용하는 방법을 알아보세요.
 ---
 
 :::note
-The CPU profiler view works with Dart CLI and mobile apps only.
-Use Chrome DevTools to [analyze performance][]
-of a web app.  
+CPU 프로파일러 뷰는 Dart CLI 및 모바일 앱에서만 작동합니다. 
+Chrome DevTools를 사용하여 웹 앱의 [성능 분석][analyze performance]을 수행합니다. 
 :::
 
-The CPU profiler view allows you to record and profile a
-session from your Dart or Flutter application.
-The profiler can help you solve performance problems
-or generally understand your app's CPU activity.
-The Dart VM collects CPU samples
-(a snapshot of the CPU call stack at a single point in time)
-and sends the data to DevTools for visualization.
-By aggregating many CPU samples together,
-the profiler can help you understand where the CPU
-spends most of its time.
+CPU 프로파일러 뷰를 사용하면 Dart 또는 Flutter 애플리케이션에서 세션을 기록하고 프로파일링할 수 있습니다. 
+프로파일러는 성능 문제를 해결하거나 앱의 CPU 활동을 일반적으로 이해하는 데 도움이 될 수 있습니다. 
+Dart VM은 CPU 샘플(단일 시점의 CPU 호출 스택 스냅샷)을 수집하여, 시각화를 위해 DevTools로 데이터를 보냅니다. 
+프로파일러는 많은 CPU 샘플을 함께 집계하여, CPU가 대부분의 시간을 어디에 사용하는지 이해하는 데 도움이 될 수 있습니다.
 
 :::note
-**If you are running a Flutter application,
-use a profile build to analyze performance.**
-CPU profiles are not indicative of release performance
-unless your Flutter application is run in profile mode.
+**Flutter 애플리케이션을 실행 중이라면, profile 빌드를 사용하여 성능을 분석하세요.** 
+Flutter 애플리케이션이 profile 모드에서 실행되지 않는 한, CPU profile은 릴리스 성능을 나타내지 않습니다.
 :::
 
-## CPU profiler
+## CPU 프로파일러 {:#cpu-profiler}
 
-Start recording a CPU profile by clicking **Record**.
-When you are done recording, click **Stop**. At this point,
-CPU profiling data is pulled from the VM and displayed
-in the profiler views (Call tree, Bottom up, Method table,
-and Flame chart).
+**Record**를 클릭하여 CPU 프로필 기록을 시작합니다. 기록이 완료되면, **Stop**을 클릭합니다. 
+이 시점에서, CPU 프로파일링 데이터가 VM에서 가져와, 
+프로파일러 뷰(호출 트리, Bottom up, Method 테이블, Flame 차트)에 표시됩니다.
 
-To load all available CPU samples without manually
-recording and stopping, you can click **Load all CPU samples**,
-which pulls all CPU samples that the VM has recorded and
-stored in its ring buffer, and then displays those
-CPU samples in the profiler views.
+수동으로 기록하고 중지하지 않고 사용 가능한 모든 CPU 샘플을 로드하려면, 
+**Load all CPU samples**를 클릭하면 됩니다. 
+이 경우 VM이 링 버퍼에 기록하고 저장한 모든 CPU 샘플을 가져온 다음, 프로파일러 뷰에 해당 CPU 샘플을 표시합니다.
 
-### Bottom up
+### Bottom up {:#bottom-up}
 
-This table provides a bottom-up representation
-of a CPU profile. This means that each top-level method,
-or root, in the bottom up table is actually the
-top method in the call stack for one or more CPU samples.
-In other words, each top-level method in a bottom up
-table is a leaf node from the top down table
-(the call tree).
-In this table, a method can be expanded to show its _callers_.
+이 표는 CPU 프로필의 bottom-up 표현을 제공합니다. 
+즉, bottom up 표의 각 최상위 메서드 또는 루트는, 
+실제로 하나 이상의 CPU 샘플에 대한 호출 스택의 최상위 메서드입니다. 
+즉, bottom up 표의 각 최상위 메서드는 top down 표(호출 트리)의 리프 노드입니다. 
+이 표에서, 메서드를 확장하여 _호출자(callers)_ 를 표시할 수 있습니다.
 
-This view is useful for identifying expensive _methods_
-in a CPU profile. When a root node in this table
-has a high _self_ time, that means that many CPU samples
-in this profile ended with that method on top of the call stack.
+이 뷰는 CPU 프로필에서 비용이 많이 드는 _메서드_ 를 식별하는 데 유용합니다. 
+이 표의 루트 노드에 _self_ 시간이 높으면, 
+이 프로필의 많은 CPU 샘플이 호출 스택 맨 위에 있는 메서드로 끝났다는 것을 의미합니다.
 
 ![Screenshot of the Bottom up view](/assets/images/docs/tools/devtools/bottom-up-view.png)
-See the [Guidelines](#guidelines) section below to learn how to
-enable the blue and green vertical lines seen in this image.
+이 이미지에서 보이는 파란색과 녹색 수직선을 활성화하는 방법을 알아보려면, 
+아래의 [가이드라인](#guidelines) 섹션을 참조하세요.
 
-Tooltips can help you understand the values in each column:
+도구 설명은 각 열의 값을 이해하는 데 도움이 될 수 있습니다.
 
-**Total time**
-: For top-level methods in the bottom-up tree
-(stack frames that were at the top of at least one
-CPU sample), this is the time the method spent executing
-its own code, as well as the code for any methods that
-it called.
+**총 시간 (Total time)**
+: bottom-up 트리의 최상위 메서드(최소 한 CPU 샘플의 맨 위에 있는 스택 프레임)의 경우, 
+  이는 메서드가 자체 코드를 실행하는 데 소요된 시간과, 호출한 모든 메서드의 코드입니다.
 
-**Self time**
-: For top-level methods in the bottom-up tree
-(stack frames that were at the top of at least one CPU
-sample), this is the time the method spent executing only
-its own code.<br><br>
-For children methods in the bottom-up tree (the callers),
-this is the self time of the top-level method (the callee)
-when called through the child method (the caller).
+**자체 시간 (Self time)**
+: bottom-up 트리의 최상위 메서드(최소 한 CPU 샘플의 맨 위에 있는 스택 프레임)의 경우, 
+  이는 메서드가 자체 코드만 실행하는 데 소요된 시간입니다.<br><br> 
+  bottom-up 트리(호출자)의 자식 메서드의 경우, 
+  이는 자식 메서드(호출자)를 통해 호출될 때 최상위 메서드(호출자)의 자체 시간입니다.
 
-**Table element** (self time)
+**테이블 요소**(자체 시간)
 ![Screenshot of a bottom up table](/assets/images/docs/tools/devtools/table-element.png)
 
-### Call tree
+### Call 트리 {:#call-tree}
 
-This table provides a top-down representation of a CPU profile.
-This means that each top-level method in the call tree is a root
-of one or more CPU samples. In this table,
-a method can be expanded to show its _callees_.
+이 표는 CPU 프로필의 top-down 표현을 제공합니다. 
+즉, 호출 트리의 각 최상위 메서드는 하나 이상의 CPU 샘플의 루트입니다. 
+이 표에서 메서드를 확장하여 _호출 대상(callees)_ 을 표시할 수 있습니다.
 
-This view is useful for identifying expensive _paths_ in a CPU profile.
-When a root node in this table has a high _total_ time,
-that means that many CPU samples in this profile started
-with that method on the bottom of the call stack.
+이 뷰는 CPU 프로필에서 비용이 많이 드는 _경로(paths)_ 를 식별하는 데 유용합니다. 
+이 표의 루트 노드에 _총_ 시간이 높으면, 
+이 프로필의 많은 CPU 샘플이 호출 스택의 맨 아래에 있는 해당 메서드에서 시작되었음을 의미합니다.
 
 ![Screenshot of a call tree table](/assets/images/docs/tools/devtools/call-tree.png)
-See the [Guidelines](#guidelines) section below to learn how to
-enable the blue and green vertical lines seen in this image.
+이 이미지에서 보이는 파란색과 녹색 수직선을 활성화하는 방법을 알아보려면, 
+아래의 [가이드라인](#guidelines) 섹션을 참조하세요.
 
-Tooltips can help you understand the values in each column:
+도구 설명은 각 열의 값을 이해하는 데 도움이 될 수 있습니다.
 
-**Total time**
-: Time that a method spent executing its own code as well as
-the code for any methods it called.
+**총 시간 (Total time)**
+: 메서드가 자체 코드와 호출한 모든 메서드의 코드를 실행하는 데 소요된 시간입니다.
 
-**Self time**
-: Time the method spent executing only its own code.
+**자체 시간 (Self time)**
+: 메서드가 자체 코드만 실행하는 데 소요된 시간입니다.
 
-### Method table
+### Method 테이블 {:#method-table}
 
-The method table provides CPU statistics for each method
-contained in a CPU profile. In the table on the left,
-all available methods are listed with their **total** and
-**self** time.
+메서드 테이블은 CPU 프로필에 포함된 각 메서드에 대한 CPU 통계를 제공합니다. 
+왼쪽의 표에는 사용 가능한 모든 메서드가 **전체 (total)** 및 **자체 (self)** 시간과 함께 나열되어 있습니다.
 
-**Total** time is the combined time that a method spent
-**anywhere** on the call stack, or in other words,
-the time a method spent executing its own code and
-any code for methods that it called.
+**전체** 시간은 메서드가 호출 스택의 **어디서나 (anywhere)** 소요한 시간을 합친 시간입니다. 
+즉, 메서드가 자체 코드와 호출한 메서드의 모든 코드를 실행하는 데 소요한 시간입니다.
 
-**Self** time is the combined time that a method spent
-on top of the call stack, or in other words,
-the time a method spent executing only its own code.
+**자체** 시간은 메서드가 호출 스택 위에서 소요한 시간을 합친 시간입니다. 
+즉, 메서드가 자체 코드만 실행하는 데 소요한 시간입니다.
 
 ![Screenshot of a call tree table](/assets/images/docs/tools/devtools/method-table.png)
 
-Selecting a method from the table on the left shows
-the call graph for that method. The call graph shows
-a method's callers and callees and their respective
-caller / callee percentages.
+왼쪽 표에서 메서드를 선택하면, 해당 메서드에 대한 호출 그래프가 표시됩니다. 
+호출 그래프는 메서드의 호출자와 호출 대상자 및 해당 호출자/호출 대상자 백분율을 보여줍니다.
 
-### Flame chart
+### Flame 차트 {:#flame-chart}
 
-The flame chart view is a graphical representation of
-the [Call tree](#call-tree). This is a top-down view
-of a CPU profile, so in this chart,
-the top-most method calls the one below it.
-The width of each flame chart element represents the
-amount of time that a method spent on the call stack.
+Flame 차트 뷰는 [호출 트리](#call-tree)의 그래픽 표현입니다. 
+이것은 CPU 프로필의 top-down 뷰이므로, 
+이 차트에서 가장 위에 있는 메서드는 그 아래에 있는 메서드를 호출합니다. 
+각 Flame 차트 요소의 너비는 메서드가 호출 스택에서 소비한 시간을 나타냅니다.
 
-Like the Call tree, this view is useful for identifying
-expensive paths in a CPU profile.
+호출 트리와 마찬가지로, 이 뷰는 CPU 프로필에서 비용이 많이 드는 경로를 식별하는 데 유용합니다.
 
 ![Screenshot of a flame chart](/assets/images/docs/tools/devtools/cpu-flame-chart.png)
 
-The help menu, which can be opened by clicking the `?` icon
-next to the search bar, provides information about how to
-navigate and zoom within the chart and a color-coded legend.
+검색 창 옆에 있는 `?` 아이콘을 클릭하면 열리는 도움말 메뉴에는, 
+차트 내에서 탐색하고 확대/축소하는 방법에 대한 정보와 색상으로 구분된 범례가 제공됩니다.
 ![Screenshot of flame chart help](/assets/images/docs/tools/devtools/flame-chart-help.png){:width="70%"}
 
 
-### CPU sampling rate
+### CPU 샘플링 비율 {:#cpu-sampling-rate}
 
-DevTools sets a rate at which the VM collects CPU samples:
-1 sample / 250 μs (microseconds).
-This is selected by default on
-the CPU profiler page as "Cpu sampling rate: medium".
-This rate can be modified using the selector at the top
-of the page.
+DevTools는 VM이 ​​CPU 샘플을 수집하는 속도를 설정합니다: 1 샘플 / 250 μs(마이크로초). 
+이는 CPU 프로파일러 페이지에서 기본적으로 "Cpu 샘플링 속도: 중간"으로 선택됩니다. 
+이 속도는 페이지 상단의 선택기를 사용하여 수정할 수 있습니다.
 
 ![Screenshot of cpu sampling rate menu](/assets/images/docs/tools/devtools/cpu-sampling-rate-menu.png){:width="70%"}
 
-The **low**, **medium**, and **high** sampling rates are
-1,000 Hz, 4,000 Hz, and 20,000 Hz, respectively.
-It's important to know the trade-offs
-of modifying this setting.
+**low**, **medium**, **high** 샘플링 속도는 각각 1,000Hz, 4,000Hz, 20,000Hz입니다. 
+이 설정을 수정하는 것의 장단점을 아는 것이 중요합니다.
 
-A profile that was recorded with a **higher** sampling rate
-yields a more fine-grained CPU profile with more samples.
-This might affect performance of your app since the VM
-is being interrupted more often to collect samples.
-This also causes the VM's CPU sample buffer to overflow more quickly.
-The VM has limited space where it can store CPU sample information.
-At a higher sampling rate, the space fills up and begins
-to overflow sooner than it would have if a lower sampling
-rate was used.
-This means that you might not have access to CPU samples
-from the beginning of the recorded profile, depending
-on whether the buffer overflows during the time of recording.
+**higher** 샘플링 속도로 기록된 프로필은 더 많은 샘플이 있는 더 세분화된 CPU 프로필을 생성합니다. 
+이는 VM이 ​​샘플을 수집하기 위해 더 자주 중단되므로, 앱 성능에 영향을 미칠 수 있습니다. 
+또한 이로 인해 VM의 CPU 샘플 버퍼가 더 빨리 오버플로됩니다. 
+VM은 CPU 샘플 정보를 저장할 수 있는 공간이 제한되어 있습니다. 
+더 높은 샘플링 속도에서는, 공간이 가득 차고 낮은 샘플링 속도를 사용한 경우보다 더 빨리 오버플로되기 시작합니다. 
+즉, 기록하는 동안 버퍼가 오버플로되는지 여부에 따라, 기록된 프로필의 시작부터 CPU 샘플에 액세스할 수 없을 수도 있습니다.
 
-A profile that was recorded with a lower sampling rate
-yields a more coarse-grained CPU profile with fewer samples.
-This affects your app's performance less,
-but you might have access to less information about what
-the CPU was doing during the time of the profile.
-The VM's sample buffer also fills more slowly, so you can see
-CPU samples for a longer period of app run time.
-This means that you have a better chance of viewing CPU
-samples from the beginning of the recorded profile.
+더 낮은 샘플링 속도로 기록된 프로필은 샘플이 적은 더 거친(coarse-grained) CPU 프로필을 생성합니다. 
+이렇게 하면 앱 성능에 미치는 영향은 적지만, 프로필 시간 동안 CPU가 수행한 작업에 대한 정보에 덜 접근할 수 있습니다. 
+VM의 샘플 버퍼도 더 느리게 채워지므로, 앱 실행 시간 동안 CPU 샘플을 더 오랫동안 볼 수 있습니다. 
+즉, 기록된 프로필의 시작 부분에서 CPU 샘플을 볼 가능성이 더 높아집니다.
 
-### Filtering
+### 필터링 {:#filtering}
 
-When viewing a CPU profile, you can filter the data by
-library, method name, or [`UserTag`][].
+CPU 프로필을 볼 때 라이브러리, 메서드 이름 또는 [`UserTag`][]로 데이터를 필터링할 수 있습니다.
 
 ![Screenshot of filter by tag menu](/assets/images/docs/tools/devtools/filter-by-tag.png)
 
 [`UserTag`]: {{site.api}}/flutter/dart-developer/UserTag-class.html
 
-## Guidelines
+## 가이드라인 {:#guidelines}
 
-When looking at a call tree or bottom up view,
-sometimes the trees can be very deep.
-To help with viewing parent-child relationships in a deep tree,
-enable the **Display guidelines** option.
-This adds vertical guidelines between parent and child in the tree.
+호출 트리나 bottom up 뷰를 볼 때, 때때로 트리가 매우 깊을 수 있습니다. 
+깊은 트리에서 부모-자식 관계를 보는 데 도움이 되도록, **Display guidelines** 옵션을 활성화합니다. 
+이렇게 하면 트리에서 부모와 자식 사이에 수직 가이드라인이 추가됩니다.
 
 ![Screenshot of display options](/assets/images/docs/tools/devtools/display-options.png)
 
 [analyze performance]: {{site.developers}}/web/tools/chrome-devtools/evaluate-performance/
   
-## Other resources
-  
-To learn how to use DevTools to analyze
-the CPU usage of a compute-intensive Mandelbrot app,
-check out a guided [CPU Profiler View tutorial][profiler-tutorial].
-Also, learn how to analyze CPU usage when the app
-uses isolates for parallel computing.
+## 기타 리소스 {:#other-resources}
+
+DevTools를 사용하여 컴퓨팅 집약적 Mandelbrot 앱의 CPU 사용량을 분석하는 방법을 알아보려면, 
+가이드 [CPU Profiler View 튜토리얼][profiler-tutorial]을 확인하세요. 
+또한 앱이 병렬 컴퓨팅을 위해 isolates를 사용할 때, CPU 사용량을 분석하는 방법도 알아보세요.
 
 [profiler-tutorial]: {{site.medium}}/@fluttergems/mastering-dart-flutter-devtools-cpu-profiler-view-part-6-of-8-31e24eae6bf8

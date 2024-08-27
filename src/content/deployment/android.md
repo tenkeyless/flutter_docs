@@ -1,74 +1,61 @@
 ---
-title: Build and release an Android app
-description: How to prepare for and release an Android app to the Play store.
+# title: Build and release an Android app
+title: Android 앱 빌드 및 릴리스
+# description: How to prepare for and release an Android app to the Play store.
+description: Android 앱을 Play 스토어에 출시하기 위해 준비하는 방법.
 short-title: Android
 ---
 
-To test an app, you can use `flutter run` at the command line,
-or the **Run** and **Debug** options in your IDE.
+앱을 테스트하려면, 명령줄에서 `flutter run`을 사용하거나, IDE에서 **Run** 및 **Debug** 옵션을 사용할 수 있습니다.
 
-When you're ready to prepare a _release_ version of your app,
-for example to [publish to the Google Play Store][play],
-this page can help. Before publishing,
-you might want to put some finishing touches on your app.
-This guide explains how to perform the following tasks:
+앱의 _release_ 버전을 준비할 준비가 되면(예: [Google Play Store에 게시][play]), 이 페이지가 도움이 될 수 있습니다. 
+게시하기 전에, 앱에 마무리 작업을 하는 것이 좋습니다. 
+이 가이드에서는 다음 작업을 수행하는 방법을 설명합니다.
 
-* [Add a launcher icon](#add-a-launcher-icon)
-* [Enable Material Components](#enable-material-components)
-* [Signing the app](#signing-the-app)
-* [Shrink your code with R8](#shrink-your-code-with-r8)
-* [Enable multidex support](#enable-multidex-support)
-* [Review the app manifest](#review-the-app-manifest)
-* [Review the build configuration](#review-the-gradle-build-configuration)
-* [Build the app for release](#build-the-app-for-release)
-* [Publish to the Google Play Store](#publish-to-the-google-play-store)
-* [Update the app's version number](#update-the-apps-version-number)
-* [Android release FAQ](#android-release-faq)
+* [런처 아이콘 추가](#add-a-launcher-icon)
+* [Material 컴포넌트 활성화](#enable-material-components)
+* [앱 서명](#signing-the-app)
+* [R8로 코드 축소](#shrink-your-code-with-r8)
+* [multidex 지원 활성화](#enable-multidex-support)
+* [앱 manifest 검토](#review-the-app-manifest)
+* [빌드 구성 검토](#review-the-gradle-build-configuration)
+* [릴리스를 위한 앱 빌드](#build-the-app-for-release)
+* [Google Play 스토어에 게시](#publish-to-the-google-play-store)
+* [앱 버전 번호 업데이트](#update-the-apps-version-number)
+* [Android 릴리스 FAQ](#안드로이드-릴리스-faq)
 
 :::note
-Throughout this page, `[project]` refers to 
-the directory that your application is in. While following
-these instructions, substitute `[project]` with 
-your app's directory.
+이 페이지 전체에서, `[project]`는 애플리케이션이 있는 디렉토리를 나타냅니다. 
+이 지침을 따르는 동안, `[project]`를 앱의 디렉토리로 바꾸세요.
 :::
 
-## Add a launcher icon
+## 런처 아이콘 추가 {:#add-a-launcher-icon}
 
-When a new Flutter app is created, it has a default launcher icon.
-To customize this icon, you might want to check out the
-[flutter_launcher_icons][] package.
+새로운 Flutter 앱을 만들면, 기본 런처 아이콘이 있습니다. 
+이 아이콘을 커스터마이즈 하려면, [flutter_launcher_icons][] 패키지를 확인하세요.
 
-Alternatively, you can do it manually using the following steps:
+또는, 다음 단계를 사용하여 수동으로 수행할 수 있습니다.
 
-1. Review the [Material Design product
-   icons][launchericons] guidelines for icon design.
+1. 아이콘 디자인에 대한 [Material Design 제품 아이콘][launchericons] 가이드라인을 검토합니다.
 
-1. In the `[project]/android/app/src/main/res/` directory,
-   place your icon files in folders named using
-   [configuration qualifiers][].
-   The default `mipmap-` folders demonstrate the correct
-   naming convention.
+2. `[project]/android/app/src/main/res/` 디렉토리에서, 
+   [configuration qualifiers][]를 사용하여 이름이 지정된 폴더에 아이콘 파일을 넣습니다. 
+   기본 `mipmap-` 폴더는 올바른 명명 규칙을 보여줍니다.
 
-1. In `AndroidManifest.xml`, update the
-   [`application`][applicationtag] tag's `android:icon`
-   attribute to reference icons from the previous
-   step (for example,
-   `<application android:icon="@mipmap/ic_launcher" ...`).
+3. `AndroidManifest.xml`에서, 이전 단계의 아이콘을 참조하도록 [`application`][applicationtag] 태그의 
+   `android:icon` 속성을 업데이트합니다. (예: `<application android:icon="@mipmap/ic_launcher" ...`)
 
-1. To verify that the icon has been replaced,
-   run your app and inspect the app icon in the Launcher.
+4. 아이콘이 대체되었는지 확인하려면, 앱을 실행하고 런처에서 앱 아이콘을 검사합니다.
 
-## Enable Material Components
+## Material 컴포넌트 활성화 {:#enable-material-components}
 
-If your app uses [Platform Views][], you might want to enable
-Material Components by following the steps described in the
-[Getting Started guide for Android][].
+앱에서 [플랫폼 뷰][Platform Views]를 사용하는 경우, [Android 시작 가이드][Getting Started guide for Android]에 설명된 단계에 따라, Material 구성 요소를 활성화할 수 있습니다.
 
-For example:
+예:
 
-1. Add the dependency on Android's Material in `<my-app>/android/app/build.gradle`:
+1. `<my-app>/android/app/build.gradle`에 Android의 Material에 대한 종속성을 추가합니다.
 
-```groovy
+```kotlin
 dependencies {
     // ...
     implementation("com.google.android.material:material:<version>")
@@ -76,55 +63,51 @@ dependencies {
 }
 ```
 
-To find out the latest version, visit [Google Maven][].
+최신 버전을 알아보려면, [Google Maven][]을 방문하세요.
 
-1. Set the light theme in `<my-app>/android/app/src/main/res/values/styles.xml`:
+1. `<my-app>/android/app/src/main/res/values/styles.xml`에서 밝은 테마를 설정합니다.
 
-```diff
--<style name="NormalTheme" parent="@android:style/Theme.Light.NoTitleBar">
-+<style name="NormalTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
-```
+   ```xml diff
+   - <style name="NormalTheme" parent="@android:style/Theme.Light.NoTitleBar">
+   + <style name="NormalTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+   ```
 
-1. Set the dark theme in `<my-app>/android/app/src/main/res/values-night/styles.xml`
+1. `<my-app>/android/app/src/main/res/values-night/styles.xml`에서 다크 테마를 설정합니다.
 
-```diff
--<style name="NormalTheme" parent="@android:style/Theme.Black.NoTitleBar">
-+<style name="NormalTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-```
+   ```xml diff
+   - <style name="NormalTheme" parent="@android:style/Theme.Black.NoTitleBar">
+   + <style name="NormalTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+   ```
 
 <a id="signing-the-app"></a>
-## Sign the app
+## 앱 서명 {:#sign-the-app}
 
-To publish on the Play Store, you need to
-sign your app with a digital certificate.
+Play 스토어에 게시하려면, 디지털 인증서(digital certificate)로 앱에 서명해야 합니다.
 
-Android uses two signing keys: _upload_ and _app signing_.
+Android는 _upload_ 와 _app signature_ 라는 두 가지 서명 키를 사용합니다.
 
-* Developers upload an `.aab` or `.apk` file signed with
-  an _upload key_ to the Play Store.
-* The end-users download the `.apk` file signed with an _app signing key_.
+* 개발자는 _upload key_ 로 서명된 `.aab` 또는 `.apk` 파일을 Play 스토어에 업로드합니다.
+* 최종 사용자는 _app signature key_ 로 서명된 `.apk` 파일을 다운로드합니다.
 
-To create your app signing key, use Play App Signing
-as described in the [official Play Store documentation][].
+앱 서명 키를 만들려면, [공식 Play 스토어 문서][official Play Store documentation]에 설명된 대로 Play App Signing을 사용합니다.
 
-To sign your app, use the following instructions.
+앱에 서명하려면, 다음 지침을 따르세요.
 
-### Create an upload keystore
+### 업로드 키스토어 생성 {:#create-an-upload-keystore}
 
-If you have an existing keystore, skip to the next step.
-If not, create one using one of the following methods:
+기존 키스토어가 있는 경우, 다음 단계로 건너뜁니다. 없는 경우, 다음 방법 중 하나를 사용하여 키스토어를 만듭니다.
 
-1. Follow the [Android Studio key generation steps]({{site.android-dev}}/studio/publish/app-signing#generate-key)
-1. Run the following command at the command line:
+1. [Android Studio 키 생성 단계]({{site.android-dev}}/studio/publish/app-signing#generate-key)를 따릅니다.
+1. 명령줄에서 다음 명령을 실행합니다.
 
-   On macOS or Linux, use the following command:
+   macOS 또는 Linux에서는 다음 명령을 사용합니다.
 
    ```console
    keytool -genkey -v -keystore ~/upload-keystore.jks -keyalg RSA \
            -keysize 2048 -validity 10000 -alias upload
    ```
 
-   On Windows, use the following command in PowerShell:
+   Windows에서는 PowerShell에서 다음 명령을 사용합니다.
 
    ```powershell
    keytool -genkey -v -keystore $env:USERPROFILE\upload-keystore.jks `
@@ -132,36 +115,29 @@ If not, create one using one of the following methods:
            -alias upload
    ```
 
-   This command stores the `upload-keystore.jks` file in your home
-   directory. If you want to store it elsewhere, change
-   the argument you pass to the `-keystore` parameter.
-   **However, keep the `keystore` file private;
-   don't check it into public source control!**
+   이 명령은 홈 디렉토리에 `upload-keystore.jks` 파일을 저장합니다. 
+   다른 곳에 저장하려면, `-keystore` 매개변수에 전달하는 인수를 변경합니다. 
+   **그러나 `keystore` 파일은 비공개로 유지하세요. 공개 소스 제어에 체크인하지 마세요!**
 
    :::note
-   * The `keytool` command might not be in your path&mdash;it's
-     part of Java, which is installed as part of
-     Android Studio.  For the concrete path,
-     run `flutter doctor -v` and locate the path printed after
-     'Java binary at:'. Then use that fully qualified path
-     replacing `java` (at the end) with `keytool`.
-     If your path includes space-separated names,
-     such as `Program Files`, use platform-appropriate
-     notation for the names. For example, on Mac/Linux
-     use `Program\ Files`, and on Windows use
-     `"Program Files"`.
+   * `keytool` 명령이 경로에 없을 수 있습니다. 
+     * 이는 Android Studio의 일부로 설치된 Java의 일부입니다. 
+     * 구체적인 경로의 경우 `flutter doctor -v`를 실행하고, 'Java binary at:' 뒤에 인쇄된 경로를 찾습니다.
+     * 그런 다음, `java`(끝에 있음)를 `keytool`로 바꿔서 해당 정규화된 경로를 사용합니다. 
+     * 경로에 `Program Files`와 같이 공백으로 구분된 이름이 포함된 경우, 이름에 플랫폼에 적합한 표기법을 사용합니다. 
+       * 예를 들어 
+         * Mac/Linux에서는 `Program\ Files`를 사용하고, 
+         * Windows에서는 `"Program Files"`를 사용합니다.
 
-   * The `-storetype JKS` tag is only required for Java 9
-     or newer. As of the Java 9 release,
-     the keystore type defaults to PKS12.
+   * `-storetype JKS` 태그는 Java 9 이상에서만 필요합니다. 
+     * Java 9 릴리스부터, 키 저장소 타입은 기본적으로 PKS12입니다.
    :::
 
-### Reference the keystore from the app
+### 앱에서 키스토어 참조 {:#reference-the-keystore-from-the-app}
 
-Create a file named `[project]/android/key.properties`
-that contains a reference to your keystore.
-Don't include the angle brackets (`< >`).
-They indicate that the text serves as a placeholder for your values.
+`[project]/android/key.properties`라는 이름의 파일을 만들고, 키스토어에 대한 참조를 포함합니다. 
+꺾쇠괄호(`< >`)는 포함하지 마세요. 
+이는 텍스트가 값의 플레이스홀더 역할을 한다는 것을 나타냅니다.
 
 ```properties
 storePassword=<password-from-previous-step>
@@ -170,140 +146,131 @@ keyAlias=upload
 storeFile=<keystore-file-location>
 ```
 
-The `storeFile` might be located at
-`/Users/<user name>/upload-keystore.jks` on macOS
-or `C:\\Users\\<user name>\\upload-keystore.jks` on Windows.
+`storeFile`은 macOS에서는 `/Users/<user name>/upload-keystore.jks`에 있고, 
+Windows에서는 `C:\\Users\\<user name>\\upload-keystore.jks`에 있습니다.
 
 :::warning
-Keep the `key.properties` file private;
-don't check it into public source control.
+`key.properties` 파일을 비공개로 유지하세요. 공개 소스 제어에 체크인하지 마세요.
 :::
 
-### Configure signing in gradle
+### Gradle에서 서명 구성 {:#configure-signing-in-gradle}
 
-When building your app in release mode, configure gradle to use your upload key.
-To configure gradle, edit the `<project>/android/app/build.gradle` file.
+릴리스 모드에서 앱을 빌드할 때, 업로드 키를 사용하도록 Gradle을 구성합니다. 
+Gradle을 구성하려면, `<project>/android/app/build.gradle` 파일을 편집합니다.
 
-1. Define and load the keystore properties file before the `android`
-   property block.
+1. `android` 속성 블록 앞에 키스토어 속성 파일을 정의하고 로드합니다.
 
-1. Set the `keystoreProperties` object to load the `key.properties` file.
+1. `keystoreProperties` 객체를 설정하여, `key.properties` 파일을 로드합니다.
 
-   ```diff title="[project]/android/app/build.gradle"
-   +   def keystoreProperties = new Properties()
-   +   def keystorePropertiesFile = rootProject.file('key.properties')
-   +   if (keystorePropertiesFile.exists()) {
-   +       keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
-   +   }
+   ```kotlin diff title="[project]/android/app/build.gradle"
+   + def keystoreProperties = new Properties()
+   + def keystorePropertiesFile = rootProject.file('key.properties')
+   + if (keystorePropertiesFile.exists()) {
+   +     keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+   + }
    +
-      android {
-         ...
-      }
+     android {
+        ...
+     }
    ```
 
-1. Add the signing configuration before the `buildTypes` property block
-   inside the `android` property block.
+2. `android` 속성 블록 안에 있는 `buildTypes` 속성 블록 앞에 서명 구성을 추가합니다.
 
-   ```diff title="[project]/android/app/build.gradle"
-       android {
-           ...
+   ```kotlin diff title="[project]/android/app/build.gradle"
+     android {
+         // ...
 
-   +       signingConfigs {
-   +           release {
-   +               keyAlias keystoreProperties['keyAlias']
-   +               keyPassword keystoreProperties['keyPassword']
-   +               storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
-   +               storePassword keystoreProperties['storePassword']
-   +           }
-   +       }
-           buildTypes {
-              release {
-                 // TODO: Add your own signing config for the release build.
-                 // Signing with the debug keys for now,
-                 // so `flutter run --release` works.
-   -                signingConfig signingConfigs.debug
-   +                signingConfig signingConfigs.release
-              }
-           }
-       ...
-       }
+   +     signingConfigs {
+   +         release {
+   +             keyAlias = keystoreProperties['keyAlias']
+   +             keyPassword = keystoreProperties['keyPassword']
+   +             storeFile = keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
+   +             storePassword = keystoreProperties['storePassword']
+   +         }
+   +     }
+         buildTypes {
+             release {
+                 // TODO: 릴리스 빌드에 대한 자체 서명 구성을 추가합니다. 
+                 // 지금은 디버그 키로 서명하므로, `flutter run --release`가 작동합니다.
+   -             signingConfig = signingConfigs.debug
+   +             signingConfig = signingConfigs.release
+             }
+         }
+     ...
+     }
    ```
 
-Flutter now signs all release builds.
+이제 Flutter가 모든 릴리스 빌드에 서명합니다.
 
 :::note
-You might need to run `flutter clean` after changing the gradle file.
-This prevents cached builds from affecting the signing process.
+Gradle 파일을 변경한 후 `flutter clean`을 실행해야 할 수도 있습니다.
+이렇게 하면 캐시된 빌드가 서명 프로세스에 영향을 미치지 않습니다.
 :::
 
-To learn more about signing your app, check out
-[Sign your app][] on developer.android.com.
+앱 서명에 대한 자세한 내용은, developer.android.com의 [앱 서명][Sign your app]을 확인하세요.
 
-## Shrink your code with R8
+## R8로 코드 축소 {:#shrink-your-code-with-r8}
 
-[R8][] is the new code shrinker from Google.
-It's enabled by default when you build a release APK or AAB.
-To disable R8, pass the `--no-shrink` flag to
-`flutter build apk` or `flutter build appbundle`.
+[R8][]은 Google의 새로운 코드 축소기입니다. 
+릴리스 APK 또는 AAB를 빌드할 때 기본적으로 활성화됩니다. 
+R8을 비활성화하려면, `--no-shrink` 플래그를 
+`flutter build apk` 또는 `flutter build appbundle`에 전달합니다.
 
 :::note
-Obfuscation and minification can considerably extend compile time
-of the Android application.
+난독화(Obfuscation)와 축소(minification)는 Android 애플리케이션의 컴파일 시간을 상당히 늘릴 수 있습니다.
+
+`--[no-]shrink` 플래그는 효과가 없습니다. 코드 축소는 릴리스 빌드에서 항상 활성화됩니다.
+자세한 내용은 [앱 축소, 난독화 및 최적화]({{site.android-dev}}/studio/build/shrink-code)를 확인하세요.
 :::
 
-## Enable multidex support
+## multidex 지원 활성화 {:#enable-multidex-support}
 
-When writing large apps or making use of large plugins,
-you might encounter Android's dex limit of 64k methods
-when targeting a minimum API of 20 or below.
-This might also be encountered when running debug versions of your app
-using `flutter run` that does not have shrinking enabled.
+대규모 앱을 작성하거나 대규모 플러그인을 사용할 때, 최소 API 20 이하를 타겟팅할 때, 
+Android의 dex 제한인 64k 메서드에 직면할 수 있습니다. 
+이는 축소가 활성화되지 않은 `flutter run`을 사용하여, 앱의 디버그 버전을 실행할 때도 발생할 수 있습니다.
 
-Flutter tool supports easily enabling multidex. The simplest way is to
-opt into multidex support when prompted. The tool detects multidex build errors
-and asks before making changes to your Android project.
-Opting in allows Flutter to automatically depend on
-`androidx.multidex:multidex` and use a generated
-`FlutterMultiDexApplication` as the project's application.
+Flutter 도구는 multidex를 쉽게 활성화할 수 있도록 지원합니다. 
+가장 간단한 방법은 메시지가 표시될 때 multidex 지원을 옵트인하는 것입니다. 
+이 도구는 multidex 빌드 오류를 감지하고, Android 프로젝트를 변경하기 전에 묻습니다. 
+옵트인하면, Flutter가 `androidx.multidex:multidex`에 자동으로 의존하고, 
+생성된 `FlutterMultiDexApplication`을 프로젝트의 애플리케이션으로 사용할 수 있습니다.
 
-When you try to build and run your app with the **Run** and **Debug**
-options in your IDE, your build might fail with the following message:
+IDE에서 **Run** 및 **Debug** 옵션으로 앱을 빌드하고 실행하려고 하면, 
+다음 메시지와 함께 빌드가 실패할 수 있습니다.
 
 <img src='/assets/images/docs/deployment/android/ide-build-failure-multidex.png' width="100%" alt='Build failure because Multidex support is required'>
 
-To enable multidex from the command line,
-run `flutter run --debug` and select an Android device:
+명령줄에서 multidex를 활성화하려면, 
+`flutter run --debug`를 실행하고 Android 기기를 선택하세요.
 
 <img src='/assets/images/docs/deployment/android/cli-select-device.png' width="100%" alt='Selecting an Android device with the flutter CLI.'>
 
-When prompted, enter `y`.
-The Flutter tool enables multidex support and retries the build:
+메시지가 표시되면, `y`를 입력합니다. 
+Flutter 도구는 multidex 지원을 활성화하고 빌드를 다시 시도합니다.
 
 <img src='/assets/images/docs/deployment/android/cli-multidex-added-build.png' width="100%" alt='The output of a successful build after adding multidex.'>
 
 :::note
-Multidex support is natively included when targeting
-Android SDK 21 or later. However, we don't recommend
-targeting API 21+ purely to resolve the multidex issue
-as this might inadvertently exclude users running older devices.
+Multidex 지원은 Android SDK 21 이상을 타겟팅할 때 기본적으로 포함됩니다. 
+그러나, multidex 문제를 해결하기 위해 API 21 이상을 타겟팅하는 것은 권장하지 않습니다. 
+이는 이전 기기를 사용하는 사용자를 실수로 제외할 수 있기 때문입니다.
 :::
 
-You might also choose to manually support multidex by following Android's guides
-and modifying your project's Android directory configuration.
-A [multidex keep file][multidex-keep] must be specified to include:
+Android 가이드를 따르고 프로젝트의 Android 디렉토리 구성을 수정하여, 
+multidex를 수동으로 지원하도록 선택할 수도 있습니다. 
+[multidex keep file][multidex-keep]에는 다음을 포함하도록 지정해야 합니다.
 
 ```plaintext
 io/flutter/embedding/engine/loader/FlutterLoader.class
 io/flutter/util/PathUtils.class
 ```
 
-Also, include any other classes used in app startup.
-For more detailed guidance on adding multidex support manually,
-check out the official [Android documentation][multidex-docs].
+또한, 앱 시작에 사용되는 다른 클래스를 포함합니다. 
+multidex 지원을 수동으로 추가하는 것에 대한 자세한 지침은, 공식 [Android 문서][multidex-docs]를 확인하세요.
 
-## Review the app manifest
+## 앱 manifest 검토 {:#review-the-app-manifest}
 
-Review the default [App Manifest][manifest] file.
+기본 [앱 매니페스트][manifest] 파일을 검토합니다.
 
 ```xml title="[project]/android/app/src/main/AndroidManifest.xml"
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
@@ -316,43 +283,39 @@ Review the default [App Manifest][manifest] file.
 </manifest>
 ```
 
-Verify the following values:
+다음 값을 확인하세요.
 
-| Tag                                | Attribute | Value                                                                                                   |
+| 태그                                | 속성 | 값                                                                                                   |
 |------------------------------------|-----------|-----------------------------------------------------------------------------------------------------------|
-| [`application`][applicationtag]    | Edit the `android:label` in the [`application`][applicationtag] tag to reflect the final name of the app. |
-| [`uses-permission`][permissiontag] | Add the `android.permission.INTERNET` [permission][permissiontag] value to the `android:name` attribute if your app needs Internet access. The standard template doesn't include this tag but allows Internet access during development to enable communication between Flutter tools and a running app. |
+| [`application`][applicationtag]    | [`application`][applicationtag] 태그에서 `android:label`을 편집하여 앱의 최종 이름을 반영합니다. |
+| [`uses-permission`][permissiontag] | 앱에 인터넷 액세스가 필요한 경우, `android.permission.INTERNET` [permission][permissiontag] 값을 `android:name` 속성에 추가합니다. 표준 템플릿에는 이 태그가 포함되지 않지만, 개발 중에 인터넷 액세스를 허용하여, Flutter 도구와 실행 중인 앱 간의 통신을 가능하게 합니다. |
 
 {:.table .table-striped}
 
-## Review or change the Gradle build configuration {:#review-the-gradle-build-configuration}
+## Gradle 빌드 구성을 검토하거나 변경 {:#review-the-gradle-build-configuration}
 
-To verify the Android build configuration,
-review the `android` block in the default
-[Gradle build script][gradlebuild].
-The default Gradle build script is found at `[project]/android/app/build.gradle`.
-You can change the values of any of these properties.
+Android 빌드 구성을 확인하려면, 기본 [Gradle 빌드 스크립트][gradlebuild]에서 `android` 블록을 검토하세요. 
+기본 Gradle 빌드 스크립트는 `[project]/android/app/build.gradle`에서 찾을 수 있습니다. 
+이러한 속성의 값을 변경할 수 있습니다.
 
-```groovy title="[project]/android/app/build.gradle"
+```kotlin title="[project]/android/app/build.gradle"
 android {
     namespace = "com.example.[project]"
-    // Any value starting with "flutter." gets its value from
-    // the Flutter Gradle plugin.
-    // To change from these defaults, make your changes in this file.
+    // "flutter."로 시작하는 모든 값은 Flutter Gradle 플러그인에서 값을 가져옵니다.
+    // 이러한 기본값을 변경하려면, 이 파일에서 변경하세요.
     [!compileSdk = flutter.compileSdkVersion!]
     ndkVersion = flutter.ndkVersion
 
     ...
 
     defaultConfig {
-        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
+        // TODO: unique 애플리케이션 ID를 지정하세요 (https://developer.android.com/studio/build/application-id.html).
         [!applicationId = "com.example.[project]"!]
-        // You can update the following values to match your application needs.
+        // 당신의 애플리케이션 요구 사항에 맞게 다음 값을 업데이트할 수 있습니다.
         [!minSdk = flutter.minSdkVersion!]
         [!targetSdk = flutter.targetSdkVersion!]
-        // These two properties use values defined elsewhere in this file.
-        // You can set these values in the property declaration
-        // or use a variable.
+        // 이 두 속성은 이 파일의 다른 곳에서 정의된 값을 사용합니다.
+        // 속성 선언에서 이러한 값을 설정하거나 변수를 사용할 수 있습니다.
         [!versionCode = flutterVersionCode.toInteger()!]
         [!versionName = flutterVersionName!]
     }
@@ -363,207 +326,183 @@ android {
 }
 ```
 
-### Properties to adjust in build.gradle
+### build.gradle에서 조정할 속성 {:#properties-to-adjust-in-build-gradle}
 
-| Property             | Purpose                                                                                                                                                                                                                                                     | Default Value              |
+| 속성             | 목적                                                                                                                                                                                                                                                     | 디폴트 값              |
 |----------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------|
-| `compileSdk`         | The Android API level against which your app is compiled. This should be the highest version available. If you set this property to `31`, you run your app on a device running API `30` or earlier as long as your app makes uses no APIs specific to `31`. | |
+| `compileSdk`         | 앱이 컴파일되는 Android API 레벨입니다. 이는 사용 가능한 가장 높은 버전이어야 합니다. 이 속성을 `31`로 설정하면, 앱이 `31`에 특정한 API를 사용하지 않는 한, API `30` 또는 이전 버전을 실행하는 기기에서 앱을 실행합니다. | |
 | `defaultConfig`      |  |  |
-| `.applicationId`     | The final, unique [application ID][] that identifies your app.                                                                                                                                                                                              |                            |
+| `.applicationId`     | 앱을 식별하는 final, unique [애플리케이션 ID][application ID]입니다. |                            |
 | `.minSdk`            | The [minimum Android API level][] for which you designed your app to run.                                                                                                                                                                                   | `flutter.minSdkVersion`    |
-| `.targetSdk`         | The Android API level against which you tested your app to run. Your app should run on all Android API levels up to this one.                                                                                                                               | `flutter.targetSdkVersion` |
-| `.versionCode`       | A positive integer that sets an [internal version number][]. This number only determines which version is more recent than another. Greater numbers indicate more recent versions. App users never see this value.                                          |                            |
-| `.versionName`       | A string that your app displays as its version number. Set this property as a raw string or as a reference to a string resource.                                                                                                                            |                            |
-| `.buildToolsVersion` | The Gradle plugin specifies the default version of the Android build tools that your project uses. To specify a different version of the build tools, change this value.                                                                                    |                            |
+| `.targetSdk`         | 앱 실행을 테스트한 Android API 레벨입니다. 앱은 이 레벨까지의 모든 Android API 레벨에서 실행되어야 합니다.  | `flutter.targetSdkVersion` |
+| `.versionCode`       | [내부 버전 번호][internal version number]를 설정하는 양의 정수입니다. 이 숫자는 어느 버전이 다른 버전보다 최신인지만 판별합니다. 숫자가 클수록 최신 버전을 나타냅니다. 앱 사용자는 이 값을 절대 볼 수 없습니다.   |                            |
+| `.versionName`       | 앱이 버전 번호로 표시하는 문자열입니다. 이 속성을 raw 문자열 또는 문자열 리소스에 대한 참조로 설정합니다.     |                            |
+| `.buildToolsVersion` | Gradle 플러그인은 프로젝트에서 사용하는 Android 빌드 도구의 기본 버전을 지정합니다. 빌드 도구의 다른 버전을 지정하려면 이 값을 변경합니다.       |
 
 {:.table .table-striped}
 
-To learn more about Gradle, check out the module-level build
-section in the [Gradle build file][gradlebuild].
+Gradle에 대해 자세히 알아보려면, [Gradle 빌드 파일][gradlebuild]의 모듈 레벨 빌드 섹션을 확인하세요.
 
 :::note
-If you use a recent version of the Android SDK, you might get deprecation warnings about `compileSdkVersion`, `minSdkVersion` or `targetSdkVersion`.
-You can rename these properties to `compileSdk`, `minSdk` and `targetSdk` respectively.
+최신 버전의 Android SDK를 사용하는 경우, 
+`compileSdkVersion`, `minSdkVersion` 또는 `targetSdkVersion`에 대한 사용 중단 경고가 표시될 수 있습니다. 
+이러한 속성의 이름을 각각 `compileSdk`, `minSdk` 및 `targetSdk`로 바꿀 수 있습니다.
 :::
   
-## Build the app for release
+## 릴리스를 위한 앱 빌드 {:#build-the-app-for-release}
 
-You have two possible release formats when publishing to
-the Play Store.
+Play Store에 게시할 때 두 가지 가능한 릴리스 형식이 있습니다.
 
-* App bundle (preferred)
+* App bundle (권장)
 * APK
 
 :::note
-The Google Play Store prefers the app bundle format.
-To learn more, check out [About Android App Bundles][bundle].
+Google Play Store는 앱 번들 형식을 선호합니다. 
+자세한 내용은 [Android 앱 번들에 관하여][bundle]를 확인하세요.
 :::
 
-### Build an app bundle
+### 앱 번들 빌드 {:#build-an-app-bundle}
 
-This section describes how to build a release app bundle.
-If you completed the signing steps,
-the app bundle will be signed.
-At this point, you might consider [obfuscating your Dart code][]
-to make it more difficult to reverse engineer. Obfuscating
-your code involves adding a couple flags to your build command,
-and maintaining additional files to de-obfuscate stack traces.
+이 섹션에서는 릴리스 앱 번들을 빌드하는 방법을 설명합니다. 
+서명 단계를 완료했다면, 앱 번들이 서명됩니다. 
+이 시점에서 리버스 엔지니어링을 더 어렵게 만들기 위해, [Dart 코드 난독화][obfuscating your Dart code]를 고려할 수 있습니다. 
+코드 난독화에는 빌드 명령에 몇 가지 플래그를 추가하고, 스택 추적의 난독화를 해제하기 위한 추가 파일을 유지하는 것이 포함됩니다.
 
-From the command line:
+명령줄에서:
 
-1. Enter `cd [project]`<br>
-1. Run `flutter build appbundle`<br>
-   (Running `flutter build` defaults to a release build.)
+1. `cd [project]`를 입력합니다.<br>
+2. `flutter build appbundle`를 실행합니다.<br> 
+   (`flutter build`를 실행하면, 기본적으로 릴리스 빌드가 됩니다.)
 
-The release bundle for your app is created at
-`[project]/build/app/outputs/bundle/release/app.aab`.
+앱의 릴리스 번들은 `[project]/build/app/outputs/bundle/release/app.aab`에 생성됩니다.
 
-By default, the app bundle contains your Dart code and the Flutter
-runtime compiled for [armeabi-v7a][] (ARM 32-bit), [arm64-v8a][]
-(ARM 64-bit), and [x86-64][] (x86 64-bit).
+기본적으로, 앱 번들에는 [armeabi-v7a][] (ARM 32비트), [arm64-v8a][] (ARM 64비트), 
+[x86-64][] (x86 64비트)용으로 컴파일된 Dart 코드와 Flutter 런타임이 포함되어 있습니다.
 
-### Test the app bundle
+### 앱 번들 테스트 {:#test-the-app-bundle}
 
-An app bundle can be tested in multiple ways.
-This section describes two.
+앱 번들은 여러 가지 방법으로 테스트할 수 있습니다. 이 섹션에서는 두 가지를 설명합니다.
 
-#### Offline using the bundle tool
+#### (1) 번들 도구를 사용하여 오프라인으로 {:#offline-using-the-bundle-tool}
 
-1. If you haven't done so already, download `bundletool` from the
-   [GitHub repository][].
-1. [Generate a set of APKs][apk-set] from your app bundle.
-1. [Deploy the APKs][apk-deploy] to connected devices.
+1. 아직 다운로드하지 않았다면, [GitHub 저장소][GitHub repository]에서 `bundletool`을 다운로드하세요.
+1. 앱 번들에서 [APK 세트 생성][apk-set]
+1. 연결된 기기에 [APK 배포][apk-deploy]
 
-#### Online using Google Play
+#### (2) Google Play를 사용하여 온라인으로 {:#online-using-google-play}
 
-1. Upload your bundle to Google Play to test it.
-   You can use the internal test track,
-   or the alpha or beta channels to test the bundle before
-   releasing it in production.
-2. Follow [these steps to upload your bundle][upload-bundle]
-   to the Play Store.
+1. 번들을 Google Play에 업로드하여 테스트합니다. 
+   프로덕션에서 출시하기 전에, 내부 테스트 트랙이나 알파 또는 베타 채널을 사용하여, 번들을 테스트할 수 있습니다.
+2. Play 스토어에 [번들을 업로드하는 단계][upload-bundle]를 따르세요.
 
-### Build an APK
+### APK 빌드 {:#build-an-apk}
 
-Although app bundles are preferred over APKs, there are stores
-that don't yet support app bundles. In this case, build a release
-APK for each target ABI (Application Binary Interface).
+APK보다 앱 번들이 선호되지만, 아직 앱 번들을 지원하지 않는 스토어가 있습니다. 
+이 경우, 각 대상 ABI(Application Binary Interface)에 대한 릴리스 APK를 빌드합니다.
 
-If you completed the signing steps, the APK will be signed.
-At this point, you might consider [obfuscating your Dart code][]
-to make it more difficult to reverse engineer. Obfuscating
-your code involves adding a couple flags to your build command.
+서명 단계를 완료했다면 APK가 서명됩니다. 
+이 시점에서, 리버스 엔지니어링을 어렵게 만들기 위해 [Dart 코드 난독화][obfuscating your Dart code]를 고려할 수 있습니다. 
+코드 난독화에는 빌드 명령에 몇 가지 플래그를 추가하는 것이 포함됩니다.
 
-From the command line:
+명령줄에서:
 
-1. Enter `cd [project]`.
+1. `cd [project]`를 입력합니다.
 
-1. Run `flutter build apk --split-per-abi`.
-   (The `flutter build` command defaults to `--release`.)
+2. `flutter build apk --split-per-abi`를 실행합니다. 
+   (`flutter build` 명령은 기본적으로 `--release`로 설정됩니다.)
 
-This command results in three APK files:
+이 명령은 세 개의 APK 파일을 생성합니다.
 
 * `[project]/build/app/outputs/apk/release/app-armeabi-v7a-release.apk`
 * `[project]/build/app/outputs/apk/release/app-arm64-v8a-release.apk`
 * `[project]/build/app/outputs/apk/release/app-x86_64-release.apk`
 
-Removing the `--split-per-abi` flag results in a fat APK that contains
-your code compiled for _all_ the target ABIs. Such APKs are larger in
-size than their split counterparts, causing the user to download
-native binaries that are not applicable to their device's architecture.
+`--split-per-abi` 플래그를 제거하면, _모든_ 대상 ABI에 대해 컴파일된 코드가 포함된 fat APK가 생성됩니다. 
+이러한 APK는 분할된 APK보다 크기가 더 크기 때문에, 
+사용자는 기기 아키텍처에 적용되지 않는 네이티브 바이너리를 다운로드하게 됩니다.
 
-### Install an APK on a device
+### 장치에 APK 설치 {:#install-an-apk-on-a-device}
 
-Follow these steps to install the APK on a connected Android device.
+연결된 Android 기기에 APK를 설치하려면 다음 단계를 따르세요.
 
-From the command line:
+명령줄에서:
 
-1. Connect your Android device to your computer with a USB cable.
-1. Enter `cd [project]`.
-1. Run `flutter install`.
+1. USB 케이블로 Android 기기를 컴퓨터에 연결합니다.
+2. `cd [project]`를 입력합니다.
+3. `flutter install`을 실행합니다.
 
-## Publish to the Google Play Store
+## Google Play 스토어에 게시 {:#publish-to-the-google-play-store}
 
-For detailed instructions on publishing your app to the Google Play Store,
-check out the [Google Play launch][play] documentation.
+Google Play 스토어에 앱을 게시하는 방법에 대한 자세한 지침은, 
+[Google Play 출시][play] 문서를 확인하세요.
 
-## Update the app's version number
+## 앱 버전 번호 업데이트 {:#update-the-apps-version-number}
 
-The default version number of the app is `1.0.0`.
-To update it, navigate to the `pubspec.yaml` file
-and update the following line:
+앱의 기본 버전 번호는 `1.0.0`입니다. 
+이를 업데이트하려면, `pubspec.yaml` 파일로 이동하여 다음 줄을 업데이트하세요.
 
 `version: 1.0.0+1`
 
-The version number is three numbers separated by dots,
-such as `1.0.0` in the example above, followed by an optional
-build number such as `1` in the example above, separated by a `+`.
+버전 번호는 위의 예에서 `1.0.0`과 같이 점으로 구분된 세 개의 숫자이며, 
+그 뒤에 `1`과 같이 선택적 빌드 번호가 `+`로 구분되어 있습니다.
 
-Both the version and the build number can be overridden in Flutter's
-build by specifying `--build-name` and `--build-number`, respectively.
+버전과 빌드 번호는 모두 `--build-name`과 `--build-number`를 각각 지정하여, 
+Flutter 빌드에서 재정의할 수 있습니다.
 
-In Android, `build-name` is used as `versionName` while
-`build-number` used as `versionCode`. For more information,
-check out [Version your app][] in the Android documentation.
+Android에서, 
+`build-name`은 `versionName`으로 사용되고, 
+`build-number`는 `versionCode`로 사용됩니다. 
+자세한 내용은 Android 설명서의 [앱 버전 지정][Version your app]을 확인하세요.
 
-When you rebuild the app for Android, any updates in the version number
-from the pubspec file will update the `versionName` and `versionCode` 
-in the `local.properties` file.
+Android용 앱을 다시 빌드할 때, 
+pubspec 파일의 버전 번호가 업데이트되면, 
+`local.properties` 파일의 `versionName`과 `versionCode`가 업데이트됩니다.
 
-## Android release FAQ
+## Android 릴리스 FAQ {:#android-release-faq}
 
-Here are some commonly asked questions about deployment for
-Android apps.
+Android 앱 배포와 관련하여 자주 묻는 질문은 다음과 같습니다.
 
-### When should I build app bundles versus APKs?
+### 언제 앱 번들과 APK를 빌드해야 하나요? {:#when-should-i-build-app-bundles-versus-apks}
 
-The Google Play Store recommends that you deploy app bundles
-over APKs because they allow a more efficient delivery of the
-application to your users. However, if you're distributing
-your application by means other than the Play Store,
-an APK might be your only option.
+Google Play Store는 사용자에게 앱을 보다 효율적으로 제공할 수 있기 때문에, 
+APK 대신 앱 번들을 배포할 것을 권장합니다. 
+그러나 Play Store가 아닌 다른 방법으로 앱을 배포하는 경우, APK가 유일한 옵션일 수 있습니다.
 
-### What is a fat APK?
+### Fat APK란 무엇인가요? {:#what-is-a-fat-apk}
 
-A [fat APK][] is a single APK that contains binaries for multiple
-ABIs embedded within it. This has the benefit that the single APK
-runs on multiple architectures and thus has wider compatibility,
-but it has the drawback that its file size is much larger,
-causing users to download and store more bytes when installing
-your application. When building APKs instead of app bundles,
-it is strongly recommended to build split APKs,
-as described in [build an APK](#build-an-apk) using the
-`--split-per-abi` flag.
+[fat APK][]는 여러 ABI에 대한 바이너리가 포함된 단일 APK입니다. 
+이는 단일 APK가 여러 아키텍처에서 실행되어 더 광범위한 호환성을 제공한다는 이점이 있지만, 
+파일 크기가 훨씬 더 커서 사용자가 애플리케이션을 설치할 때 더 많은 바이트를 다운로드하고 저장해야 한다는 단점이 있습니다. 
+앱 번들 대신 APK를 빌드할 때는 `--split-per-abi` 플래그를 사용하여, 
+[APK 빌드](#build-an-apk)에 설명된 대로 분할 APK를 빌드하는 것이 좋습니다.
 
-### What are the supported target architectures?
+### 지원되는 대상 아키텍처는 무엇입니까? {:#what-are-the-supported-target-architectures}
 
-When building your application in release mode,
-Flutter apps can be compiled for [armeabi-v7a][] (ARM 32-bit),
-[arm64-v8a][] (ARM 64-bit), and [x86-64][] (x86 64-bit).
+릴리스 모드에서 애플리케이션을 빌드할 때, 
+Flutter 앱은 [armeabi-v7a][] (ARM 32비트), [arm64-v8a][] (ARM 64비트), 
+[x86-64][] (x86 64비트)로 컴파일될 수 있습니다.
 
-### How do I sign the app bundle created by `flutter build appbundle`?
+### `flutter build appbundle`로 생성된 앱 번들에 어떻게 서명하나요? {:#how-do-i-sign-the-app-bundle-created-by-flutter-build-appbundle}
 
-See [Signing the app](#signing-the-app).
+[앱 서명](#signing-the-app)을 참조하세요.
 
-### How do I build a release from within Android Studio?
+### Android Studio에서 릴리스를 빌드하려면 어떻게 해야 하나요? {:#how-do-i-build-a-release-from-within-android-studio}
 
-In Android Studio, open the existing `android/`
-folder under your app's folder. Then,
-select **build.gradle (Module: app)** in the project panel:
+Android Studio에서, 앱 폴더 아래에 있는 기존 `android/` 폴더를 엽니다. 
+그런 다음, 프로젝트 패널에서 **build.gradle (Module: app)**을 선택합니다.
 
 <img src='/assets/images/docs/deployment/android/gradle-script-menu.png' width="100%" alt='The Gradle build script menu in Android Studio.'>
 
-Next, select the build variant. Click **Build > Select Build Variant**
-in the main menu. Select any of the variants in the **Build Variants**
-panel (debug is the default):
+다음으로, 빌드 변형(build variant)을 선택합니다. 
+메인 메뉴에서 **Build > Select Build Variant**을 클릭합니다. 
+**Build Variants** 패널에서 변형을 선택합니다. (debug가 기본값입니다)
 
 <img src='/assets/images/docs/deployment/android/build-variant-menu.png' width="100%" alt='The build variant menu in Android Studio with Release selected.'>
 
-The resulting app bundle or APK files are located in
-`build/app/outputs` within your app's folder.
+결과 앱 번들 또는 APK 파일은 앱 내의 `build/app/outputs`에 있습니다.
 
 {% comment %}
-### Are there any special considerations with add-to-app?
+### 앱에 추가 시(add-to-app) 특별히 고려해야 할 사항이 있나요?
 {% endcomment %}
 
 [apk-deploy]: {{site.android-dev}}/studio/command-line/bundletool#deploy_with_bundletool

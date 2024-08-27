@@ -1,194 +1,172 @@
 ---
 title: Visual Studio Code
 short-title: VS Code
-description: How to develop Flutter apps in Visual Studio Code.
+# description: How to develop Flutter apps in Visual Studio Code.
+description: Visual Studio Code에서 Flutter 앱을 개발하는 방법.
 ---
 
 <ul class="nav nav-tabs" id="ide-tabs" role="tablist">
   <li class="nav-item">
-    <a class="nav-link" href="/tools/android-studio" role="tab" aria-selected="false">Android Studio and IntelliJ</a>
+    <a class="nav-link" href="/tools/android-studio" role="tab" aria-selected="false">Android Studio 및 IntelliJ</a>
   </li>
   <li class="nav-item">
     <a class="nav-link active" role="tab" aria-selected="true">Visual Studio Code</a>
   </li>
 </ul>
 
-## Installation and setup
+## 초기화 및 셋업 {:#installation-and-setup}
 
-Follow the [Set up an editor][] instructions to
-install the Dart and Flutter extensions
-(also called plugins).
+[편집기 설정][Set up an editor] 지침에 따라, 
+Dart 및 Flutter 확장 프로그램(플러그인이라고도 함)을 설치하세요.
 
-### Updating the extension {:#updating}
+### 확장 프로그램 업데이트 {:#updating}
 
-Updates to the extensions are shipped on a regular basis.
-By default, VS Code automatically updates extensions when
-updates are available.
+확장 프로그램 업데이트는 정기적으로 제공됩니다. 
+기본적으로, VS Code는 업데이트가 있을 때 자동으로 확장 프로그램을 업데이트합니다.
 
-To install updates yourself:
+직접 업데이트를 설치하려면:
 
-1. Click **Extensions** in the Side Bar.
-1. If the Flutter extension has an available update,
-   click **Update** and then **Reload**.
-1. Restart VS Code.
+1. 사이드 바에서 **Extensions**을 클릭합니다.
+2. Flutter 확장 프로그램에 사용 가능한 업데이트가 있는 경우, **Update**를 클릭한 다음 **Reload**를 클릭합니다.
+3. VS Code를 다시 시작합니다.
 
-## Creating projects
+## 프로젝트 생성 {:#creating-projects}
 
-There are a couple ways to create a new project.
+새로운 프로젝트를 만드는 방법에는 여러 가지가 있습니다.
 
-### Creating a new project
+### 새로운 프로젝트 만들기 {:#creating-a-new-project}
 
-To create a new Flutter project from the Flutter
-starter app template:
+Flutter 스타터 앱 템플릿에서 새 Flutter 프로젝트를 만들려면:
 
-1. Go to **View** <span aria-label="and then">></span>
-   **Command Palette...**.
+1. **View** <span aria-label="and then">></span> **Command Palette...**로 이동합니다.
 
-   You can also press <kbd>Ctrl</kbd> / <kbd>Cmd</kbd> +
-   <kbd>Shift</kbd> + <kbd>P</kbd>.
+   <kbd>Ctrl</kbd> / <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd>를 누를 수도 있습니다.
 
-1. Type `flutter`.
-1. Select the **Flutter: New Project**.
-1. Press <kbd>Enter</kbd>.
-1. Select **Application**.
-1. Press <kbd>Enter</kbd>.
-1. Select a **Project location**.
-1. Enter your desired **Project name**.
+2. `flutter`를 입력합니다.
+3. **Flutter: New Project**를 선택합니다.
+4. <kbd>Enter</kbd>를 누릅니다.
+5. **Application**을 선택합니다.
+6. <kbd>Enter</kbd>를 누릅니다.
+7. **Project location**을 선택합니다.
+8. 원하는 **Project name**을 입력합니다.
 
-### Opening a project from existing source code
+### 기존 소스 코드에서 프로젝트 열기 {:#opening-a-project-from-existing-source-code}
 
-To open an existing Flutter project:
+기존 Flutter 프로젝트를 여는 방법:
 
-1. Go to **File** <span aria-label="and then">></span> **Open**.
+1. **File** <span aria-label="and then">></span> **Open**로 이동합니다.
 
-   You can also press <kbd>Ctrl</kbd> / <kbd>Cmd</kbd> + <kbd>O</kbd>
+   <kbd>Ctrl</kbd> / <kbd>Cmd</kbd> + <kbd>O</kbd>를 누를 수도 있습니다.
 
-1. Browse to the directory holding your existing
-   Flutter source code files.
-1. Click **Open**.
+2. 기존 Flutter 소스 코드 파일이 있는 디렉토리로 이동합니다.
+3. **Open**를 클릭합니다.
 
-## Editing code and viewing issues
+## 코드 편집 및 문제 보기 {:#editing-code-and-viewing-issues}
 
-The Flutter extension performs code analysis.
-The code analysis can:
+Flutter 확장 프로그램은 코드 분석을 수행합니다.
+코드 분석은 다음을 수행할 수 있습니다.
 
-- Highlight language syntax
-- Complete code based on rich type analysis
-- Navigate to type declarations
+- 언어 구문 강조
+- 풍부한 타입 분석을 기반으로 코드 완성
+- 타입 선언으로 이동
 
-  - Go to **Go** <span aria-label="and then">></span> **Go to Definition**.
-  - You can also press <kbd>F12</kbd>.
+  - **Go** <span aria-label="그리고">></span> **Go to Definition**으로 이동합니다.
+  - <kbd>F12</kbd>를 누를 수도 있습니다.
 
-- Find type usages.
+- 타입 사용법 찾기
 
-  - Press <kbd>Shift</kbd> + <kbd>F12</kbd>.
+  - <kbd>Shift</kbd> + <kbd>F12</kbd>를 누릅니다.
 
-- View all current source code problems.
+- 모든 현재 소스 코드 문제 보기
 
-  - Go to **View** <span aria-label="and then">></span> **Problems**.
-  - You can also press <kbd>Ctrl</kbd> / <kbd>Cmd</kbd> +
-    <kbd>Shift</kbd> + <kbd>M</kbd>.
-  - The Problems pane displays any analysis issues:<br>
-    ![Problems pane](/assets/images/docs/tools/vs-code/problems.png){:.mw-100 .pt-1}
+  - **View** <span aria-label="그리고">></span> **Problems**로 이동합니다.
+  - <kbd>Ctrl</kbd> / <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>M</kbd>을 누를 수도 있습니다.
+  - 문제 창에는 모든 분석 문제가 표시됩니다.<br>
+    ![문제 창](/assets/images/docs/tools/vs-code/problems.png){:.mw-100 .pt-1}
 
-## Running and debugging
+## 실행 및 디버깅 {:#running-and-debugging}
 
 :::note
-You can debug your app in a couple of ways.
+앱을 디버깅하는 방법은 여러 가지가 있습니다.
 
-- Using [DevTools][], a suite of debugging and profiling
-  tools that run in a browser.
-- Using VS Code's built-in debugging features,
-  such as setting breakpoints.
+- 브라우저에서 실행되는 디버깅 및 프로파일링 도구 모음인 [DevTools][] 사용
+- 중단점 설정과 같은, VS Code의 빌트인 디버깅 기능 사용
 
-The instructions below describe features available in VS Code.
-For information on launching and using DevTools, see
-[Running DevTools from VS Code][] in the [DevTools][] docs.
+아래 지침에서는 VS Code에서 사용할 수 있는 기능을 설명합니다.
+DevTools 시작 및 사용에 대한 자세한 내용은 [DevTools][] 문서의 [VS Code에서 DevTools 실행][Running DevTools from VS Code]을 참조하세요.
 :::
 
-Start debugging by clicking **Run > Start Debugging**
-from the main IDE window, or press <kbd>F5</kbd>.
+IDE 창에서 **Run > Start Debugging**을 클릭하거나, <kbd>F5</kbd>를 눌러 디버깅을 시작합니다.
 
-### Selecting a target device
+### 대상 장치 선택 {:#selecting-a-target-device}
 
-When a Flutter project is open in VS Code,
-you should see a set of Flutter specific entries in the status bar,
-including a Flutter SDK version and a
-device name (or the message **No Devices**):<br>
+VS Code에서 Flutter 프로젝트를 열면, 
+상태 표시줄에 Flutter SDK 버전과 장치 이름(또는 **No Devices** 메시지)을 포함한 
+Flutter 관련 항목 세트가 표시되어야 합니다.<br>
 ![VS Code status bar][]{:.mw-100 .pt-1}
 
 :::note
-- If you do not see a Flutter version number or device info,
-  your project might not have been detected as a Flutter project.
-  Ensure that the folder that contains your `pubspec.yaml` is
-  inside a VS Code **Workspace Folder**.
-- If the status bar reads **No Devices**, Flutter has not been
-  able to discover any connected iOS or Android devices or simulators.
-  You need to connect a device, or start a simulator or emulator,
-  to proceed.
+- Flutter 버전 번호나 기기 정보가 보이지 않으면, 프로젝트가 Flutter 프로젝트로 감지되지 않았을 수 있습니다. 
+  `pubspec.yaml`이 포함된 폴더가 VS Code **Workspace Folder** 안에 있는지 확인하세요.
+- 상태 표시줄에 **No Devices**이라고 표시되면, 
+  Flutter가 연결된 iOS 또는 Android 기기나 시뮬레이터를 발견하지 못한 것입니다. 
+  계속하려면, 기기를 연결하거나 시뮬레이터나 에뮬레이터를 시작해야 합니다.
 :::
 
-The Flutter extension automatically selects the last device connected.
-However, if you have multiple devices/simulators connected, click
-**device** in the status bar to see a pick-list
-at the top of the screen. Select the device you want to use for
-running or debugging.
+Flutter 확장 프로그램은 자동으로 마지막으로 연결된 기기를 선택합니다. 
+그러나, 여러 기기/시뮬레이터가 연결된 경우, 상태 표시줄에서 **device**를 클릭하여, 
+화면 상단에 선택 리스트를 확인합니다. 
+실행 또는 디버깅에 사용할 기기를 선택합니다.
 
 :::secondary
-**Are you developing for macOS or iOS remotely using
-Visual Studio Code Remote?** If so, you might need to manually
-unlock the keychain. For more information, see this
-[question on StackExchange][].
+**Visual Studio Code Remote를 사용하여 macOS 또는 iOS를 원격으로 개발하고 있습니까?** 
+그렇다면, 키체인을 수동으로 잠금 해제해야 할 수 있습니다. 
+자세한 내용은 이 [StackExchange의 질문][question on StackExchange]을 참조하세요.
 :::
 
 [question on StackExchange]: https://superuser.com/questions/270095/when-i-ssh-into-os-x-i-dont-have-my-keychain-when-i-use-terminal-i-do/363840#363840
 
-### Run app without breakpoints
+### 중단점 없이 앱 실행 {:#run-app-without-breakpoints}
 
-Go to **Run** > **Start Without Debugging**.
+**Run** > **Start Without Debugging**으로 이동합니다.
 
-You can also press <kbd>Ctrl</kbd> + <kbd>F5</kbd>.
+<kbd>Ctrl</kbd> + <kbd>F5</kbd>를 누를 수도 있습니다.
 
-### Run app with breakpoints
+### 중단점을 사용하여 앱 실행 {:#run-app-with-breakpoints} 
 
-1. If desired, set breakpoints in your source code.
-1. Click **Run** <span aria-label="and then">></span> **Start Debugging**.
-   You can also press <kbd>F5</kbd>.
-   The status bar turns orange to show you are in a debug session.<br>
-   ![Debug console](/assets/images/docs/tools/vs-code/debug_console.png){:.mw-100 .pt-1}
+1. 원하는 경우, 소스 코드에 중단점을 설정합니다.
+2. **Run** <span aria-label="and then">></span> **Start Debugging**을 클릭합니다.
+   <kbd>F5</kbd>를 누를 수도 있습니다.
+   상태 표시줄이 주황색으로 바뀌어, 디버그 세션에 있음을 나타냅니다.<br>
+   ![디버그 콘솔](/assets/images/docs/tools/vs-code/debug_console.png){:.mw-100 .pt-1}
 
-   - The left **Debug Sidebar** shows stack frames and variables.
-   - The bottom **Debug Console** pane shows detailed logging output.
-   - Debugging is based on a default launch configuration.
-     To customize, click the cog at the top of the
-     **Debug Sidebar** to create a `launch.json` file.
-     You can then modify the values.
+   - 왼쪽 **Debug Sidebar**에는 스택 프레임과 변수가 표시됩니다.
+   - 아래쪽 **Debug Console** 창에는 자세한 로깅 출력이 표시됩니다.
+   - 디버깅은 기본 실행 구성을 기반으로 합니다. 
+     커스터마이즈하려면, **Debug Sidebar** 상단의 톱니바퀴를 클릭하여, `launch.json` 파일을 만듭니다. 
+     그런 다음 값을 수정할 수 있습니다.
 
-### Run app in debug, profile, or release mode
+### 디버그, 프로필 또는 릴리스 모드에서 앱 실행 {:#run-app-in-debug-profile-or-release-mode}
 
-Flutter offers many different build modes to run your app in. 
-You can read more about them in [Flutter's build modes][].
+Flutter는 앱을 실행하기 위한 다양한 빌드 모드를 제공합니다.
+자세한 내용은 [Flutter의 빌드 모드][Flutter's build modes]에서 확인할 수 있습니다.
 
-1. Open the `launch.json` file in VS Code.
+1. VS Code에서 `launch.json` 파일을 엽니다.
 
-   If you don't have a `launch.json` file:
+`launch.json` 파일이 없는 경우:
 
    {: type="a"}
-   1. Go to **View** <span aria-label="and then">></span> **Run**.
+   1. **View** <span aria-label="and then">></span> **Run**으로 이동합니다.
 
-      You can also press <kbd>Ctrl</kbd> / <kbd>Cmd</kbd> +
-      <kbd>Shift</kbd> + <kbd>D</kbd>
+      <kbd>Ctrl</kbd> / <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>D</kbd>를 누를 수도 있습니다.
 
-      The **Run and Debug** panel displays.
+      **Run and Debug** 패널이 표시됩니다.
 
-   1. Click **create a launch.json file**.
+   2. **create a launch.json file**을 클릭합니다.
 
-1. In the `configurations` section,
-   change the `flutterMode` property to
-   the build mode you want to target.
+1. `configurations` 섹션에서, `flutterMode` 속성을 대상으로 삼고 싶은 빌드 모드로 변경합니다.
 
-   For example, if you want to run in debug mode,
-   your `launch.json` might look like this:
+   예를 들어, 디버그 모드에서 실행하려면 `launch.json`이 다음과 같을 수 있습니다.
 
     ```json
     "configurations": [
@@ -201,152 +179,127 @@ You can read more about them in [Flutter's build modes][].
     ]
     ```
 
-1. Run the app through the **Run** panel.
+2. **Run** 패널을 통해 앱을 실행합니다.
 
-## Fast edit and refresh development cycle
+## 빠른 편집 및 개발 주기 새로 고침 {:#fast-edit-and-refresh-development-cycle}
 
-Flutter offers a best-in-class developer cycle enabling you
-to see the effect of your changes almost instantly with the
-_Stateful Hot Reload_ feature.
-To learn more, check out [Hot reload][].
+Flutter는 _Stateful Hot Reload_ 기능으로 변경 사항의 효과를 거의 즉시 확인할 수 있는, 
+동급 최고의 개발자 주기를 제공합니다. 
+자세한 내용은 [Hot reload][]를 확인하세요.
 
-## Advanced debugging
+## 고급 디버깅 {:#advanced-debugging}
 
-You might find the following advanced debugging tips useful:
+다음의 고급 디버깅 팁이 유용할 수 있습니다.
 
-### Debugging visual layout issues
+### 시각적 레이아웃 문제 디버깅 {:#debugging-visual-layout-issues}
 
-During a debug session,
-several additional debugging commands are added to the
-[Command Palette][] and to the [Flutter inspector][].
-When space is limited, the icon is used as the visual
-version of the label.
+디버그 세션 동안, 여러 추가 디버깅 명령이 [Command Palette][] 및 [Flutter inspector][]에 추가됩니다. 
+공간이 제한되면, 아이콘이 레이블의 시각적 버전으로 사용됩니다.
 
-**Toggle Baseline Painting** ![Baseline painting icon](/assets/images/docs/tools/devtools/paint-baselines-icon.png){:width="20px"}
-: Causes each RenderBox to paint a line at each of its baselines.
+**베이스라인 페인팅 토글** ![Baseline painting icon](/assets/images/docs/tools/devtools/paint-baselines-icon.png){:width="20px"}
+: 각 RenderBox가 각 베이스라인에 선을 그리도록 합니다.
 
-**Toggle Repaint Rainbow** ![Repaint rainbow icon](/assets/images/docs/tools/devtools/repaint-rainbow-icon.png){:width="20px"}
-: Shows rotating colors on layers when repainting.
+**리페인트 레인보우 토글** ![Repaint rainbow icon](/assets/images/docs/tools/devtools/repaint-rainbow-icon.png){:width="20px"}
+: 다시 칠할 때(리페인트) 레이어의 색상을 회전하여 표시합니다.
 
-**Toggle Slow Animations** ![Slow animations icon](/assets/images/docs/tools/devtools/slow-animations-icon.png){:width="20px"}
-: Slows down animations to enable visual inspection.
+**느린 애니메이션 토글** ![Slow animations icon](/assets/images/docs/tools/devtools/slow-animations-icon.png){:width="20px"}
+: 시각적으로 검사할 수 있도록 애니메이션 속도를 늦춥니다.
 
-**Toggle Debug Mode Banner** ![Debug mode banner icon](/assets/images/docs/tools/devtools/debug-mode-banner-icon.png){:width="20px"}
-: Hides the debug mode banner even when running a debug build.
+**디버그 모드 배너 토글** ![Debug mode banner icon](/assets/images/docs/tools/devtools/debug-mode-banner-icon.png){:width="20px"}
+: 디버그 빌드를 실행하는 동안에도 디버그 모드 배너를 숨깁니다.
 
-### Debugging external libraries
+### 외부 라이브러리 디버깅 {:#debugging-external-libraries}
 
-By default, debugging an external library is disabled
-in the Flutter extension. To enable:
+기본적으로, Flutter 확장 프로그램에서 외부 라이브러리 디버깅은 비활성화되어 있습니다. 활성화하려면:
 
-1. Select **Settings > Extensions > Dart Configuration**.
-2. Check the `Debug External Libraries` option.
+1. **Settings > Extensions > Dart Configuration**을 선택합니다.
+2. `Debug External Libraries` 옵션을 선택합니다.
 
-## Editing tips for Flutter code
+## Flutter 코드 편집 팁 {:#editing-tips-for-flutter-code}
 
-If you have additional tips we should share, [let us know][]!
+추가로 공유하고 싶은 팁이 있다면, [알려주세요][let us know]!
 
-### Assists & quick fixes
+### 지원 및 빠른 수정 {:#assists-quick-fixes}
 
-Assists are code changes related to a certain code identifier.
-A number of these are available when the cursor is placed on a
-Flutter widget identifier, as indicated by the yellow lightbulb icon.
-To invoke the assist, click the lightbulb as shown in the following screenshot:
+지원은 특정 코드 식별자와 관련된 코드 변경입니다. 
+노란색 전구 아이콘으로 표시된 대로, Flutter 위젯 식별자에 커서를 놓으면, 이러한 지원 중 일부를 사용할 수 있습니다. 
+지원을 호출하려면, 다음 스크린샷에 표시된 대로 전구를 클릭합니다.
 
 ![Code assists](/assets/images/docs/tools/vs-code/assists.png){:width="467px"}
 
-You can also press <kbd>Ctrl</kbd> / <kbd>Cmd</kbd> + <kbd>.</kbd>
+<kbd>Ctrl</kbd> / <kbd>Cmd</kbd> + <kbd>.</kbd>를 누를 수도 있습니다.
 
-Quick fixes are similar,
-only they are shown with a piece of code has an error and they
-can assist in correcting it.
+빠른 수정은 비슷하지만, 오류가 있는 코드 조각과 함께 표시되고, 이를 수정하는 데 도움이 될 수 있습니다.
 
-**Wrap with new widget assist**
-: This can be used when you have a widget that you want to wrap
-  in a surrounding widget, for example if you want to wrap a
-  widget in a `Row` or `Column`.
+**새로운 위젯 지원(widget assist)으로 래핑**
+: 주변 위젯에 래핑하려는 위젯이 있는 경우, 
+  예를 들어 위젯을 `Row` 또는 `Column`에 래핑하려는 경우 사용할 수 있습니다.
 
-**Wrap widget list with new widget assist**
-: Similar to the assist above, but for wrapping an existing
-  list of widgets rather than an individual widget.
+**새로운 위젯 지원으로 위젯 리스트 래핑**
+: 위의 지원과 유사하지만, 개별 위젯이 아닌 기존 위젯 리스트를 래핑합니다.
 
-**Convert child to children assist**
-: Changes a child argument to a children argument,
-  and wraps the argument value in a list.
+**child에서 children으로 변환 지원**
+: child 인수를 children 인수로 변경하고, 인수 값을 리스트로 래핑합니다.
 
-**Convert StatelessWidget to StatefulWidget assist**
-: Changes the implementation of a `StatelessWidget` to that of
-  a `StatefulWidget`, by creating the `State` class and moving
-  the code there.
+**StatelessWidget에서 StatefulWidget 지원으로 변환**
+: `State` 클래스를 생성하고 코드를 그곳으로 이동하여, 
+  `StatelessWidget`의 구현을 `StatefulWidget`의 구현으로 변경합니다.
 
-### Snippets
+### 스니펫 {:#snippets}
 
-Snippets can be used to speed up entering typical code structures.
-They are invoked by typing their prefix,
-and then selecting from the code completion window:
+스니펫은 일반적인 코드 구조 입력 속도를 높이는 데 사용할 수 있습니다. 
+스니펫은 접두사를 입력한 다음, 코드 완성 창에서 선택하여 호출합니다.
+
 ![Snippets](/assets/images/docs/tools/vs-code/snippets.png){:width="100%"}
 
-The Flutter extension includes the following snippets:
+Flutter 확장 프로그램에는 다음 스니펫이 포함되어 있습니다.
 
-- Prefix `stless`: Create a new subclass of -StatelessWidget`.
-- Prefix `stful`: Create a new subclass of `StatefulWidget`
-  and its associated State subclass.
-- Prefix `stanim`: Create a new subclass of `StatefulWidget`,
-  and its associated State subclass including a field initialized
-  with an `AnimationController`.
+- 접두사 `stless`: `StatelessWidget`의 새 하위 클래스를 만듭니다.
+- 접두사 `stful`: `StatefulWidget`의 새 하위 클래스와 연관된 State 하위 클래스를 만듭니다.
+- 접두사 `stanim`: `StatefulWidget`의 새 하위 클래스와 연관된 State 하위 클래스를 만듭니다. 
+  여기에는 `AnimationController`로 초기화된 필드가 포함됩니다.
 
-You can also define custom snippets by executing
-**Configure User Snippets** from the [Command Palette][].
+[Command Palette][]에서 **Configure User Snippets**를 실행하여, 커스텀 스니펫을 정의할 수도 있습니다.
 
-### Keyboard shortcuts
+### 키보드 단축키 {:#keyboard-shortcuts}
 
-**Hot reload**
-: To perform a hot reload during a debug session,
-  click **Hot Reload** on the **Debug Toolbar**.
-  
-  You can also press <kbd>Ctrl</kbd> + <kbd>F5</kbd>
-  (<kbd>Cmd</kbd> + <kbd>F5</kbd>  on macOS).
+**핫 리로드**
+: 디버그 세션 중에 핫 리로드를 수행하려면, **Debug Toolbar**에서 **Hot Reload**를 클릭합니다.
 
-  Keyboard mappings can be changed by executing the
-  **Open Keyboard Shortcuts** command from the [Command Palette][].
+  <kbd>Ctrl</kbd> + <kbd>F5</kbd>(macOS에서는 <kbd>Cmd</kbd> + <kbd>F5</kbd>)를 누를 수도 있습니다.
 
-### Hot reload vs. hot restart
+  키보드 매핑은 [Command Palette][]에서 **Open Keyboard Shortcuts** 명령을 실행하여 변경할 수 있습니다.
 
-Hot reload works by injecting updated source code files into the
-running Dart VM (Virtual Machine). This includes not only
-adding new classes, but also adding methods and fields to
-existing classes, and changing existing functions.
-A few types of code changes cannot be hot reloaded though:
+### 핫 리로드 vs 핫 리스타트 {:#hot-reload-vs-hot-restart}
 
-- Global variable initializers
-- Static field initializers
-- The `main()` method of the app
+핫 리로드는 업데이트된 소스 코드 파일을 실행 중인 Dart VM(가상 머신)에 주입하여 작동합니다. 
+여기에는 새 클래스를 추가하는 것뿐만 아니라, 기존 클래스에 메서드와 필드를 추가하고 기존 함수를 변경하는 것도 포함됩니다. 
+그러나 몇 가지 유형의 코드 변경은 핫 리로드할 수 없습니다.
 
-For these changes, restart your app without
-ending your debugging session. To perform a hot restart,
-run the **Flutter: Hot Restart** command from the [Command Palette][].
+- 전역 변수 초기화자 (Global variable initializers)
+- 정적 필드 초기화자 (Static field initializers)
+- 앱의 `main()` 메서드
 
-You can also press
-<kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>F5</kbd>
-or <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>F5</kbd> on macOS.
+이러한 변경의 경우, 디버깅 세션을 종료하지 않고 앱을 다시 시작합니다. 
+핫 리스타트를 수행하려면, [Command Palette][]에서 **Flutter: Hot Restart** 명령을 실행합니다.
 
-## Troubleshooting
+<kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>F5</kbd> 또는 
+macOS에서는 <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>F5</kbd>를 누를 수도 있습니다.
 
-### Known issues and feedback
+## 문제 해결 {:#troubleshooting}
 
-All known bugs are tracked in the issue tracker:
-[Dart and Flutter extensions GitHub issue tracker][issue tracker].
-We welcome feedback,
-both on bugs/issues and feature requests.
+### 알려진 문제 및 피드백 {:#known-issues-and-feedback}
 
-Prior to filing new issues:
+알려진 모든 버그는 이슈 트래커에서 추적됩니다: 
+[Dart 및 Flutter 확장 GitHub 이슈 트래커][issue tracker]. 
+버그/이슈와 기능 요청에 대한 피드백을 환영합니다.
 
-- Do a quick search in the issue trackers to see if the
-  issue is already tracked.
-- Make sure you are [up to date](#updating) with the most recent
-  version of the plugin.
+새로운 이슈를 제출하기 전에:
 
-When filing new issues, include [flutter doctor][] output.
+- 이슈 트래커에서 빠르게 검색하여, 이슈가 이미 추적되고 있는지 확인합니다.
+- 플러그인의 최신 버전으로 [업데이트](#updating)되어 있는지 확인합니다.
+
+새로운 이슈를 제출할 때, [flutter doctor][] 출력을 포함합니다.
 
 [Command Palette]: https://code.visualstudio.com/docs/getstarted/userinterface#_command-palette
 [DevTools]: /tools/devtools

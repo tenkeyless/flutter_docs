@@ -1,65 +1,61 @@
-Once you [turn on Swift Package Manager][], the Flutter CLI tries to migrate
-your project to use Swift Package Manager the next time you run your app
-using the CLI.
+[Swift Package Manager를 켜면][turn on Swift Package Manager], 
+Flutter CLI는 다음에 CLI를 사용하여 앱을 실행할 때, 
+Swift Package Manager를 사용하도록 프로젝트를 마이그레이션하려고 시도합니다.
 
-However, the Flutter CLI tool might be unable to migrate your project
-automatically if there are unexpected modifications.
+그러나, Flutter CLI 도구는 예상치 못한 수정 사항이 있는 경우, 
+프로젝트를 자동으로 마이그레이션하지 못할 수 있습니다.
 
-If the automatic migration fails, use the steps below to add Swift Package
-Manager integration to a project manually.
+자동 마이그레이션이 실패하면, 
+아래 단계에 따라 프로젝트에 Swift Package Manager 통합을 수동으로 추가하세요.
 
-Before migrating manually, [file an issue][]; this helps the Flutter team
-improve the automatic migration process.
-Include the error message and, if possible, include a copy of
-the following files in your issue:
+수동으로 마이그레이션하기 전에, [문제를 제출하세요][file an issue]. 
+이렇게 하면 Flutter 팀이 자동 마이그레이션 프로세스를 개선하는 데 도움이 됩니다. 
+오류 메시지를 포함하고, 가능하면 문제에 다음 파일의 사본을 포함하세요.
 
 * `ios/Runner.xcodeproj/project.pbxproj`
-* `ios/Runner.xcodeproj/xcshareddata/xcschemes/Runner.xcscheme`
-   (or the xcsheme for the flavor used)
+* `ios/Runner.xcodeproj/xcshareddata/xcschemes/Runner.xcscheme` (또는 사용된 플레이버의 xcsheme)
 
-### Step 1: Add FlutterGeneratedPluginSwiftPackage Package Dependency {:.no_toc}
+### 스텝 1: FlutterGeneratedPluginSwiftPackage 패키지 종속성 추가 {:#step-1-add-fluttergeneratedpluginswiftpackage-package-dependency .no_toc}
 
-1. Open your app (`ios/Runner.xcworkspace`) in Xcode.
-1. Navigate to **Package Dependencies** for the project.
+1. Xcode에서 앱(`ios/Runner.xcworkspace`)을 엽니다.
+2. 프로젝트의 **Package Dependencies**로 이동합니다.
 
    {% render docs/captioned-image.liquid,
    image:"development/packages-and-plugins/swift-package-manager/package-dependencies.png",
-   caption:"The project's package dependencies" %}
+   caption:"프로젝트의 패키지 종속성" %}
 
-1. Click <span class="material-symbols-outlined">add</span>.
-1. In the dialog that opens, click **Add Local...**.
-1. Navigate to `ios/Flutter/ephemeral/Packages/FlutterGeneratedPluginSwiftPackage`
-   and click **Add Package**.
-1. Ensure that it's added to the `Runner` target and click **Add Package**.
+3. <span class="material-symbols-outlined">add</span>를 클릭합니다.
+4. 열리는 대화 상자에서, **Add Local...**를 클릭합니다.
+5. `ios/Flutter/ephemeral/Packages/FlutterGeneratedPluginSwiftPackage`로 이동하여, **Add Package**를 클릭합니다.
+1. `Runner` 대상에 추가되었는지 확인하고, **Add Package**를 클릭합니다.
  
    {% render docs/captioned-image.liquid,
    image:"development/packages-and-plugins/swift-package-manager/choose-package-products.png",
-   caption:"Ensure that the package is added to the `Runner` target" %}
+   caption:"패키지가 `Runner` 대상에 추가되었는지 확인하세요." %}
 
-1. Ensure that `FlutterGeneratedPluginSwiftPackage` was added to **Frameworks,
-   Libraries, and Embedded Content**.
+2. `FlutterGeneratedPluginSwiftPackage`가 **Frameworks, Libraries, and Embedded Content**에 추가되었는지 확인하세요.
 
    {% render docs/captioned-image.liquid,
    image:"development/packages-and-plugins/swift-package-manager/add-generated-framework.png",
-   caption:"Ensure that `FlutterGeneratedPluginSwiftPackage` was added to **Frameworks, Libraries, and Embedded Content**" %}
+   caption:"`FlutterGeneratedPluginSwiftPackage`가 **Frameworks, Libraries, and Embedded Content**에 추가되었는지 확인하세요. %}
 
-### Step 2: Add Run Prepare Flutter Framework Script Pre-Action {:.no_toc}
+### 스텝 2: Flutter Framework 스크립트 사전 작업(Pre-Action) 실행 준비 추가 {:#step-2-add-run-prepare-flutter-framework-script-pre-action .no_toc}
 
-**The following steps must be completed for each flavor.**
+**각 플레이버에 대해 다음 단계를 완료해야 합니다.**
 
-1. Go to **Product > Scheme > Edit Scheme**.
-1. Expand the **Build** section in the left side bar.
-1. Click **Pre-actions**.
-1. Click <span class="material-symbols-outlined">add</span> and
-   select **New Run Script Action** from the menu.
-1. Click the **Run Script** title and change it to:
+1. **Product > Scheme > Edit Scheme**으로 이동합니다.
+1. 왼쪽 사이드바에서 **Build** 섹션을 확장합니다.
+1. **Pre-actions**을 클릭합니다.
+1. <span class="material-symbols-outlined">add</span>를 클릭하고, 
+   메뉴에서 **New Run Script Action**을 선택합니다.
+2. **Run Script** 제목을 클릭하고 다음과 같이 변경합니다.
 
    ```plaintext
    Run Prepare Flutter Framework Script
    ```
 
-1. Change the **Provide build settings from** to the `Runner` app.
-1. Input the following in the text box:
+3. **Provide build settings from**을 `Runner` 앱으로 변경합니다.
+4. 텍스트 상자에 다음을 입력합니다.
 
    ```sh
    "$FLUTTER_ROOT/packages/flutter_tools/bin/xcode_backend.sh" prepare
@@ -67,19 +63,19 @@ the following files in your issue:
 
    {% render docs/captioned-image.liquid,
    image:"development/packages-and-plugins/swift-package-manager/add-flutter-pre-action.png",
-   caption:"Add **Run Prepare Flutter Framework Script** build pre-action" %}
+   caption:"**Run Prepare Flutter Framework Script** 빌드 사전 작업(pre-action) 추가 %}
 
-### Step 3: Run app {:.no_toc}
+### 스텝 3: 앱 실행하기  {:#step-3-run-app .no_toc}
 
-1. Run the app in Xcode.
-1. Ensure that  **Run Prepare Flutter Framework Script** runs as a pre-action
-   and that `FlutterGeneratedPluginSwiftPackage` is a target dependency.
+1. Xcode에서 앱을 실행합니다.
+1. **Run Prepare Flutter Framework Script**가 사전 작업(pre-action)으로 실행되고, 
+   `FlutterGeneratedPluginSwiftPackage`가 대상 종속성인지 확인합니다.
 
    {% render docs/captioned-image.liquid,
    image:"development/packages-and-plugins/swift-package-manager/flutter-pre-action-build-log.png",
-   caption:"Ensure **Run Prepare Flutter Framework Script** runs as a pre-action" %}
+   caption:"**Run Prepare Flutter Framework Script**가 사전 작업(pre-action)으로 실행되도록 합니다." %}
 
-1. Ensure that the app runs on the command line with `flutter run`.
+2. `flutter run`을 사용하여 앱이 명령줄에서 실행되는지 확인하세요.
 
 [turn on Swift Package Manager]: /packages-and-plugins/swift-package-manager/for-app-developers/#how-to-turn-on-swift-package-manager
 [file an issue]: {{site.github}}/flutter/flutter/issues/new?template=2_bug.yml

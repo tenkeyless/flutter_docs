@@ -1,6 +1,6 @@
 <div class="tab-pane active" id="vscode" role="tabpanel" aria-labelledby="vscode-tab">
 
-### Create a sample Flutter app {:#create-app-vs-code}
+### 샘플 Flutter 앱 만들기 {:#create-app-vs-code}
 
 1. To use Flutter DevTools from VS Code, install the
     [Flutter extension](https://marketplace.visualstudio.com/items?itemName=Dart-Code.flutter).
@@ -34,7 +34,7 @@
 The previous commands create a Flutter project directory called `test_drive` that
 contains a simple demo app that uses [Material Components][].
 
-### Run your sample Flutter app
+### 샘플 Flutter 앱 실행 {:#run-your-sample-flutter-app}
 
 Run your example application on your desktop platform, in the Chrome web browser, in an iOS simulator, or
 Android emulator.

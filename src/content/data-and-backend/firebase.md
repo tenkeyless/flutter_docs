@@ -1,47 +1,46 @@
 ---
 title: Firebase
-description: How to use Firebase and Firestore with Flutter.
+# description: How to use Firebase and Firestore with Flutter.
+description: Flutter와 함께 Firebase와 Firestore를 사용하는 방법.
 ---
 
-Firebase is a Backend-as-a-Service (BaaS) app development platform
-that provides hosted backend services such as a realtime database,
-cloud storage, authentication, crash reporting, machine learning,
-remote configuration, and hosting for your static files.
+Firebase는 실시간 데이터베이스, 클라우드 스토리지, 인증, 충돌 보고, 머신 러닝, 원격 구성, 정적 파일 호스팅과 같은 
+호스팅된 백엔드 서비스를 제공하는 백엔드 서비스(BaaS, Backend-as-a-Service) 앱 개발 플랫폼입니다.
 
-## Flutter and Firebase resources
+## Flutter와 Firebase 리소스 {:#flutter-and-firebase-resources}
 
-Firebase supports Flutter. To learn more,
-check out the following resources.
+Firebase는 Flutter를 지원합니다. 자세히 알아보려면, 다음 리소스를 확인하세요.
 
-### Documentation
+### 문서
 
-* [Getting started with Firebase and Flutter][started]
-* [Firebase plugins][]
+* [Firebase 및 Flutter 시작하기][started]
+* [Firebase 플러그인][Firebase plugins]
 
-### Blog Posts
+### 블로그 포스트
 
-[Use Firebase to host your Flutter app on the web][article]
+[Firebase를 사용하여 웹에서 Flutter 앱을 호스팅하세요][article]
 
-### Tutorials
+### 튜토리얼
 
-Get to know Firebase for Flutter
-* [tutorial][codelab1]
-* [video workshop][workshop]
+Flutter를 위한 Firebase 알아보기
 
-## Flutter and Firebase community resources
+* [튜토리얼][codelab1]
+* [비디오 워크샵][workshop]
 
-The Flutter community created the following useful resources.
+## Flutter 및 Firebase 커뮤니티 리소스 {:#flutter-and-firebase-community-resources}
 
-### Blog Posts
+Flutter 커뮤니티는 다음과 같은 유용한 리소스를 만들었습니다.
 
-[Building chat app with Flutter and Firebase][chat app]
+### 블로그 포스트
 
-### Videos
+[Flutter와 Firebase를 사용하여 채팅 앱 구축][chat app]
 
-* [Using Firestore as a backend to your Flutter app][video]
-* [Live Coding Firebase Authentication with Flutter][video2]
+### 비디오
+
+* [Flutter 앱의 백엔드로 Firestore 사용][video]
+* [라이브 코딩 - Flutter를 사용한 Firebase 인증][video2]
 * [Flutter & Firebase Auth 01][video3]
-* [Flutter: Firebase Tutorial Part 1 - Auth and Sign in][video4]
+* [Flutter: Firebase 튜토리얼 1부 - 인증 및 로그인][video4]
 
 [article]: {{site.flutter-medium}}/must-try-use-firebase-to-host-your-flutter-app-on-the-web-852ee533a469
 [chat app]: {{site.medium}}/flutter-community/building-a-chat-app-with-flutter-and-firebase-from-scratch-9eaa7f41782e

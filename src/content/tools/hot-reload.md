@@ -1,98 +1,84 @@
 ---
-title: Hot reload
-description: Speed up development using Flutter's hot reload feature.
+# title: Hot reload
+title: 핫 리로드
+# description: Speed up development using Flutter's hot reload feature.
+description: Flutter의 핫 리로드 기능을 사용하여 개발 속도를 높이세요.
 ---
 
 <?code-excerpt path-base="tools"?>
 
-Flutter's hot reload feature helps you quickly and
-easily experiment, build UIs, add features, and fix bugs.
-Hot reload works by injecting updated source code files
-into the running [Dart Virtual Machine (VM)][].
-After the VM updates classes with the new versions of fields and functions,
-the Flutter framework automatically rebuilds the widget tree,
-allowing you to quickly view the effects of your changes.
+Flutter의 핫 리로드 기능은 빠르고 쉽게 실험하고, UI를 빌드하고, 기능을 추가하고, 버그를 수정하는 데 도움이 됩니다. 
+핫 리로드는 업데이트된 소스 코드 파일을 실행 중인 [Dart Virtual Machine(VM)][]에 주입하여 작동합니다. 
+VM이 새 버전의 필드와 함수로 클래스를 업데이트한 후, Flutter 프레임워크는 자동으로 위젯 트리를 다시 빌드하여, 
+변경 사항의 효과를 빠르게 볼 수 있도록 합니다.
 
-## How to perform a hot reload
+## 핫 리로드를 수행하는 방법 {:#how-to-perform-a-hot-reload}
 
-To hot reload a Flutter app:
+Flutter 앱을 핫 리로드하려면:
 
-1. Run the app from a supported [Flutter editor][] or a terminal window.
-   Either a physical or virtual device can be the target.
-   **Only Flutter apps in debug mode can be hot reloaded or hot restarted.**
-1. Modify one of the Dart files in your project.
-   Most types of code changes can be hot reloaded;
-   for a list of changes that require a hot restart,
-   see [Special cases](#special-cases).
-1. If you're working in an IDE/editor that supports Flutter's IDE tools,
-   select **Save All** (`cmd-s`/`ctrl-s`),
-   or click the hot reload button on the toolbar.
+1. 지원되는 [Flutter 에디터][Flutter editor] 또는 터미널 창에서 앱을 실행합니다. 
+   실제 또는 가상 장치가 대상이 될 수 있습니다. 
+   **디버그 모드의 Flutter 앱만 핫 리로드 또는 핫 재시작이 가능합니다.**
+2. 프로젝트에서 Dart 파일 중 하나를 수정합니다. 
+   대부분의 코드 변경 사항은 핫 리로드할 수 있습니다. 
+   핫 재시작이 필요한 변경 사항 리스트는, [특수 사례](#special-cases)를 참조하세요.
+3. Flutter의 IDE 도구를 지원하는 IDE/편집기에서 작업하는 경우, 
+   **Save All**(`cmd-s`/`ctrl-s`)을 선택하거나, 도구 모음에서 핫 리로드 버튼을 클릭합니다.
 
-   If you're running the app at the command line using `flutter run`,
-   enter `r` in the terminal window.
+  `flutter run`을 사용하여 명령줄에서 앱을 실행하는 경우, 터미널 창에 `r`을 입력합니다.
 
-After a successful hot reload operation,
-you'll see a message in the console similar to:
+핫 리로드 작업이 성공적으로 완료되면, 콘솔에 다음과 유사한 메시지가 표시됩니다.
 
 ```console
 Performing hot reload...
 Reloaded 1 of 448 libraries in 978ms.
 ```
 
-The app updates to reflect your change,
-and the current state of the app is preserved.
-Your app continues to execute from where it was prior
-to run the hot reload command.
-The code updates and execution continues.
+앱은 변경 사항을 반영하도록 업데이트되고, 앱의 현재 상태는 보존됩니다. 
+앱은 핫 리로드 명령을 실행하기 전 위치에서 계속 실행됩니다. 코드가 업데이트되고 실행이 계속됩니다.
 
 :::secondary
-**What is the difference between hot reload, hot restart,
-and full restart?**
+**핫 리로드, 핫 리스타트, 풀 리스타트의 차이점은 무엇인가요?**
 
-* **Hot reload** loads code changes into the VM and re-builds
-  the widget tree, preserving the app state;
-  it doesn't rerun `main()` or `initState()`.
-  (`⌘\` in Intellij and Android Studio, `⌃F5` in VSCode)
-* **Hot restart** loads code changes into the VM,
-  and restarts the Flutter app, losing the app state.
-  (`⇧⌘\` in IntelliJ and Android Studio, `⇧⌘F5` in VSCode)
-* **Full restart** restarts the iOS, Android, or web app.
-  This takes longer because it also recompiles the
-  Java / Kotlin / Objective-C / Swift code. On the web,
-  it also restarts the Dart Development Compiler.
-  There is no specific keyboard shortcut for this;
-  you need to stop and start the run configuration.
+* **핫 리로드**는 
+  * 코드 변경 사항을 VM에 로드하고 위젯 트리를 다시 빌드하고, 앱 상태를 유지합니다. 
+    * `main()` 또는 `initState()`를 다시 실행하지 않습니다. 
+  * (Intellij 및 Android Studio에서는 `⌘\`, VSCode에서는 `⌃F5`)
+* **핫 리스타트**는 
+  * 코드 변경 사항을 VM에 로드하고, Flutter 앱을 다시 시작하며, 앱 상태를 잃습니다. 
+  * (IntelliJ 및 Android Studio에서는 `⇧⌘\`, VSCode에서는 `⇧⌘F5`)
+* **전체 리스타트**는 
+  * iOS, Android 또는 웹 앱을 다시 시작합니다. 
+  * Java/Kotlin/Objective-C/Swift 코드도 다시 컴파일하기 때문에 시간이 더 오래 걸립니다. 
+  * 웹에서는, Dart 개발 컴파일러도 다시 시작합니다. 
+  * 이에 대한 특정 키보드 단축키는 없습니다. 
+    * 실행 구성을 중지했다가 다시 시작해야 합니다.
 
-Flutter web currently supports hot restart but not
-hot reload.
+Flutter 웹은 현재 핫 리스타트를 지원하지만, 핫 리로드는 지원하지 않습니다.
 :::
 
 ![Android Studio UI](/assets/images/docs/development/tools/android-studio-run-controls.png){:width="100%"}<br>
-Controls for run, run debug, hot reload, and hot restart in Android Studio
+Android Studio에서 실행, 실행 디버그, 핫 리로드 및 핫 재시작을 위한 컨트롤
 
-A code change has a visible effect only if the modified
-Dart code is run again after the change. Specifically,
-a hot reload causes all the existing widgets to rebuild.
-Only code involved in the rebuilding of the widgets
-is automatically re-executed. The `main()` and `initState()`
-functions, for example, are not run again.
+코드 변경은 변경 후 수정된 Dart 코드를 다시 실행하는 경우에만 눈에 띄는 효과가 있습니다. 
+구체적으로, 핫 리로드는 모든 기존 위젯을 다시 빌드합니다. 
+위젯을 다시 빌드하는 데 관련된 코드만 자동으로 다시 실행됩니다. 
+예를 들어 `main()` 및 `initState()` 함수는 다시 실행되지 않습니다.
 
-## Special cases
+## 특수한 경우 {:#special-cases}
 
-The next sections describe specific scenarios that involve
-hot reload. In some cases, small changes to the Dart code
-enable you to continue using hot reload for your app.
-In other cases, a hot restart, or a full restart is needed.
+다음 섹션에서는 핫 리로드와 관련된 구체적인 시나리오를 설명합니다. 
+어떤 경우에는, Dart 코드를 약간 변경하면 앱에 핫 리로드를 계속 사용할 수 있습니다. 
+다른 경우에는, 핫 재시작 또는 전체 재시작이 필요합니다.
 
-### An app is killed
+### 앱이 종료됨 {:#an-app-is-killed}
 
-Hot reload can break when the app is killed.
-For example, if the app was in the background for too long.
+앱이 종료되면, 핫 리로드가 중단될 수 있습니다.
+예를 들어, 앱이 너무 오랫동안 백그라운드에 있는 경우.
 
-### Compilation errors
+### 컴파일 오류 {:#compilation-errors}
 
-When a code change introduces a compilation error,
-hot reload generates an error message similar to:
+코드 변경으로 인해 컴파일 오류가 발생하면, 핫 리로드는 다음과 유사한 오류 메시지를 생성합니다.
 
 ```plaintext
 Hot reload was rejected:
@@ -107,21 +93,18 @@ Hot reload was rejected:
 In this situation, simply correct the errors on the
 specified lines of Dart code to keep using hot reload.
 
-### CupertinoTabView's builder
+### CupertinoTabView의 빌더 {:#cupertinotabviews-builder}
 
-Hot reload won't apply changes made to
-a `builder` of a `CupertinoTabView`.
-For more information, see [Issue 43574][].
+핫 리로드는 `CupertinoTabView`의 `builder`에 대한 변경 사항을 적용하지 않습니다. 
+자세한 내용은 [이슈 43574][Issue 43574]를 참조하세요.
 
-### Enumerated types
+### 열거형 타입 {:#enumerated-types}
 
-Hot reload doesn't work when enumerated types are
-changed to regular classes or regular classes are
-changed to enumerated types.
+열거형이 일반 클래스로 변경되거나, 일반 클래스가 열거형으로 변경되면, 핫 리로드가 작동하지 않습니다.
 
-For example:
+예를 들어:
 
-Before the change:
+변경 전:
 <?code-excerpt "lib/hot-reload/before.dart (enum)"?>
 ```dart
 enum Color {
@@ -131,7 +114,7 @@ enum Color {
 }
 ```
 
-After the change:
+변경 후:
 <?code-excerpt "lib/hot-reload/after.dart (enum)"?>
 ```dart
 class Color {
@@ -141,12 +124,12 @@ class Color {
 }
 ```
 
-### Generic types
+### 제네릭 타입 {:#generic-types}
 
-Hot reload won't work when generic type declarations
-are modified. For example, the following won't work:
+제네릭 타입 선언이 수정되면, 핫 리로드가 작동하지 않습니다. 
+예를 들어, 다음은 작동하지 않습니다.
 
-Before the change:
+변경 전:
 <?code-excerpt "lib/hot-reload/before.dart (class)"?>
 ```dart
 class A<T> {
@@ -154,7 +137,7 @@ class A<T> {
 }
 ```
 
-After the change:
+변경 후:
 <?code-excerpt "lib/hot-reload/after.dart (class)"?>
 ```dart
 class A<T, V> {
@@ -163,41 +146,32 @@ class A<T, V> {
 }
 ```
 
-### Native code
+### 네이티브 코드 {:#native-code}
 
-If you've changed native code (such as Kotlin, Java, Swift,
-or Objective-C), you must perform a full restart (stop and
-restart the app) to see the changes take effect.
+네이티브 코드(예: Kotlin, Java, Swift, Objective-C)를 변경한 경우, 
+변경 사항이 적용되는지 확인하려면 전체 재시작(앱을 중지했다가 다시 시작)을 수행해야 합니다.
 
-### Previous state is combined with new code
+### 이전 상태는 새 코드와 결합되는 경우 {:#previous-state-is-combined-with-new-code}
 
-Flutter's stateful hot reload preserves the state of your app.
-This approach enables you to view the effect of the most
-recent change only, without throwing away the current state.
-For example, if your app requires a user to log in,
-you can modify and hot reload a page several levels down in
-the navigation hierarchy, without re-entering your login credentials.
-State is kept, which is usually the desired behavior.
+Flutter의 stateful 핫 리로드는 앱의 상태를 보존합니다. 
+이 접근 방식을 사용하면 현재 상태를 버리지 않고, 가장 최근의 변경 사항의 효과만 볼 수 있습니다. 
+예를 들어, 앱에서 사용자가 로그인해야 하는 경우, 로그인 자격 증명을 다시 입력하지 않고도, 
+네비게이션 계층 구조에서 몇 레벨 아래에 있는 페이지를 수정하고, 핫 리로드할 수 있습니다. 
+상태는 유지되며, 이는 일반적으로 원하는 동작입니다.
 
-If code changes affect the state of your app (or its dependencies),
-the data your app has to work with might not be fully consistent
-with the data it would have if it executed from scratch.
-The result might be different behavior after a hot reload
-versus a hot restart.
+코드 변경 사항이 앱(또는 종속성)의 상태에 영향을 미치는 경우, 
+앱이 작업해야 하는 데이터는 처음부터 실행했을 때의 데이터와 완전히 일치하지 않을 수 있습니다. 
+핫 리로드와 핫 재시작 후의 결과는 다를 수 있습니다.
 
-### Recent code change is included but app state is excluded
+### 최근 코드 변경 사항은 포함되지만 앱 상태는 제외되는 경우 {:#recent-code-change-is-included-but-app-state-is-excluded}
 
-In Dart, [static fields are lazily initialized][static-variables].
-This means that the first time you run a Flutter app and a
-static field is read, it's set to whatever value its
-initializer was evaluated to.
-Global variables and static fields are treated as state,
-and are therefore not reinitialized during hot reload.
+Dart에서, [static 필드는 lazily 초기화][static-variables]됩니다. 
+즉, Flutter 앱을 처음 실행하고 static 필드를 읽을 때, 이니셜라이저가 평가된 값으로 설정됩니다. 
+전역 변수와 정적 필드는 상태로 처리되므로, 핫 리로드 중에 다시 초기화되지 않습니다.
 
-If you change initializers of global variables and static fields,
-a hot restart or restart the state where the initializers are hold
-is necessary to see the changes.
-For example, consider the following code:
+전역 변수와 정적 필드의 이니셜라이저를 변경하는 경우, 
+핫 재시작 또는 이니셜라이저가 유지되는 상태를 다시 시작해야 변경 사항을 확인할 수 있습니다. 
+예를 들어, 다음 코드를 고려해 보세요.
 
 <?code-excerpt "lib/hot-reload/before.dart (sample-table)"?>
 ```dart
@@ -233,7 +207,7 @@ final sampleTable = [
 ];
 ```
 
-After running the app, you make the following change:
+앱을 실행한 후, 다음과 같이 변경합니다.
 
 <?code-excerpt "lib/hot-reload/after.dart (sample-table)"?>
 ```dart
@@ -262,16 +236,16 @@ final sampleTable = [
   Table(
     children: const [
       TableRow(
-        children: [Text('T10')], // modified
+        children: [Text('T10')], // 수정됨
       )
     ],
   ),
 ];
 ```
 
-You hot reload, but the change is not reflected.
+핫 리로드를 했지만, 변경 사항이 반영되지 않았습니다.
 
-Conversely, in the following example:
+반대로, 다음 예에서는:
 
 <?code-excerpt "lib/hot-reload/before.dart (const)"?>
 ```dart
@@ -283,12 +257,12 @@ void onClick() {
 }
 ```
 
-Running the app for the first time prints `1` and `1`.
-Then, you make the following change:
+앱을 처음 실행하면 `1`과 `1`이 출력됩니다. 
+그런 다음, 다음과 같이 변경합니다.
 
 <?code-excerpt "lib/hot-reload/after.dart (const)"?>
 ```dart
-const foo = 2; // modified
+const foo = 2; // 수정됨
 final bar = foo;
 void onClick() {
   print(foo);
@@ -296,30 +270,28 @@ void onClick() {
 }
 ```
 
-While changes to `const` field values are always hot reloaded,
-the static field initializer is not rerun. Conceptually,
-`const` fields are treated like aliases instead of state.
+`const` 필드 값에 대한 변경 사항은 항상 핫 리로드되지만, 
+정적 필드 이니셜라이저는 다시 실행되지 않습니다. 
+개념적으로, `const` 필드는 상태가 아닌 별칭으로 처리됩니다.
 
-The Dart VM detects initializer changes and flags when a set
-of changes needs a hot restart to take effect.
-The flagging mechanism is triggered for
-most of the initialization work in the above example,
-but not for cases like the following:
+Dart VM은 이니셜라이저 변경 사항을 감지하고, 
+변경 사항 집합이 적용되려면 핫 재시작이 필요한 경우 플래그를 지정합니다. 
+플래깅 메커니즘은 위의 예에서 대부분의 초기화 작업에 대해 트리거되지만, 다음과 같은 경우에는 트리거되지 않습니다.
 
 <?code-excerpt "lib/hot-reload/after.dart (final-foo)"?>
 ```dart
 final bar = foo;
 ```
 
-To update `foo` and view the change after hot reload,
-consider redefining the field as `const` or using a getter to
-return the value, rather than using `final`.
-For example, either of the following solutions work:
+`foo`를 업데이트하고 핫 리로드 후 변경 사항을 보려면, 
+`final`을 사용하는 대신 필드를 `const`로 다시 정의하거나, 
+getter를 사용하여 값을 반환하는 것을 고려하세요. 
+예를 들어, 다음 솔루션 중 하나가 작동합니다.
 
 <?code-excerpt "lib/hot-reload/foo_const.dart (const)"?>
 ```dart
 const foo = 1;
-const bar = foo; // Convert foo to a const...
+const bar = foo; // foo를 const로 변환합니다...
 void onClick() {
   print(foo);
   print(bar);
@@ -329,30 +301,25 @@ void onClick() {
 <?code-excerpt "lib/hot-reload/getter.dart (const)"?>
 ```dart
 const foo = 1;
-int get bar => foo; // ...or provide a getter.
+int get bar => foo; // ...또는 getter를 제공합니다.
 void onClick() {
   print(foo);
   print(bar);
 }
 ```
 
-For more information, read about the [differences
-between the `const` and `final` keywords][const-new] in Dart.
+자세한 내용은, Dart의 [`const`와 `final` 키워드의 차이점][const-new]를 읽어보세요.
 
-### Recent UI change is excluded
+### 최근 UI 변경 사항은 제외 {:#recent-ui-change-is-excluded}
 
-Even when a hot reload operation appears successful and generates no
-exceptions, some code changes might not be visible in the refreshed UI.
-This behavior is common after changes to the app's `main()` or
-`initState()` methods.
+핫 리로드 작업이 성공적으로 보이고 예외가 발생하지 않더라도, 
+일부 코드 변경 사항은 새로 고침된 UI에서 표시되지 않을 수 있습니다. 
+이 동작은 앱의 `main()` 또는 `initState()` 메서드가 변경된 후에 일반적입니다.
 
-As a general rule, if the modified code is downstream of the root
-widget's `build()` method, then hot reload behaves as expected.
-However, if the modified code won't be re-executed as a result
-of rebuilding the widget tree, then you won't
-see its effects after hot reload.
+일반적으로, 수정된 코드가 루트 위젯의 `build()` 메서드의 다운스트림인 경우, 핫 리로드는 예상대로 동작합니다.
+그러나, 위젯 트리를 다시 빌드한 결과로 수정된 코드가 다시 실행되지 않으면, 핫 리로드 후에 그 효과를 볼 수 없습니다.
 
-For example, consider the following code:
+예를 들어 다음 코드를 고려해 보겠습니다.
 
 <?code-excerpt "lib/hot-reload/before.dart (build)"?>
 ```dart
@@ -372,7 +339,7 @@ class MyApp extends StatelessWidget {
 }
 ```
 
-After running this app, change the code as follows:
+이 앱을 실행한 후, 코드를 다음과 같이 변경하세요.
 
 <?code-excerpt "lib/hot-reload/after.dart (main)"?>
 ```dart
@@ -383,36 +350,27 @@ void main() {
 }
 ```
 
-With a hot restart, the program starts from the beginning,
-executes the new version of `main()`,
-and builds a widget tree that displays the text `Hello`.
+핫 리스타트를 사용하면, 프로그램이 처음부터 시작하여 `main()`의 새 버전을 실행하고, 
+`Hello`라는 텍스트를 표시하는 위젯 트리를 빌드합니다.
 
-However, if you hot reload the app after this change,
-`main()` and `initState()` are not re-executed,
-and the widget tree is rebuilt with the unchanged instance
-of `MyApp` as the root widget.
-This results in no visible change after hot reload.
+그러나, 이 변경 후에 앱을 핫 리로드하면, `main()`과 `initState()`가 다시 실행되지 않고, 
+위젯 트리가 루트 위젯으로 변경되지 않은 `MyApp` 인스턴스로 다시 빌드됩니다. 
+이로 인해 핫 리로드 후에 눈에 띄는 변경 사항이 없습니다.
 
-## How it works
+## 작동 원리 {:#how-it-works}
 
-When hot reload is invoked, the host machine looks
-at the edited code since the last compilation.
-The following libraries are recompiled:
+핫 리로드가 호출되면, 호스트 머신은 마지막 컴파일 이후 편집된 코드를 살펴봅니다. 다음 라이브러리가 다시 컴파일됩니다.
 
-* Any libraries with changed code
-* The application's main library
-* The libraries from the main library leading
-  to affected libraries
+* 코드가 변경된 모든 라이브러리
+* 애플리케이션의 메인 라이브러리
+* 영향을 받는 라이브러리로 이어지는 메인 라이브러리의 라이브러리
 
-The source code from those libraries is compiled into
-[kernel files][] and sent to the mobile device's Dart VM.
+해당 라이브러리의 소스 코드는 [커널 파일][kernel files]로 컴파일되어, 모바일 기기의 Dart VM으로 전송됩니다.
 
-The Dart VM re-loads all libraries from the new kernel file.
-So far no code is re-executed.
+Dart VM은 새 커널 파일에서 모든 라이브러리를 다시 로드합니다. 지금까지 코드는 다시 실행되지 않았습니다.
 
-The hot reload mechanism then causes the Flutter framework
-to trigger a rebuild/re-layout/repaint of all existing
-widgets and render objects.
+그런 다음, 핫 리로드 메커니즘은 Flutter 프레임워크가,
+모든 기존 위젯과 렌더 객체의 재구축/재레이아웃/재페인트를 트리거하도록 합니다.
 
 [static-variables]: {{site.dart-site}}/language/classes#static-variables
 [const-new]: {{site.dart-site}}/language/variables#final-and-const

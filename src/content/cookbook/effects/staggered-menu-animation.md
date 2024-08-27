@@ -1,6 +1,8 @@
 ---
-title: Create a staggered menu animation
-description: How to implement a staggered menu animation.
+# title: Create a staggered menu animation
+title: 단계적(staggered) 메뉴 애니메이션 만들기
+# description: How to implement a staggered menu animation.
+description: 단계적 메뉴 애니메이션을 구현하는 방법.
 js:
   - defer: true
     url: /assets/js/inject_dartpad.js
@@ -8,29 +10,22 @@ js:
 
 <?code-excerpt path-base="cookbook/effects/staggered_menu_animation"?>
 
-A single app screen might contain multiple animations.
-Playing all of the animations at the same time can be
-overwhelming. Playing the animations one after the other
-can take too long. A better option is to stagger the animations. 
-Each animation begins at a different time,
-but the animations overlap to create a shorter duration.
-In this recipe, you build a drawer menu with animated 
-content that is staggered and has a button that pops
-in at the bottom.
+단일 앱 화면에는 여러 애니메이션이 포함될 수 있습니다. 
+모든 애니메이션을 동시에 재생하는 것은 압도적일 수 있습니다. 
+애니메이션을 하나씩 재생하면 너무 오래 걸릴 수 있습니다. 
+더 나은 옵션은 애니메이션을 단계적으로 재생하는 것입니다. 
+각 애니메이션은 다른 시간에 시작하지만, 애니메이션이 겹쳐져 더 짧은 지속 시간을 만듭니다. 
+이 레시피에서는, 애니메이션 콘텐츠가 단계적으로 표시되고 하단에 팝업되는 버튼이 있는 drawer 메뉴를 빌드합니다.
 
-The following animation shows the app's behavior:
+다음 애니메이션은 앱의 동작을 보여줍니다.
 
 ![Staggered Menu Animation Example](/assets/images/docs/cookbook/effects/StaggeredMenuAnimation.gif){:.site-mobile-screenshot}
 
-## Create the menu without animations
+## 애니메이션 없이 메뉴 만들기 {:#create-the-menu-without-animations}
 
-The drawer menu displays a list of titles,
-followed by a Get started button at 
-the bottom of the menu.
+drawer 메뉴는 제목 리스트를 표시한 다음, 메뉴 하단에 Get started 버튼이 표시됩니다.
 
-Define a stateful widget called `Menu`
-that displays the list and button 
-in static locations.
+`Menu`라는 stateful 위젯을 정의하여, static 위치에 리스트와 버튼을 표시합니다.
 
 <?code-excerpt "lib/step1.dart (step1)"?>
 ```dart
@@ -65,7 +60,7 @@ class _MenuState extends State<Menu> {
   }
 
   Widget _buildFlutterLogo() {
-    // TODO: We'll implement this later.
+    // TODO: 이것은 나중에 구현하겠습니다.
     return Container();
   }
 
@@ -127,14 +122,12 @@ class _MenuState extends State<Menu> {
 }
 ```
 
-## Prepare for animations
+## 애니메이션 준비 {:#prepare-for-animations}
 
-Control of the animation timing requires an
-`AnimationController`.
+애니메이션 타이밍을 제어하려면, `AnimationController`가 필요합니다.
 
-Add the `SingleTickerProviderStateMixin`
-to the `MenuState` class. Then, declare and
-instantiate an `AnimationController`.
+`SingleTickerProviderStateMixin`을 `MenuState` 클래스에 추가합니다. 
+그런 다음, `AnimationController`를 선언하고 인스턴스화합니다.
 
 <?code-excerpt "lib/step2.dart (animation-controller)" plaster="none"?>
 ```dart
@@ -158,10 +151,7 @@ class _MenuState extends State<Menu> with SingleTickerProviderStateMixin {
 }
 ```
 
-The length of the delay before every animation is
-up to you. Define the animation delays,
-individual animation durations, and the total 
-animation duration.
+각 애니메이션 전 지연 시간은 당신에게 달려 있습니다. 애니메이션 지연, 개별 애니메이션 기간, 그리고 총 애니메이션 기간을 정의하세요.
 
 <?code-excerpt "lib/animation_delays.dart (delays)" plaster="none"?>
 ```dart
@@ -178,35 +168,25 @@ class _MenuState extends State<Menu> with SingleTickerProviderStateMixin {
 }
 ```
 
-In this case, all the animations are delayed by 50 ms.
-After that, list items begin to appear.
-Each list item's appearance is delayed by 50 ms after the 
-previous list item begins to slide in.
-Each list item takes 250 ms to slide from right to left.
-After the last list item begins to slide in,
-the button at the bottom waits another 150 ms to pop in.
-The button animation takes 500 ms.
+이 경우, 모든 애니메이션은 50ms 지연됩니다. 그 후, 리스트 아이템이 나타나기 시작합니다. 
+각 리스트 아이템의 출현은 이전 리스트 아이템이 슬라이드 인되기 시작한 후 50ms 지연됩니다. 
+각 리스트 아이템은 오른쪽에서 왼쪽으로 슬라이드하는 데 250ms가 걸립니다. 
+마지막 리스트 아이템이 슬라이드 인되기 시작한 후, 맨 아래의 버튼은 튀어나오기까지 150ms 더 기다립니다. 
+버튼 애니메이션은 500ms가 걸립니다. (50+250+150=500)
 
-With each delay and animation duration defined,
-the total duration is calculated so that it can be
-used to calculate the individual animation times.
+각 지연 및 애니메이션 지속 시간을 정의하면, 총 지속 시간이 계산되어 개별 애니메이션 시간을 계산하는 데 사용할 수 있습니다.
 
-The desired animation times are shown in the following diagram:
+원하는 애니메이션 시간은 다음 다이어그램에 나와 있습니다.
 
 ![Animation Timing Diagram](/assets/images/docs/cookbook/effects/TimingDiagram.png){:.site-mobile-screenshot}
 
-To animate a value during a subsection of a larger animation,
-Flutter provides the `Interval` class.
-An `Interval` takes a start time percentage and an end 
-time percentage. That `Interval` can then be used to
-animate a value between those start and end times,
-instead of using the entire animation's start and 
-end times. For example, given an animation that takes 1 second, 
-an interval from 0.2 to 0.5 would start at 200 ms
-(20%) and end at 500 ms (50%). 
+더 큰 애니메이션의 하위 섹션 동안 값을 애니메이션화하기 위해, Flutter는 `Interval` 클래스를 제공합니다. 
+`Interval`은 시작 시간 백분율과 종료 시간 백분율을 사용합니다. 
+그런 다음, 해당 `Interval`을 사용하여 전체 애니메이션의 시작 및 종료 시간을 사용하는 대신 
+시작 및 종료 시간 사이의 값을 애니메이션화할 수 있습니다. 
+예를 들어, 1초가 걸리는 애니메이션의 경우, 0.2에서 0.5까지의 간격은 200ms(20%)에서 시작하여 500ms(50%)에서 끝납니다.
 
-Declare and calculate each list item's `Interval` and the 
-bottom button `Interval`.
+각 리스트 아이템의 `Interval`과 하단 버튼 `Interval`을 선언하고 계산합니다.
 
 <?code-excerpt "lib/step3.dart (step3)" plaster="none"?>
 ```dart
@@ -249,11 +229,11 @@ class _MenuState extends State<Menu> with SingleTickerProviderStateMixin {
 }
 ```
 
-## Animate the list items and button
+## 리스트 아이템과 버튼에 애니메이션 적용 {:#animate-the-list-items-and-button}
 
-The staggered animation plays as soon as the menu becomes visible.
+메뉴가 표시되자마자 계단형(staggered) 애니메이션이 재생됩니다.
 
-Start the animation in `initState()`.
+`initState()`에서 애니메이션을 시작합니다.
 
 <?code-excerpt "lib/step4.dart (init-state)"?>
 ```dart
@@ -269,13 +249,9 @@ void initState() {
   )..forward();
 }
 ```
+각 리스트 아이템은 오른쪽에서 왼쪽으로 슬라이드하고, 동시에 페이드 인합니다.
 
-Each list item slides from right to left and
-fades in at the same time.
-
-Use the list item's `Interval` and an `easeOut`
-curve to animate the opacity and translation
-values for each list item.
+리스트 아이템의 `Interval`과 `easeOut` 곡선을 사용하여, 각 리스트 아이템의 불투명도와 변환 값을 애니메이션화합니다.
 
 <?code-excerpt "lib/step4.dart (build-list-items)"?>
 ```dart
@@ -318,9 +294,8 @@ List<Widget> _buildListItems() {
 }
 ```
 
-Use the same approach to animate the opacity and
-scale of the bottom button. This time, use an
-`elasticOut` curve to give the button a springy effect.
+같은 접근 방식을 사용하여 하단 버튼의 불투명도와 크기를 애니메이션화합니다. 
+이번에는, `elasticOut` 곡선을 사용하여 버튼에 탄력 있는 효과를 줍니다.
 
 <?code-excerpt "lib/step4.dart (build-get-started)"?>
 ```dart
@@ -366,12 +341,11 @@ Widget _buildGetStartedButton() {
 }
 ```
 
-Congratulations!
-You have an animated menu where the appearance of each 
-list item is staggered, followed by a bottom button that
-pops into place.
+축하합니다!
+각 리스트 아이템의 모양이 단계적(staggered)으로 배열되고, 
+그 뒤에 하단 버튼이 제자리로 튀어나오는 애니메이션 메뉴가 있습니다.
 
-## Interactive example
+## 상호 작용 예제 {:#interactive-example}
 
 <?code-excerpt "lib/main.dart"?>
 ```dartpad title="Flutter staggered menu animation hands-on example in DartPad" run="true"
@@ -484,7 +458,7 @@ class _ExampleStaggeredAnimationsState extends State<ExampleStaggeredAnimations>
   }
 
   Widget _buildContent() {
-    // Put page content here.
+    // 여기에 페이지 내용을 넣으세요.
     return const SizedBox();
   }
 
