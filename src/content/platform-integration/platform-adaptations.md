@@ -39,7 +39,7 @@ Flutter는 안드로이드와 iOS에서 볼 수 있는 네비게이션 패턴을
 ### 네비게이션 전환 {:#navigation-transitions}
 
 **Android**에서, 기본 [`Navigator.push()`][] 전환은, 
-일반적으로 하향식(bottom-up) 애니메이션 변형이 하나인, [`startActivity()`][]를 모델로 합니다.
+일반적으로 bottom-up 애니메이션 변형이 하나인, [`startActivity()`][]를 모델로 합니다.
 
 **iOS**에서:
 
@@ -47,7 +47,7 @@ Flutter는 안드로이드와 iOS에서 볼 수 있는 네비게이션 패턴을
   iOS Show/Push 스타일 전환을 생성합니다. 
   새 경로 뒤에 있는 페이지도 iOS와 같은 방향으로 패럴랙스 슬라이드합니다.
 * [`PageRoute.fullscreenDialog`][]가 true인 페이지 경로를 푸시할 때, 
-  별도의 하향식(bottom-up) 전환 스타일이 있습니다. 
+  별도의 bottom-up 전환 스타일이 있습니다. 
   이는 iOS의 Present/Modal 스타일 전환을 나타내며, 일반적으로 전체 화면 모달 페이지에서 사용됩니다.
 
 <div class="container">
