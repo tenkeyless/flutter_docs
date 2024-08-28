@@ -1,238 +1,209 @@
-#### Set up your target physical iOS device
+#### 대상 실제 iOS 기기 설정 {:#set-up-your-target-physical-ios-device}
 
-To deploy your Flutter app to a physical iPhone or iPad,
-you need to do the following:
+실제 iPhone 또는 iPad에 Flutter 앱을 배포하려면, 다음을 수행해야 합니다.
 
-- Create an [Apple Developer][] account.
-- Set up physical device deployment in Xcode.
-- Create a development provisioning profile to self-sign certificates.
-- Install the third-party CocoaPods dependency manager
-  if your app uses Flutter plugins.
+- [Apple Developer][] 계정을 만듭니다.
+- Xcode에서 실제 장치 배포를 설정합니다.
+- 인증서에 자체 서명하기 위한 개발 프로비저닝 프로필을 만듭니다.
+- 앱이 Flutter 플러그인을 사용하는 경우 타사 CocoaPods 종속성 관리자를 설치합니다.
 
-##### Create your Apple ID and Apple Developer account
+##### Apple ID와 Apple 개발자 계정 만들기 {:#create-your-apple-id-and-apple-developer-account}
 
-You can skip this step for now. You don't actually need
-an Apple Developer account until you are ready to distribute
-your app to the App Store.
+지금은 이 단계를 건너뛸 수 있습니다. 
+앱을 App Store에 배포할 준비가 될 때까지 실제로 Apple 개발자 계정이 필요하지 않습니다.
 
-If you only need to _test_ deploying your app,
-complete the first step and move on to the next section.
+앱 배포를 _테스트_ 만 하면 되는 경우, 첫 번째 단계를 완료하고 다음 섹션으로 넘어가세요.
 
-1. If you don't have an [Apple ID][], create one.
+1. [Apple ID][]가 없으면 만드세요.
 
-1. If you haven't enrolled in the [Apple Developer][] program, enroll now.
+1. [Apple Developer][] 프로그램에 등록하지 않은 경우, 지금 등록하세요.
 
-   To learn more about membership types,
-   check out [Choosing a Membership][].
+   멤버십 타입에 대해 자세히 알아보려면, [멤버십 선택][Choosing a Membership]을 확인하세요.
 
 [Apple ID]: https://support.apple.com/en-us/HT204316
 
-##### Attach your physical iOS device to your Mac {:#attach}
+##### 실제 iOS 기기를 Mac에 연결 {:#attach}
 
-Configure your physical iOS device to connect to Xcode.
+실제 iOS 기기를 구성하여 Xcode에 연결합니다.
 
-1. Attach your iOS device to the USB port on your Mac.
+1. iOS 기기를 Mac의 USB 포트에 연결합니다.
 
-1. On first connecting your iOS device to your Mac,
-   your iOS device displays the **Trust this computer?** dialog.
+2. iOS 기기를 Mac에 처음 연결할 때, iOS 기기에 **이 컴퓨터를 신뢰하시겠습니까?** 대화 상자가 표시됩니다.
 
-1. Click **Trust**.
+3. **Trust**를 클릭합니다.
 
-   ![Trust Mac][]{:.mw-100}
+   ![Mac 신뢰][Trust Mac]{:.mw-100}
 
-1. When prompted, unlock your iOS device.
+4. 메시지가 표시되면, iOS 기기를 잠금 해제합니다.
 
-##### Enable Developer Mode on iOS 16 or later
+##### iOS 16 이상에서 개발자 모드 활성화 {:#enable-developer-mode-on-ios-16-or-later}
 
-Starting with iOS 16, Apple requires you to enable **[Developer Mode][]**
-to protect against malicious software.
-Enable Developer Mode before deploying to a device running iOS 16 or later.
+iOS 16부터, Apple은 악성 소프트웨어로부터 보호하기 위해 **[개발자 모드][Developer Mode]** 를 활성화해야 합니다. 
+iOS 16 이상을 실행하는 기기에 배포하기 전에 개발자 모드를 활성화하세요.
 
-1. Tap on **Settings** <span aria-label="and then">></span>
-   **Privacy & Security** <span aria-label="and then">></span>
-   **Developer Mode**.
+1. **Settings** <span aria-label="and then">></span> **Privacy & Security** <span aria-label="and then">></span> **Developer Mode**를 탭합니다.
 
-1. Tap to toggle **Developer Mode** to **On**.
+2. 탭하여 **Developer Mode**를 **On**으로 토글합니다.
 
-1. Tap **Restart**.
+3. **Restart**을 탭합니다.
 
-1. After the iOS device restarts, unlock your iOS device.
+4. iOS 기기를 다시 시작한 후, iOS 기기를 잠금 해제합니다.
 
-1. When the **Turn on Developer Mode?** dialog appears, tap **Turn On**.
+5. **Turn on Developer Mode?** 대화 상자가 나타나면, **Turn On**를 탭합니다.
 
-   The dialog explains that Developer Mode requires reducing the security
-   of the iOS device.
+   대화 상자에는 개발자 모드가 iOS 기기의 보안을 낮춰야 한다고 설명되어 있습니다.
 
-1. Unlock your iOS device.
+6. iOS 기기를 잠금 해제합니다.
 
-##### Enable developer code signing certificates
+##### 개발자 코드 서명 인증서 활성화 {:#enable-developer-code-signing-certificates}
 
-To deploy to a physical iOS device, you need to establish trust with your
-Mac and the iOS device.
-This requires you to load signed developer certificates to your iOS device.
-To sign an app in Xcode,
-you need to create a development provisioning profile.
+실제 iOS 기기에 배포하려면, Mac과 iOS 기기와의 신뢰를 구축해야 합니다. 
+이를 위해서는 서명된 개발자 인증서를 iOS 기기에 로드해야 합니다. 
+Xcode에서 앱에 서명하려면 개발 프로비저닝 프로필을 만들어야 합니다.
 
-To provision your project, follow the Xcode signing flow.
+프로젝트를 프로비저닝하려면, Xcode 서명 흐름을 따르세요.
 
-1. Launch Xcode.
+1. Xcode를 시작합니다.
 
-1. Go to **Xcode** <span aria-label="and then">></span>
-   **Settings...**
+2. **Xcode** <span aria-label="and then">></span> **Settings...** 으로 이동합니다.
 
-   1. Go to **Xcode** <span aria-label="and then">></span>
-      **Settings...**
-   1. Click **Accounts**.
-   1. Click **+**.
-   1. Select **Apple ID** and click **Continue**.
-   1. When prompted, enter your **Apple ID** and **Password**.
-   1. Close the **Settings** dialog.
+   1. **Xcode** <span aria-label="and then">></span> **Settings...** 으로 이동합니다.
+   2. **Accounts**을 클릭합니다.
+   3. **+** 를 클릭합니다.
+   4. **Apple ID**를 선택하고 **Continue**을 클릭합니다.
+   5. 메시지가 표시되면 **Apple ID**와 **Password**를 입력합니다.
+   6. **Settings** 대화 상자를 닫습니다.
 
-   Development and testing supports any Apple ID.
+   개발 및 테스트는 모든 Apple ID를 지원합니다.
 
-1. Go to **File** <span aria-label="and then">></span> **Open...**
+3. **파일** <span aria-label="그리고">></span> **Open...** 으로 이동합니다.
 
-   You can also press <kbd>Cmd</kbd> + <kbd>O</kbd>.
+   <kbd>Cmd</kbd> + <kbd>O</kbd>를 누를 수도 있습니다.
 
-1. Navigate to your Flutter project directory.
+4. Flutter 프로젝트 디렉토리로 이동합니다.
 
-1. Open the default Xcode workspace in your project: `ios/Runner.xcworkspace`.
+5. 프로젝트에서 기본 Xcode workspace인 `ios/Runner.xcworkspace`를 엽니다.
 
-1. Select the physical iOS device you intend to deploy to in the device
-   drop-down menu to the right of the run button.
+6. 실행 버튼 오른쪽에 있는 기기 드롭다운 메뉴에서 배포하려는 실제 iOS 기기를 선택합니다.
 
-   It should appear under the **iOS devices** heading.
+   **iOS devices** 제목 아래에 표시되어야 합니다.
 
-1. In the left navigation panel under **Targets**, select **Runner**.
+7. 왼쪽 탐색 패널의 **Targets** 아래에서, **Runner**를 선택합니다.
 
-1. In the **Runner** settings pane, click **Signing & Capabilities**.
+8. **Runner** 설정 창에서, **Signing & Capabilities**을 클릭합니다.
 
-1. Select **All** at the top.
+9. 상단에서 **All**를 선택합니다.
 
-1. Select **Automatically manage signing**.
+10. **Automatically manage signing**를 선택합니다.
 
-1. Select a team from the **Team** dropdown menu.
+11. **Team** 드롭다운 메뉴에서 팀을 선택합니다.
 
-   Teams are created in the **App Store Connect** section of your
-   [Apple Developer Account][] page.
-   If you have not created a team, you can choose a _personal team_.
+    팀은 [Apple 개발자 계정][Apple Developer Account] 페이지의 **App Store Connect** 섹션에서 생성됩니다.
+    팀을 생성하지 않은 경우 _개인 팀_ 을 선택할 수 있습니다.
 
-   The **Team** dropdown displays that option as **Your Name (Personal Team)**.
+    **팀** 드롭다운은 해당 옵션을 **Your Name (Personal Team)** 으로 표시합니다.
 
-   ![Xcode account add][]{:.mw-100}
+    ![Xcode 계정 추가][Xcode account add]{:.mw-100}
 
-   After you select a team, Xcode performs the following tasks:
+    팀을 선택하면, Xcode에서 다음 작업을 수행합니다.
 
-   1. Creates and downloads a Development Certificate
-   1. Registers your device with your account,
-   1. Creates and downloads a provisioning profile if needed
+    1. 개발 인증서(Development Certificate)를 생성하고 다운로드합니다.
+    2. 계정에 기기를 등록합니다.
+    3. 필요한 경우 프로비저닝 프로필을 생성하고 다운로드합니다.
 
-If automatic signing fails in Xcode, verify that the project's
-**General** <span aria-label="and then">></span>
-**Identity** <span aria-label="and then">></span>
-**Bundle Identifier** value is unique.
+Xcode에서 자동 서명이 실패하면, 
+프로젝트의 **General** <span aria-label="and then">></span> **Identity** <span aria-label="and then">></span> **Bundle Identifier** 값이 고유한지 확인합니다.
 
 ![Check the app's Bundle ID][]{:.mw-100}
 
-##### Enable trust of your Mac and iOS device {:#trust}
+##### Mac 및 iOS 기기 신뢰 활성화 {:#trust}
 
-When you attach your physical iOS device for the first time,
-enable trust for both your Mac and the Development Certificate
-on the iOS device.
+처음으로 실제 iOS 기기를 연결할 때, Mac과 iOS 기기의 개발 인증서(Development Certificate)에 대한 신뢰를 활성화하세요.
 
-You should have enabled trust of your Mac on your iOS device when
-you [attached the device to your Mac](#attach).
+[기기를 Mac에 연결](#attach)할 때, iOS 기기에서 Mac의 신뢰를 활성화했어야 합니다.
 
-##### Enable developer certificate for your iOS devices
+##### iOS 기기에 개발자 인증서 활성화 {:#enable-developer-certificate-for-your-ios-devices}
 
-Enabling certificates varies in different versions of iOS.
+인증서 활성화는 iOS 버전마다 다릅니다.
 
 {% tabs "ios-versions" %}
 {% tab "iOS 14" %}
 
-1. Open the **Settings** app on the iOS device.
+1. iOS 기기에서 **Settings** 앱을 엽니다.
 
-1. Tap on **General** <span aria-label="and then">></span>
-   **Profiles & Device Management**.
+2. **General** <span aria-label="and then">></span> **Profiles & Device Management**를 탭합니다.
 
-1. Tap to toggle your Certificate to **Enable**
+3. 인증서를 탭하여 **Enable**로 전환합니다.
 
 {% endtab %}
 {% tab "iOS 15" %}
 
-1. Open the **Settings** app on the iOS device.
+1. iOS 기기에서 **Settings** 앱을 엽니다.
 
-1. Tap on **General** <span aria-label="and then">></span>
-    **VPN & Device Management**.
+2. **General** <span aria-label="and then">></span> **VPN & Device Management**를 탭합니다.
 
-1. Tap to toggle your Certificate to **Enable**.
+3. 인증서를 탭하여 **Enable**로 전환합니다.
 
 {% endtab %}
-{% tab "iOS 16 or later" %}
+{% tab "iOS 16 이상" %}
 
-1. Open the **Settings** app on the iOS device.
+1. iOS 기기에서 **설정** 앱을 엽니다.
 
-1. Tap on **General** <span aria-label="and then">></span>
-    **VPN & Device Management**.
+2. **General** <span aria-label="and then">></span> **VPN & Device Management**를 탭합니다.
 
     :::note
-    If you can't find **VPN & Device Management**
-    in **Settings**, run your app on your iOS device once, then try again.
+    **Settings**에서 **VPN & Device Management**를 찾을 수 없는 경우, 
+    iOS 기기에서 당신의 앱을 한 번 실행한 다음 다시 시도하세요.
     :::
 
-1. Under the **Developer App** heading, you should find your certificate.
+3. **Developer App** 제목 아래에서, 인증서를 찾을 수 있습니다.
 
-1. Tap your Certificate.
+4. 인증서를 탭합니다.
 
-1. Tap **Trust "\<certificate\>"**.
+5. ***Trust "\<certificate\>"**.를 탭합니다.
 
-1. When the dialog displays, tap **Trust**.
+6. 대화 상자가 표시되면 **Trust**를 탭합니다.
 
 {% endtab %}
 {% endtabs %}
 
-If the **codesign wants to access key...** dialog displays:
+**codesign wants to access key...** 대화 상자가 표시됩니다.
 
-1. Enter your macOS password.
+1. macOS 비밀번호를 입력합니다.
 
-1. Tap **Always Allow**.
+2. **Always Allow**을 탭합니다.
 
-#### Set up wireless debugging on your iOS device (Optional)
+#### iOS 기기에서 무선 디버깅 설정(선택 사항) {:#set-up-wireless-debugging-on-your-ios-device-optional}
 
-To debug your device using a Wi-Fi connection, follow this procedure.
+Wi-Fi 연결을 사용하여 기기를 디버깅하려면 다음 절차를 따르세요.
 
-1. Connect your iOS device to the same network as your macOS device.
+1. iOS 기기를 macOS 기기와 동일한 네트워크에 연결합니다.
 
-1. Set a passcode for your iOS device.
+1. iOS 기기의 암호를 설정합니다.
 
-1. Open **Xcode**.
+1. **Xcode**를 엽니다.
 
-1. Go to **Window** <span aria-label="and then">></span>
-   **Devices and Simulators**.
+1. **Window** <span aria-label="and then">></span> **Devices and Simulators**로 이동합니다.
 
-   You can also press <kbd>Shift</kbd> + <kbd>Cmd</kbd> + <kbd>2</kbd>.
+<kbd>Shift</kbd> + <kbd>Cmd</kbd> + <kbd>2</kbd>를 누를 수도 있습니다.
 
-1. Select your iOS device.
+1. iOS 기기를 선택합니다.
 
-1. Select **Connect via Network**.
+1. **Connect via Network**을 선택합니다.
 
-1. Once the network icon appears next to the device name,
-   unplug your iOS device from your Mac.
+1. 기기 이름 옆에 네트워크 아이콘이 나타나면, Mac에서 iOS 기기를 분리합니다.
 
-If you don't see your device listed when using `flutter run`,
-extend the timeout. The timeout defaults to 10 seconds.
-To extend the timeout, change the value to an integer greater than 10.
+`flutter run`을 사용할 때 기기가 나열되지 않으면 시간 초과를 연장하세요. 
+시간 초과는 기본적으로 10초입니다. 시간 초과를 연장하려면 값을 10보다 큰 정수로 변경하세요.
 
 ```console
 $ flutter run --device-timeout 60
 ```
 
-:::note Learn more about wireless debugging
-* To learn more, check out
-  [Apple's documentation on pairing a wireless device with Xcode][].
-* To troubleshoot, check out [Apple's Developer Forums][].
-* To learn how to configure wireless debugging with `flutter attach`,
-  check out [Debugging your add-to-app module][].
+:::note 무선 디버깅에 대해 자세히 알아보기
+* 자세히 알아보려면, [Xcode와 무선 기기를 페어링하는 방법에 대한 Apple 문서][Apple's documentation on pairing a wireless device with Xcode]를 ​​확인하세요.
+* 문제를 해결하려면 [Apple 개발자 포럼][Apple's Developer Forums]을 확인하세요.
+* `flutter attachment`로 무선 디버깅을 구성하는 방법을 알아보려면 [앱 추가 모듈 디버깅][Debugging your add-to-app module]을 확인하세요.
 :::
 
 [Check the app's Bundle ID]: /assets/images/docs/setup/xcode-unique-bundle-id.png

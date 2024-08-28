@@ -7,18 +7,18 @@
    {% assign v-target = include.target %}
 {% endcase %}
 
-## Install the Flutter SDK
+## Flutter SDK 설치 {:#install-the-flutter-sdk}
 
-To install the Flutter SDK, you can use the VS Code Flutter extension
-or download and install the Flutter bundle yourself.
+Flutter SDK를 설치하려면, VS Code Flutter 확장 프로그램을 사용하거나, 
+Flutter 번들을 직접 다운로드하여 설치하면 됩니다.
 
 {% tabs "vs-code-or-download" %}
-{% tab "Use VS Code to install" %}
+{% tab "VS Code를 사용하여 설치" %}
 
 {% include docs/install/flutter/vscode.md os=include.os terminal=include.terminal target=v-target %}
 
 {% endtab %}
-{% tab "Download and install" %}
+{% tab "다운로드 및 설치" %}
 
 {% include docs/install/flutter/download.md os=include.os terminal=include.terminal target=v-target %}
 

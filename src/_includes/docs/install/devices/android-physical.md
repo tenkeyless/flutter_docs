@@ -1,32 +1,29 @@
-#### Set up your target Android device
+#### 대상 Android 기기 셋업 {:#set-up-your-target-android-device}
 
 {% render docs/help-link.md, location:'android-device', section:'#android-setup' %}
 
-To configure your Flutter app to run on a physical Android device,
-you need an Android device running {{site.targetmin.android}} or later.
+실제 Android 기기에서 실행되도록 Flutter 앱을 구성하려면, 
+{{site.targetmin.android}} 이상을 실행하는 Android 기기가 필요합니다.
 
-1. Enable **Developer options** and **USB debugging** on your device
-   as described in the
-   [Android documentation]({{site.android-dev}}/studio/debug/dev-options).
+1. [Android 문서]({{site.android-dev}}/studio/debug/dev-options)에 설명된 대로, 
+   기기에서 **Developer options** 및 **USB debugging**을 활성화합니다.
 
-1. [Optional] To leverage wireless debugging,
-   enable **Wireless debugging** on your device as described in the
-   [Android documentation]({{site.android-dev}}/studio/run/device#wireless).
+2. [선택 사항] 무선 디버깅을 활용하려면, [Android 문서]({{site.android-dev}}/studio/run/device#wireless)에 설명된 대로, 기기에서 **Wireless debugging**을 활성화합니다.
 
 {%- if include.devos == 'Windows' %}
 
-1. Install the [Google USB Driver]({{site.android-dev}}/studio/run/win-usb).
+1. [Google USB 드라이버]({{site.android-dev}}/studio/run/win-usb)를 설치하세요.
 
 {% endif %}
 
-1. Plug your device into your {{include.devos}} computer.
-   If your device prompts you, authorize your computer to access your device.
+1. 기기를 {{include.devos}} 컴퓨터에 연결합니다.
+   기기에서 메시지가 표시되면 컴퓨터가 기기에 액세스할 수 있도록 승인합니다.
 
-1. Verify that Flutter recognizes your connected Android device.
+1. Flutter가 연결된 Android 기기를 인식하는지 확인합니다.
 
    {%- if include.devos == 'Windows' %}
 
-   In PowerShell, run:
+   PowerShell에서 다음을 실행합니다.
 
    ```console
    c:\> flutter devices
@@ -34,7 +31,7 @@ you need an Android device running {{site.targetmin.android}} or later.
 
    {% elsif devos == 'macOS' %}
 
-   In the Terminal, run:
+   터미널에서 다음을 실행하세요.
 
    ```console
    $ flutter devices
@@ -42,8 +39,6 @@ you need an Android device running {{site.targetmin.android}} or later.
 
    {% endif %}
 
-   By default, Flutter uses the version of the Android
-   SDK where your `adb` tool is based.
-   To use a different Android SDK installation path with Flutter,
-   set the `ANDROID_SDK_ROOT` environment variable
-   to that installation directory.
+   기본적으로, Flutter는 `adb` 도구가 기반하는 Android SDK 버전을 사용합니다. 
+   Flutter에서 다른 Android SDK 설치 경로를 사용하려면, 
+   `ANDROID_SDK_ROOT` 환경 변수를 해당 설치 디렉토리로 설정합니다.

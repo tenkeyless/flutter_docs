@@ -4,68 +4,64 @@
 {% assign special = 'Control' %}
 {%- endif %}
 
-### Use VS Code to install Flutter {:.no_toc}
+### VS Code를 사용하여 Flutter 설치 {:#use-vs-code-to-install-flutter .no_toc}
 
-To install Flutter using these instructions, verify that
-you have installed [Visual Studio Code][]
-{{site.appmin.vscode}} or later and the [Flutter extension for VS Code][].
+이러한 지침에 따라 Flutter를 설치하려면, 
+[Visual Studio Code][] {{site.appmin.vscode}} 이상 및 
+[VS Code용 Flutter 확장 프로그램][Flutter extension for VS Code]이 설치되어 있는지 확인하세요.
 
-#### Prompt VS Code to install Flutter
+#### VS Code를 프롬프트하여 Flutter 설치 {:#prompt-vs-code-to-install-flutter}
 
-1. Launch VS Code.
+1. VS Code를 시작합니다.
 
-1. To open the **Command Palette**,
-   press <kbd>{{special}}</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd>.
+1. **Command Palette**를 열려면, 
+   <kbd>{{special}}</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd>를 누릅니다.
 
-1. In the **Command Palette**, type `flutter`.
+2. **Command Palette**에서 `flutter`를 입력합니다.
 
-1. Select **Flutter: New Project**.
+3. **Flutter: New Project**를 선택합니다.
 
-1. VS Code prompts you to locate the Flutter SDK on your computer.
+4. VS Code에서 컴퓨터에서 Flutter SDK를 찾으라는 메시지가 표시됩니다.
 
    {:type="a"}
-   1. If you have the Flutter SDK installed, click **Locate SDK**.
+   1. Flutter SDK가 설치되어 있으면, **Locate SDK**를 클릭합니다.
 
-   1. If you do not have the Flutter SDK installed,
-      click **Download SDK**.
+   1. Flutter SDK가 설치되어 있지 않으면, **Download SDK**를 클릭합니다.
 
-      This option sends you the Flutter install page if you have not
-      installed Git {% if include.os == "Windows" %}for Windows {% endif %}as
-      directed in the [development tools prerequisites][].
+      이 옵션을 선택하면 [개발 도구 필수 조건][development tools prerequisites]에서 지시한 대로, 
+      {% if include.os == "Windows" %} Windows용{% endif %} Git을 설치하지 않은 경우, 
+      Flutter 설치 페이지로 이동합니다.
 
-1. When prompted **Which Flutter template?**, ignore it.
-   Press <kbd>Esc</kbd>.
-   You can create a test project after checking your development setup.
+5. **Which Flutter template?** 라는 메시지가 표시되면 무시합니다. 
+   <kbd>Esc</kbd>를 누르세요. 
+   개발 설정을 확인한 후, 테스트 프로젝트를 만들 수 있습니다.
 
-#### Download the Flutter SDK
+#### Flutter SDK 다운로드 {:#download-the-flutter-sdk}
 
-1. When the **Select Folder for Flutter SDK** dialog displays,
-   choose where you want to install Flutter.
+1. **Select Folder for Flutter SDK** 대화 상자가 표시되면, Flutter를 설치할 위치를 선택합니다.
 
-   VS Code places you in your user profile to start.
-   Choose a different location.
+   VS Code는 사용자 프로필에서 시작합니다. 다른 위치를 선택합니다.
 
    {% if include.os == "Windows" -%}
-   Consider `%USERPROFILE%` or `C:\dev`.
+   `%USERPROFILE%` 또는 `C:\dev`를 고려하세요.
 
    {% render docs/install/admonitions/install-paths.md %}
    {% else -%}
-   Consider `~/development/`
+   `~/development/`를 고려하세요.
    {% endif %}
 
-1. Click **Clone Flutter**.
+2. **Clone Flutter**를 클릭합니다.
 
-   While downloading Flutter, VS Code displays this pop-up notification:
+   Flutter를 다운로드하는 동안, VS Code는 이 팝업 알림을 표시합니다.
 
    ```console
    Downloading the Flutter SDK. This may take a few minutes.
    ```
 
-   This download takes a few minutes.
-   If you suspect that the download has hung, click **Cancel** then
-   start the installation again.
+   이 다운로드는 몇 분 정도 걸립니다.
+   다운로드가 중단되었다고 생각되면, **Cancel**를 클릭한 다음 설치를 다시 시작하세요.
 
-1. Once it finishes downloading Flutter, the **Output** panel displays.
+3. Flutter 다운로드가 완료되면, **Output** 패널이 표시됩니다.
 
    ```console
    Checking Dart SDK version...
@@ -73,13 +69,13 @@ you have installed [Visual Studio Code][]
    Expanding downloaded archive...
    ```
 
-   When successful, VS Code displays this pop-up notification:
+   성공하면, VS Code는 다음 팝업 알림을 표시합니다.
 
    ```console
    Initializing the Flutter SDK. This may take a few minutes.
    ```
 
-   While initializing, the **Output** panel displays the following:
+   초기화하는 동안, **Output** 패널에 다음이 표시됩니다.
 
    ```console
    Building flutter tool...
@@ -95,11 +91,11 @@ you have installed [Visual Studio Code][]
    Downloading windows-x64/font-subset tools...
    ```
 
-   This process also runs `flutter doctor -v`.
-   At this point in the procedure, _ignore this output._
-   Flutter Doctor might show errors that don't apply to this quick start.
+   이 프로세스는 `flutter doctor -v`도 실행합니다.
+   이 시점에서는, _이 출력을 무시합니다._
+   Flutter Doctor는 이 빠른 시작에 적용되지 않는 오류를 표시할 수 있습니다.
 
-   When the Flutter install succeeds, VS Code displays this pop-up notification:
+   Flutter 설치가 성공하면, VS Code는 이 팝업 알림을 표시합니다.
 
    ```console
    Do you want to add the Flutter SDK to PATH so it's accessible
@@ -118,15 +114,15 @@ you have installed [Visual Studio Code][]
 
 {% endif %}
 
-1. VS Code may display a Google Analytics notice.
+1. VS Code는 Google Analytics 알림을 표시할 수 있습니다.
 
-   If you agree, click **OK**.
+   동의하면 **OK**을 클릭합니다.
 
-1. To enable `flutter` in all {{include.terminal}} windows:
+2. 모든 {{include.terminal}} 창에서 `flutter`를 활성화하려면:
 
    {:type="a"}
-   1. Close, then reopen all {{include.terminal}} windows.
-   1. Restart VS Code.
+   1. 모든 {{include.terminal}} 창을 닫았다가 다시 엽니다.
+   2. VS Code를 다시 시작합니다.
 
 [development tools prerequisites]: #development-tools
 [Visual Studio Code]: https://code.visualstudio.com/docs/setup/mac

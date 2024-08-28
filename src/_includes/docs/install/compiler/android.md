@@ -17,98 +17,90 @@
 
 {% render docs/help-link.md, location:'android-studio', section:'#android-setup' %}
 
-To create Android apps with Flutter, verify that the following Android
-components have been installed.
+Flutter로 Android 앱을 만들려면, 다음 Android 구성 요소가 설치되었는지 확인하세요.
 
-* **Android SDK Platform, API {{ site.appnow.android_sdk }}**
-* **Android SDK Command-line Tools**
-* **Android SDK Build-Tools**
-* **Android SDK Platform-Tools**
-* **Android Emulator**
+* **Android SDK 플랫폼, API {{ site.appnow.android_sdk }}**
+* **Android SDK 명령줄 도구**
+* **Android SDK 빌드 도구**
+* **Android SDK 플랫폼 도구**
+* **Android 에뮬레이터**
 
-If you haven't installed these, or you don't know, continue with the following procedure.
+이러한 도구를 설치하지 않았거나 모르는 경우, 다음 절차를 계속 진행하세요.
 
-Otherwise, you can skip to the [next section][check-dev].
+그렇지 않으면, [다음 섹션][check-dev]로 건너뛸 수 있습니다.
 
 [check-dev]: #check-your-development-setup
 
 {% tabs "android-studio-experience" %}
-{% tab "First time using Android Studio" %}
+{% tab "Android Studio를 처음 사용" %}
 
-1. Launch **Android Studio**.
+1. **Android Studio**를 실행합니다.
 
-   The **Welcome to Android Studio** dialog displays.
+   **Welcome to Android Studio** 대화 상자가 표시됩니다.
 
-1. Follow the **Android Studio Setup Wizard**.
+2. **Android Studio Setup Wizard**를 따릅니다.
 
-1. Install the following components:
+3. 다음 구성 요소를 설치합니다.
 
-   * **Android SDK Platform, API {{ site.appnow.android_sdk }}**
-   * **Android SDK Command-line Tools**
-   * **Android SDK Build-Tools**
-   * **Android SDK Platform-Tools**
-   * **Android Emulator**
+   * **Android SDK 플랫폼, API {{ site.appnow.android_sdk }}**
+   * **Android SDK 명령줄 도구**
+   * **Android SDK 빌드 도구**
+   * **Android SDK 플랫폼 도구**
+   * **Android 에뮬레이터**
 
 {% endtab %}
-{% tab "Current Android Studio User" %}
+{% tab "Current Android Studio 사용자" %}
 
-1. Launch **Android Studio**.
+1. **Android Studio**를 실행합니다.
 
-1. Go to the **Settings** dialog to view the **SDK Manager**.
+2. **Settings** 대화 상자로 이동하여 **SDK Manager**를 확인합니다.
 
-   1. If you have a project open,
-      go to **Tools** <span aria-label="and then">></span> **SDK Manager**.
+   1. 프로젝트가 열려 있는 경우, **Tools** <span aria-label="and then">></span> **SDK Manager**로 이동합니다.
 
-   1. If the **Welcome to Android Studio** dialog displays,
-      click the **More Options** icon that follows the **Open** button
-      and click **SDK Manager** from the dropdown menu.
+   2. **Welcome to Android Studio** 대화 상자가 표시되면, 
+      **Open** 버튼 뒤에 있는 **More Options** 아이콘을 클릭하고, 드롭다운 메뉴에서 **SDK Manager**를 클릭합니다.
 
-1. Click **SDK Platforms**.
+3. **SDK Platforms**을 클릭합니다.
 
-1. Verify that **Android API {{ site.appnow.android_sdk }}** has been selected.
+4. **Android API {{ site.appnow.android_sdk }}**가 선택되었는지 확인합니다.
 
-   If the **Status** column displays **Update available** or **Not installed**:
+   **Status** 열에 **Update available** 또는 **Not installed**이 표시되는 경우:
 
    {:type="a"}
-   1. Select **Android API {{ site.appnow.android_sdk }}**.
+   1. **Android API {{ site.appnow.android_sdk }}**를 선택합니다.
 
-   1. Click **Apply**.
+   2. **Apply**을 클릭합니다.
 
-   1. When the **Confirm Change** dialog displays, click **OK**.
+   3. **Confirm Change** 대화 상자가 표시되면 **OK**을 클릭합니다.
 
-      The **SDK Quickfix Installation** dialog displays with a
-      completion meter.
+      **SDK Quickfix Installation** 대화 상자가 완료 미터와 함께 표시됩니다.
 
-   1. When the install finishes, click **Finish**.
+   4. 설치가 완료되면 **Finish**을 클릭합니다.
 
-      After you installed the latest SDK,
-      the **Status** column might display **Update available**.
-      This means some additional system images might not be installed.
-      You can ignore this and continue.
+      최신 SDK를 설치한 후, **Status** 열에 **Update available**이 표시될 수 있습니다. 
+      즉, 일부 추가 시스템 이미지가 설치되지 않았을 수 있습니다. 이를 무시하고 계속할 수 있습니다.
 
-1. Click **SDK Tools**.
+5. **SDK Tools**를 클릭합니다.
 
-1. Verify that the following SDK Tools have been selected:
+6. 다음 SDK 도구가 선택되었는지 확인합니다.
 
-   * **Android SDK Command-line Tools**
-   * **Android SDK Build-Tools**
-   * **Android SDK Platform-Tools**
-   * **Android Emulator**
+   * **Android SDK 명령줄 도구**
+   * **Android SDK 빌드 도구**
+   * **Android SDK 플랫폼 도구**
+   * **Android 에뮬레이터**
 
-1. If the **Status** column for any of the preceding tools displays
-   **Update available** or **Not installed**:
+7. 이전 도구 중 하나에 대한 **Status** 열에 **Update available** 또는 **Not installed**이 표시되는 경우:
 
    {:type="a"}
-   1. Select the needed tools.
+   1. 필요한 도구를 선택합니다.
 
-   1. Click **Apply**.
+   2. **Apply**을 클릭합니다.
 
-   1. When the **Confirm Change** dialog displays, click **OK**.
+   3. **Confirm Change** 대화 상자가 표시되면 **OK**을 클릭합니다.
 
-      The **SDK Quickfix Installation** dialog displays with a
-      completion meter.
+      **SDK Quickfix Installation** 대화 상자가 완료 미터와 함께 표시됩니다.
 
-   1. When the install finishes, click **Finish**.
+   4. 설치가 완료되면 **Finish**을 클릭합니다.
 
 {% endtab %}
 {% endtabs %}
@@ -116,12 +108,12 @@ Otherwise, you can skip to the [next section][check-dev].
 ### 대상 Android 기기 구성 {:#configure-your-target-android-device}
 
 {% tabs "android-emulator-or-not" %}
-{% tab "Virtual device" %}
+{% tab "가상 장치" %}
 
 {% include docs/install/devices/android-emulator.md devos=include.devos %}
 
 {% endtab %}
-{% tab "Physical device" %}
+{% tab "실제 장치" %}
 
 {% include docs/install/devices/android-physical.md devos=include.devos %}
 
@@ -134,36 +126,33 @@ Otherwise, you can skip to the [next section][check-dev].
 
 {% render docs/help-link.md, location:'android-licenses', section:'#android-setup' %}
 
-Before you can use Flutter and after you install all prerequisites,
-agree to the licenses of the Android SDK platform.
+Flutter를 사용하기 전에 모든 필수 구성 요소를 설치한 후, Android SDK 플랫폼의 라이선스에 동의하세요.
 
-1. Open an elevated console window.
+1. 관리자 권한 콘솔 창을 엽니다.
 
-1. Run the following command to enable signing licenses.
+1. 다음 명령을 실행하여 라이선스 서명을 활성화합니다.
 
    ```console
    {{prompt}} flutter doctor --android-licenses
    ```
 
-   If you accepted the Android Studio licenses at another time,
-   this command returns:
+   다른 시간에 Android Studio 라이선스를 수락한 경우, 이 명령은 다음을 반환합니다.
 
    ```console
    [========================================] 100% Computing updates...
    All SDK package licenses accepted.
    ```
 
-   You can skip the next step.
+   다음 단계는 건너뛸 수 있습니다.
 
-1. Before agreeing to the terms of each license,
-   read each with care.
+2. 각 라이선스의 조건에 동의하기 전에, 각 라이선스의 내용을 주의 깊게 읽어보세요.
 
 #### 라이센스 문제 해결 {:#troubleshooting-licensing-issues}
 
 <details>
-<summary>How to fix the error of finding Java install</summary>
+<summary>Java 설치 찾기 오류를 수정하는 방법</summary>
 
-You might have an issue with the Android SDK locating the Java SDK.
+Android SDK가 Java SDK를 찾는 데 문제가 있을 수 있습니다.
 
 ```console
 $ flutter doctor --android-licenses
@@ -179,29 +168,28 @@ Try re-installing or updating your Android SDK,
 visit https://flutter.dev/docs/get-started/install/macos#android-setup for detailed instructions.
 ```
 
-The `flutter doctor` command returns this error because of how the `JAVA_HOME`
-variable was set. When you add the path to `JAVA_HOME`, you can add a backslash
-to the space between `Android` and `Studio` or enclose the entire path in
-matching quotes. You cannot do _both_.
+`flutter doctor` 명령은 `JAVA_HOME` 변수가 설정된 방식 때문에 이 오류를 반환합니다. 
+`JAVA_HOME`에 경로를 추가할 때, `Android`와 `Studio` 사이의 공백에 백슬래시를 추가하거나, 
+전체 경로를 일치하는 따옴표로 묶을 수 있습니다. _둘 다_ 할 수는 없습니다.
 
-Look for your `JAVA_HOME` path in your appropriate shell resource file.
+해당 셸 리소스 파일에서 `JAVA_HOME` 경로를 찾으세요.
 
-Change it from:
+다음을 변경하세요.
 
 ```bash
 export JAVA_HOME="/Applications/Android\ Studio.app/Contents/jre/Contents/Home"
 ```
 
-to:
+이렇게 변경하세요.
 
 ```bash
 export JAVA_HOME="/Applications/Android Studio.app/Contents/jre/Contents/Home"
 ```
 
-Do not include the backslash between `Android` and `Studio`.
+`Android`와 `Studio` 사이에 백슬래시를 포함하지 마십시오.
 
-To load this updated environment variable, reload your shell.
-This example uses the `zsh` resource file.
+이 업데이트된 환경 변수를 로드하려면 셸을 다시 로드하십시오.
+이 예에서는 `zsh` 리소스 파일을 사용합니다.
 
 ```console
 source ~/.zshrc

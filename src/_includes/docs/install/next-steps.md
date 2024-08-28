@@ -1,7 +1,7 @@
-## Manage your Flutter SDK
+## Flutter SDK 관리 {:#manage-your-flutter-sdk}
 
-To learn more about managing your Flutter SDK install,
-consult the following resources.
+Flutter SDK 설치 관리에 대한 자세한 내용은, 다음 리소스를 참조하세요.
+
 
 {% assign choice = include.config %}
 {% assign next-step = doctor[include.config] %}
@@ -17,33 +17,32 @@ consult the following resources.
   {% assign andtarget = include.devos | downcase %}
 {% endif %}
 
-* [Upgrade Flutter][upgrade]
+* [Flutter 업그레이드][upgrade]
 {%- case next-step.add-android %}
 {%- when 'Y' %}
-* [Add Android compilation tools](/platform-integration/android/install-android/install-android-from-{{andtarget}})
+* [Android 컴파일 도구 추가](/platform-integration/android/install-android/install-android-from-{{andtarget}})
 {%- endcase %}
 {%- case next-step.add-chrome %}
 {%- when 'Y' %}
-* [Add Web debugging
-  tools](/platform-integration/web/install-web/install-web-from-{{webtarget}})
+* [웹 디버깅 도구 추가](/platform-integration/web/install-web/install-web-from-{{webtarget}})
 {%- endcase %}
 {%- case next-step.add-simulator %}
 {%- when 'Y' %}
-* [Add iOS simulator or device](/platform-integration/ios/install-ios/install-ios-from-{{mod-target}})
+* [iOS 시뮬레이터 또는 장치 추가](/platform-integration/ios/install-ios/install-ios-from-{{mod-target}})
 {%- endcase %}
 {%- case next-step.add-xcode %}
 {%- when 'Y' %}
-* [Add macOS compilation tools](/platform-integration/macos/install-macos/install-macos-from-{{mod-target}})
+* [macOS 컴파일 도구 추가](/platform-integration/macos/install-macos/install-macos-from-{{mod-target}})
 {%- endcase %}
 {%- case next-step.add-linux-tools %}
 {%- when 'Y' %}
-* [Add Linux compilation tools](/platform-integration/linux/install-linux/install-linux-from-{{mod-target}})
+* [Linux 컴파일 도구 추가](/platform-integration/linux/install-linux/install-linux-from-{{mod-target}})
 {%- endcase %}
 {%- case next-step.add-visual-studio %}
 {%- when 'Y' %}
-* [Add Windows desktop compilation tools](/platform-integration/windows/install-windows/install-windows-from-{{mod-target}})
+* [Windows 데스크톱 컴파일 도구 추가](/platform-integration/windows/install-windows/install-windows-from-{{mod-target}})
 {%- endcase %}
-* [Uninstall Flutter][uninstall]
+* [Flutter 제거][uninstall]
 
 [upgrade]: /release/upgrade
 [uninstall]: /get-started/uninstall?tab={{include.devos}}
