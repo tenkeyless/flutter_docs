@@ -68,10 +68,8 @@ Flutter를 설치하려면, Flutter SDK 번들을 아카이브에서 다운로�
 
    Flutter SDK는 {{include.os}} 기본 다운로드 디렉토리인 `{{dirdl}}`에 다운로드되어야 합니다: 
    {% if include.os=='Windows' %}
-   If you changed the location of the Downloads directory,
-   replace this path with that path.
-   To find your Downloads directory location,
-   check out this [Microsoft Community post][move-dl].
+   다운로드 디렉토리의 위치를 ​​변경한 경우 이 경로를 해당 경로로 바꾸세요. 
+   다운로드 디렉토리 위치를 찾으려면, 이 [Microsoft 커뮤니티 게시물][move-dl]을 확인하세요.
    {% endif %}
 
 2. Flutter를 설치할 수 있는 폴더를 만듭니다.

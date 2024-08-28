@@ -6,31 +6,30 @@
 
 {% if mod-target == 'desktop' -%}
 
-* [Visual Studio 2022][] to debug and compile native C++ Windows code.
-  Make sure to install the **Desktop development with C++** workload.
-  This enables building Windows app including all of its default components.
-  **Visual Studio** is an IDE separate from **[Visual Studio _Code_][]**.
+* [Visual Studio 2022][]는 네이티브 C++ Windows 코드를 디버깅하고 컴파일합니다. 
+  **Desktop development with C++** 워크로드를 설치해야 합니다. 
+  이렇게 하면, 모든 기본 구성 요소를 포함하여, Windows 앱을 빌드할 수 있습니다. 
+  **Visual Studio**는 **[Visual Studio _Code_][]**와 별도의 IDE입니다.
 
 {% elsif mod-target == 'mobile' -%}
 
-* [Android Studio][] {{site.appmin.android_studio}} or later
-  to debug and compile Java or Kotlin code for Android.
-  Flutter requires the full version of Android Studio.
+* [Android Studio][] {{site.appmin.android_studio}} 이상은 Android용 Java 또는 Kotlin 코드를 디버깅하고 컴파일합니다. 
+  Flutter에는 Android Studio 풀버전이 필요합니다.
 
 {% elsif mod-target == 'web' -%}
 
-* [Google Chrome][] to debug JavaScript code for web apps.
+* 웹 앱의 JavaScript 코드를 디버깅하려면 [Google Chrome][]을 사용하세요.
 
 {% else -%}
 
-* [Visual Studio 2022][] with the **Desktop development with C++** workload
-  or [Build Tools for Visual Studio 2022][].
-  This enables building Windows app including all of its default components.
-  **Visual Studio** is an IDE separate from **[Visual Studio _Code_][]**.
-* [Android Studio][] {{site.appmin.android_studio}} or later
-  to debug and compile Java or Kotlin code for Android.
-  Flutter requires the full version of Android Studio.
-* The latest version of [Google Chrome][] to debug JavaScript code for web apps.
+* **Desktop development with C++** 워크로드가 있는 [Visual Studio 2022][] 또는 
+  [Visual Studio 2022용 빌드 도구][Build Tools for Visual Studio 2022]. 
+  이를 통해 모든 기본 구성 요소를 포함하여, Windows 앱을 빌드할 수 있습니다. 
+  **Visual Studio**는 **[Visual Studio _Code_][]**와 별도의 IDE입니다.
+* Android용 Java 또는 Kotlin 코드를 디버깅하고 컴파일하려면, 
+  [Android Studio][] {{site.appmin.android_studio}} 이상이 필요합니다. 
+  Flutter에는 Android Studio 풀버전이 필요합니다.
+* 웹 앱용 JavaScript 코드를 디버깅하려면, 최신 버전의 [Google Chrome][]이 필요합니다.
 
 {% endif -%}
 

@@ -104,9 +104,9 @@
 
 {% if include.os=='Windows' %}
 
-1. Click **Add SDK to PATH**.
+1. **Add SDK to PATH**를 클릭합니다.
 
-   When successful, a notification displays:
+   성공하면, 알림이 표시됩니다.
 
    ```console
    The Flutter SDK was added to your PATH
