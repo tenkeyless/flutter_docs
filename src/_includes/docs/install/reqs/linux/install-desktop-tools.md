@@ -1,5 +1,4 @@
-1. To develop {{include.devos}} {{include.target}} apps, use the
-   following command to install these packages:  
+1. {{include.devos}} {{include.target}} 앱을 개발하려면, 다음 명령을 사용하여 이러한 패키지를 설치하세요.
    [`clang`][clang],
    [`cmake`][cmake],
    [`ninja-build`][ninjabuild],

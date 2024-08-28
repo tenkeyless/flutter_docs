@@ -1,12 +1,12 @@
-To develop Flutter on {{include.os}}:
+{{include.os}}에서 Flutter를 개발하려면:
 
 {% if include.os == "ChromeOS" %}
 
-1. Enable [Linux][] on your Chromebook.
+1. Chromebook에서 [Linux][]를 활성화하세요.
 
 {% endif %}
 
-1. Verify that you have the following tools installed:
+1. 다음 도구가 설치되어 있는지 확인하세요.
    `bash`, `file`, `mkdir`, `rm`, `which`
 
    ```console
@@ -18,7 +18,7 @@ To develop Flutter on {{include.os}}:
    which: shell built-in command
    ```
 
-1. Install the following packages:
+1. 다음 패키지를 설치하세요:
    [`curl`][curl], [`git`][git], [`unzip`][unzip], [`xz-utils`][xz], [`zip`][zip], `libglu1-mesa`
 
    ```console
@@ -33,10 +33,10 @@ To develop Flutter on {{include.os}}:
 
 {% when 'Android' -%}
 
-1. To develop {{include.target}} apps:
+1. {{include.target}} 앱을 개발하려면:
 
    {:type="a"}
-   1. Install the following prerequisite packages for Android Studio.
+   1. Android Studio에 대한 다음 필수 패키지를 설치하세요.
 
       ```console
       $ sudo apt-get install \
@@ -44,13 +44,13 @@ To develop Flutter on {{include.os}}:
           libbz2-1.0:amd64 libncurses5:amd64
       ```
 
-   1. Install [Android Studio][] {{site.appmin.android_studio}} or later to debug and compile
-      Java or Kotlin code for Android.
-      Flutter requires the full version of Android Studio.
+   1. Android용 Java 또는 Kotlin 코드를 디버깅하고 컴파일하려면, 
+      [Android Studio][] {{site.appmin.android_studio}} 이상을 설치하세요.
+      Flutter에는 Android Studio 풀버전이 필요합니다.
 
 {% when 'Web' -%}
 
-1. Install [Google Chrome][] to debug JavaScript code for web apps.
+1. 웹 앱의 JavaScript 코드를 디버깅하려면 [Google Chrome][]을 설치하세요.
 
 {% render docs/install/accordions/install-chrome-from-cli.md %}
 
