@@ -22,6 +22,36 @@ description: Flutter를 시작하세요. 첫 번째 Flutter 앱을 작성하는 
 
 [What's new]: /release/whats-new
 
+---
+
+## 번역 사이트 개요 {:translated}
+
+[Flutter 문서 사이트](https://docs.flutter.dev/)의 한글 번역입니다.
+
+|       |      |
+|:-----:|:----|
+| Flutter 버전 | 3.24.0 |
+| 최종 업데이트 | 2024-08-29 |
+| 웹사이트 주소 | [flutter-docs-kr.web.app](https://flutter-docs-kr.web.app/) |
+| GitHub 주소 | <https://github.com/tenkeyless/flutter_docs> |
+
+{:.table .table-striped}
+
+- Github 사이트에서 태그가 달린 버전 및 날짜에 해당하는 문서를 Docker 통해 구동할 수 있습니다.
+- 애플 실리콘의 Docker를 통해서 구동할 수도 있습니다.
+- 주기적으로, [flutter docs Github](https://github.com/flutter/website)에서 문서를 fork 및 업데이트하여, 최신으로 유지할 예정입니다.
+- 몇몇 내용은 번역되지 않은 부분이 있을 수 있습니다. 이후, 추가로 번역이 진행될 예정입니다.
+  - [Flutter for 파트](/get-started/flutter-for/)
+  - [Flutter 역대 릴리즈 노트](/release/release-notes/)
+  - [Flutter 중요한 변경사항](/release/breaking-changes/)
+  - [Flutter 플랫폼 통합 파트](/platform-integration/)
+  - [Flutter 앱 배포 - 윈도우, 리눅스](/deployment/linux/)
+  - [Flutter 기존 앱에 추가](/add-to-app/)
+  - [Flutter 도구 파트](/tools/)
+
+---
+
+
 ## Flutter를 처음 사용하시나요? {:#new-to-flutter}
 
 [시작하기][Get started]와 
