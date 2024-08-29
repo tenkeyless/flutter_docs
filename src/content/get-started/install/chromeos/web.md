@@ -1,12 +1,16 @@
 ---
-title: Start building Flutter web apps on ChromeOS
-description: Configure your system to develop Flutter web apps on ChromeOS.
-short-title: Web app
+# title: Start building Flutter web apps on ChromeOS
+title: ChromeOS에서 Flutter 웹 앱 빌드 시작
+# description: Configure your system to develop Flutter web apps on ChromeOS.
+description: ChromeOS에서 Flutter 웹앱을 개발하도록 시스템을 구성하세요.
+# short-title: Web app
+short-title: 웹 앱
 target: Web
 config: ChromeOSWeb
 devos: ChromeOS
 next:
-  title: Create a test app
+  # title: Create a test app
+  title: 테스트 앱 만들기
   path: /get-started/test-drive
 ---
 

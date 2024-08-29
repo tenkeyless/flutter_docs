@@ -1,18 +1,19 @@
 ---
-title: Archive of What's new
+# title: Archive of What's new
+title: 새로운 소식 아카이브
+# description: >-
+#   A list of previous what's new updates on docs.flutter.dev
+#   and related documentation sites.
 description: >-
-  A list of previous what's new updates on docs.flutter.dev
-  and related documentation sites.
+  docs.flutter.dev와 관련 문서 사이트에 게시된 이전의 새로운 소식 리스트입니다.
 ---
 
-This page contains of archived announcements of
-what's new on the Flutter website and blog.
-For information on the latest releases,
-check out the [current what's new][] page.
+이 페이지에는 Flutter 웹사이트와 블로그의 새로운 소식에 대한 보관된 공지가 들어 있습니다. 
+최신 릴리스에 대한 정보는 [현재 새로운 소식][current what's new] 페이지를 확인하세요.
 
 [current what's new]: /release/whats-new
 
-## 15 February 2024: Valentine's-Day-adjacent 3.19 release
+## 2024/02/15: Valentine's-Day-adjacent 3.19 릴리즈 {:#15-february-2024-valentines-day-adjacent-3-19-release}
 
 Flutter 3.19 is live! For more information,
 check out the [Flutter 3.19 umbrella blog post][3.19-umbrella]
@@ -51,7 +52,7 @@ You might also check out the [Dart 3.3 release][] blog post.
 [Flutter and Dart 2024 Roadmap]: {{site.github}}/flutter/flutter/blob/master/docs/roadmap/Roadmap.md
 [Harness the Gemini API in your Dart and Flutter apps]: {{site.flutter-medium}}/harness-the-gemini-api-in-your-dart-and-flutter-apps-00573e560381
 
-## 15 November 2023: 3.16 release
+## 2023/11/15: 3.16 릴리즈 {:#15-november-2023-3-16-release}
 
 Flutter 3.16 is live! For more information,
 check out the [Flutter 3.16 blog post][3.16-umbrella]
@@ -111,7 +112,7 @@ publication since Flutter 3.13:
 [ios-app-ext]: /platform-integration/ios/app-extensions
 [What's new in Flutter 3.16]: {{site.flutter-medium}}/whats-new-in-flutter-3-16-dba6cb1015d1
 
-## 16 August 2023: 3.13 release
+## 2023/08/16: 3.13 릴리즈 {:#16-august-2023-3-13-release}
 
 Flutter 3.13 is live! For more information,
 check out the [Flutter 3.13 blog post][blog-general].
@@ -240,7 +241,7 @@ check out the [Flutter 3.13 blog post][blog-games].
 
 <hr>
 
-## 10 May 2023: Google I/O 2023: 3.10 release
+## 2023/05/10: Google I/O 2023: 3.10 릴리즈 {:#10-may-2023-google-io-2023-3-10-release}
 
 Flutter 3.10 is live! This release contains many updates
 and improvements. This page lists the documentation changes,
@@ -335,7 +336,7 @@ publication since Flutter 3.7:
 [Wonderous nominated for Webby Award]: {{site.flutter-medium}}/wonderous-nominated-for-webby-award-8e00e2a648c2
 [Flutter in 2023: strategy and roadmap]: {{site.flutter-medium}}/flutter-in-2023-strategy-and-roadmap-60efc8d8b0c7
 
-## 25 Jan 2023: Flutter Forward: 3.7 release
+## 2023/01/25: Flutter Forward: 3.7 릴리즈 {:#25-jan-2023-flutter-forward-3-7-release}
 
 Flutter 3.7 is live! This release contains many updates
 and improvements. This page lists the documentation changes,
@@ -514,7 +515,7 @@ publication since the last stable release:
 [Supporting six platforms with two keyboards]: {{site.medium}}/flutter/what-we-learned-from-the-flutter-q3-2022-survey-9b78803accd2
 [What we learned from the Flutter Q3 2022 survey]: {{site.medium}}/flutter/what-we-learned-from-the-flutter-q3-2022-survey-9b78803accd2
 
-## 31 Aug 2022: Flutter Vikings: 3.3 release
+## 2022/08/31: Flutter Vikings: 3.3 릴리즈 {:#31-aug-2022-flutter-vikings-3-3-release}
 
 Flutter 3.3 is live! For more information, see
 
@@ -558,7 +559,7 @@ and the [Flutter 3.3 release notes][3.3 release notes].
 [navigation and routing overview]: /ui/navigation
 [URL strategies]: /ui/navigation/url-strategies
 
-## 11 May 2022: Google I/O 2022: Flutter 3 release
+## 2022/05/11: Google I/O 2022: Flutter 3 릴리즈 {:#11-may-2022-google-io-2022-flutter-3-release}
 
 Flutter 3 is live!!! For more information, see
 [Introducing Flutter 3][], [What's new in Flutter 3][],
@@ -645,7 +646,7 @@ on the [videos] page.
 
 ---
 
-## 03 Feb 2022: Windows Support: 2.10 release
+## 2022/02/03: Windows Support: 2.10 릴리즈 {:#03-feb-2022-windows-support-2-10-release}
 
 Desktop support for Microsoft Windows
 (a central feature of the 2.10 release) is live!
@@ -661,7 +662,7 @@ free articles on Medium.
 
 ---
 
-## 08 Dec 2021: 2.8 release
+## 2021/12/08: 2.8 릴리즈 {:#08-dec-2021-2-8-release}
 
 Flutter 2.8 is live! For details, see
 [Announcing Flutter 2.8][] and
@@ -670,7 +671,7 @@ Flutter 2.8 is live! For details, see
 [Announcing Flutter 2.8]: {{site.flutter-medium}}/announcing-flutter-2-8-31d2cb7e19f5
 [What's new in Flutter 2.8]: {{site.flutter-medium}}/whats-new-in-flutter-2-8-d085b763d181
 
-## 08 Sep 2021: 2.5 release
+## 2021/09/08: 2.5 릴리즈 {:#08-sep-2021-2-5-release}
 
 Flutter 2.5 is live! For details, see
 [What's new in Flutter 2.5][].
@@ -712,7 +713,7 @@ publication since the last stable release:
 
 ---
 
-## 18 May 2021: Google I/O 2021: 2.2 release
+## 2021/05/18: Google I/O 2021: 2.2 릴리즈 {:#18-may-2021-google-io-2021-2-2-release}
 
 Flutter 2.2 is live! For details, see
 [Announcing Flutter 2.2][] and
@@ -806,7 +807,7 @@ publication since the last stable release:
 
 ---
 
-## 03 Mar 2021: Flutter Engage: 2.0 release
+## 2021/03/03: Flutter Engage: 2.0 릴리즈 {:#03-mar-2021-flutter-engage-2-0-release}
 
 Flutter 2 is live!!!  For more information, see
 [Announcing Flutter 2][], [What's new in Flutter 2][],
@@ -916,7 +917,7 @@ publication since the last stable release:
 
 ---
 
-## 01 Oct 2020: 1.22 release
+## 2020/10/01: 1.22 릴리즈 {:#01-oct-2020-1-22-release}
 
 Flutter 1.22 is live! For details, see
 [Announcing Flutter 1.22][].
@@ -986,7 +987,7 @@ publication since the last stable release:
 [Updates on Flutter and Firebase]: {{site.flutter-medium}}/updates-on-flutter-and-firebase-8076f70bc90e
 [webview_flutter]: {{site.pub}}/packages/webview_flutter
 
-## 05 Aug 2020: 1.20 release
+## 2020/08/05: 1.20 릴리즈 {:#05-aug-2020-1-20-release}
 
 Flutter 1.20 is live! For details,
 see [Announcing Flutter 1.20][].
@@ -1090,7 +1091,7 @@ publication since the last stable release:
 [What we learned from the Flutter Q2 2020 survey]: {{site.flutter-medium}}/what-we-learned-from-the-flutter-q2-2020-survey-a4f1fc8faac9
 [Write a Flutter desktop application]: {{site.codelabs}}/codelabs/flutter-github-graphql-client/
 
-## 06 May 2020: Work-From-Home: 1.17 release
+## 2020/05/06: Work-From-Home: 1.17 릴리즈 {:#06-may-2020-work-from-home-1-17-release}
 
 Flutter 1.17 is live!
 
@@ -1176,7 +1177,7 @@ Other newness:
 [Understanding constraints]: /ui/layout/constraints
 [When should I use AnimatedBuilder or AnimatedWidget?]: {{site.flutter-medium}}/when-should-i-useanimatedbuilder-or-animatedwidget-57ecae0959e8
 
-## 11 Dec 2019: Flutter Interact: 1.12 release
+## 2019/12/11: Flutter Interact: 1.12 릴리즈 {:#11-dec-2019-flutter-interact-1-12-release}
 
 Flutter 1.12 is live!
 
@@ -1238,7 +1239,7 @@ Happy Fluttering!
 [write your first Flutter app on the web]: /get-started/codelab-web
 [Get started]: /get-started/install
 
-## 10 Sep 2019: 1.9 release
+## 2019/09/10: 1.9 릴리즈 {:#10-sep-2019-1-9-release}
 
 Flutter 1.9 is live!
 
@@ -1311,7 +1312,7 @@ Happy Fluttering!
 [ToggleButtons demo]: {{site.github}}/csells/flutter_toggle_buttons
 [using the dart:ffi library]: /platform-integration/android/c-interop
 
-## 09 Jul 2019: 1.7 release
+## 2019/07/09: 1.7 릴리즈 {:#09-jul-2019-1-7-release}
 
 Flutter 1.7 is live!
 
@@ -1360,7 +1361,7 @@ component and how to customize it, see
 [`RangeSlider`]: {{site.api}}/flutter/material/RangeSlider-class.html
 [Simple app state management]: /data-and-backend/state-mgmt/simple
 
-## 07 May 2019: Google I/O 2019: 1.5 release
+## 2019/05/07: Google I/O 2019: 1.5 릴리스 {:#07-may-2019-google-io-2019-1-5-release}
 
 [Flutter 1.5][] is live!
 
@@ -1374,7 +1375,7 @@ Basic Flutter layout codelab and tell us what you think!
 [Flutter 1.5]: {{site.google-blog}}/2019/05/Flutter-io19.html
 [1.5.4 release notes]: /release/release-notes/release-notes-1.5.4
 
-## 26 Feb 2019: 1.2 release
+## 2019/02/26: 1.2 릴리즈 {:#26-feb-2019-1-2-release}
 
 Flutter released [version 1.2][] at Mobile World Congress
 (MWC) in Barcelona. For more information, see the
@@ -1421,7 +1422,7 @@ If you have questions or comments about any of these docs,
 
 [version 1.2]: {{site.google-blog}}/2019/02/launching-flutter-12-at-mobile-world.html
 
-## 05 Nov 2018: new website
+## 2018/11/05: 새로운 웹사이트 {:#05-nov-2018-new-website}
 
 Welcome to the revamped Flutter website!
 

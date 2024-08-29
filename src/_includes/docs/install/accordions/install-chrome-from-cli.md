@@ -1,6 +1,6 @@
 
 <details>
-<summary><strong>How to install Chrome from the command line</strong></summary>
+<summary><strong>명령줄에서 Chrome을 설치하는 방법</strong></summary>
 
 ```console
 $ wget https://dl-ssl.google.com/linux/linux_signing_key.pub -O /tmp/google.pub

@@ -35,14 +35,14 @@ Flutter는 iOS에서 실행할 때 앱 동작에 대한 여러 가지 적응을 
 이 가이드를 쿡북으로 사용하세요.
 돌아다니며 가장 관련성 있는 요구 사항을 다루는 질문을 찾으세요.
 
-## Overview {:#overview}
+## 개요 {:#overview}
 
 As an introduction, watch the following video.
 It outlines how Flutter works on iOS and how to use Flutter to build iOS apps.
 
 {% ytEmbed 'ceMsPBbcEGg', 'Flutter for iOS developers', false, true %}
 
-### Views vs. Widgets
+### Views vs. Widgets {:#views-vs-widgets}
 
 :::secondary
 How is react-style, or _declarative_,
@@ -89,7 +89,7 @@ On iOS, you can use the [Cupertino widgets][]
 library to produce an interface that looks like
 [Apple's iOS design language][].
 
-### Updating widgets
+### 위젯 업데이트 {:#updating-widgets}
 
 To update your views in UIKit, you directly mutate them.
 In Flutter, widgets are immutable and not updated directly.
@@ -200,7 +200,7 @@ class _SampleAppPageState extends State<SampleAppPage> {
 }
 ```
 
-### Widget layout
+### 위젯 레이아웃 {:#widget-layout}
 
 In UIKit, you might use a Storyboard file
 to organize your views and set constraints,
@@ -232,7 +232,7 @@ which mimics the functionality of constraints in iOS.
 You can view the layouts that Flutter has to offer
 in the [widget catalog][].
 
-### Removing Widgets
+### 위젯 제거 {:#removing-widgets}
 
 In UIKit, you call `addSubview()` on the parent,
 or `removeFromSuperview()` on a child view
@@ -308,7 +308,7 @@ class _SampleAppPageState extends State<SampleAppPage> {
 }
 ```
 
-### Animations
+### 애니메이션 {:#animations}
 
 In UIKit, you create an animation by calling the
 `animate(withDuration:animations:)` method on a view.
@@ -413,7 +413,7 @@ class _MyFadeTest extends State<MyFadeTest>
 For more information, see [Animation & Motion widgets][],
 the [Animations tutorial][], and the [Animations overview][].
 
-### Drawing on the screen
+### 화면에 그리기 {:#drawing-on-the-screen}
 
 In UIKit, you use `CoreGraphics` to draw lines and shapes to the
 screen. Flutter has a different API based on the `Canvas` class,
@@ -492,13 +492,13 @@ class SignaturePainter extends CustomPainter {
 }
 ```
 
-### Widget opacity
+### 위젯 불투명도 {:#widget-opacity}
 
 In UIKit, everything has `.opacity` or `.alpha`.
 In Flutter, most of the time you need to
 wrap a widget in an `Opacity` widget to accomplish this.
 
-### Custom Widgets
+### 커스텀 위젯 {:#custom-widgets}
 
 In UIKit, you typically subclass `UIView`, or use a pre-existing view,
 to override and implement methods that achieve the desired behavior.
@@ -540,7 +540,7 @@ Widget build(BuildContext context) {
 }
 ```
 
-### Managing dependencies
+### 종속성 관리 {:#managing-dependencies}
 
 In iOS, you add dependencies with CocoaPods by adding to your `Podfile`.
 Flutter uses Dart's build system and the Pub package manager
@@ -554,12 +554,12 @@ dependencies needed for per-platform integration.
 In general, use `pubspec.yaml` to declare external dependencies in Flutter.
 A good place to find great packages for Flutter is on [pub.dev][].
 
-## Navigation
+## 네비게이션 {:#navigation}
 
 This section of the document discusses navigation
 between pages of an app, the push and pop mechanism, and more.
 
-### Navigating between pages
+### 페이지 간 탐색하기 {:#navigating-between-pages}
 
 In UIKit, to travel between view controllers, you can use a
 `UINavigationController` that manages the stack of view controllers
@@ -624,7 +624,7 @@ location, `pop()` the stack with the result:
 Navigator.of(context).pop({'lat': 43.821757, 'long': -79.226392});
 ```
 
-### Navigating to another app
+### 다른 앱으로 탐색하기 {:#navigating-to-another-app}
 
 In UIKit, to send the user to another application,
 you use a specific URL scheme.
@@ -633,7 +633,7 @@ To implement this functionality in Flutter,
 create a native platform integration, or use an
 [existing plugin][], such as [`url_launcher`][].
 
-### Manually pop back
+### 수동으로 뒤로 팝하기 {:#manually-pop-back}
 
 Calling `SystemNavigator.pop()` from your Dart code
 invokes the following iOS code:
@@ -648,7 +648,7 @@ if ([viewController isKindOfClass:[UINavigationController class]]) {
 If that doesn't do what you want, you can create your own
 [platform channel][] to invoke arbitrary iOS code.
 
-### Handling localization
+### 현지화 처리 {:#handling-localization}
 
 Unlike iOS, which has the `Localizable.strings` file,
 Flutter doesn't currently have a dedicated system for handling strings.
@@ -741,13 +741,13 @@ For further details on internationalization and localization in Flutter,
 see the [internationalization guide][], which has sample code
 with and without the `intl` package.
 
-## ViewControllers
+## ViewControllers {:#viewcontrollers}
 
 This section of the document discusses the equivalent
 of ViewController in Flutter and how to listen to
 lifecycle events.
 
-### Equivalent of ViewController in Flutter
+### Flutter의 ViewController와 동일한 것 {:#equivalent-of-viewcontroller-in-flutter}
 
 In UIKit, a `ViewController` represents a portion of user interface,
 most commonly used for a screen or section.
@@ -761,7 +761,7 @@ Use a `Navigator` to move between different `Route`s
 that represent different screens or pages,
 or maybe different states or renderings of the same data.
 
-### Listening to lifecycle events
+### 라이프사이클 이벤트 수신 {:#listening-to-lifecycle-events}
 
 In UIKit, you can override methods to the `ViewController`
 to capture lifecycle methods for the view itself,
@@ -792,12 +792,12 @@ The iOS platform has no equivalent event.
 For more details on the meaning of these states, see
 [`AppLifecycleState` documentation][].
 
-## Layouts
+## Layouts {:#layouts}
 
 This section discusses different layouts in Flutter
 and how they compare with UIKit.
 
-### Displaying a list view
+### 리스트 뷰 표시 {:#displaying-a-list-view}
 
 In UIKit, you might show a list in
 either a `UITableView` or a `UICollectionView`.
@@ -863,7 +863,7 @@ class _SampleAppPageState extends State<SampleAppPage> {
 }
 ```
 
-### Detecting what was clicked
+### 클릭된 것 감지 {:#detecting-what-was-clicked}
 
 In UIKit, you implement the delegate method,
 `tableView:didSelectRowAtIndexPath:`.
@@ -929,7 +929,7 @@ class _SampleAppPageState extends State<SampleAppPage> {
 }
 ```
 
-### Dynamically updating ListView
+### ListView를 동적으로 업데이트 {:#dynamically-updating-listview}
 
 In UIKit, you update the data for the list view,
 and notify the table or collection view using the
@@ -1109,7 +1109,7 @@ cell you want rendered at that position.
 Finally, but most importantly, notice that the `onTap()` function
 doesn't recreate the list anymore, but instead `.add`s to it.
 
-### Creating a scroll view
+### 스크롤 뷰 만들기 {:#creating-a-scroll-view}
 
 In UIKit, you wrap your views in a `ScrollView` that
 allows a user to scroll your content if needed.
@@ -1136,13 +1136,13 @@ Widget build(BuildContext context) {
 For more detailed docs on how to lay out widgets in Flutter,
 see the [layout tutorial][].
 
-## Gesture detection and touch event handling
+## 제스처 감지 및 터치 이벤트 처리 {:#gesture-detection-and-touch-event-handling}
 
 This section discusses how to detect gestures
 and handle different events in Flutter,
 and how they compare with UIKit.
 
-### Adding a click listener
+### 클릭 리스너 추가 {:#adding-a-click-listener}
 
 In UIKit, you attach a `GestureRecognizer` to a view to
 handle click events.
@@ -1192,7 +1192,7 @@ In Flutter, there are two ways of adding touch listeners:
   }
    ```
 
-### Handling other gestures
+### 다른 제스처 처리 {:#handling-other-gestures}
 
 Using `GestureDetector` you can listen
 to a wide range of gestures such as:
@@ -1312,7 +1312,7 @@ class _SampleAppState extends State<SampleApp>
 }
 ```
 
-## Themes, styles, and media
+## 테마, 스타일 및 미디어 {:#themes-styles-and-media}
 
 Flutter applications are easy to style; you can switch
 between light and dark themes,
@@ -1320,7 +1320,7 @@ change the style of your text and UI components,
 and more. This section covers aspects of styling your Flutter apps
 and compares how you might do the same in UIKit.
 
-### Using a theme
+### 테마 사용 {:#using-a-theme}
 
 Out of the box, Flutter comes with a beautiful implementation
 of Material Design, which takes care of a lot of styling and
@@ -1371,7 +1371,7 @@ class SampleApp extends StatelessWidget {
 }
 ```
 
-### Using custom fonts
+### 커스텀 폰트 사용 {:#using-custom-fonts}
 
 In UIKit, you import any `ttf` font files into your project
 and create a reference in the `info.plist` file.
@@ -1407,7 +1407,7 @@ Widget build(BuildContext context) {
 }
 ```
 
-### Styling text
+### 텍스트 스타일링 {:#styling-text}
 
 Along with fonts, you can customize other styling elements on a `Text` widget.
 The style parameter of a `Text` widget takes a `TextStyle` object,
@@ -1428,7 +1428,7 @@ where you can customize many parameters, such as:
 * `textBaseline`
 * `wordSpacing`
 
-### Bundling images in apps
+### 앱에서 이미지 번들링 {:#bundling-images-in-apps}
 
 While iOS treats images and assets as distinct items,
 Flutter apps have only assets. Resources that are
@@ -1508,12 +1508,12 @@ Widget build(BuildContext context) {
 For more details, see
 [Adding Assets and Images in Flutter][].
 
-## Form input
+## Form 입력 {:#form-input}
 
 This section discusses how to use forms in Flutter
 and how they compare with UIKit.
 
-### Retrieving user input
+### 사용자 입력 검색 {:#retrieving-user-input}
 
 Given how Flutter uses immutable widgets with a separate state,
 you might be wondering how user input fits into the picture.
@@ -1575,7 +1575,7 @@ You can find more information and the full code listing in
 [Retrieve the value of a text field][],
 from the [Flutter cookbook][].
 
-### Placeholder in a text field
+### 텍스트 필드의 자리 표시자 {:#placeholder-in-a-text-field}
 
 In Flutter, you can easily show a "hint" or a placeholder text
 for your field by adding an `InputDecoration` object
@@ -1590,7 +1590,7 @@ Center(
 )
 ```
 
-### Showing validation errors
+### 검증 오류 표시 {:#showing-validation-errors}
 
 Just as you would with a "hint", pass an `InputDecoration` object
 to the decoration constructor for the `Text` widget.
@@ -1668,12 +1668,12 @@ class _SampleAppPageState extends State<SampleAppPage> {
 }
 ```
 
-## Threading & asynchronicity
+## 스레딩 및 비동기성 {:#threading-asynchronicity}
 
 This section discusses concurrency in Flutter and
 how it compares with UIKit.
 
-### Writing asynchronous code
+### 비동기 코드 작성 {:#writing-asynchronous-code}
 
 Dart has a single-threaded execution model,
 with support for `Isolate`s
@@ -1788,7 +1788,7 @@ class _SampleAppPageState extends State<SampleAppPage> {
 Refer to the next section for more information on doing work
 in the background, and how Flutter differs from iOS.
 
-### Moving to the background thread
+### 백그라운드 스레드로 이동 {:#moving-to-the-background-thread}
 
 Since Flutter is single threaded and runs an event loop
 (like Node.js), you don't have to worry about
@@ -2014,7 +2014,7 @@ class _SampleAppPageState extends State<SampleAppPage> {
 }
 ```
 
-### Making network requests
+### 네트워크 요청하기 {:#making-network-requests}
 
 Making a network call in Flutter is easy when you
 use the popular [`http` package][]. This abstracts
@@ -2041,7 +2041,7 @@ Future<void> loadData() async {
 }
 ```
 
-### Showing the progress on long-running tasks
+### 장기 실행 작업의 진행 상황 표시 {:#showing-the-progress-on-long-running-tasks}
 
 In UIKit, you typically use a `UIProgressView`
 while executing a long-running task in the background.

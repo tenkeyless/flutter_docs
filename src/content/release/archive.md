@@ -55,18 +55,16 @@ curl [provenance URL] | jq -r .payload | base64 -d | jq
 
 ## Master 채널 {:#master-channel}
 
-Installation bundles are not available for master.
-However, you can get the SDK directly from
-[GitHub repo][] by cloning the master channel,
-and then triggering a download of the SDK dependencies:
+설치 번들은 master에 사용할 수 없습니다. 
+그러나, master 채널을 복제한 다음, SDK 종속성 다운로드를 트리거하여, 
+[GitHub repo][]에서 직접 SDK를 가져올 수 있습니다.
 
 ```console
 $ git clone -b master https://github.com/flutter/flutter.git
 $ ./flutter/bin/flutter --version
 ```
 
-For additional details on how our installation bundles are structured,
-see [Installation bundles][].
+설치 번들의 구조에 대한 추가 세부 정보는, [설치 번들][Installation bundles]을 참조하세요.
 
 [Flutter's channels]: {{site.repo.flutter}}/blob/master/docs/releases/Flutter-build-release-channels.md
 [release notes]: /release/release-notes

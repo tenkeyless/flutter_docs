@@ -16,9 +16,9 @@ Flutter 프레임워크는 여러 플랫폼에서 사용되는 단일 UI를 만�
 
 이 문서는 필요에 가장 적합한 질문을 찾아 탐색하면서 쿡북으로 사용할 수 있습니다.
 
-## Project setup
+## 프로젝트 설정 {:#project-setup}
 
-### How does the app start?
+### 앱은 어떻게 시작하나요? {:#how-does-the-app-start}
 
 For each platform in Xamarin.Forms,
 you call the `LoadApplication` method,
@@ -80,7 +80,7 @@ class MyApp extends StatelessWidget {
 }
 ```
 
-### How do you create a page?
+### 페이지는 어떻게 만드나요? {:#how-do-you-create-a-page}
 
 Xamarin.Forms has many types of pages;
 `ContentPage` is the most common.
@@ -199,9 +199,9 @@ to rebuild the entire widget tree again.
 This way of generating UI is different from Xamarin.Forms,
 but there are many benefits to this approach.
 
-## Views
+## Views {:#views}
 
-### What is the equivalent of a Page or Element in Flutter?
+### Flutter에서 Page나 Element에 해당하는 것은 무엇입니까? {:#what-is-the-equivalent-of-a-page-or-element-in-flutter}
 
 :::secondary
 How is react-style, or _declarative_, programming different from the
@@ -229,7 +229,7 @@ to implement any design language.
 For example, on iOS, you can use the [Cupertino widgets][]
 to produce an interface that looks like [Apple's iOS design language][].
 
-### How do I update widgets?
+### 위젯을 어떻게 업데이트하나요? {:#how-do-i-update-widgets}
 
 In Xamarin.Forms, each `Page` or `Element` is a stateful class,
 that has properties and methods.
@@ -347,7 +347,7 @@ class _SampleAppPageState extends State<SampleAppPage> {
 }
 ```
 
-### How do I lay out my widgets? What is the equivalent of an XAML file?
+### 위젯을 어떻게 레이아웃하나요? XAML 파일과 동등한 것은 무엇인가요? {:#how-do-i-lay-out-my-widgets-what-is-the-equivalent-of-an-xaml-file}
 
 In Xamarin.Forms, most developers write layouts in XAML,
 though sometimes in C#.
@@ -377,7 +377,7 @@ Widget build(BuildContext context) {
 You can view the layouts that Flutter has to offer in the
 [widget catalog][].
 
-### How do I add or remove an Element from my layout?
+### 레이아웃에 Element를 추가하거나 제거하려면 어떻게 해야 하나요? {:#how-do-i-add-or-remove-an-element-from-my-layout}
 
 In Xamarin.Forms, you had to remove or add an `Element` in code.
 This involved either setting the `Content` property or calling
@@ -446,7 +446,7 @@ class _SampleAppPageState extends State<SampleAppPage> {
 }
 ```
 
-### How do I animate a widget?
+### 위젯에 애니메이션을 적용하려면 어떻게 해야 하나요? {:#how-do-i-animate-a-widget}
 
 In Xamarin.Forms, you create simple animations using ViewExtensions that
 include methods such as `FadeTo` and `TranslateTo`.
@@ -560,7 +560,7 @@ class _MyFadeTest extends State<MyFadeTest> with TickerProviderStateMixin {
 For more information, see [Animation & Motion widgets][],
 the [Animations tutorial][], and the [Animations overview][].
 
-### How do I draw/paint on the screen?
+### 화면에 그리거나 칠하려면(draw/paint) 어떻게 해야 하나요? {:#how-do-i-drawpaint-on-the-screen}
 
 Xamarin.Forms never had a built-in way to draw directly on the screen.
 Many would use SkiaSharp, if they needed a custom image drawn.
@@ -649,13 +649,13 @@ class SignaturePainter extends CustomPainter {
 }
 ```
 
-### Where is the widget's opacity?
+### 위젯의 불투명도는 어디에 있나요? {:#where-is-the-widgets-opacity}
 
 On Xamarin.Forms, all `VisualElement`s have an Opacity.
 In Flutter, you need to wrap a widget in an
 [`Opacity` widget][] to accomplish this.
 
-### How do I build custom widgets?
+### 커스텀 위젯을 어떻게 만들 수 있나요? {:#how-do-i-build-custom-widgets}
 
 In Xamarin.Forms, you typically subclass `VisualElement`,
 or use a pre-existing `VisualElement`, to override and
@@ -701,9 +701,9 @@ Widget build(BuildContext context) {
 }
 ```
 
-## Navigation
+## 네비게이션 {:#navigation}
 
-### How do I navigate between pages?
+### 페이지 사이를 어떻게 이동하나요? {:#how-do-i-navigate-between-pages}
 
 In Xamarin.Forms, the `NavigationPage` class
 provides a hierarchical navigation experience
@@ -775,7 +775,7 @@ location, pop the stack with the result:
 Navigator.of(context).pop({'lat': 43.821757, 'long': -79.226392});
 ```
 
-### How do I navigate to another app?
+### 다른 앱으로 이동하려면 어떻게 해야 하나요? {:#how-do-i-navigate-to-another-app}
 
 In Xamarin.Forms, to send the user to another application,
 you use a specific URI scheme, using `Device.OpenUrl("mailto://")`.
@@ -784,9 +784,9 @@ To implement this functionality in Flutter,
 create a native platform integration, or use an [existing plugin][],
 such as[`url_launcher`][], available with many other packages on [pub.dev][].
 
-## Async UI
+## Async UI {:#async-ui}
 
-### What is the equivalent of Device.BeginOnMainThread() in Flutter?
+### Flutter에서 Device.BeginOnMainThread()와 동일한 기능은 무엇입니까? {:#what-is-the-equivalent-of-device-beginonmainthread-in-flutter}
 
 Dart has a single-threaded execution model,
 with support for `Isolate`s (a way to run Dart codes on another thread),
@@ -904,7 +904,7 @@ Refer to the next section for more information
 on doing work in the background,
 and how Flutter differs from Android.
 
-### How do you move work to a background thread?
+### 작업을 백그라운드 스레드로 옮기려면 어떻게 해야 하나요? {:#how-do-you-move-work-to-a-background-thread}
 
 Since Flutter is single threaded and runs an event loop,
 you don't have to worry about thread management
@@ -1123,7 +1123,7 @@ class _SampleAppPageState extends State<SampleAppPage> {
 }
 ```
 
-### How do I make network requests?
+### 네트워크 요청은 어떻게 하나요? {:#how-do-i-make-network-requests}
 
 In Xamarin.Forms you would use `HttpClient`.
 Making a network call in Flutter is easy
@@ -1155,7 +1155,7 @@ Future<void> loadData() async {
 }
 ```
 
-### How do I show the progress for a long-running task?
+### 장기 작업의 진행 상황을 어떻게 표시하나요? {:#how-do-i-show-the-progress-for-a-long-running-task}
 
 In Xamarin.Forms you would typically create a loading indicator,
 either directly in XAML or through a 3rd party plugin such as AcrDialogs.
@@ -1260,9 +1260,9 @@ class _SampleAppPageState extends State<SampleAppPage> {
 }
 ```
 
-## Project structure & resources
+## 프로젝트 구조 및 리소스 {:#project-structure-resources}
 
-### Where do I store my image files?
+### 이미지 파일은 어디에 저장하나요? {:#where-do-i-store-my-image-files}
 
 Xamarin.Forms has no platform independent way of storing images,
 you had to place images in the iOS `xcasset` folder,
@@ -1340,7 +1340,7 @@ Widget build(BuildContext context) {
 
 More detailed information can be found in [Adding assets and images][].
 
-### Where do I store strings? How do I handle localization?
+### 문자열은 어디에 저장하나요? 지역화를 어떻게 처리하나요? {:#where-do-i-store-strings-how-do-i-handle-localization}
 
 Unlike .NET which has `resx` files,
 Flutter doesn't currently have a dedicated system for handling strings.
@@ -1432,7 +1432,7 @@ For further details on internationalization and localization in Flutter,
 see the [internationalization guide][], which has sample code
 with and without the `intl` package.
 
-### Where is my project file?
+### 내 프로젝트 파일은 어디에 있나요? {:#where-is-my-project-file}
 
 In Xamarin.Forms you will have a `csproj` file.
 The closest equivalent in Flutter is pubspec.yaml,
@@ -1440,7 +1440,7 @@ which contains package dependencies and various project details.
 Similar to .NET Standard,
 files within the same directory are considered part of the project.
 
-### What is the equivalent of Nuget? How do I add dependencies?
+### Nuget과 동등한 것은 무엇입니까? 종속성을 어떻게 추가합니까? {:#what-is-the-equivalent-of-nuget-how-do-i-add-dependencies}
 
 In the .NET ecosystem, native Xamarin projects and Xamarin.Forms projects
 had access to Nuget and the built-in package management system.
@@ -1457,9 +1457,9 @@ In general, use `pubspec.yaml` to declare
 external dependencies to use in Flutter.
 A good place to find Flutter packages is on [pub.dev][].
 
-## Application lifecycle
+## 애플리케이션 라이프사이클 {:#application-lifecycle}
 
-### How do I listen to application lifecycle events?
+### 애플리케이션 수명 주기 이벤트를 어떻게 수신합니까? {:#how-do-i-listen-to-application-lifecycle-events}
 
 In Xamarin.Forms, you have an `Application`
 that contains `OnStart`, `OnResume` and `OnSleep`.
@@ -1489,9 +1489,9 @@ see the [`AppLifecycleStatus` documentation][].
 
 [`AppLifecycleStatus` documentation]: {{site.api}}/flutter/dart-ui/AppLifecycleState.html
 
-## Layouts
+## Layouts {:#layouts}
 
-### What is the equivalent of a StackLayout?
+### StackLayout과 동일한 것은 무엇입니까? {:#what-is-the-equivalent-of-a-stacklayout}
 
 In Xamarin.Forms you can create a `StackLayout`
 with an `Orientation` of horizontal or vertical.
@@ -1535,7 +1535,7 @@ Widget build(BuildContext context) {
   );
 ```
 
-### What is the equivalent of a Grid?
+### Grid와 동일한 것은 무엇입니까? {:#what-is-the-equivalent-of-a-grid}
 
 The closest equivalent of a `Grid` would be a `GridView`.
 This is much more powerful than what you are used to in Xamarin.Forms.
@@ -1596,7 +1596,7 @@ Widget build(BuildContext context) {
 }
 ```
 
-### What is the equivalent of a ScrollView?
+### ScrollView와 동일한 것은 무엇입니까? {:#what-is-the-equivalent-of-a-scrollview}
 
 In Xamarin.Forms, a `ScrollView` wraps around a `VisualElement`,
 and if the content is larger than the device screen, it scrolls.
@@ -1635,7 +1635,7 @@ Widget build(BuildContext context) {
 }
 ```
 
-### How do I handle landscape transitions in Flutter?
+### Flutter에서 가로 모드 전환을 어떻게 처리하나요? {:#how-do-i-handle-landscape-transitions-in-flutter}
 
 Landscape transitions can be handled automatically by setting the
 `configChanges` property in the AndroidManifest.xml:
@@ -1644,9 +1644,9 @@ Landscape transitions can be handled automatically by setting the
 <activity android:configChanges="orientation|screenSize" />
 ```
 
-## Gesture detection and touch event handling
+## 제스처 감지 및 터치 이벤트 처리 {:#gesture-detection-and-touch-event-handling}
 
-### How do I add GestureRecognizers to a widget in Flutter?
+### Flutter에서 위젯에 GestureRecognizers를 추가하려면 어떻게 해야 하나요? {:#how-do-i-add-gesturerecognizers-to-a-widget-in-flutter}
 
 In Xamarin.Forms, `Element`s might contain a click event you can attach to.
 Many elements also contain a `Command` that is tied to this event.
@@ -1695,7 +1695,7 @@ In Flutter there are two very similar ways:
    }
    ```
 
-### How do I handle other gestures on widgets?
+### 위젯에서 다른 제스처를 어떻게 처리하나요? {:#how-do-i-handle-other-gestures-on-widgets}
 
 In Xamarin.Forms you would add a `GestureRecognizer` to the `View`.
 You would normally be limited to `TapGestureRecognizer`,
@@ -1815,9 +1815,9 @@ class _RotatingFlutterDetectorState extends State<RotatingFlutterDetector>
 }
 ```
 
-## Listviews and adapters
+## 리스트 뷰와 어댑터 {:#listviews-and-adapters}
 
-### What is the equivalent to a ListView in Flutter?
+### Flutter에서 ListView와 동일한 것은 무엇입니까? {:#what-is-the-equivalent-to-a-listview-in-flutter}
 
 The equivalent to a `ListView` in Flutter is … a `ListView`!
 
@@ -1876,7 +1876,7 @@ class SampleAppPage extends StatelessWidget {
 }
 ```
 
-### How do I know which list item has been clicked?
+### 어떤 리스트 아이템이 클릭되었는지 어떻게 알 수 있나요? {:#how-do-i-know-which-list-item-has-been-clicked}
 
 In Xamarin.Forms, the ListView has an `ItemTapped` method
 to find out which item was clicked.
@@ -1941,7 +1941,7 @@ class _SampleAppPageState extends State<SampleAppPage> {
 }
 ```
 
-### How do I update a ListView dynamically?
+### ListView를 동적으로 업데이트하려면 어떻게 해야 하나요? {:#how-do-i-update-a-listview-dynamically}
 
 In Xamarin.Forms, if you bound the
 `ItemsSource` property to an `ObservableCollection`,
@@ -2121,9 +2121,9 @@ doesn't recreate the list anymore, but instead adds to it.
 For more information, see
 [Your first Flutter app][first_codelab] codelab.
 
-## Working with text
+## 텍스트 작업 {:#working-with-text}
 
-### How do I set custom fonts on my text widgets?
+### 텍스트 위젯에 커스텀 글꼴을 설정하려면 어떻게 해야 하나요? {:#how-do-i-set-custom-fonts-on-my-text-widgets}
 
 In Xamarin.Forms, you would have to add a custom font in each native project.
 Then, in your `Element` you would assign this font name
@@ -2159,7 +2159,7 @@ Widget build(BuildContext context) {
 }
 ```
 
-### How do I style my text widgets?
+### 텍스트 위젯의 스타일을 어떻게 지정하나요? {:#how-do-i-style-my-text-widgets}
 
 Along with fonts, you can customize other styling elements on a `Text` widget.
 The style parameter of a `Text` widget takes a `TextStyle` object,
@@ -2180,9 +2180,9 @@ where you can customize many parameters, such as:
 * `textBaseline`
 * `wordSpacing`
 
-## Form input
+## Form 입력 {:#form-input}
 
-### How do I retrieve user input?
+### 사용자 입력을 어떻게 검색합니까? {:#how-do-i-retrieve-user-input}
 
 Xamarin.Forms `element`s allow you to directly query the `element`
 to determine the state of its properties,
@@ -2252,7 +2252,7 @@ You can find more information and the full code listing in
 [Retrieve the value of a text field][],
 from the [Flutter cookbook][].
 
-### What is the equivalent of a Placeholder on an Entry?
+### Entry의 Placeholder와 동일한 것은 무엇입니까? {:#what-is-the-equivalent-of-a-placeholder-on-an-entry}
 
 In Xamarin.Forms, some `Elements` support a `Placeholder` property
 that you can assign a value to. For example:
@@ -2272,7 +2272,7 @@ TextField(
 ),
 ```
 
-### How do I show validation errors?
+### 검증 오류를 어떻게 표시합니까? {:#how-do-i-show-validation-errors}
 
 With Xamarin.Forms, if you wished to provide a visual hint of a
 validation error, you would need to create new properties and
@@ -2355,11 +2355,11 @@ class _SampleAppPageState extends State<SampleAppPage> {
 }
 ```
 
-## Flutter plugins
+## Flutter 플러그인 {:#flutter-plugins}
 
-## Interacting with hardware, third party services, and the platform
+## 하드웨어, 타사 서비스 및 플랫폼과 상호 작용 {:#interacting-with-hardware-third-party-services-and-the-platform}
 
-### How do I interact with the platform, and with platform native code?
+### 플랫폼과 플랫폼 네이티브 코드와 어떻게 상호작용하나요? {:#how-do-i-interact-with-the-platform-and-with-platform-native-code}
 
 Flutter doesn't run code directly on the underlying platform;
 rather, the Dart code that makes up a Flutter app is run natively
@@ -2396,20 +2396,20 @@ or Android, or both.
 If you can't find a plugin on pub.dev that fits your needs,
 you can [write your own][], and [publish it on pub.dev][].
 
-### How do I access the GPS sensor?
+### GPS 센서에 어떻게 접근하나요? {:#how-do-i-access-the-gps-sensor}
 
 Use the [`geolocator`][] community plugin.
 
-### How do I access the camera?
+### 카메라에 어떻게 접근하나요? {:#how-do-i-access-the-camera}
 
 The [`camera`][] plugin is popular for accessing the camera.
 
-### How do I log in with Facebook?
+### 페이스북으로 로그인하려면 어떻게 해야 하나요? {:#how-do-i-log-in-with-facebook}
 
 To log in with Facebook, use the
 [`flutter_facebook_login`][] community plugin.
 
-### How do I use Firebase features?
+### Firebase 기능을 어떻게 사용하나요? {:#how-do-i-use-firebase-features}
 
 Most Firebase functions are covered by [first party plugins][].
 These plugins are first-party integrations, maintained by the Flutter team:
@@ -2427,7 +2427,7 @@ These plugins are first-party integrations, maintained by the Flutter team:
 You can also find some third-party Firebase plugins on pub.dev
 that cover areas not directly covered by the first-party plugins.
 
-### How do I build my own custom native integrations?
+### 사용자 정의 네이티브 통합을 직접 빌드하려면 어떻게 해야 하나요? {:#how-do-i-build-my-own-custom-native-integrations}
 
 If there is platform-specific functionality that Flutter
 or its community plugins are missing,
@@ -2440,9 +2440,9 @@ you fire off a message and let the receiver process and emit a result
 back to you. In this case, the receiver is code running on the native side
 on Android or iOS.
 
-## Themes (Styles)
+## 테마(스타일) {:#themes-styles}
 
-### How do I theme my app?
+### 앱 테마를 어떻게 설정하나요? {:#how-do-i-theme-my-app}
 
 Flutter comes with a beautiful, built-in implementation of Material Design,
 which handles much of the styling and theming needs
@@ -2492,9 +2492,9 @@ class SampleApp extends StatelessWidget {
 }
 ```
 
-## Databases and local storage
+## 데이터베이스 및 로컬 스토리지 {:#databases-and-local-storage}
 
-### How do I access shared preferences or UserDefaults?
+### shared preferences 또는 UserDefaults에 어떻게 액세스합니까? {:#how-do-i-access-shared-preferences-or-userdefaults}
 
 Xamarin.Forms developers will likely be familiar with the
 `Xam.Plugins.Settings` plugin.
@@ -2504,7 +2504,7 @@ In Flutter, access equivalent functionality using the
 functionality of both `UserDefaults` and the Android
 equivalent, `SharedPreferences`.
 
-### How do I access SQLite in Flutter?
+### Flutter에서 SQLite에 어떻게 접근하나요? {:#how-do-i-access-sqlite-in-flutter}
 
 In Xamarin.Forms most applications would use the `sqlite-net-pcl`
 plugin to access SQLite databases.
@@ -2513,9 +2513,9 @@ In Flutter, on macOS, Android, and iOS,
 access this functionality using the
 [`sqflite`][] plugin.
 
-## Debugging
+## 디버깅 {:#debugging}
 
-### What tools can I use to debug my app in Flutter?
+### Flutter에서 앱을 디버깅하는 데 어떤 도구를 사용할 수 있나요? {:#what-tools-can-i-use-to-debug-my-app-in-flutter}
 
 Use the [DevTools][] suite for debugging Flutter or Dart apps.
 
@@ -2525,9 +2525,9 @@ observing executed lines of code,
 debugging memory leaks and memory fragmentation.
 For more information, check out the [DevTools][] documentation.
 
-## Notifications
+## 알림 {:#notifications}
 
-### How do I set up push notifications?
+### 푸시 알림을 어떻게 설정하나요? {:#how-do-i-set-up-push-notifications}
 
 In Android, you use Firebase Cloud Messaging to set up
 push notifications for your app.

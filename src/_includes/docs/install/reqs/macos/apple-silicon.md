@@ -1,8 +1,6 @@
-Some Flutter components require the 
-[Rosetta 2 translation process][need-rosetta]
-on Macs running [Apple silicon][].
-To run all Flutter components on Apple silicon,
-install [Rosetta 2][rosetta].
+일부 Flutter 구성 요소에는, 
+[Apple 실리콘][Apple silicon]을 실행하는 Mac에서 [Rosetta 2 번역 프로세스][need-rosetta]가 필요합니다. 
+Apple 실리콘에서 모든 Flutter 구성 요소를 실행하려면, [Rosetta 2][rosetta]를 설치하세요.
 
 ```console
 $ sudo softwareupdate --install-rosetta --agree-to-license

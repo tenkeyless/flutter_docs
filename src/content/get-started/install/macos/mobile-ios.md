@@ -1,12 +1,16 @@
 ---
-title: Start building Flutter iOS apps on macOS
-description: Configure your system to develop Flutter mobile apps on macOS and iOS.
-short-title: Make iOS apps
+# title: Start building Flutter iOS apps on macOS
+title: macOS에서 Flutter iOS 앱 빌드 시작
+# description: Configure your system to develop Flutter mobile apps on macOS and iOS.
+description: macOS 및 iOS에서 Flutter 모바일 앱을 개발하도록 시스템을 구성하세요.
+# short-title: Make iOS apps
+short-title: iOS 앱 만들기
 target: iOS
 config: macOSiOS
 devos: macOS
 next:
-  title: Create a test app
+  # title: Create a test app
+  title: 테스트 앱 만들기
   path: /get-started/test-drive
 ---
 

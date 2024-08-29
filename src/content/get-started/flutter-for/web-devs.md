@@ -48,11 +48,11 @@ React 스타일 또는 _선언적(declarative)_ 프로그래밍은 기존의 명
 비교를 위해 [선언적 UI 소개][Introduction to declarative UI]를 참조하세요.
 :::
 
-## Performing basic layout operations
+## 기본 레이아웃 작업 수행 {:#performing-basic-layout-operations}
 
 The following examples show how to perform the most common UI layout tasks.
 
-### Styling and aligning text
+### 텍스트 스타일 지정 및 정렬 {:#styling-and-aligning-text}
 
 Font style, size, and other text attributes that CSS
 handles with the font and color properties are individual
@@ -95,7 +95,7 @@ final container = Container(
 );
 ```
 
-### Setting background color
+### 배경색 설정 {:#setting-background-color}
 
 In Flutter, you set the background color using the `color` property
 or the `decoration` property of a [`Container`][].
@@ -149,7 +149,7 @@ final container = Container(
 );
 ```
 
-### Centering components
+### 구성 요소 중심화 {:#centering-components}
 
 A [`Center`][] widget centers its child both horizontally
 and vertically.
@@ -189,7 +189,7 @@ final container = Container(
 );
 ```
 
-### Setting container width
+### 컨테이너 너비 설정 {:#setting-container-width}
 
 To specify the width of a [`Container`][]
 widget, use its `width` property.
@@ -250,12 +250,12 @@ final container = Container(
 );
 ```
 
-## Manipulating position and size
+## 위치 및 크기 조작 {:#manipulating-position-and-size}
 
 The following examples show how to perform more complex operations
 on widget position, size, and background.
 
-### Setting absolute position
+### 절대 위치 설정 {:#setting-absolute-position}
 
 By default, widgets are positioned relative to their parent.
 
@@ -315,7 +315,7 @@ final container = Container(
 );
 ```
 
-### Rotating components
+### 구성 요소 회전 {:#rotating-components}
 
 To rotate a widget, nest it in a [`Transform`][] widget.
 Use the `Transform` widget's `alignment` and `origin` properties
@@ -378,7 +378,7 @@ final container = Container(
 );
 ```
 
-### Scaling components
+### 구성 요소 확장 {:#scaling-components}
 
 To scale a widget up or down, nest it in a [`Transform`][] widget.
 Use the Transform widget's `alignment` and `origin` properties
@@ -443,7 +443,7 @@ final container = Container(
 );
 ```
 
-### Applying a linear gradient
+### 선형 그래디언트 적용 {:#applying-a-linear-gradient}
 
 To apply a linear gradient to a widget's background,
 nest it in a [`Container`][] widget.
@@ -458,7 +458,7 @@ The gradient "angle" is based on the Alignment (x, y) values:
 * If the beginning and ending y values are equal,
   the gradient is horizontal (90° | 270°).
 
-#### Vertical gradient
+#### 수직 그래디언트 {:#vertical-gradient}
 
 ```css highlightLines=19
 <div class="grey-box">
@@ -512,7 +512,7 @@ final container = Container(
 );
 ```
 
-#### Horizontal gradient
+#### 수평 그래디언트 {:#horizontal-gradient}
 
 ```css highlightLines=19
 <div class="grey-box">
@@ -566,11 +566,11 @@ final container = Container(
 );
 ```
 
-## Manipulating shapes
+## 모양 조작 {:#manipulating-shapes}
 
 The following examples show how to make and customize shapes.
 
-### Rounding corners
+### 모서리를 둥글게 만들기 {:#rounding-corners}
 
 To round the corners of a rectangular shape,
 use the `borderRadius` property of a [`BoxDecoration`][] object.
@@ -626,7 +626,7 @@ final container = Container(
 );
 ```
 
-### Adding box shadows
+### 상자 그림자 추가 {:#adding-box-shadows}
 
 In CSS you can specify shadow offset and blur in shorthand,
 using the box-shadow property. This example shows two box shadows,
@@ -703,7 +703,7 @@ final container = Container(
 );
 ```
 
-### Making circles and ellipses
+### 원과 타원 만들기 {:#making-circles-and-ellipses}
 
 Making a circle in CSS requires a workaround of applying a
 border-radius of 50% to all four sides of a rectangle,
@@ -767,13 +767,13 @@ final container = Container(
 );
 ```
 
-## Manipulating text
+## 텍스트 조작 {:#manipulating-text}
 
 The following examples show how to specify fonts and other
 text attributes. They also show how to transform text strings,
 customize spacing, and create excerpts.
 
-### Adjusting text spacing
+### 텍스트 간격 조정 {:#adjusting-text-spacing}
 
 In CSS, you specify the amount of white space
 between each letter or word by giving a length value
@@ -836,7 +836,7 @@ final container = Container(
 );
 ```
 
-### Making inline formatting changes
+### 인라인 서식 변경하기 {:#making-inline-formatting-changes}
 
 A [`Text`][] widget lets you display text
 with some formatting characteristics.
@@ -911,7 +911,7 @@ final container = Container(
 );
 ```
 
-### Creating text excerpts
+### 텍스트 발췌문 만들기 {:#creating-text-excerpts}
 
 An excerpt displays the initial line(s) of text in a paragraph,
 and handles the overflow text, often using an ellipsis.

@@ -1,29 +1,26 @@
-### Add Flutter to your `PATH` {:.no_toc}
+### `PATH`에 Flutter 추가 {:#add-flutter-to-your-path .no_toc}
 
-To run Flutter commands in {{include.terminal}},
-add Flutter to the `PATH` environment variable.
+{{include.terminal}}에서 Flutter 명령을 실행하려면, Flutter를 `PATH` 환경 변수에 추가합니다.
 
-1. Check which shell starts when you open a new console window.
-   This would be your _default shell_.
+1. 새 콘솔 창을 열 때 어떤 셸이 시작되는지 확인합니다.
+   이것이 당신의 _기본 셸_ 입니다.
 
    ```console
    $ echo $SHELL
    ```
 
-   This differs from another command that tells you which shell runs
-   in your current console.
+   이는 현재 콘솔에서 어떤 셸이 실행되는지 알려주는 다른 명령과 다릅니다.
 
    ```console
    $ echo $0
    ```
 
-1. To add Flutter to your `PATH`, expand the entry for your default shell, then
-   choose the command.
+2. `PATH`에 Flutter를 추가하려면, 기본 셸에 대한 항목을 확장한 다음, 명령을 선택하세요.
 
 {% for shell in shells %}
 
    <details {% if shell.name == 'bash' %}open{% endif %}>
-   <summary>Show <tt>{{shell.name}}</tt> command</summary>
+   <summary><tt>{{shell.name}}</tt> 명령 보기</summary>
 
    ```console
    $ {{shell.set-path}}
@@ -31,16 +28,18 @@ add Flutter to the `PATH` environment variable.
 
    {% if shell.name == 'shell' %}
    :::note
-   If the above doesn't work, you might be using a non-login shell.
-   In that case, add the same line to ~/.bashrc: `console $ echo
-   'export PATH="~/development/flutter/bin:$PATH"' >> ~/.bashrc `.
-   To ensure consistency across all shell types, source ~/.bashrc from
-   ~/.bash_profile by adding the following to ~/.bash_profile: ` if [ -f
-   ~/.bashrc ]; then source ~/.bashrc fi `.
+   위의 방법이 작동하지 않으면, 로그인이 안된 셸(non-login shell)을 사용하고 있을 수 있습니다. 
+   이 경우, 다음의 줄을 ~/.bashrc에 추가합니다. 
+   
+   `console $ echo 'export PATH="~/development/flutter/bin:$PATH"' >> ~/.bashrc `. 
+   
+   모든 셸 타입에서 일관성을 유지하려면, 다음을 ~/.bash_profile에 추가하여, ~/.bashrc를 ~/.bash_profile에서 소스합니다. 
+   
+   ` if [ -f ~/.bashrc ]; then source ~/.bashrc fi `.
    {% endif %}
 
    </details>
 
 {% endfor %}
 
-1. To apply this change, restart all open terminal sessions.
+1. 이 변경 사항을 적용하려면, 열려 있는 모든 터미널 세션을 다시 시작하세요.

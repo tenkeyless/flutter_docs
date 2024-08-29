@@ -1,5 +1,5 @@
 
-### Download then install Flutter {:.no_toc}
+### Flutter를 다운로드한 후 설치 {:#download-then-install-flutter .no_toc}
 
 {% assign osl = include.os | downcase | replace: "chromeos","linux" %}
 {% case include.os %}
@@ -47,17 +47,14 @@
    {%- endcapture %}
 {% endcase -%}
 
-To install Flutter,
-download the Flutter SDK bundle from its archive,
-move the bundle to where you want it stored,
-then extract the SDK.
+Flutter를 설치하려면, Flutter SDK 번들을 아카이브에서 다운로드하고, 
+번들을 저장하려는 위치로 옮긴 다음, SDK를 압축해제합니다.
 
-1. Download the following installation bundle to get the latest
-   {{site.sdk.channel}} release of the Flutter SDK.
+1. Flutter SDK의 최신 {{site.sdk.channel}} 릴리스를 받으려면 다음 설치 번들을 다운로드하세요.
 
    {% if include.os=='macOS' %}
 
-   | Intel Processor                                                     | Apple Silicon                                                                             |
+   | 인텔                                         | 애플 실리콘  |
    |---------------------------------------------------------------------|-------------------------------------------------------------------------------------------|
    | [(loading...)](#){:.download-latest-link-{{osl}} .btn .btn-primary} | [(loading...)](#){:.download-latest-link-{{osl}}-arm64 .apple-silicon .btn .btn-primary}  |
 
@@ -67,31 +64,28 @@ then extract the SDK.
 
    {% endif -%}
 
-   For other release channels, and older builds, check out the [SDK archive][].
+   다른 릴리스 채널 및 이전 빌드의 경우, [SDK 아카이브][SDK archive]를 확인하세요.
 
-   The Flutter SDK should download to the {{include.os}}
-   default download directory: `{{dirdl}}`.
+   Flutter SDK는 {{include.os}} 기본 다운로드 디렉토리인 `{{dirdl}}`에 다운로드되어야 합니다: 
    {% if include.os=='Windows' %}
-   If you changed the location of the Downloads directory,
-   replace this path with that path.
-   To find your Downloads directory location,
-   check out this [Microsoft Community post][move-dl].
+   다운로드 디렉토리의 위치를 ​​변경한 경우 이 경로를 해당 경로로 바꾸세요. 
+   다운로드 디렉토리 위치를 찾으려면, 이 [Microsoft 커뮤니티 게시물][move-dl]을 확인하세요.
    {% endif %}
 
-1. Create a folder where you can install Flutter.
+2. Flutter를 설치할 수 있는 폴더를 만듭니다.
 
-   Consider creating a directory at {{diroptions}}.
+   {{diroptions}}에 디렉토리를 만드는 것을 고려하세요.
    {% if include.os == "Windows" -%}
    {% render docs/install/admonitions/install-paths.md %}
    {% endif %}
 
-1. Extract the file into the directory you want to store the Flutter SDK.
+3. Flutter SDK를 저장하려는 디렉토리에 파일을 압축해제합니다.
 
    ```console
    {{uz}}
    ```
 
-   When finished, the Flutter SDK should be in the `{{flutter-path}}` directory.
+   완료되면, Flutter SDK가 `{{flutter-path}}` 디렉토리에 있게 됩니다.
 
 [SDK archive]: /release/archive
 [move-dl]: https://answers.microsoft.com/en-us/windows/forum/all/move-download-folder-to-other-drive-in-windows-10/67d58118-4ccd-473e-a3da-4e79fdb4c878

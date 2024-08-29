@@ -1,3 +1,3 @@
-When you run the current version of `flutter doctor`,
-it might list a different version of one of these packages.
-If it does, install the version it recommends.
+`flutter doctor`의 현재 버전을 실행하면, 
+이러한 패키지 중 하나의 다른 버전이 나열될 수 있습니다. 
+그렇다면, 권장하는 버전을 설치하세요.

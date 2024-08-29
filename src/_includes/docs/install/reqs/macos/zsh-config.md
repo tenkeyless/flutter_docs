@@ -1,42 +1,38 @@
 
 <details>
-<summary><strong>To verify your shell configuration, expand this section</strong></summary>
+<summary><strong>셸 구성을 확인하려면, 이 섹션을 확장하세요.</strong></summary>
 
-Like most UNIX-like operating system, macOS can support multiple shells,
-like `bash`, `zsh`, and `sh`.
-As of the October 2019 release of macOS Catalina (macOS 10.15),
-Zsh or `zsh` is the default shell for macOS.
+대부분의 UNIX 유사 운영 체제와 마찬가지로, 
+macOS는 `bash`, `zsh`, `sh`와 같은 여러 셸을 지원할 수 있습니다. 
+macOS Catalina(macOS 10.15)의 2019년 10월 릴리스부터, 
+Zsh 또는 `zsh`가 macOS의 기본 셸입니다.
 
-#### Check and set `zsh` as default
+#### `zsh`를 기본값으로 체크하고 설정 {:#check-and-set-zsh-as-default}
 
-1. To verify `zsh` was set as the default macOS shell,
-   run the [Directory Services command line utility][dscl].
+1. `zsh`가 기본 macOS 셸로 설정되었는지 확인하려면, [Directory Services 명령줄 유틸리티][dscl]을 실행하세요.
 
     ```console
     $ dscl . -read ~/ UserShell
     ```
 
-    The command should print the following as its response.
+    이 명령은 다음과 같은 응답을 출력합니다.
 
     ```console
     UserShell: /bin/zsh
     ```
 
-    You can skip the remaining steps.
+    나머지 단계는 건너뛸 수 있습니다.
 
-1. If you need to install `zsh`,
-   follow the procedure in [this Wiki][install-zsh].
+2. `zsh`를 설치해야 하는 경우, [이 위키][install-zsh]의 절차를 따르세요.
 
-1. If you need to change your default shell to `zsh`,
-   run the `chsh` command.
+3. 기본 셸을 `zsh`로 변경해야 하는 경우, `chsh` 명령을 실행하세요.
 
     ```console
     $ chsh -s `which zsh`
     ```
 
-To learn more about macOS and `zsh`, check out
-[Use zsh as the default shell on your Mac][zsh-mac]
-in the macOS documentation.
+macOS 및 `zsh`에 대해 자세히 알아보려면, 
+macOS 설명서의 [Mac에서 zsh를 기본 셸로 사용하기][zsh-mac]를 확인하세요.
 
 </details>
 

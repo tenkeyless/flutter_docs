@@ -1,10 +1,9 @@
 
    :::warning
-   Don't install Flutter to a directory or path that meets
-   one or both of the following conditions:
+   다음 조건 중 하나 또는 둘 다를 충족하는 디렉토리나 경로에 Flutter를 설치하지 마세요.
 
-   * The path contains special characters or spaces.
-   * The path requires elevated privileges.
+   * 경로에 특수 문자나 공백이 포함되어 있습니다.
+   * 경로에 상승된 권한이 필요합니다.
 
-   As an example, `C:\Program Files` fails both conditions.
+   예를 들어 `C:\Program Files`는 두 조건을 모두 충족하지 않습니다.
    :::

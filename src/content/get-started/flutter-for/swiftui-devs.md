@@ -39,7 +39,7 @@ Flutter는 iOS 및 macOS에서 실행할 때 앱 동작에 대한 여러 가지 
 호버 또는 포커스 시 나타나는 "DartPad에서 열기" 버튼을 사용하여, 
 DartPad에서 일부 예제를 열고 실행할 수 있습니다.
 
-## Overview
+## 개요 {:#overview}
 
 As an introduction, watch the following video.
 It outlines how Flutter works on iOS and how to use Flutter to build iOS apps.
@@ -49,7 +49,7 @@ It outlines how Flutter works on iOS and how to use Flutter to build iOS apps.
 Flutter and SwiftUI code describes how the UI looks and works.
 Developers call this type of code a _declarative framework_.
 
-### Views vs. Widgets
+### Views vs. Widgets {:#views-vs-widgets}
 
 **SwiftUI** represents UI components as _views_.
 You configure views using _modifiers_.
@@ -78,7 +78,7 @@ To compose layouts, both SwiftUI and Flutter nest UI components
 within one another.
 SwiftUI nests Views while Flutter nests Widgets.
 
-### Layout process
+### 레이아웃 프로세스 {:#layout-process}
 
 **SwiftUI** lays out views using the following process:
 
@@ -142,7 +142,7 @@ UnconstrainedBox(
 To learn how constraints work in Flutter,
 see [Understanding constraints][].
 
-### Design system
+### 디자인 시스템 {:#design-system}
 
 Because Flutter targets multiple platforms, your app doesn't need
 to conform to any design system.
@@ -159,14 +159,14 @@ your Flutter app can use many different design systems:
 If you're looking for a great reference app that features a
 custom design system, check out [Wonderous][].
 
-## UI Basics
+## UI 기본 사항 {:#ui-basics}
 
 This section covers the basics of UI development in
 Flutter and how it compares to SwiftUI.
 This includes how to start developing your app, display static text,
 create buttons, react to on-press events, display lists, grids, and more.
 
-### Getting started
+### 시작하기 {:#getting-started}
 
 In **SwiftUI**, you use `App` to start your app.
 
@@ -252,7 +252,7 @@ To center the text, wrap it in a `Center` widget.
 To learn about different widgets and their default behaviors, check out
 the [Widget catalog][].
 
-### Adding Buttons
+### 버튼 추가 {:#adding-buttons}
 
 In **SwiftUI**, you use the `Button` struct to create a button.
 
@@ -280,7 +280,7 @@ use the `CupertinoButton` class:
 The [`CupertinoButton`][] class comes from the Cupertino library.
 Widgets in the Cupertino library use Apple's design system.
 
-### Aligning components horizontally
+### 구성 요소를 수평으로 정렬 {:#aligning-components-horizontally}
 
 In **SwiftUI**, stack views play a big part in designing your layouts.
 Two separate structures allow you to create stacks:
@@ -318,7 +318,7 @@ with extra space. `MainAxisAlignment.center` positions children in the
 center of the main axis. For `Row`, the main axis is the horizontal
 axis.
 
-### Aligning components vertically
+### 구성 요소를 수직으로 정렬 {:#aligning-components-vertically}
 
 The following examples build on those in the previous section.
 
@@ -346,7 +346,7 @@ except it swaps [`Column`][] for `Row`:
 ),
 ```
 
-### Displaying a list view
+### 리스트 뷰 표시 {:#displaying-a-list-view}
 
 In **SwiftUI**, you use the `List` base component to display sequences
 of items.
@@ -429,7 +429,7 @@ The `ListTile` widget includes properties like `height` and `font-size`.
 These properties help build a list. However, Flutter allows you to return
 almost any widget that represents your data.
 
-### Displaying a grid
+### 그리드 표시 {:#displaying-a-grid}
 
 When constructing non-conditional grids in **SwiftUI**,
 you use `Grid` with `GridRow`.
@@ -493,7 +493,7 @@ How SwiftUI's `Grid` and Flutter's `GridView` differ in that `Grid`
 requires `GridRow`. `GridView` uses the delegate to decide how the
 grid should lay out its components.
 
-### Creating a scroll view
+### 스크롤 뷰 만들기 {:#creating-a-scroll-view}
 
 In **SwiftUI**, you use `ScrollView` to create custom scrolling
 components.
@@ -529,7 +529,7 @@ of the `Person` class to create the custom `PersonView` widget.
 ),
 ```
 
-### Responsive and adaptive design
+### 반응형 및 적응형 디자인 {:#responsive-and-adaptive-design}
 
 In **SwiftUI**, you use `GeometryReader` to create relative view sizes.
 
@@ -549,7 +549,7 @@ To create relative views in **Flutter**, you can use one of two options:
 
 To learn more, check out [Creating responsive and adaptive apps][].
 
-### Managing state
+### 상태 관리 {:#managing-state}
 
 In **SwiftUI**, you use the `@State` property wrapper to represent the
 internal state of a SwiftUI view.
@@ -615,7 +615,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
 To learn more ways to manage state, check out [State management][].
 
-### Animations
+### 애니메이션 {:#animations}
 
 Two main types of UI animations exist.
 
@@ -677,7 +677,7 @@ Flutter also allows you to create a custom explicit animation using
 
 To learn more about animations in Flutter, see [Animations overview][].
 
-### Drawing on the Screen
+### 화면에 그리기 {:#drawing-on-the-screen}
 
 In **SwiftUI**, you use `CoreGraphics` to draw lines and shapes to the
 screen.
@@ -723,12 +723,12 @@ with two classes that help you draw:
     }
     ```
 
-## Navigation
+## 네비게이션 {:#navigation}
 
 This section explains how to navigate between pages of an app,
 the push and pop mechanism, and more.
 
-### Navigating between pages
+### 페이지 간 탐색하기 {:#navigating-between-pages}
 
 Developers build iOS and macOS apps with different pages called
 _navigation routes_.
@@ -851,7 +851,7 @@ use a routing package such as [go_router][].
 
 To learn more, check out [Navigation and routing][].
 
-### Manually pop back
+### 수동으로 뒤로 팝하기 {:#manually-pop-back}
 
 In **SwiftUI**, you use the `dismiss` environment value to pop-back to
 the previous screen.
@@ -876,7 +876,7 @@ TextButton(
 ),
 ```
 
-### Navigating to another app
+### 다른 앱으로 탐색하기 {:#navigating-to-another-app}
 
 In **SwiftUI**, you use the `openURL` environment variable to open a
 URL to another application.
@@ -911,14 +911,14 @@ In **Flutter**, use the [`url_launcher`][] plugin.
 ),
 ```
 
-## Themes, styles, and media
+## 테마, 스타일 및 미디어 {:#themes-styles-and-media}
 
 You can style Flutter apps with little effort.
 Styling includes switching between light and dark themes,
 changing the design of your text and UI components,
 and more. This section covers how to style your apps.
 
-### Using dark mode
+### 다크 모드 사용 {:#using-dark-mode}
 
 In **SwiftUI**, you call the `preferredColorScheme()`
 function on a `View` to use dark mode.
@@ -937,7 +937,7 @@ of the `App` class:
 );
 ```
 
-### Styling text
+### 텍스트 스타일링 {:#styling-text}
 
 In **SwiftUI**, you use modifier functions to style text.
 For example, to change the font of a `Text` string,
@@ -964,7 +964,7 @@ of the `style` parameter of the `Text` widget.
 ),
 ```
 
-### Styling buttons
+### 버튼 스타일링 {:#styling-buttons}
 
 In **SwiftUI**, you use modifier functions to style buttons.
 
@@ -1004,7 +1004,7 @@ child: CupertinoButton(
 ),
 ```
 
-### Using custom fonts
+### 커스텀 글꼴 사용 {:#using-custom-fonts}
 
 In **SwiftUI**, you can use a custom font in your app in two steps.
 First, add the font file to your SwiftUI project. After adding the file,
@@ -1058,7 +1058,7 @@ To download custom fonts to use in your apps,
 check out [Google Fonts](https://fonts.google.com).
 :::
 
-### Bundling images in apps
+### 앱에서 이미지 번들링 {:#bundling-images-in-apps}
 
 In **SwiftUI**, you first add the image files to `Assets.xcassets`,
 then use the `Image` view to display the images.
@@ -1084,7 +1084,7 @@ After adding your image, display it using the `Image` widget's
 
 To review a complete example, check out the [`Image`][] docs.
 
-### Bundling videos in apps
+### 앱에서 비디오 번들링 {:#bundling-videos-in-apps}
 
 In **SwiftUI**, you bundle a local video file with your app in two
 steps.

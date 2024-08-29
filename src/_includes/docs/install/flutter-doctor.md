@@ -37,52 +37,48 @@
 
 ### Flutter doctor 실행 {:#run-flutter-doctor}
 
-The `flutter doctor` command validates that all components of a
-complete Flutter development environment for {{include.devos}}.
+`flutter doctor` 명령은 {{include.devos}}에 대한 완전한 Flutter 개발 환경의 모든 구성 요소를 검증합니다.
 
-1. Open {{terminal}}.
+1. {{terminal}}을 엽니다.
 
-1. To verify your installation of all the components,
-   run the following command.
+1. 모든 구성 요소의 설치를 확인하려면, 다음 명령을 실행합니다.
 
    ```console
    {{prompt}} flutter doctor
    ```
 
-As you chose to develop for {{include.target}},
-you do not need _all_ components.
-If you followed this guide, the result of your command should resemble:
+{{include.target}}을(를) 개발하기로 선택했으므로, _모든_ 구성 요소가 필요하지 않습니다. 
+이 가이드를 따랐다면, 명령의 결과는 다음과 비슷해야 합니다.
 
 {% include docs/install/flutter-doctor-success.md config=include.config devos=include.devos -%}
 
 ### Flutter Doctor 문제 해결 {:#troubleshoot-flutter-doctor-issues}
 
-When the `flutter doctor` command returns an error, it could be for Flutter,
-VS Code, {{compiler}}, the connected device, or network resources.
+`flutter doctor` 명령이 오류를 반환하는 경우, 
+Flutter, VS Code, {{compiler}}, 연결된 기기 또는 네트워크 리소스 때문일 수 있습니다.
 
-If the `flutter doctor` command returns an error for any of these components,
-run it again with the verbose flag.
+`flutter doctor` 명령이 이러한 구성 요소에 대한 오류를 반환하는 경우, 
+verbose 플래그를 사용하여 다시 실행합니다.
 
 ```console
 {{prompt}} flutter doctor -v
 ```
 
-Check the output for other software you might need to install
-or further tasks to perform.
+설치해야 할 다른 소프트웨어나, 수행해야 할 추가 작업에 대한 출력을 확인하세요.
 
-If you change the configuration of your Flutter SDK or its related components,
-run `flutter doctor` _again_ to verify the installation.
+Flutter SDK 또는 관련 구성 요소의 구성을 변경하는 경우, `flutter doctor`를 _다시_ 실행하여 설치를 확인하세요.
 
-## Start developing {{work-target}} apps with Flutter
+<!-- ## Start developing {{work-target}} apps with Flutter -->
+## Flutter로 {{work-target}} 앱 개발을 시작하세요
 
-**Congratulations.**
-Having installed all prerequisites and the Flutter SDK,
-you can start developing Flutter apps for {{work-target}}.
+**축하합니다.** 
+모든 필수 구성 요소와 Flutter SDK를 설치했으므로, 
+이제 {{work-target}}에 대한 Flutter 앱 개발을 시작할 수 있습니다.
 
-To continue on your learning journey, consult the following guides:
+학습 여정을 계속하려면, 다음 가이드를 참조하세요.
 
-- [Learn how to write your first Flutter app][codelab]
-- [First week experience of Flutter][fwe]
+- [첫 번째 Flutter 앱 작성 방법 알아보기][codelab]
+- [Flutter 첫 주 경험][fwe]
 
 [codelab]: /get-started/codelab/
 [fwe]: /get-started/fwe/
