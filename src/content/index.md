@@ -24,7 +24,7 @@ description: Flutter를 시작하세요. 첫 번째 Flutter 앱을 작성하는 
 
 ---
 
-## 번역 사이트 개요 {:translated}
+## 번역 사이트 개요 {:#translated}
 
 [Flutter 문서 사이트](https://docs.flutter.dev/)의 한글 번역입니다.
 
