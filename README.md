@@ -18,7 +18,9 @@ built with [Eleventy][] and hosted on [Firebase][].
 [Flutter]: https://docs.flutter.dev/
 [Repo on GitHub Actions]: https://github.com/flutter/website/actions?query=workflow%3Abuild+branch%3Amain
 
-## [Flutter][] 한글 문서 웹사이트
+## [Flutter][] [한글 문서](https://flutter-docs-kr.web.app/) 웹사이트
+
+이 문서는 [flutter-docs-kr.web.app](https://flutter-docs-kr.web.app/)에서 호스팅되고 있습니다.
 
 이 문서는 [Flutter Doc][Flutter]를 번역한 것입니다.
 
