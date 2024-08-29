@@ -13,78 +13,69 @@ iOS 개발에서 온 경우, Apple의 시스템 라이브러리와 동일한 기
 
 SwiftUI 프레임워크가 Flutter와 어떻게 비교되는지에 대한 개요는 [SwiftUI 개발자를 위한 Flutter][Flutter for SwiftUI developers]를 참조하세요.
 
-## Flutter 플러그인 Introducing {:#introducing-flutter-plugins}
+## Flutter 플러그인 소개 {:#introducing-flutter-plugins}
 
-Dart calls libraries that contain platform-specific code _plugins_,
-short for "plugin package".
-When developing an app with Flutter, you use _plugins_ to interact
-with system libraries.
+Dart는 플랫폼별 코드가 포함된 라이브러리를 _플러그인_ 이라고 부르는데, 
+이는 "플러그인 패키지"의 줄임말입니다. 
+Flutter로 앱을 개발할 때, _플러그인_ 을 사용하여 시스템 라이브러리와 상호 작용합니다.
 
-In your Dart code, you use the plugin's Dart API to call the native
-code from the system library being used. This means that you can write
-the code to call the Dart API. The API then makes it work for all
-platforms that the plugin supports.
+Dart 코드에서, 플러그인의 Dart API를 사용하여 사용 중인 시스템 라이브러리에서 네이티브 코드를 호출합니다. 
+즉, Dart API를 호출하는 코드를 작성할 수 있습니다. 
+그런 다음, API는 플러그인이 지원하는 모든 플랫폼에서 작동하도록 합니다.
 
-To learn more about plugins, see [Using packages][].
-Though this page links to some popular plugins,
-you can find thousands more, along with examples,
-on [pub.dev][].
-The following table does not endorse any particular plugin.
-If you can't find a package that meets your needs,
-you can create your own or
-use platform channels directly in your project.
-To learn more, check out [Writing platform-specific code][].
+플러그인에 대해 자세히 알아보려면, [패키지 사용][Using packages]을 참조하세요. 
+이 페이지는 일부 인기 있는 플러그인에 대한 링크를 제공하지만, 
+[pub.dev][]에서 수천 개의 플러그인과 예제를 찾을 수 있습니다. 
+다음 표는 특정 플러그인을 보증하지 않습니다. 
+필요에 맞는 패키지를 찾을 수 없는 경우, 직접 만들거나 프로젝트에서 플랫폼 채널을 직접 사용할 수 있습니다. 
+자세히 알아보려면 [플랫폼별 코드 작성][Writing platform-specific code]을 확인하세요.
 
 ## 프로젝트에 플러그인 추가하기 {:#adding-a-plugin-to-your-project}
 
-To use an Apple framework within your native project,
-import it into your Swift or Objective-C file.
+네이티브 프로젝트 내에서 Apple 프레임워크를 사용하려면, Swift 또는 Objective-C 파일에 import 합니다.
 
-To add a Flutter plugin, run `flutter pub add package_name`
-from the root of your project.
-This adds the dependency to your [`pubspec.yaml`][] file.
-After you add the dependency, add an `import` statement for the package
-in your Dart file.
+Flutter 플러그인을 추가하려면, 프로젝트 루트에서 `flutter pub add package_name`을 실행합니다. 
+이렇게 하면 종속성이 [`pubspec.yaml`][] 파일에 추가됩니다. 
+종속성을 추가한 후, Dart 파일에 패키지에 대한 `import` 문을 추가합니다.
 
-You might need to change app settings or initialization logic.
-If that's needed, the package's "Readme" page on [pub.dev][]
-should provide details.
+앱 설정이나 초기화 로직을 변경해야 할 수도 있습니다. 
+필요한 경우 [pub.dev][]의 패키지 "Readme" 페이지에서 자세한 내용을 확인할 수 있습니다.
 
 ### Flutter 플러그인과 Apple 프레임워크 {:#flutter-plugins-and-apple-frameworks}
 
-| Use Case                                       | Apple Framework or Class                                                              | Flutter Plugin               |
+| 사용 사례       | Apple 프레임워크 또는 클래스    | Flutter 플러그인               |
 |------------------------------------------------|---------------------------------------------------------------------------------------|------------------------------|
-| Access the photo library                       | `PhotoKit`using the `Photos` and `PhotosUI ` frameworks and `UIImagePickerController` | [`image_picker`][]           |
-| Access the camera                              | `UIImagePickerController` using the `.camera` `sourceType`                            | [`image_picker`][]           |
-| Use advanced camera features                   | `AVFoundation`                                                                        | [`camera`][]                 |
-| Offer In-app purchases                         | `StoreKit`                                                                            | [`in_app_purchase`][][^1]    |
-| Process payments                               | `PassKit`                                                                             | [`pay`][][^2]                |
-| Send push notifications                        | `UserNotifications`                                                                   | [`firebase_messaging`][][^3] |
-| Access GPS coordinates                         | `CoreLocation`                                                                        | [`geolocator`][]             |
-| Access sensor data[^4]                         | `CoreMotion`                                                                          | [`sensors_plus`][]           |
-| Embed maps                                     | `MapKit`                                                                              | [`google_maps_flutter`][]    |
-| Make network requests                          | `URLSession`                                                                          | [`http`][]                   |
-| Store key-values                               | `@AppStorage` property wrapper and `NSUserDefaults`                                   | [`shared_preferences`][]     |
-| Persist to a database                          | `CoreData` or SQLite                                                                  | [`sqflite`][]                |
-| Access health data                             | `HealthKit`                                                                           | [`health`][]                 |
-| Use machine learning                           | `CoreML`                                                                              | [`google_ml_kit`][][^5]      |
-| Recognize text                                 | `VisionKit`                                                                           | [`google_ml_kit`][][^5]      |
-| Recognize speech                               | `Speech`                                                                              | [`speech_to_text`][]         |
-| Use augmented reality                          | `ARKit`                                                                               | [`ar_flutter_plugin`][]      |
-| Access weather data                            | `WeatherKit`                                                                          | [`weather`][][^6]            |
-| Access and manage contacts                     | `Contacts`                                                                            | [`contacts_service`][]       |
-| Expose quick actions on the home screen        | `UIApplicationShortcutItem`                                                           | [`quick_actions`][]          |
-| Index items in Spotlight search                | `CoreSpotlight`                                                                       | [`flutter_core_spotlight`][] |
-| Configure, update and communicate with Widgets | `WidgetKit`                                                                           | [`home_widget`][]            |
+| 사진 라이브러리에 액세스 | `Photos` 및 `PhotosUI` 프레임워크와 `UIImagePickerController`를 사용하는 `PhotoKit` | [`image_picker`][]           |
+| 카메라에 액세스   | `.camera` `sourceType`을 사용하는 `UIImagePickerController` | [`image_picker`][]           |
+| 고급 카메라 기능 사용                   | `AVFoundation`                                                                        | [`camera`][]                 |
+| 앱 내 구매 제공                         | `StoreKit`                                                                            | [`in_app_purchase`][][^1]    |
+| 결제 처리                               | `PassKit`                                                                             | [`pay`][][^2]                |
+| 푸시 알림 보내기                        | `UserNotifications`                                                                   | [`firebase_messaging`][][^3] |
+| GPS 좌표에 액세스                         | `CoreLocation`                                                                        | [`geolocator`][]             |
+| 센서 데이터에 액세스[^4]                         | `CoreMotion`                                                                          | [`sensors_plus`][]           |
+| 지도 임베드                                     | `MapKit`                                                                              | [`google_maps_flutter`][]    |
+| 네트워크 요청하기                          | `URLSession`                                                                          | [`http`][]                   |
+| 키-값 저장                               | `@AppStorage` 속성 래퍼 및 `NSUserDefaults`   | [`shared_preferences`][]     |
+| 데이터베이스에 유지                          | `CoreData` 또는 SQLite                                                                  | [`sqflite`][]                |
+| 건강 데이터에 액세스                             | `HealthKit`                                                                           | [`health`][]                 |
+| 머신러닝 사용                           | `CoreML`                                                                              | [`google_ml_kit`][][^5]      |
+| 텍스트 인식                                 | `VisionKit`                                                                           | [`google_ml_kit`][][^5]      |
+| 음성 인식                               | `Speech`                                                                              | [`speech_to_text`][]         |
+| 증강 현실 사용                          | `ARKit`                                                                               | [`ar_flutter_plugin`][]      |
+| 날씨 데이터에 액세스                            | `WeatherKit`                                                                          | [`weather`][][^6]            |
+| 연락처 액세스 및 관리                     | `Contacts`                                                                            | [`contacts_service`][]       |
+| 홈 화면에 빠른 작업 표시        | `UIApplicationShortcutItem`                                                           | [`quick_actions`][]          |
+| Spotlight 검색에서 항목 인덱스                | `CoreSpotlight`                                                                       | [`flutter_core_spotlight`][] |
+| 위젯 구성, 업데이트 및 통신 | `WidgetKit`                                                                           | [`home_widget`][]            |
 
 {:.table .table-striped .nowrap}
 
-[^1]: Supports both Google Play Store on Android and Apple App Store on iOS.
-[^2]: Adds Google Pay payments on Android and Apple Pay payments on iOS.
-[^3]: Uses Firebase Cloud Messaging and integrates with APNs.
-[^4]: Includes sensors like accelerometer, gyroscope, etc.
-[^5]: Uses Google's ML Kit and supports various features like text recognition, face detection, image labeling, landmark recognition, and barcode scanning. You can also create a custom model with Firebase. To learn more, see [Use a custom TensorFlow Lite model with Flutter][].
-[^6]: Uses the [OpenWeatherMap API][]. Other packages exist that can pull from different weather APIs.
+[^1]: Android의 Google Play Store와 iOS의 Apple App Store를 모두 지원합니다.
+[^2]: Android에서는 Google Pay 결제를, iOS에서는 Apple Pay 결제를 추가합니다.
+[^3]: Firebase 클라우드 메시징을 사용하고 APN과 통합됩니다.
+[^4]: 가속도계, 자이로스코프 등의 센서가 포함됩니다.
+[^5]: Google의 ML Kit을 사용하고 (텍스트 인식, 얼굴 감지, 이미지 레이블 지정, 랜드마크 인식 및 바코드 스캐닝과 같은) 다양한 기능을 지원합니다. Firebase를 사용하여 커스텀 모델을 만들 수도 있습니다. 자세한 내용은, [Flutter로 커스텀 TensorFlow Lite 모델 사용][Use a custom TensorFlow Lite model with Flutter]을 참조하세요.
+[^6]: [OpenWeatherMap API][]를 사용합니다. 다른 날씨 API에서 가져올 수 있는 다른 패키지가 있습니다.
 
 [Flutter for SwiftUI developers]: /get-started/flutter-for/swiftui-devs
 [Using packages]: /packages-and-plugins/using-packages

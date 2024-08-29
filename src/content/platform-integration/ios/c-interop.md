@@ -33,33 +33,24 @@ iOS에서 Dart FFI 라이브러리를 사용하여 바인딩하는 방법을 보
 
 ## Dynamic vs static 링크 {:#dynamic-vs-static-linking}
 
-A native library can be linked into an app either
-dynamically or statically. A statically linked library
-is embedded into the app's executable image,
-and is loaded when the app starts.
+네이티브 라이브러리는 동적으로 또는 정적으로 앱에 링크될 수 있습니다. 
+정적으로 링크된 라이브러리는 앱의 실행 가능 이미지에 내장되고, 앱이 시작될 때 로드됩니다.
 
-Symbols from a statically linked library can be
-loaded using `DynamicLibrary.executable` or
-`DynamicLibrary.process`.
+정적으로 링크된 라이브러리의 심볼은 
+`DynamicLibrary.executable` 또는 `DynamicLibrary.process`를 사용하여 로드할 수 있습니다.
 
-A dynamically linked library, by contrast, is distributed
-in a separate file or folder within the app,
-and loaded on-demand. On iOS, the dynamically linked
-library is distributed as a `.framework` folder.
+반면, 동적으로 링크된 라이브러리는 앱 내의 별도 파일이나 폴더에 배포되고 필요에 따라 로드됩니다. 
+iOS에서 동적으로 링크된 라이브러리는 `.framework` 폴더로 배포됩니다.
 
-A dynamically linked library can be loaded into
-Dart using `DynamicLibrary.open`.
+동적으로 링크된 라이브러리는 `DynamicLibrary.open`을 사용하여 Dart에 로드할 수 있습니다.
 
-API documentation is available from the Dart dev channel:
-[Dart API reference documentation][].
-
+API 문서는 Dart 개발 채널에서 제공됩니다: [Dart API 참조 문서][Dart API reference documentation].
 
 [Dart API reference documentation]: {{site.dart.api}}/dev/
 
 ## FFI 플러그인 생성 {:#create-an-ffi-plugin}
 
-To create an FFI plugin called "native_add",
-do the following:
+"native_add"라는 FFI 플러그인을 만들려면, 다음을 수행하세요.
 
 ```console
 $ flutter create --platforms=android,ios,macos,windows,linux --template=plugin_ffi native_add
@@ -67,46 +58,36 @@ $ cd native_add
 ```
 
 :::note
-You can exclude platforms from `--platforms` that you don't want
-to build to. However, you need to include the platform of 
-the device you are testing on.
+빌드하고 싶지 않은 플랫폼을 `--platforms`에서 제외할 수 있습니다. 
+그러나, 테스트하는 기기의 플랫폼을 포함해야 합니다.
 :::
 
-This will create a plugin with C/C++ sources in `native_add/src`.
-These sources are built by the native build files in the various
-os build folders.
+이렇게 하면 `native_add/src`에 C/C++ 소스가 있는 플러그인이 생성됩니다. 
+이러한 소스는 다양한 os 빌드 폴더의 네이티브 빌드 파일에 의해 빌드됩니다.
 
-The FFI library can only bind against C symbols,
-so in C++ these symbols are marked `extern "C"`.
+FFI 라이브러리는 C 심볼에 대해서만 바인딩할 수 있으므로, C++에서 이러한 심볼은 `extern "C"`로 표시됩니다.
 
-You should also add attributes to indicate that the
-symbols are referenced from Dart,
-to prevent the linker from discarding the symbols
-during link-time optimization.
+또한 심볼이 Dart에서 참조된다는 것을 나타내는 속성을 추가하여, 
+링커가 링크 타임 최적화 중에 심볼을 삭제하지 않도록 해야 합니다. 
 `__attribute__((visibility("default"))) __attribute__((used))`.
 
-On iOS, the `native_add/ios/native_add.podspec` links the code.
+iOS에서 `native_add/ios/native_add.podspec`은 코드를 연결합니다.
 
-The native code is invoked from dart in `lib/native_add_bindings_generated.dart`.
+네이티브 코드는 `lib/native_add_bindings_generated.dart`에서 dart에서 호출됩니다.
 
-The bindings are generated with [package:ffigen]({{site.pub-pkg}}/ffigen).
+바인딩은 [package:ffigen]({{site.pub-pkg}}/ffigen)으로 생성됩니다.
 
 ## 다른 사용 사례 {:#other-use-cases}
 
 ### iOS 및 macOS {:#ios-and-macos}
 
-Dynamically linked libraries are automatically loaded by
-the dynamic linker when the app starts. Their constituent
-symbols can be resolved using [`DynamicLibrary.process`][].
-You can also get a handle to the library with
-[`DynamicLibrary.open`][] to restrict the scope of
-symbol resolution, but it's unclear how Apple's
-review process handles this.
+동적으로 링크된 라이브러리는 앱이 시작될 때 동적 링커에 의해 자동으로 로드됩니다. 
+구성 심볼은 [`DynamicLibrary.process`][]를 사용하여 해결할 수 있습니다. 
+또한 [`DynamicLibrary.open`][]을 사용하여 라이브러리에 대한 핸들을 가져와 심볼 해결 범위를 제한할 수 있지만, 
+Apple의 리뷰 프로세스가 이를 어떻게 처리하는지는 불분명합니다.
 
-Symbols statically linked into the application binary
-can be resolved using [`DynamicLibrary.executable`][] or
-[`DynamicLibrary.process`][].
-
+애플리케이션 바이너리에 정적으로 링크된 심볼은, 
+[`DynamicLibrary.executable`][] 또는 [`DynamicLibrary.process`][]를 사용하여 해결할 수 있습니다.
 
 [`DynamicLibrary.executable`]: {{site.dart.api}}/dev/dart-ffi/DynamicLibrary/DynamicLibrary.executable.html
 [`DynamicLibrary.open`]: {{site.dart.api}}/dev/dart-ffi/DynamicLibrary/DynamicLibrary.open.html
@@ -114,33 +95,25 @@ can be resolved using [`DynamicLibrary.executable`][] or
 
 #### Platform 라이브러리 {:#platform-library}
 
-To link against a platform library,
-use the following instructions:
+플랫폼 라이브러리에 연결하려면, 다음 지침을 따르세요.
 
-1. In Xcode, open `Runner.xcworkspace`.
-1. Select the target platform.
-1. Click **+** in the **Linked Frameworks and Libraries**
-   section.
-1. Select the system library to link against.
+1. Xcode에서 `Runner.xcworkspace`를 엽니다.
+1. 대상 플랫폼을 선택합니다.
+1. **Linked Frameworks and Libraries** 섹션에서 **+**를 클릭합니다.
+1. 연결할 시스템 라이브러리를 선택합니다.
 
 #### 퍼스트파티 라이브러리 {:#first-party-library}
 
-A first-party native library can be included either
-as source or as a (signed) `.framework` file.
-It's probably possible to include statically linked
-archives as well, but it requires testing.
+퍼스트파티 네이티브 라이브러리는 소스 또는 (서명된) `.framework` 파일로 포함될 수 있습니다. 
+정적으로 링크된 아카이브도 포함할 수 있지만, 테스트가 필요합니다.
 
 #### 소스 코드 {:#source-code}
 
-To link directly to source code,
-use the following instructions:
+소스 코드에 직접 링크하려면, 다음 지침을 따르세요.
 
- 1. In Xcode, open `Runner.xcworkspace`.
- 2. Add the C/C++/Objective-C/Swift
-    source files to the Xcode project.
- 3. Add the following prefix to the
-    exported symbol declarations to ensure they
-    are visible to Dart:
+1. Xcode에서 `Runner.xcworkspace`를 엽니다.
+2. C/C++/Objective-C/Swift 소스 파일을 Xcode 프로젝트에 추가합니다.
+3. Dart에서 볼 수 있도록 내보낸 심볼 선언에 다음 접두사를 추가합니다.
 
     **C/C++/Objective-C**
 
@@ -156,58 +129,40 @@ use the following instructions:
 
 #### 컴파일된(동적) 라이브러리 {:#compiled-dynamic-library}
 
-To link to a compiled dynamic library,
-use the following instructions:
+컴파일된 동적 라이브러리에 링크하려면, 다음 지침을 따르세요.
 
-1. If a properly signed `Framework` file is present,
-   open `Runner.xcworkspace`.
-1. Add the framework file to the **Embedded Binaries**
-   section.
-1. Also add it to the **Linked Frameworks & Libraries**
-   section of the target in Xcode.
+1. 적절하게 서명된 `Framework` 파일이 있는 경우, `Runner.xcworkspace`를 엽니다.
+2. 프레임워크 파일을 **Embedded Binaries** 섹션에 추가합니다.
+3. 또한 Xcode에서 대상의 **Linked Frameworks & Libraries** 섹션에도 추가합니다.
 
 #### 오픈소스 타사 라이브러리 {:#open-source-third-party-library}
 
-To create a Flutter plugin that includes both
-C/C++/Objective-C _and_ Dart code,
-use the following instructions:
+C/C++/Objective-C _및_ Dart 코드를 모두 포함하는 Flutter 플러그인을 만들려면 다음 지침을 따르세요.
 
-1. In your plugin project,
-   open `ios/<myproject>.podspec`.
-1. Add the native code to the `source_files`
-   field.
+1. 플러그인 프로젝트에서 `ios/<myproject>.podspec`을 엽니다.
+2. `source_files` 필드에 네이티브 코드를 추가합니다.
 
-The native code is then statically linked into
-the application binary of any app that uses
-this plugin.
+그러면 네이티브 코드가 이 플러그인을 사용하는 모든 앱의 애플리케이션 바이너리에 정적으로 링크됩니다.
 
 #### 폐쇄형 소스 타사 라이브러리 {:#closed-source-third-party-library}
 
-To create a Flutter plugin that includes Dart
-source code, but distribute the C/C++ library
-in binary form, use the following instructions:
+Dart 소스 코드를 포함하지만 C/C++ 라이브러리를 바이너리 형태로 배포하는 Flutter 플러그인을 만들려면 다음 지침을 따르세요.
 
-1. In your plugin project,
-   open `ios/<myproject>.podspec`.
-1. Add a `vendored_frameworks` field.
-   See the [CocoaPods example][].
+1. 플러그인 프로젝트에서 `ios/<myproject>.podspec`을 엽니다.
+1. `vendored_frameworks` 필드를 추가합니다. [CocoaPods 예제][CocoaPods example]를 참조하세요.
 
 :::warning
-**Do not** upload this plugin
-(or any plugin containing binary code) to pub.dev.
-Instead, this plugin should be downloaded
-from a trusted third-party,
-as shown in the CocoaPods example.
+이 플러그인(또는 바이너리 코드가 포함된 플러그인)을 pub.dev에 **업로드하지 마세요.** 
+대신, CocoaPods 예제에서 보듯이, 신뢰할 수 있는 제3자로부터 이 플러그인을 다운로드해야 합니다.
 :::
 
 [CocoaPods example]: {{site.github}}/CocoaPods/CocoaPods/blob/master/examples/Vendored%20Framework%20Example/Example%20Pods/VendoredFrameworkExample.podspec
 
 ## iOS 심볼 제거 {:#stripping-ios-symbols}
 
-When creating a release archive (IPA),
-the symbols are stripped by Xcode.
+릴리스 아카이브(IPA)를 만들 때, 심볼은 Xcode에 의해 스트립됩니다.
 
-1. In Xcode, go to **Target Runner > Build Settings > Strip Style**.
-2. Change from **All Symbols** to **Non-Global Symbols**.
+1. Xcode에서 **Target Runner > Build Settings > Strip Style**로 이동합니다.
+2. **All Symbols**에서 **Non-Global Symbols**로 변경합니다.
 
 {% include docs/resource-links/ffi-video-resources.md %}

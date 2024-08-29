@@ -197,7 +197,7 @@ For more information, see the API docs for:
 [`FlutterPlatformViewFactory`]: {{site.api}}/ios-embedder/protocol_flutter_platform_view_factory-p.html
 [`PlatformView`]: {{site.api}}/javadoc/io/flutter/plugin/platform/PlatformView.html
 
-## 그것을 함께 넣기 {:#putting-it-together}
+## 함께 모으기 {:#putting-it-together}
 
 When implementing the `build()` method in Dart,
 you can use [`defaultTargetPlatform`][]

@@ -27,115 +27,97 @@ iOS 앱 확장을 사용하면 앱 외부에서 기능을 확장할 수 있습�
 
 ## Flutter 앱에 앱 확장 기능을 추가하려면 어떻게 해야 하나요? {:#how-do-you-add-an-app-extension-to-your-flutter-app}
 
-To add an app extension to your Flutter app,
-add the extension point *target* to your Xcode project.
+Flutter 앱에 앱 확장을 추가하려면, 확장 지점 *대상*을 Xcode 프로젝트에 추가합니다.
 
-1. Open the default Xcode workspace in your project by running
-   `open ios/Runner.xcworkspace` in a terminal window from your
-   Flutter project directory.
-1. In Xcode, select **File -> New -> Target** from the menu bar. 
+1. Flutter 프로젝트 디렉토리의 터미널 창에서 `open ios/Runner.xcworkspace`를 실행하여, 
+   프로젝트의 기본 Xcode workspace를 엽니다.
+2. Xcode에서 메뉴 바에서 **File -> New -> Target**을 선택합니다.
 
     <figure class="site-figure">
     <div class="site-figure-container">
         <img src='/assets/images/docs/development/platform-integration/app-extensions/xcode-new-target.png' alt='Opening the File -> New menu, then selecting Target in Xcode.' height='300'>
     </div>
     </figure>
-1. Select the app extension you intend to add.
-   This selection generates extension-specific code 
-   within a new folder in your project.
-   To learn more about the generated code and the SDKs for each
-   extension point, check out the resources in
-   [Apple's documentation][].
 
-To learn how to add a home screen widget to your iOS device,
-check out the 
-[Adding a Home Screen Widget to your Flutter app][lab]
-codelab.
+3. 추가하려는 앱 확장 프로그램을 선택합니다. 
+   이 선택은 프로젝트의 새 폴더 내에 확장 프로그램별 코드를 생성합니다. 
+   생성된 코드와 각 확장 지점의 SDK에 대해 자세히 알아보려면, 
+   [Apple 문서][Apple's documentation]의 리소스를 확인하세요.
+
+iOS 기기에 홈 화면 위젯을 추가하는 방법을 알아보려면, 
+[Flutter 앱에 홈 화면 위젯 추가][lab] 코드랩을 확인하세요.
 
 ## Flutter 앱은 앱 확장 프로그램과 어떻게 상호작용하나요? {:#how-do-flutter-apps-interact-with-app-extensions} 
 
-Flutter apps interact with app extensions using the same
-techniques as UIKit or SwiftUI apps.
-The containing app and the app extension don't communicate directly.
-The containing app might not be running while the device user
-interacts with the extension.
-The app and your extension can read and write to
-shared resources or use higher-level APIs
-to communicate with each other.
+Flutter 앱은 UIKit 또는 SwiftUI 앱과 동일한 기술을 사용하여, 앱 확장 프로그램과 상호 작용합니다. 
+포함하는 앱과 앱 확장 프로그램은 직접 통신하지 않습니다. 
+포함하는 앱은 기기 사용자가 확장 프로그램과 상호 작용하는 동안 실행되지 않을 수 있습니다. 
+앱과 확장 프로그램은 공유 리소스를 읽고 쓰거나, 높은 레벨 API를 사용하여 서로 통신할 수 있습니다.
 
 ### 높은 레벨 API 사용 {:#using-higher-level-apis}
 
-Some extensions have APIs. For example, 
-the [Core Spotlight][] framework indexes your app,
-allowing users to search from Spotlight and Safari.
-The [WidgetKit][] framework can trigger an update
-of your home screen widget.
+일부 확장 프로그램에는 API가 있습니다. 
+예를 들어, [Core Spotlight][] 프레임워크는 앱을 인덱싱하여, 
+사용자가 Spotlight 및 Safari에서 검색할 수 있도록 합니다. 
+[WidgetKit][] 프레임워크는 홈 화면 위젯의 업데이트를 트리거할 수 있습니다.
 
-To simplify how your app communicates with extensions,
-Flutter plugins wrap these APIs.
-To find plugins that wrap extension APIs,
-check out [Leveraging Apple's System APIs and Frameworks][leverage]
-or search [pub.dev][].
+앱이 확장 프로그램과 통신하는 방식을 간소화하기 위해, 
+Flutter 플러그인은 이러한 API를 래핑합니다. 
+확장 프로그램 API를 래핑하는 플러그인을 찾으려면, 
+[Apple의 시스템 API 및 프레임워크 활용][leverage]을 확인하거나, 
+[pub.dev][]를 검색하세요.
 
 ### 리소스 공유 {:#sharing-resources}
 
-To share resources between your Flutter app
-and your app extension, put the `Runner` app target
-and the extension target in the same [App Group][].
+Flutter 앱과 앱 확장 프로그램 간에 리소스를 공유하려면, 
+`Runner` 앱 대상과 확장 프로그램 대상을 동일한 [앱 그룹][App Group]에 넣으세요.
 
 :::note
-You must be signed in to your Apple Developer account.
+Apple 개발자 계정에 로그인해야 합니다.
 :::
 
-To add a target to an App Group:
+앱 그룹에 대상을 추가하려면:
 
-1. Open the target settings in Xcode.
-1. Navigate to the **Signing & Capabilities** tab.
-1. Select **+ Capability** then **App Groups**.
-1. Choose which App Group you want to add the target from
-   one of two options:
+1. Xcode에서 대상 설정을 엽니다.
+
+2. **Signing & Capabilities** 탭으로 이동합니다.
+
+3. **+ Capability**을 선택한 다음 **App Groups**을 선택합니다.
+
+4. 두 옵션 중 하나에서 대상을 추가할 앱 그룹을 선택합니다.
 
     {: type="a"}
-    1. Select an App Group from the list.
-    1. Click **+** to add a new App Group.
+    1. 리스트에서 앱 그룹을 선택합니다.
+
+    2. **+**를 클릭하여 새 앱 그룹을 추가합니다.
 
 {% render docs/app-figure.md, image:"development/platform-integration/app-extensions/xcode-app-groups.png", alt:"Selecting an App Group within an Xcode Runner target configuration." %}
 
-When two targets belong to the same App Group,
-they can read from and write to the same source.
-Choose one of the following sources for your data.
+두 대상이 동일한 앱 그룹에 속하면 동일한 소스에서 읽고 쓸 수 있습니다. 
+데이터에 대해 다음 소스 중 하나를 선택하세요.
 
-* **Key/value:** Use the [`shared_preference_app_group`][]
-  plugin to read or write to `UserDefaults` within the same App Group.
-* **File:** Use the App Group container path from the
-  [`path_provider`][] plugin to [read and write files][].
-* **Database:** Use the App Group container path from
-  the [`path_provider`][] plugin to create a database with the
-  [`sqflite`][] plugin.
+* **키/값:** [`shared_preference_app_group`][] 플러그인을 사용하여, 
+  동일한 앱 그룹 내에서 `UserDefaults`를 읽거나 씁니다.
+* **파일:** [`path_provider`][] 플러그인의 앱 그룹 컨테이너 경로를 사용하여, [파일을 읽고 씁니다][read and write files].
+* **데이터베이스:** [`path_provider`][] 플러그인의 앱 그룹 컨테이너 경로를 사용하여, [`sqflite`][] 플러그인으로 데이터베이스를 만듭니다.
 
 ### 백그라운드 업데이트 {:#background-updates}
 
-Background tasks provide a means to update your extension
-through code regardless of the status of your app.
+백그라운드 작업은 앱의 상태와 관계없이 코드를 통해 확장 프로그램을 업데이트하는 수단을 제공합니다.
 
-To schedule background work from your Flutter app,
-use the [`workmanager`][] plugin.
+Flutter 앱에서 백그라운드 작업을 예약하려면, [`workmanager`][] 플러그인을 사용하세요.
 
 ### 딥 링크 {:#deep-linking}
 
-You might want to direct users from an
-app extension to a specific page in your Flutter app.
-To open a specific route in your app,
-you can use [Deep Linking][].
+앱 확장 프로그램에서 사용자를 Flutter 앱의 특정 페이지로 안내하고 싶을 수 있습니다. 
+앱에서 특정 경로를 열려면, [딥 링크][Deep Linking]를 사용할 수 있습니다.
 
 ## Flutter로 앱 확장 UI 만들기 {:#creating-app-extension-uis-with-flutter}
 
-Some app extensions display a user interface.
+일부 앱 확장 프로그램은 사용자 인터페이스를 표시합니다.
 
-For example, share extensions allow users to conveniently
-share content with other apps,
-such as sharing a picture to create
-a new post on a social media app.
+예를 들어, 공유 확장 프로그램을 사용하면 사용자가 다른 앱과 편리하게 콘텐츠를 공유할 수 있습니다.
+(예: 소셜 미디어 앱에서 새 게시물을 만들기 위해 사진을 공유)
 
 <figure class="site-figure">
     <div class="site-figure-container">
@@ -143,37 +125,29 @@ a new post on a social media app.
     </div>
 </figure>
 
-As of the 3.16 release, you can build
-Flutter UI for an app extension,
-though you must use an extension-safe
-`Flutter.xcframework` and embed the
-`FlutterViewController` as described in
-the following section.
+3.16 릴리스부터, 앱 확장을 위한 Flutter UI를 빌드할 수 있지만, 
+다음 섹션에 설명된 대로 확장 기능이 안전한 `Flutter.xcframework`를 사용하고, 
+`FlutterViewController`를 임베드해야 합니다.
 
 :::note
-Due to the memory limitations of app extensions,
-use Flutter to build an app extension UI for extension
-types that have memory limits larger than 100MB.
-For example, Share extensions have a 120MB memory limit.
+앱 확장 프로그램의 메모리 제한으로 인해, 
+Flutter를 사용하여 메모리 제한이 100MB보다 큰 확장 프로그램 타입에 대한 앱 확장 프로그램 UI를 빌드합니다. 
+예를 들어, Share 확장 프로그램의 메모리 제한은 120MB입니다.
 
-In addition, Flutter uses extra memory in debug mode.
-Therefore, Flutter doesn't fully support running
-app extensions in debug mode on physical devices
-when used to build extension UI; it might run out of memory.
-As an alternative,
-use an iOS simulator to test your extension in debug mode.
+또한, Flutter는 디버그 모드에서 추가 메모리를 사용합니다. 
+따라서, Flutter는 확장 프로그램 UI를 빌드하는 데 사용될 때, 
+물리적 장치에서 디버그 모드에서 앱 확장 프로그램을 실행하는 것을 완전히 지원하지 않습니다. 
+메모리가 부족할 수 있습니다. 
+대안으로 iOS 시뮬레이터를 사용하여 디버그 모드에서 확장 프로그램을 테스트합니다.
 :::
 
-1. Locate the extension-safe `Flutter.xcframework` file,
-   at `<path_to_flutter_sdk>/bin/cache/artifacts/engine/ios/extension_safe/Flutter.xcframework`.
-   
-    * To build for release or profile modes,
-      find the framework file under the
-      `ios-release` or `ios-profile` folder, respectively.
+1. `<path_to_flutter_sdk>/bin/cache/artifacts/engine/ios/extension_safe/Flutter.xcframework`에서, 확장 기능 안전 `Flutter.xcframework` 파일을 찾습니다.
 
-1. Drag and drop the `Flutter.xcframework` file into your
-   share extension's frameworks and libraries list.
-   Make sure the embed column says "Embed & Sign".
+   * 릴리스 또는 프로필 모드로 빌드하려면, 
+     각각 `ios-release` 또는 `ios-profile` 폴더에서 프레임워크 파일을 찾습니다.
+
+1. `Flutter.xcframework` 파일을 공유 확장 기능의 프레임워크 및 라이브러리 리스트로 끌어다 놓습니다. 
+   임베드 열에 "Embed & Sign"이라고 표시되어 있는지 확인합니다.
 
    <figure class="site-figure">
        <div class="site-figure-container">
@@ -181,16 +155,14 @@ use an iOS simulator to test your extension in debug mode.
        </div>
    </figure>
 
-1. Open the Flutter app project settings in Xcode
-   to share build configurations. 
+2. Xcode에서 Flutter 앱 프로젝트 설정을 열어, 빌드 구성을 공유합니다.
 
-   {: type="a"}
-   1. Navigate to the **Info** tab.
-   1. Expand the **Configurations** group. 
-   1. Expand the **Debug**, **Profile**, and **Release** entries.
-   1. For each of these configurations, make sure the value in the
-      **Based on configuration file** drop-down menu for your
-      extension matches the one selected for the normal app target.
+    {: type="a"}
+    1. **Info** 탭으로 이동합니다.
+    2. **Configurations** 그룹을 확장합니다.
+    3. **Debug**, **Profile**, **Release** 항목을 확장합니다.
+    4. 이러한 각 구성에 대해 확장 프로그램의 **Based on configuration file** 드롭다운 메뉴에 있는 값이, 
+       일반 앱 대상에 대해 선택한 값과 일치하는지 확인합니다.
 
     <figure class="site-figure">
         <div class="site-figure-container">
@@ -198,18 +170,14 @@ use an iOS simulator to test your extension in debug mode.
         </div>
     </figure>
 
-1. (Optional) Replace any storyboard files with an extension class, if needed.
+3. (선택 사항) 필요한 경우, 스토리보드 파일을 확장 클래스로 바꿉니다.
 
     {: type="a"}
-    1. In the `Info.plist` file,
-       delete the **NSExtensionMainStoryboard** property.
-    1. Add the **NSExtensionPrincipalClass** property.
-    1. Set the value for this property to the entry point of the extension.
-       For example, for share extensions, it's usually
-       `<YourShareExtensionTargetName>.ShareViewController`.
-       If you use Objective-C to implement the extension,
-       you should omit the `<YourShareExtensionTargetName>.`
-       portion.<br>
+    1. `Info.plist` 파일에서 **NSExtensionMainStoryboard** 속성을 삭제합니다.
+    2. **NSExtensionPrincipalClass** 속성을 추가합니다.
+    3. 이 속성의 값을 확장의 진입점으로 설정합니다. 
+       예를 들어, 공유 확장의 경우, 일반적으로 `<YourShareExtensionTargetName>.ShareViewController`입니다. 
+       Objective-C를 사용하여 확장을 구현하는 경우, `<YourShareExtensionTargetName>.` 부분을 생략해야 합니다.<br>
 
     <figure class="site-figure">
         <div class="site-figure-container">
@@ -217,9 +185,8 @@ use an iOS simulator to test your extension in debug mode.
         </div>
     </figure>
 
-1. Embed the `FlutterViewController` as described in
-   [Adding a Flutter Screen][]. For example, you can display a
-   specific route in your Flutter app within a share extension.
+4. [Flutter 화면 추가][Adding a Flutter Screen]에 설명된 대로, `FlutterViewController`를 임베드합니다. 
+   예를 들어, 공유 확장 내에서 Flutter 앱의 특정 경로를 표시할 수 있습니다.
 
     ```swift
     import UIKit
@@ -242,8 +209,7 @@ use an iOS simulator to test your extension in debug mode.
 
 ## 확장 테스트 {:#test-extensions}
 
-Testing extensions on simulators and physical devices
-have slightly different procedures.
+시뮬레이터와 실제 장치에서 확장 프로그램을 테스트하는 절차는 약간 다릅니다.
 
 {% comment %}
 The different procedures are necessary due to bugs(which bugs?) in Xcode.
@@ -252,34 +218,24 @@ Revisit these docs after future Xcode releases to see if they are fixed.
 
 ### 시뮬레이터에서 테스트 {:#test-on-a-simulator}
 
-1. Build and run the main application target.
-1. After the app is launched on the simulator,
-   press <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>H</kbd>
-   to minimize the app, which switches to the home screen.
-1. Launch an app that supports the share extension,
-   such as the Photos app.
-1. Select a photo, tap the share button, then tap
-   on the share extension icon of your app.
+1. 메인 애플리케이션 타겟을 빌드하고 실행합니다.
+2. 시뮬레이터에서 앱을 실행한 후, <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>H</kbd>를 눌러 앱을 최소화하면, 
+   홈 화면으로 전환됩니다.
+3. (사진 앱과 같이) 공유 확장 기능을 지원하는 앱을 실행합니다.
+4. 사진을 선택하고, 공유 버튼을 탭한 다음, 앱의 공유 확장 기능 아이콘을 탭합니다.
 
 ### 실제 장치에서 테스트 {:#test-on-a-physical-device}
 
-You can use the following procedure or the
-[Testing on simulators](#test-on-a-simulator) instructions
-to test on physical devices.
+다음 절차나 [시뮬레이터에서 테스트](#test-on-a-simulator) 지침을 사용하여, 실제 장치에서 테스트할 수 있습니다.
 
-1. Launch the share extension target.
-1. In the popup window that says "Choose an app to run",
-   select an app that can be used to test share extension,
-   such as the Photos app.
-1. Select a photo, tap the share button,
-   then tap on the share extension icon of your app.
+1. 공유 확장 대상을 시작합니다.
+1. "실행할 앱 선택"이라는 팝업 창에서, 사진 앱과 같이 공유 확장을 테스트하는 데 사용할 수 있는 앱을 선택합니다.
+1. 사진을 선택하고 공유 버튼을 탭한 다음, 앱의 공유 확장 아이콘을 탭합니다.
 
 ## 튜토리얼 {:#tutorials}
 
-For step-by-step instruction for using app
-extensions with your Flutter iOS app, check out the
-[Adding a Home Screen Widget to your Flutter app][lab]
-codelab.
+Flutter iOS 앱에서 앱 확장 기능을 사용하기 위한 단계별 지침은, 
+[Flutter 앱에 홈 화면 위젯 추가][lab] 코드랩을 확인하세요.
 
 [Adding a Flutter Screen]: /add-to-app/ios/add-flutter-screen?tab=vc-uikit-swift-tab#alternatively-create-a-flutterviewcontroller-with-an-implicit-flutterengine
 [App Group]: {{site.apple-dev}}/documentation/xcode/configuring-app-groups

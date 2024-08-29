@@ -22,20 +22,14 @@ Apple App Store에 제출된 모든 앱은 Xcode 스토리보드가 포함된 [�
 
 ## 시작 화면 커스터마이즈 {:#customize-the-launch-screen}
 
-The default Flutter template includes an Xcode
-storyboard named `LaunchScreen.storyboard`
-that can be customized with your own assets.
-By default, the storyboard displays a blank image,
-but you can change this. To do so,
-open the Flutter app's Xcode project
-by typing `open ios/Runner.xcworkspace`
-from the root of your app directory.
-Then select `Runner/Assets.xcassets`
-from the Project Navigator and
-drop in the desired images to the `LaunchImage` image set.
+기본 Flutter 템플릿에는 자체 assets으로 커스터마이즈할 수 있는 `LaunchScreen.storyboard`라는 Xcode 스토리보드가 포함되어 있습니다. 
+기본적으로 스토리보드는 빈 이미지를 표시하지만, 이를 변경할 수 있습니다. 
+이를 위해, 앱 디렉토리의 루트에서 `open ios/Runner.xcworkspace`를 입력하여, 
+Flutter 앱의 Xcode 프로젝트를 엽니다. 
+그런 다음, Project Navigator에서 `Runner/Assets.xcassets`를 선택하고, 
+원하는 이미지를 `LaunchImage` 이미지 세트에 놓습니다.
 
-Apple provides detailed guidance for launch screens as
-part of the [Human Interface Guidelines][].
+Apple은 [Human Interface Guidelines][]의 일부로 실행 화면에 대한 자세한 지침을 제공합니다.
 
 [apple-requirement]: {{site.apple-dev}}/documentation/xcode/specifying-your-apps-launch-screen
 [Human Interface Guidelines]: {{site.apple-dev}}/design/human-interface-guidelines/patterns/launching#launch-screens
