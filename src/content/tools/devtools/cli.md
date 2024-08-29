@@ -22,19 +22,17 @@ Serving DevTools at http://127.0.0.1:9100
 
 ## 디버깅 할 애플리케이션 시작 {:#start-an-application-to-debug}
 
-Next, start an app to connect to.
-This can be either a Flutter application
-or a Dart command-line application.
-The command below specifies a Flutter app:
+다음으로, 연결할 앱을 시작합니다. 
+이는 Flutter 애플리케이션 또는 Dart 명령줄 애플리케이션일 수 있습니다. 
+아래 명령은 Flutter 앱을 지정합니다.
 
 ```console
 cd path/to/flutter/app
 flutter run
 ```
 
-You need to have a device connected, or a simulator open,
-for `flutter run` to work. Once the app starts, you'll see a
-message in your terminal that looks like the following:
+`flutter run`이 작동하려면 기기를 연결하거나 시뮬레이터를 열어야 합니다. 
+앱이 시작되면 터미널에 다음과 같은 메시지가 표시됩니다.
 
 ```console
 An Observatory debugger and profiler on macOS is available at:
@@ -43,23 +41,17 @@ The Flutter DevTools debugger and profiler on macOS is available at:
 http://127.0.0.1:9100?uri=http://127.0.0.1:52129/QjqebSY4lQ8=/
 ```
 
-Open the DevTools instance connected to your app
-by opening the second link in Chrome.
+Chrome에서 두 번째 링크를 열어, 앱에 연결된 DevTools 인스턴스를 엽니다.
 
-This URL contains a security token, 
-so it's different for each run of your app. 
-This means that if you stop your application and re-run it, 
-you need to connect to DevTools again with the new URL.
+이 URL에는 보안 토큰이 포함되어 있으므로, 앱을 실행할 때마다 다릅니다. 
+즉, 애플리케이션을 중지하고 다시 실행하면 새 URL로 DevTools에 다시 연결해야 합니다.
 
 ## 새 앱 인스턴스에 연결 {:#connect-to-a-new-app-instance}
 
-If your app stops running
-or you opened DevTools manually,
-you should see a **Connect** dialog:
+앱 실행이 중지되거나 DevTools를 수동으로 연 경우, **Connect** 대화 상자가 표시됩니다.
+
 
 ![Screenshot of the DevTools connect dialog](/assets/images/docs/tools/devtools/connect_dialog.png){:width="100%"}
 
-You can manually connect DevTools to a new app instance
-by copying the Observatory link you got from running your app,
-such as `http://127.0.0.1:52129/QjqebSY4lQ8=/`
-and pasting it into the connect dialog:
+앱을 실행하여 얻은 Observatory 링크(예: `http://127.0.0.1:52129/QjqebSY4lQ8=/`)를 복사하여, 
+연결 대화 상자에 붙여넣으면 DevTools를 새 앱 인스턴스에 수동으로 연결할 수 있습니다.
