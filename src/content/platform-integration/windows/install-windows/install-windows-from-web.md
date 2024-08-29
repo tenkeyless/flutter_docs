@@ -1,19 +1,22 @@
 ---
-title: Add Windows as a target platform for Flutter from Web start
-description: Configure your system to develop Flutter apps on Windows desktop.
-short-title: Starting from Web
+# title: Add Windows as a target platform for Flutter from Web start
+title: 웹으로부터 시작하여, Flutter의 대상 플랫폼으로 Windows 추가 ([Windows] Web + Windows)
+# description: Configure your system to develop Flutter apps on Windows desktop.
+description: Windows 데스크톱에서 Flutter 앱을 개발하도록 시스템을 구성하세요.
+# short-title: Starting from Web
+short-title: 웹으로부터 시작
 ---
 
-To add Windows desktop as a Flutter app target, follow this procedure.
+Flutter 앱 대상으로 Windows 데스크톱을 추가하려면, 다음 절차를 따르세요.
 
-## Install and configure Visual Studio
+## Visual Studio 설치 및 구성 {:#install-and-configure-visual-studio}
 
-1. Allocate a minimum of 26 GB of storage for Visual Studio.
-   Consider allocating 10 GB of storage for an optimal configuration.
-1. Install [Visual Studio 2022][] to debug and compile native C++ Windows code.
-   Make sure to install the **Desktop development with C++** workload.
-   This enables building Windows app including all of its default components.
-   **Visual Studio** is an IDE separate from **[Visual Studio _Code_][]**.
+1. Visual Studio에 최소 26GB의 스토리지를 할당합니다.
+   최적의 구성을 위해 10GB의 스토리지를 할당하는 것을 고려하세요.
+1. 네이티브 C++ Windows 코드를 디버그하고 컴파일하려면, [Visual Studio 2022][]를 설치하세요.
+   **Desktop development with C++** 워크로드를 설치하세요.
+   이렇게 하면 모든 기본 구성 요소를 포함하여 Windows 앱을 빌드할 수 있습니다.
+   **Visual Studio**는 **[Visual Studio _Code_][]** 와 별도의 IDE입니다.
 
 {% include docs/install/flutter-doctor.md target='Windows' devos='Windows' config='WindowsDesktopWeb' %}
 

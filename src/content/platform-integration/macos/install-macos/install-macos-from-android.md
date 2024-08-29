@@ -1,17 +1,20 @@
 ---
-title: Add macOS as a target platform for Flutter from Android start
-description: Configure your system to develop Flutter mobile apps also on macOS.
-short-title: Starting from Android
+# title: Add macOS as a target platform for Flutter from Android start
+title: Android로부터 시작하여, Flutter의 대상 플랫폼으로 macOS 추가 ([macOS] Android + macOS)
+# description: Configure your system to develop Flutter mobile apps also on macOS.
+description: macOS에서도 Flutter 모바일 앱을 개발할 수 있도록 시스템을 구성하세요.
+# short-title: Starting from Android
+short-title: Android로부터 시작
 ---
 
-To add macOS desktop as a Flutter app target, follow this procedure.
+macOS 데스크톱을 Flutter 앱 대상으로 추가하려면, 다음 절차를 따르세요.
 
-## Install Xcode
+## Xcode 설치 {:#install-xcode}
 
-1. Allocate a minimum of 26 GB of storage for Xcode.
-   Consider allocating 42 GB of storage for an optimal configuration.
-1. Install [Xcode][] {{site.appnow.xcode}} to debug and compile native
-   Swift or ObjectiveC code.
+1. Xcode에 최소 26GB의 스토리지를 할당합니다.
+   최적의 구성을 위해 42GB의 스토리지를 할당하는 것을 고려하세요.
+2. [Xcode][] {{site.appnow.xcode}}를 설치하여, 
+   네이티브 Swift 또는 ObjectiveC 코드를 디버깅하고 컴파일합니다.
 
 {% include docs/install/compiler/xcode.md target='macOS' devos='macOS' attempt="first" -%}
 

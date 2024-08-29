@@ -14,14 +14,14 @@
 {% endif %}
 {% capture filepath -%}{{mainpath | replace: "opsys", plat}}{{file-format}} {% endcapture -%}
 
-To download the {{include.ref-os}} 3.13 version of the Flutter SDK,
-you would change the original URL from:
+Flutter SDK의 {{include.ref-os}} 3.13 버전을 다운로드하려면,
+원래 URL을:
 
 ```console
 https://storage.googleapis.com/{{filepath}}
 ```
 
-to the mirror URL:
+다음과 같이 미러 URL로 변경합니다.
 
 ```console
 https://storage.flutter-io.cn/{{filepath}}
