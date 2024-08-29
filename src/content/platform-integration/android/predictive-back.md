@@ -14,33 +14,30 @@ description: >-
 
 ## 앱 구성하기 {:#configure-your-app}
 
-Make sure your app supports Android API 33 or higher,
-as predictive back won't work on older versions of Android.
-Then, set the flag `android:enableOnBackInvokedCallback="true"`
-in `android/app/src/main/AndroidManifest.xml`.
+앱이 Android API 33 이상을 지원하는지 확인하세요. 
+예측적 백은 이전 버전의 Android에서는 작동하지 않습니다. 
+그런 다음, `android/app/src/main/AndroidManifest.xml`에서 `android:enableOnBackInvokedCallback="true"` 플래그를 설정합니다.
 
 ## 장치 구성 {:#configure-your-device}
 
-You need to enable Developer Mode and set a flag on your device,
-so you can't yet expect predictive back to work on most users'
-Android devices. If you want to try it out on your own device though,
-make sure it's running API 33 or higher, and then in
-**Settings => System => Developer** options,
-make sure the switch is enabled next to **Predictive back animations**.
+개발자 모드를 활성화하고 기기에 플래그를 설정해야 하므로, 
+대부분 사용자의 Android 기기에서 예측적 백이 작동할 것으로 기대할 수 없습니다. 
+하지만, 자신의 기기에서 시도하려면 API 33 이상을 실행 중인지 확인한 다음, 
+**Settings => System => Developer** 옵션에서, 
+**Predictive back animations** 옆의 스위치가 활성화되어 있는지 확인하세요.
 
 ## 앱 설정 {:#set-up-your-app}
 
-The predictive back route transitions are currently
-not enabled by default, so for now you'll need to enable them
-manually in your app.
-Typically, you do this by setting them in your theme:
+예측적 백 라우트 전환은 현재 기본적으로 활성화되어 있지 않으므로, 
+지금은 앱에서 수동으로 활성화해야 합니다. 
+일반적으로 테마에서 설정하여 이를 수행합니다.
 
 ```dart
 MaterialApp(
   theme: ThemeData(
     pageTransitionsTheme: const PageTransitionsTheme(
       builders: <TargetPlatform, PageTransitionsBuilder>{
-        // Set the predictive back transitions for Android.
+        // Android에 대한 예측적 뒤로 전환을 설정합니다.
         TargetPlatform.android: PredictiveBackPageTransitionsBuilder(),
       },
     ),
@@ -51,15 +48,14 @@ MaterialApp(
 
 ## 앱 실행 {:#run-your-app}
 
-Lastly, just make sure you're using at least
-Flutter version 3.22.2 to run your app,
-which is the latest stable release at the time of this writing.
+마지막으로, 이 글을 쓰는 시점에서 최신 stable 릴리스 버전인, 
+Flutter 버전 3.22.2 이상을 사용하여 앱을 실행해야 합니다.
 
 ## 더 많은 정보 {:#for-more-information}
 
-You can find more information at the following link:
+다음 링크에서 더 많은 정보를 찾을 수 있습니다.
 
-* [Android predictive back][] breaking change
+* [Android 예측적 뒤로][Android predictive back] 브레이킹 체인지
 
 [Android predictive back]: /release/breaking-changes/android-predictive-back
 

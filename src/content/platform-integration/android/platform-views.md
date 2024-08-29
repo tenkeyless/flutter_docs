@@ -29,42 +29,38 @@ Android의 플랫폼 뷰에는 두 가지 구현이 있습니다.
 
 ## [하이브리드 구성(Composition)](#hybrid-composition) {:#hybrid-composition}
 
-Platform Views are rendered as they are normally. Flutter content is rendered into a texture.
-SurfaceFlinger composes the Flutter content and the platform views.
+플랫폼 뷰는 정상적으로 렌더링됩니다. Flutter 콘텐츠는 텍스처로 렌더링됩니다.
+SurfaceFlinger는 Flutter 콘텐츠와 플랫폼 뷰를 구성합니다.
 
-* `+` best performance and fidelity of Android views.
-* `-` Flutter performance suffers.
-* `-` FPS of application will be lower.
-* `-` Certain transformations that can be applied to Flutter widgets will not work when applied to platform views.
+* `+` Android 뷰의 최상의 성능과 충실도.
+* `-` Flutter 성능이 저하됩니다.
+* `-` 애플리케이션의 FPS가 낮아집니다.
+* `-` Flutter 위젯에 적용할 수 있는 특정 변환은, 플랫폼 뷰에 적용하면 작동하지 않습니다.
 
 ## [Texture 레이어](#texturelayerhybridcompisition) (또는 Texture 레이어 하이브리드 구성) {:#texture-layer-or-texture-layer-hybrid-composition}
 
-Platform Views are rendered into a texture.
-Flutter draws the platform views (via the texture).
-Flutter content is rendered directly into a Surface.
+플랫폼 뷰는 텍스처로 렌더링됩니다.
+Flutter는 플랫폼 뷰를 그립니다. (텍스처를 통해)
+Flutter 콘텐츠는 Surface로 직접 렌더링됩니다.
 
-* `+` good performance for Android Views
-* `+` best performance for Flutter rendering.
-* `+` all transformations work correctly.
-* `-` quick scrolling (e.g. a web view) will be janky
-* `-` SurfaceViews are problematic in this mode and will be moved into a virtual display (breaking a11y)
-* `-` Text magnifier will break unless Flutter is rendered into a TextureView.
+* `+` Android 뷰에 대한 우수한 성능
+* `+` Flutter 렌더링에 대한 최상의 성능.
+* `+` 모든 변환이 올바르게 작동합니다.
+* `-` 빠른 스크롤(예: 웹 뷰)이 janky 합니다.
+* `-` SurfaceView는 이 모드에서 문제가 있으며, 가상 디스플레이로 이동합니다. (a11y가 깨짐)
+* `-` Flutter가 TextureView로 렌더링되지 않으면, 텍스트 확대경이 깨집니다.
 
-To create a platform view on Android,
-use the following steps:
+Android에서 플랫폼 뷰를 만들려면, 다음 단계를 따르세요.
 
 ## Dart 측에서 {:#on-the-dart-side}
 
-On the Dart side, create a `Widget`
-and add one of the following build implementations.
+Dart 측에서, `Widget`을 생성하고 다음 빌드 구현 중 하나를 추가합니다.
 
 ### 하이브리드 구성(composition) {:#hybrid-composition-1}
 
-In your Dart file,
-for example `native_view_example.dart`,
-use the following instructions:
+예를 들어, `native_view_example.dart`와 같은 Dart 파일에서 다음 지침을 사용합니다.
 
-1. Add the following imports:  
+1. 다음 imports를 추가합니다.
 
    <?code-excerpt "lib/native_view_example_1.dart (import)"?>
    ```dart
@@ -75,14 +71,14 @@ use the following instructions:
    import 'package:flutter/services.dart';
    ```  
     
-2. Implement a `build()` method:
+2. `build()` 메서드를 구현합니다.
 
    <?code-excerpt "lib/native_view_example_1.dart (hybrid-composition)"?>
    ```dart
    Widget build(BuildContext context) {
-     // This is used in the platform side to register the view.
+     // 이는 플랫폼 측에서 뷰를 등록하는 데 사용됩니다.
      const String viewType = '<platform-view-type>';
-     // Pass parameters to the platform side.
+     // 플랫폼 측에 매개변수를 전달합니다.
      const Map<String, dynamic> creationParams = <String, dynamic>{};
    
      return PlatformViewLink(
@@ -112,7 +108,7 @@ use the following instructions:
    }
    ```
 
-For more information, see the API docs for:
+자세한 내용은, 다음 API 문서를 참조하세요.
 
 * [`PlatformViewLink`][]
 * [`AndroidViewSurface`][]
@@ -124,11 +120,9 @@ For more information, see the API docs for:
 
 ### Texture 레이어 하이브리드 구성 {:#texturelayerhybridcompisition}
 
-In your Dart file,
-for example `native_view_example.dart`,
-use the following instructions:
+예를 들어, `native_view_example.dart`와 같은 Dart 파일에서 다음 지침을 따르세요.
 
-1. Add the following imports:
+1. 다음 imports를 추가합니다.
 
    <?code-excerpt "lib/native_view_example_2.dart (import)"?>
    ```dart
@@ -136,14 +130,14 @@ use the following instructions:
    import 'package:flutter/services.dart';
    ```
 
-2. Implement a `build()` method:
+2. `build()` 메서드를 구현합니다.
 
    <?code-excerpt "lib/native_view_example_2.dart (virtual-display)"?>
    ```dart
    Widget build(BuildContext context) {
-     // This is used in the platform side to register the view.
+     // 이는 플랫폼 측에서 뷰를 등록하는 데 사용됩니다.
      const String viewType = '<platform-view-type>';
-     // Pass parameters to the platform side.
+     // 플랫폼 측에 매개변수를 전달합니다.
      final Map<String, dynamic> creationParams = <String, dynamic>{};
    
      return AndroidView(
@@ -155,7 +149,7 @@ use the following instructions:
    }
    ```
 
-For more information, see the API docs for:
+자세한 내용은, 다음 API 문서를 참조하세요.
 
 * [`AndroidView`][]
 
@@ -163,18 +157,15 @@ For more information, see the API docs for:
 
 ## 플랫폼 측에서 {:#on-the-platform-side}
 
-On the platform side, use the standard
-`io.flutter.plugin.platform` package
-in either Kotlin or Java:
+플랫폼 측에서는 Kotlin 또는 Java에서 표준 `io.flutter.plugin.platform` 패키지를 사용합니다.
 
 {% tabs "android-language" %}
 {% tab "Kotlin" %}
 
-In your native code, implement the following:
+네이티브 코드에서, 다음을 구현합니다.
 
-Extend `io.flutter.plugin.platform.PlatformView`
-to provide a reference to the `android.view.View`
-(for example, `NativeView.kt`):
+`io.flutter.plugin.platform.PlatformView`를 확장하여, 
+`android.view.View`(예: `NativeView.kt`)에 대한 참조를 제공합니다.
 
 ```kotlin
 package dev.flutter.example
@@ -203,9 +194,7 @@ internal class NativeView(context: Context, id: Int, creationParams: Map<String?
 }
 ```
 
-Create a factory class that creates an instance of the
-`NativeView` created earlier
-(for example, `NativeViewFactory.kt`):
+이전에 생성한 `NativeView`의 인스턴스를 생성하는 팩토리 클래스를 생성합니다. (예: `NativeViewFactory.kt`)
 
 ```kotlin
 package dev.flutter.example
@@ -223,12 +212,9 @@ class NativeViewFactory : PlatformViewFactory(StandardMessageCodec.INSTANCE) {
 }
 ```
 
-Finally, register the platform view.
-You can do this in an app or a plugin.
+마지막으로 플랫폼 뷰를 등록합니다. 앱이나 플러그인에서 이 작업을 수행할 수 있습니다.
 
-For app registration,
-modify the app's main activity
-(for example, `MainActivity.kt`):
+앱 등록의 경우, 앱의 메인 액티비티를 수정합니다(예: `MainActivity.kt`):
 
 ```kotlin
 package dev.flutter.example
@@ -248,9 +234,7 @@ class MainActivity : FlutterActivity() {
 }
 ```
 
-For plugin registration,
-modify the plugin's main class
-(for example, `PlatformViewPlugin.kt`):
+플러그인 등록을 위해, 플러그인의 메인 클래스를 수정합니다. (예: `PlatformViewPlugin.kt`):
 
 ```kotlin
 package dev.flutter.plugin.example
@@ -272,11 +256,10 @@ class PlatformViewPlugin : FlutterPlugin {
 {% endtab %}
 {% tab "Java" %}
 
-In your native code, implement the following:
+네이티브 코드에서 다음을 구현합니다.
 
-Extend `io.flutter.plugin.platform.PlatformView`
-to provide a reference to the `android.view.View`
-(for example, `NativeView.java`):
+`io.flutter.plugin.platform.PlatformView`를 확장하여, 
+`android.view.View`(예: `NativeView.java`)에 대한 참조를 제공합니다.
 
 ```java
 package dev.flutter.example;
@@ -311,9 +294,7 @@ class NativeView implements PlatformView {
 }
 ```
 
-Create a factory class that creates an
-instance of the `NativeView` created earlier
-(for example, `NativeViewFactory.java`):
+이전에 생성한 `NativeView`의 인스턴스를 생성하는 팩토리 클래스를 생성합니다(예: `NativeViewFactory.java`):
 
 ```java
 package dev.flutter.example;
@@ -341,12 +322,9 @@ class NativeViewFactory extends PlatformViewFactory {
 }
 ```
 
-Finally, register the platform view.
-You can do this in an app or a plugin.
+마지막으로, 플랫폼 뷰를 등록합니다. 앱이나 플러그인에서 이 작업을 수행할 수 있습니다.
 
-For app registration,
-modify the app's main activity
-(for example, `MainActivity.java`):
+앱 등록의 경우, 앱의 기본 액티비티를 수정합니다(예: `MainActivity.java`):
 
 ```java
 package dev.flutter.example;
@@ -366,9 +344,7 @@ public class MainActivity extends FlutterActivity {
 }
 ```
 
-For plugin registration,
-modify the plugin's main file
-(for example, `PlatformViewPlugin.java`):
+플러그인 등록을 위해, 플러그인의 메인 파일을 수정합니다(예: `PlatformViewPlugin.java`):
 
 ```java
 package dev.flutter.plugin.example;
@@ -392,7 +368,7 @@ public class PlatformViewPlugin implements FlutterPlugin {
 {% endtab %}
 {% endtabs %}
 
-For more information, see the API docs for:
+자세한 내용은, 다음 API 문서를 참조하세요.
 
 * [`FlutterPlugin`][]
 * [`PlatformViewRegistry`][]
@@ -404,36 +380,33 @@ For more information, see the API docs for:
 [`PlatformViewFactory`]: {{site.api}}/javadoc/io/flutter/plugin/platform/PlatformViewFactory.html
 [`PlatformViewRegistry`]: {{site.api}}/javadoc/io/flutter/plugin/platform/PlatformViewRegistry.html
 
-Finally, modify your `build.gradle` file
-to require one of the minimal Android SDK versions:
+마지막으로, 최소 Android SDK 버전 중 하나를 요구하도록 `build.gradle` 파일을 수정합니다.
 
 ```kotlin
 android {
     defaultConfig {
-        minSdk = 19 // if using hybrid composition
-        minSdk = 20 // if using virtual display.
+        minSdk = 19 // 하이브리드 구성을 사용하는 경우
+        minSdk = 20 // 가상 디스플레이를 사용하는 경우
     }
 }
 ```
 ### 표면 뷰 {:#surface-views}
 
-Handling SurfaceViews is problematic for Flutter and should be avoided when possible.
+SurfaceView를 처리하는 것은 Flutter에서 문제가 될 수 있으므로 가능하면 피하는 것이 좋습니다.
 
 ### 수동 뷰 무효화 {:#manual-view-invalidation}
 
-Certain Android Views do not invalidate themselves when their content changes.
-Some example views include `SurfaceView` and `SurfaceTexture`.
-When your Platform View includes these views you are required to
-manually invalidate the view after they have been drawn to
-(or more specifically: after the swap chain is flipped).
-Manual view invalidation is done by calling `invalidate` on the View 
-or one of its parent views.
+특정 Android View는 콘텐츠가 변경될 때 자체적으로 무효화되지 않습니다. 
+일부 예시 View에는 `SurfaceView`와 `SurfaceTexture`가 있습니다. 
+Platform View에 이러한 View가 포함된 경우 뷰가 그려진 후(또는 더 구체적으로: 스왑 체인이 뒤집힌 후), 
+수동으로 뷰를 무효화해야 합니다. 
+수동 뷰 무효화는 View 또는 부모 뷰 중 하나에서 `invalidate`를 호출하여 수행됩니다.
 
 [`AndroidViewSurface`]: {{site.api}}/flutter/widgets/AndroidViewSurface-class.html
 
 ### 이슈 {:#issues}
 
-[Existing Platform View issues](https://github.com/flutter/flutter/issues?q=is%3Aopen+is%3Aissue+label%3A%22a%3A+platform-views%22)
+[기존 플랫폼 뷰 문제](https://github.com/flutter/flutter/issues?q=is%3Aopen+is%3Aissue+label%3A%22a%3A+platform-views%22)
 
 {% include docs/platform-view-perf.md %}
 

@@ -16,56 +16,44 @@ class="mw-100" alt="A graphic outlining the launch flow of an app including a sp
 ## 개요 {:#overview}
 
 :::warning
-If you are experiencing a crash from implementing a splash screen, you
-might need to migrate your code. See detailed instructions in the
-[Deprecated Splash Screen API Migration guide][].
+스플래시 화면을 구현하는 데 충돌이 발생하는 경우 코드를 마이그레이션해야 할 수 있습니다. 
+[Deprecated 스플래시 화면 API 마이그레이션 가이드][Deprecated Splash Screen API Migration guide]에서 자세한 지침을 참조하세요.
 :::
 
-In Android, there are two separate screens that you can control:
-a _launch screen_ shown while your Android app initializes,
-and a _splash screen_ that displays while the Flutter experience
-initializes.
+Android에서는, 제어할 수 있는 두 개의 별도 화면이 있습니다. 
+(1) Android 앱이 초기화되는 동안 표시되는, _실행 화면(launch screen)_ 과 
+(2) Flutter 경험이 초기화되는 동안 표시되는, _시작 화면(splash screen)_ 입니다.
 
 :::note
-As of Flutter 2.5, the launch and splash screens have been
-consolidated—Flutter now only implements the Android launch screen,
-which is displayed until the framework draws the first frame.
-This launch screen can act as both an Android launch screen and an
-Android splash screen via customization, and thus, is referred to
-as both terms. For example of such customization, check out the
-[Android splash screen sample app][].
+Flutter 2.5부터 launch 화면과 스플래시 화면이 통합되었습니다. 
+이제 Flutter는 프레임워크가 첫 번째 프레임을 그릴 때까지 표시되는 Android launch 화면만 구현합니다. 
+이 launch 화면은 커스터마이즈를 통해, Android launch 화면과 Android 스플래시 화면으로 모두 작동할 수 있으므로, 
+두 용어로 모두 불립니다. 이러한 커스터마이즈의 예는 [Android 스플래시 화면 샘플 앱][Android splash screen sample app]을 확인하세요.
 
-If, prior to 2.5, you used `flutter create` to create an app,
-and you run the app on 2.5 or later, the app might crash.
-For more info, see the [Deprecated Splash Screen API Migration guide][].
+2.5 이전에 `flutter create`를 사용하여 앱을 만들고, 2.5 이상에서 앱을 실행하면, 앱이 충돌할 수 있습니다. 
+자세한 내용은 [Deprecated 않는 스플래시 화면 API 마이그레이션 가이드][Deprecated Splash Screen API Migration guide]를 참조하세요.
 :::
 
 :::note
-For apps that embed one or more Flutter screens within an
-existing Android app, consider
-[pre-warming a `FlutterEngine`][] and reusing the
-same engine throughout your app to minimize wait
-time associated with initialization of the Flutter engine.
+기존 Android 앱 내에 하나 이상의 Flutter 화면을 내장한 앱의 경우, 
+Flutter 엔진 초기화와 관련된 대기 시간을 최소화하기 위해, 
+[`FlutterEngine`을 미리 워밍업][pre-warming a `FlutterEngine`]하고, 
+앱 전체에서 동일한 엔진을 재사용하는 것을 고려하세요.
 :::
 
 ## 앱 초기화 {:#initializing-the-app}
 
-Every Android app requires initialization time while the
-operating system sets up the app's process.
-Android provides the concept of a [launch screen][] to
-display a `Drawable` while the app is initializing.
+모든 Android 앱은 운영 체제가 앱 프로세스를 설정하는 동안 초기화 시간이 필요합니다. 
+Android는 앱이 초기화되는 동안 `Drawable`을 표시하기 위해, [launch screen][]이라는 개념을 제공합니다.
 
-A `Drawable` is an Android graphic.
-To learn how to add a `Drawable` to your
-Flutter project in Android Studio,
-check out [Import drawables into your project][drawables]
-in the Android developer documentation.
+`Drawable`은 Android 그래픽입니다. 
+Android Studio에서 Flutter 프로젝트에 `Drawable`을 추가하는 방법을 알아보려면, 
+Android 개발자 문서에서 [프로젝트에 drawable 가져오기][drawables]를 확인하세요.
 
-The default Flutter project template includes a definition
-of a launch theme and a launch background. You can customize
-this by editing `styles.xml`, where you can define a theme
-whose `windowBackground` is set to the
-`Drawable` that should be displayed as the launch screen.
+기본 Flutter 프로젝트 템플릿에는 launch 테마와 launch 배경의 정의가 포함되어 있습니다. 
+`styles.xml`을 편집하여 이를 커스터마이즈 할 수 있으며, 
+여기서 `windowBackground`가 launch 화면으로 표시되어야 하는 
+`Drawable`로 설정된 테마를 정의할 수 있습니다.
 
 ```xml
 <style name="LaunchTheme" parent="@android:style/Theme.Black.NoTitleBar">
@@ -73,14 +61,10 @@ whose `windowBackground` is set to the
 </style>
 ```
 
-In addition, `styles.xml` defines a _normal theme_
-to be applied to `FlutterActivity` after the launch
-screen is gone. The normal theme background only shows
-for a very brief moment after the splash screen disappears,
-and during orientation change and `Activity` restoration.
-Therefore, it's recommended that the normal theme use a
-solid background color that looks similar to the primary
-background color of the Flutter UI.
+또한, `styles.xml`은 launch 화면이 사라진 후 `FlutterActivity`에 적용할 _normal 테마_ 를 정의합니다. 
+normal 테마 배경은 스플래시 화면이 사라진 후 아주 짧은 순간 동안만 표시되고, 
+방향이 변경되고 `Activity`가 복원되는 동안 표시됩니다. 
+따라서, normal 테마는 Flutter UI의 primary 배경색과 비슷한 단색 배경색을 사용하는 것이 좋습니다.
 
 ```xml
 <style name="NormalTheme" parent="@android:style/Theme.Black.NoTitleBar">
@@ -92,11 +76,9 @@ background color of the Flutter UI.
 
 ## AndroidManifest.xml에 FlutterActivity 설정 {:#set-up-the-flutteractivity-in-androidmanifest-xml}
 
-In `AndroidManifest.xml`, set the `theme` of
-`FlutterActivity` to the launch theme. Then,
-add a metadata element to the desired `FlutterActivity`
-to instruct Flutter to switch from the launch theme
-to the normal theme at the appropriate time.
+`AndroidManifest.xml`에서, `FlutterActivity`의 `theme`을 시작 테마로 설정합니다. 
+그런 다음, 원하는 `FlutterActivity`에 메타데이터 요소를 추가하여, 
+적절한 시기에 시작 테마에서 일반 테마로 전환하도록 Flutter에 지시합니다.
 
 ```xml
 <activity
@@ -115,20 +97,16 @@ to the normal theme at the appropriate time.
 </activity>
 ```
 
-The Android app now displays the desired launch screen
-while the app initializes.
+이제 Android 앱이 초기화되는 동안 원하는 시작 화면이 표시됩니다.
 
 ## Android 12 {:#android-12}
 
-To configure your launch screen on Android 12,
-check out [Android Splash Screens][].
+Android 12에서 시작 화면을 구성하려면, [Android Splash Screens][]를 확인하세요.
 
-As of Android 12, you must use the new splash screen
-API in your `styles.xml` file.
-Consider creating an alternate resource file for Android 12 and higher.
-Also make sure that your background image is in line with
-the icon guidelines;
-check out [Android Splash Screens][] for more details.
+Android 12부터, `styles.xml` 파일에서 새로운 시작 화면 API를 사용해야 합니다. 
+Android 12 이상을 위한 대체 리소스 파일을 만드는 것을 고려하세요. 
+또한, 배경 이미지가 아이콘 가이드라인에 맞는지 확인하세요. 
+자세한 내용은 [Android Splash Screens][]를 확인하세요.
 
 ```xml
 <style name="LaunchTheme" parent="@android:style/Theme.Black.NoTitleBar">
@@ -137,20 +115,13 @@ check out [Android Splash Screens][] for more details.
 </style>
 ```
 
-Make sure that
-`io.flutter.embedding.android.SplashScreenDrawable` is
-**not** set in your manifest, and that `provideSplashScreen`
-is **not** implemented, as these APIs are deprecated.
-Doing so causes the Android launch screen to fade smoothly
-into the Flutter when the
-app is launched and the app might crash.
+`io.flutter.embedding.android.SplashScreenDrawable`이 매니페스트에 **설정되지 않았는지** 확인하고, 
+`provideSplashScreen`이 구현되지 않았는지 **확인하세요.** 이러한 API는 deprecated 입니다. 
+그렇게 하면 앱이 시작될 때 Android 시작 화면이 Flutter로 부드럽게 페이드아웃되고 앱이 충돌할 수 있습니다.
 
-Some apps might want to continue showing the last frame of
-the Android launch screen in Flutter. For example,
-this preserves the illusion of a single frame
-while additional loading continues in Dart.
-To achieve this, the following
-Android APIs might be helpful:
+일부 앱은 Flutter에서 Android 시작 화면의 마지막 프레임을 계속 표시하고 싶어할 수 있습니다. 
+예를 들어, 이렇게 하면 Dart에서 추가 로딩이 계속되는 동안, 단일 프레임의 환상이 유지됩니다. 
+이를 달성하기 위해, 다음 Android API가 도움이 될 수 있습니다.
 
 {% tabs "android-language" %}
 {% tab "Kotlin" %}
@@ -163,12 +134,12 @@ import io.flutter.embedding.android.FlutterActivity
 
 class MainActivity : FlutterActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
-    // Aligns the Flutter view vertically with the window.
+    // Flutter 뷰를 창에 수직으로 정렬합니다.
     WindowCompat.setDecorFitsSystemWindows(getWindow(), false)
 
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-      // Disable the Android splash screen fade out animation to avoid
-      // a flicker before the similar frame is drawn in Flutter.
+      // Flutter에서 비슷한 프레임이 그려지기 전에 깜빡임이 발생하지 않도록, 
+      // Android 시작 화면 페이드 아웃 애니메이션을 비활성화합니다.
       splashScreen.setOnExitAnimationListener { splashScreenView -> splashScreenView.remove() }
     }
 
@@ -190,12 +161,12 @@ import io.flutter.embedding.android.FlutterActivity;
 public class MainActivity extends FlutterActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // Aligns the Flutter view vertically with the window.
+        // Flutter 뷰를 창에 수직으로 정렬합니다.
         WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            // Disable the Android splash screen fade out animation to avoid
-            // a flicker before the similar frame is drawn in Flutter.
+            // Flutter에서 비슷한 프레임이 그려지기 전에 깜빡임이 발생하지 않도록, 
+            // Android 시작 화면 페이드 아웃 애니메이션을 비활성화합니다.
             getSplashScreen()
                 .setOnExitAnimationListener(
                     (SplashScreenView splashScreenView) -> {
@@ -211,11 +182,8 @@ public class MainActivity extends FlutterActivity {
 {% endtab %}
 {% endtabs %}
 
-Then, you can reimplement the first frame in Flutter
-that shows elements of your Android launch screen in
-the same positions on screen.
-For an example of this, check out the
-[Android splash screen sample app][].
+그런 다음, 화면의 동일한 위치에 Android 시작 화면의 요소를 표시하는 Flutter의 첫 번째 프레임을 다시 구현할 수 있습니다. 
+이에 대한 예는, [Android 시작 화면 샘플 앱][Android splash screen sample app]을 확인하세요.
 
 [Android Splash Screens]: {{site.android-dev}}/about/versions/12/features/splash-screen
 [launch screen]: {{site.android-dev}}/topic/performance/vitals/launch-time#themed

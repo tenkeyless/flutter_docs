@@ -31,44 +31,30 @@ OS가 앱을 종료하려고 한다는 신호를 보낼 때 앱이 준비되고,
 
 ## 개요 {:#overview}
 
-You can enable state restoration with just a few tasks:
+몇 가지 작업만으로 상태 복원을 활성화할 수 있습니다.
 
-1. Define a `restorationId` or a `restorationScopeId`
-   for all widgets that support it,
-   such as [`TextField`][] and [`ScrollView`][].
-   This automatically enables built-in state restoration
-   for those widgets.
+1. ([`TextField`][] 및 [`ScrollView`][]와 같이) 이를 지원하는 모든 위젯에 대해, 
+   `restorationId` 또는 `restorationScopeId`를 정의합니다. 
+   이렇게 하면, 해당 위젯에 대한 기본 제공 상태 복원이 자동으로 활성화됩니다.
 
-2. For custom widgets,
-   you must decide what state you want to restore
-   and hold that state in a [`RestorableProperty`][].
-   (The Flutter API provides various subclasses for
-   different data types.)
-   Define those `RestorableProperty` widgets 
-   in a `State` class that uses the [`RestorationMixin`][].
-   Register those widgets with the mixin in a
-   `restoreState` method.
+2. 커스텀 위젯의 경우, 복원할 상태를 결정하고 해당 상태를 [`RestorableProperty`][]에 보관해야 합니다. 
+   (Flutter API는 다양한 데이터 타입에 대해 다양한 하위 클래스를 제공합니다.) 
+   [`RestorationMixin`][]을 사용하는 `State` 클래스에서, 해당 `RestorableProperty` 위젯을 정의합니다. 
+   `restoreState` 메서드에서 믹스인에 해당 위젯을 등록합니다.
 
-3. If you use any Navigator API (like `push`, `pushNamed`, and so on)
-   migrate to the API that has "restorable" in the name
-   (`restorablePush`, `restorablePushNamed`, and so on)
-   to restore the navigation stack.
+3. Navigator API(예: `push`, `pushNamed` 등)를 사용하는 경우, 
+   이름에 "restorable"이 포함된 API(`restorablePush`, `restorablePushNamed` 등)로 마이그레이션하여, 
+   탐색 스택을 복원합니다.
 
-Other considerations:
+기타 고려 사항:
 
-* Providing a `restorationId` to
-  `MaterialApp`, `CupertinoApp`, or `WidgetsApp`
-  automatically enables state restoration by
-  injecting a `RootRestorationScope`.
-  If you need to restore state _above_ the app class,
-  inject a `RootRestorationScope` manually.
+* `MaterialApp`, `CupertinoApp` 또는 `WidgetsApp`에 `restorationId`를 제공하면,
+  `RootRestorationScope`를 주입하여 자동으로 상태 복원이 활성화됩니다. 
+  앱 클래스 _위의_ 상태를 복원해야 하는 경우, `RootRestorationScope`를 수동으로 주입합니다.
 
-* **The difference between a `restorationId` and
-  a `restorationScopeId`:** Widgets that take a
-  `restorationScopeID` create a new `restorationScope`
-  (a new `RestorationBucket`) into which all children
-  store their state. A `restorationId` means the widget
-  (and its children) store the data in the surrounding bucket.
+* **`restorationId`와 `restorationScopeId`의 차이점:** 
+  `restorationScopeID`를 사용하는 위젯은 모든 자식이 상태를 저장하는 새 `restorationScope`(새 `RestorationBucket`)를 만듭니다. 
+  `restorationId`는 위젯(및 해당 자식)이 주변 버킷에 데이터를 저장함을 의미합니다.
 
 [a bit of extra setup]: {{site.api}}/flutter/services/RestorationManager-class.html#state-restoration-on-ios
 [`restorationId`]: {{site.api}}/flutter/widgets/RestorationScope/restorationId.html
@@ -80,33 +66,23 @@ Other considerations:
 
 ## 네비게이션 상태 복원 {:#restoring-navigation-state}
 
-If you want your app to return to a particular route
-that the user was most recently viewing
-(the shopping cart, for example), then you must implement
-restoration state for navigation, as well.
+사용자가 가장 최근에 본 특정 경로(예: 쇼핑 카트)로 앱을 돌아가게 하려면, 탐색을 위한 복원 상태도 구현해야 합니다.
 
-If you use the Navigator API directly,
-migrate the standard methods to restorable
-methods (that have "restorable" in the name).
-For example, replace `push` with [`restorablePush`][].
+Navigator API를 직접 사용하는 경우, 
+표준 메서드를 복원 가능한 메서드(이름에 "복원 가능"이 있는 메서드)로 마이그레이션합니다. 
+예를 들어, `push`를 [`restorablePush`][]로 바꿉니다.
 
-The VeggieSeasons example (listed under "Other resources" below)
-implements navigation with the [`go_router`][] package.
-Setting the `restorationId`
-values occur in the `lib/screens` classes.
+VeggieSeasons 예제(아래 "기타 리소스"에 나열됨)는 [`go_router`][] 패키지로 탐색을 구현합니다. 
+`restorationId` 값을 설정하는 것은 `lib/screens` 클래스에서 발생합니다.
 
 ## 상태 복원 테스트 {:#testing-state-restoration}
 
-To test state restoration, set up your mobile device so that
-it doesn't save state once an app is backgrounded.
-To learn how to do this for both iOS and Android,
-check out [Testing state restoration][] on the
-[`RestorationManager`][] page.
+상태 복원을 테스트하려면, 앱이 백그라운드로 전환되면 상태를 저장하지 않도록 모바일 기기를 설정하세요. 
+iOS와 Android에서 이 작업을 수행하는 방법을 알아보려면, 
+[`RestorationManager`][] 페이지에서 [상태 복원 테스트][Testing state restoration]를 확인하세요.
 
 :::warning
-Don't forget to reenable
-storing state on your device once you are
-finished with testing!
+테스트가 끝나면 기기에서 상태 저장 기능을 다시 활성화하는 것을 잊지 마세요!
 :::
 
 [Testing state restoration]: {{site.api}}/flutter/services/RestorationManager-class.html#testing-state-restoration
@@ -116,30 +92,22 @@ finished with testing!
 
 ## 기타 리소스 {:#other-resources}
 
-For further information on state restoration,
-check out the following resources:
+상태 복원에 대한 자세한 내용은 다음 리소스를 확인하세요.
 
-* For an example that implements state restoration, 
-  check out [VeggieSeasons][], a sample app written
-  for iOS that uses Cupertino widgets. An iOS app requires
-  [a bit of extra setup][] in Xcode, but the restoration
-  classes otherwise work the same on both iOS and Android.<br>
-  The following list links to relevant parts of the VeggieSeasons
-  example:
-    * [Defining a `RestorablePropery` as an instance property]({{site.repo.samples}}/blob/604c82cd7c9c7807ff6c5ca96fbb01d44a4f2c41/veggieseasons/lib/widgets/trivia.dart#L33-L37)
-    * [Registering the properties]({{site.repo.samples}}/blob/604c82cd7c9c7807ff6c5ca96fbb01d44a4f2c41/veggieseasons/lib/widgets/trivia.dart#L49-L54)
-    * [Updating the property values]({{site.repo.samples}}/blob/604c82cd7c9c7807ff6c5ca96fbb01d44a4f2c41/veggieseasons/lib/widgets/trivia.dart#L108-L109)
-    * [Using property values in build]({{site.repo.samples}}/blob/604c82cd7c9c7807ff6c5ca96fbb01d44a4f2c41/veggieseasons/lib/widgets/trivia.dart#L205-L210)<br>
+* 상태 복원을 구현하는 예는, Cupertino 위젯을 사용하는 iOS용으로 작성된 샘플 앱인, [VeggieSeasons][]를 확인하세요. 
+  iOS 앱은 Xcode에서 [약간의 추가 설정][a bit of extra setup]이 필요하지만, 
+  복원 클래스는 그 외에는 iOS와 Android에서 모두 동일하게 작동합니다.<br> 
+  다음 목록은 VeggieSeasons 예제의 관련 부분으로 연결됩니다.
+  * [`RestorablePropery`를 인스턴스 속성으로 정의]({{site.repo.samples}}/blob/604c82cd7c9c7807ff6c5ca96fbb01d44a4f2c41/veggieseasons/lib/widgets/trivia.dart#L33-L37)
+  * ​​[속성 등록]({{site.repo.samples}}/blob/604c82cd7c9c7807ff6c5ca96fbb01d44a4f2c41/veggieseasons/lib/widgets/trivia.dart#L49-L54)
+  * [속성 값 업데이트]({{site.repo.samples}}/blob/604c82cd7c9c7807ff6c5ca96fbb01d44a4f2c41/veggieseasons/lib/widgets/trivia.dart#L108-L109)
+  * [빌드에서 속성 값 사용]({{site.repo.samples}}/blob/604c82cd7c9c7807ff6c5ca96fbb01d44a4f2c41/veggieseasons/lib/widgets/trivia.dart#L205-L210)<br>
 
-* To learn more about short term and long term state,
-  check out [Differentiate between ephemeral state
-  and app state][state].
+* 단기 및 장기 상태에 대해 자세히 알아보려면, [임시적(ephemeral) 상태와 앱 상태의 차이점][state]를 확인하세요.
 
-* You might want to check out packages on pub.dev that
-  perform state restoration, such as [`statePersistence`][].
+* [`statePersistence`][]와 같이 상태 복원을 수행하는, pub.dev의 패키지를 확인해 보세요.
 
-* For more information on navigation and the
-  `go_router` package, check out [Navigation and routing][].
+* 탐색 및 `go_router` 패키지에 대한 자세한 내용은 [탐색 및 라우팅][Navigation and routing]을 확인하세요.
 
 [`RestorableProperty`]: {{site.api}}/flutter/widgets/RestorableProperty-class.html
 [`restorablePush`]: {{site.api}}/flutter/widgets/Navigator/restorablePush.html
