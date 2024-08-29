@@ -1,44 +1,34 @@
 ---
-title: Flutter fundamentals
-description: Learn the basic building blocks of Flutter.
+# title: Flutter fundamentals
+title: Flutter 기본 사항
+# description: Learn the basic building blocks of Flutter.
+description: Flutter의 기본 구성 요소를 알아보세요.
 prev:
-  title: First week experience
+  # title: First week experience
+  title: 첫 주의 경험
   path: /get-started/fwe
 next:
-  title: Layouts
+  # title: Layouts
+  title: 레이아웃
   path: /get-started/fwe/layout
 ---
 
+Flutter를 시작하려면, 두 가지 주제에 대해 어느 정도 알고 있어야 합니다. 
+(1) Flutter 애플리케이션이 작성된 Dart 프로그래밍 언어와 (2) Flutter UI의 구성 요소인 위젯입니다. 
+이 페이지에서는 두 가지를 모두 소개하지만, 이 시리즈 전반에 걸쳐 각각에 대해 계속 학습하게 됩니다. 
+이 페이지 전반에 추가 리소스가 나열되어 있지만, 계속하기 위해 두 주제의 전문가가 될 필요는 없습니다.
 
-To get started with Flutter, 
-you need to have some familiarity with two subjects: 
-the Dart programming language, which Flutter 
-applications are written in, and widgets, 
-which are the building blocks of Flutter UI. 
-Both will be introduced on this page, but you’ll continue
-learning about each throughout this series. 
-Additional resources are listed throughout this page, 
-but you do not need to be an expert in either 
-subject in order to continue.
+## Dart {:#dart}
 
-## Dart
-
-Flutter applications are built in [Dart][],
-a language that will look familiar
-to anyone who's written Java, Javascript,
-or any other C-like language.  
+Flutter 애플리케이션은 Java, Javascript 또는 기타 C 계열 언어를 작성한 사람이라면, 
+누구나 익숙할 언어인 [Dart][]로 빌드되었습니다.
 
 :::note
-Installing Flutter also installs Dart,
-so you don't need to install Dart separately.
+Flutter를 설치하면 Dart도 함께 설치되므로, Dart를 별도로 설치할 필요가 없습니다.
 :::
 
-The following example is a small program that 
-fetches data from dart.dev, decodes the returned json, 
-and prints it to the console. 
-If you’re confident in your ability to 
-understand this program, 
-feel free to skip to the next section on this page.
+다음 예제는 dart.dev에서 데이터를 페치하고, 반환된 json을 디코딩하고, 콘솔에 출력하는 작은 프로그램입니다. 
+이 프로그램을 이해하는 데 자신이 있다면, 이 페이지의 다음 섹션으로 건너뛰어도 됩니다.
 
 ```dart
 import 'dart:convert';
@@ -69,52 +59,30 @@ void main() async {
 }
 ```
 
-This program has two parts: 
-the `Package` class declaration, and the business logic, 
-which is contained in the [`main`][] function.
+이 프로그램은 두 부분으로 구성되어 있습니다. `Package` 클래스 선언과 [`main`][] 함수에 포함된 비즈니스 로직입니다.
 
-The `Package` class contains many of the most common
-features you’ll use when working with [classes in Dart][].
-This class has three members, 
-and defines a constructor and a method.
+`Package` 클래스에는 [Dart의 클래스][classes in Dart]로 작업할 때 사용하는 가장 일반적인 기능이 많이 포함되어 있습니다. 
+이 클래스에는 멤버가 세 개 있으며, 생성자와 메서드를 정의합니다.
 
-The Dart language is [type safe][]; it uses 
-static type checking to ensure that 
-a variable's value always matches the
-variable's static type. 
-When defining a class, annotating the members with 
-`String` is required, 
-but it is often optional due to type inference. 
-In the `main` function in this example 
-there are many lines that start with `final variableName =`. 
-These lines are type safe, 
-despite not being explicitly given a type.
+Dart 언어는 [타입 안전][type safe]입니다. 
+정적 타입 검사를 사용하여, 변수의 값이 항상 변수의 정적 타입과 일치하는지 확인합니다. 
+클래스를 정의할 때, 멤버에 `String` 주석을 달 필요가 있지만, 타입 추론으로 인해 종종 선택 사항입니다. 
+이 예제의 `main` 함수에는 `final variableName =`으로 시작하는 줄이 많이 있습니다. 
+이러한 줄은 명시적으로 타입이 지정되지 않았음에도 불구하고 타입이 안전합니다.
 
-Dart also has built-in [sound null safety][]. 
-In the example, the `description` member is 
-declared with the type `String?`. 
-The `?` at the end of `String?` means that 
-this property can be null. 
-The other two members cannot be null, 
-and the program will not compile if 
-you tried to set them to null. 
-You can see this demonstrated in the constructor for 
-the ‘Package class’. It takes two required,
-positional arguments and one optional, named argument.
+Dart에는 또한 내장된 [sound null safety][]가 있습니다. 
+이 예제에서 `description` 멤버는 `String?` 타입으로 선언됩니다. `String?`의 끝에 있는 `?`는 이 속성이 null일 수 있음을 의미합니다. 
+다른 두 멤버는 null이 될 수 없으며, null로 설정하려고 하면 프로그램이 컴파일되지 않습니다. 
+'Package class'의 생성자에서 이를 확인할 수 있습니다. 
+두 개의 필수(required) 위치(positional) 인수와 하나의 선택적인(optional) 명명된(named) 인수가 필요합니다.
 
-Next in the example is the `main` function. 
-All Dart programs, including Flutter apps, 
-start with a `main`function. 
-The function showcases several basic Dart language features, 
-including using libraries, marking functions as async, 
-making function calls, using `if` statement control-flow,
-and more.
+다음은 `main` 함수입니다. 
+Flutter 앱을 포함한 모든 Dart 프로그램은 `main` 함수로 시작합니다. 
+이 함수는 라이브러리 사용, 함수를 async로 표시, 함수 호출, `if` 문 제어 흐름 사용 등 여러 가지 기본 Dart 언어 기능을 보여줍니다.
 
-:::note Where does initialization code go?
-The main entrypoint in a starter
-Flutter app is in `lib/main.dart`.
-The default `main` method looks
-like the following:
+:::note 초기화 코드는 어디에 들어가나요?
+스타터 Flutter 앱의 주요 진입점은 `lib/main.dart`에 있습니다. 
+기본 `main` 메서드는 다음과 같습니다.
 
 ```dart
 void main() {
@@ -123,54 +91,35 @@ void main() {
 
 ```
 
-Perform any _quick_ initialization (less than a frame or two)
-_before_ calling `runApp()`,
-though be aware that the widget tree hasn't been created yet.
-If you want to perform initialization that takes awhile,
-such as loading data from disk or over a network,
-do it in a way that won't block the main UI thread.
-For more information, check out [Asynchronous programming][],
-the [`FutureBuilder`][] API, [Deferred components][],
-or the [Working with long lists][] cookbook recipe,
-as appropriate.
+`runApp()`를 호출하기 _전에_, _빠른_ 초기화(1~2프레임 미만)를 수행하지만, 위젯 트리가 아직 생성되지 않았다는 점에 유의하세요. 
+(디스크나 네트워크를 통해 데이터를 로드하는 것과 같이) 시간이 오래 걸리는 초기화를 수행하려는 경우, 
+메인 UI 스레드를 차단하지 않는 방식으로 수행하세요. 
+자세한 내용은 [비동기 프로그래밍][Asynchronous programming], [`FutureBuilder`][] API, 
+[지연된 구성 요소][Deferred components] 또는 [긴 리스트로 작업하기][Working with long lists] 쿡북 레시피를 적절하게 확인하세요.
 
 [Asynchronous programming]: {{site.dart-site}}/libraries/async/async-await
 [Deferred components]: /perf/deferred-components
 [`FutureBuilder`]: {{site.api}}/flutter/widgets/FutureBuilder-class.html
 [Working with long lists]: /cookbook/lists/long-lists
 
-Every stateful widget has an `initState()`
-method that is called when the widget is
-created and added to the widget tree.
-You can override this method and perform
-initialization there, though the first line of
-this method _must_ be `super.initState()`.
+모든 stateful 위젯에는 위젯이 생성되어 위젯 트리에 추가될 때 호출되는 `initState()` 메서드가 있습니다. 
+이 메서드를 재정의하여 초기화를 수행할 수 있지만, 이 메서드의 첫 번째 줄은 _반드시_ `super.initState()`여야 합니다.
 
-Finally, hot reloading your app does _not_
-call `initState` or `main` again.
-Hot restart calls both.
+마지막으로, 앱을 핫 리로딩해도 `initState`나 `main`이 다시 호출되지는 _않습니다_. 핫 리스타트는 둘 다 호출합니다.
 :::
 
-If these features aren’t familiar to you, 
-read [Introduction to Dart][] from the Dart documentation.
+이러한 기능이 익숙하지 않은 경우, Dart 문서의 [Dart 소개][Introduction to Dart]를 읽어보세요.
 
-## Widgets
+## 위젯 {:#widgets}
 
-In regard to Flutter, you'll often hear
-"everything is a widget". 
-Widgets are the building blocks of a 
-Flutter app's user interface, 
-and each widget is an immutable declaration of part 
-of the user interface. Widgets are used 
-to describe all aspects of a user interface,
-including physical aspects such as text and buttons to
-lay out effects like padding and alignment.
+Flutter와 관련하여, "모든 것이 위젯이다"라는 말을 자주 듣게 될 것입니다. 
+위젯은 Flutter 앱의 사용자 인터페이스의 구성 요소이며, 각 위젯은 사용자 인터페이스의 일부에 대한 불변(immutable) 선언입니다. 
+위젯은 패딩 및 정렬과 같은 효과를 배치하기 위한 텍스트 및 버튼과 같은 물리적 측면을 포함하여, 
+사용자 인터페이스의 모든 측면을 설명하는 데 사용됩니다.
 
-Widgets form a hierarchy based on composition. 
-Each widget nests inside its parent and 
-can receive context from the parent. 
-This structure carries all the way up to the root
-widget, as this trivial example shows:
+위젯은 구성을 기반으로 계층 구조를 형성합니다. 
+각 위젯은 부모 위젯 내부에 중첩되어, 부모 위젯에서 컨텍스트를 수신할 수 있습니다. 
+이 구조는 이 사소한 예에서 알 수 있듯이, 루트 위젯까지 이어집니다.
 
 ```dart
 import 'package:flutter/material.dart';
@@ -183,7 +132,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp( // Root widget
+    return MaterialApp( // 루트 위젯
       home: Scaffold(
         appBar: AppBar(
           title: const Text('My Home Page'),
@@ -212,57 +161,34 @@ class MyApp extends StatelessWidget {
 }
 ```
 
-In the preceding code, 
-all instantiated classes are widgets: 
-`MaterialApp`, `Scaffold`, `AppBar`, `Text`,
-`Center`, `Builder`, `Column`, `SizedBox`, and
-`ElevatedButton`.
+이전 코드에서, 인스턴스화된 모든 클래스는 위젯입니다: 
+`MaterialApp`, `Scaffold`, `AppBar`, `Text`, `Center`, `Builder`, `Column`, `SizedBox`, `ElevatedButton`.
 
-### Widget composition
+### 위젯 구성 {:#widget-composition}
 
-As mentioned, Flutter emphasizes widgets as a unit
-of composition. Widgets are typically composed of
-many other small, single-purpose widgets that
-combine to produce powerful effects.
+앞서 언급했듯이, Flutter는 위젯을 유닛 구성으로 강조합니다. 
+위젯은 일반적으로 강력한 효과를 내기 위해, 결합된 여러 다른 작고 단일 목적의 위젯으로 구성됩니다.
 
-There are layout widgets such
-as `Padding`, `Alignment`, `Row`, `Column`,
-and `Grid`. These layout widgets do not have a
-visual representation of their own. 
-Instead, their sole purpose is to 
-control some aspect of another widget's layout. 
-Flutter also includes utility widgets that 
-take advantage of this compositional approach. 
-For example, `Container`, a commonly used widget, 
-is made up of several widgets responsible for layout, 
-painting, positioning, and sizing.
-Some widgets have visual representation, 
-such as `ElevatedButton` and 
-`Text` in the preceding example, as well as
-widgets like `Icon` and `Image`.
+`Padding`, `Alignment`, `Row`, `Column`, `Grid`와 같은 레이아웃 위젯이 있습니다. 
+이러한 레이아웃 위젯은 자체의 시각적 표현이 없습니다. 
+대신, 유일한 목적은 다른 위젯의 레이아웃의 일부 측면을 제어하는 ​​것입니다. 
+Flutter에는 이러한 구성적 접근 방식을 활용하는 유틸리티 위젯도 포함되어 있습니다. 
+예를 들어, 일반적으로 사용되는 위젯인 `Container`는 레이아웃, 페인팅, 위치 지정 및 크기를 담당하는 여러 위젯으로 구성됩니다. 
+일부 위젯은 이전 예의 `ElevatedButton` 및 `Text`와 같은 시각적 표현이 있으며, `Icon` 및 `Image`와 같은 위젯도 있습니다.
 
-If you run the code from the preceding example, 
-Flutter paints a button with the text
-"Hello, World!" centered on the screen, laid out vertically. 
-To position these elements, there’s a`Center` widget, 
-which positions its children in the center
-of the available space, and a `Column` widget, 
-which lays out its children vertically one after another.
+이전 예의 코드를 실행하면, Flutter는 화면 중앙에 "Hello, World!"라는 텍스트가 있는 버튼을 수직으로 배치하여 그립니다. 
+이러한 요소를 배치하려면, 사용 가능한 공간의 중앙에 자식 요소를 배치하는 `Center` 위젯과, 
+자식 요소를 하나씩 수직으로 배치하는 `Column` 위젯이 있습니다.
 
 <img src='/assets/images/docs/fwe/simple_composition_example.png' width="100%" alt="A diagram that shows widget composition with a series of lines and nodes.">
 
+이 시리즈의 [다음 페이지][next page]에서는 Flutter의 레이아웃에 대해 자세히 알아보겠습니다.
 
-In the [next page][] in this series, you will
-learn more about layout in Flutter.
+### 위젯 빌드 {:#building-widgets}
 
-### Building widgets
-
-To create a user interface in Flutter, 
-you override the [`build`][] method on widget objects. 
-All widgets must have a build method, 
-and it must return another widget. For example, 
-if you want to add text to the screen with some padding, 
-you could write it like this:
+Flutter에서 사용자 인터페이스를 만들려면, 위젯 객체에서 [`build`][] 메서드를 재정의합니다. 
+모든 위젯에는 build 메서드가 있어야 하며, 다른 위젯을 반환해야 합니다. 
+예를 들어, 패딩을 사용하여 화면에 텍스트를 추가하려면, 다음과 같이 작성할 수 있습니다.
 
 ```dart
 class PaddedText extends StatelessWidget {
@@ -278,43 +204,25 @@ class PaddedText extends StatelessWidget {
 }
 ```
 
-The framework calls the `build` method when this 
-widget is created and when the dependencies of this
-widget change (such as state that is passed into the widget). 
-This method can potentially be called in every frame
-and should not have any side effects beyond 
-building a widget. 
-For more information on how Flutter renders widgets, 
-read [Flutter architectural overview][].
+이 위젯이 생성되고, 이 위젯의 ​​종속성이 변경될 때(예: 위젯에 전달되는 상태), 프레임워크는 `build` 메서드를 호출합니다. 
+이 메서드는 잠재적으로 모든 프레임에서 호출될 수 있으며, 위젯을 빌드하는 것 외에는 부수 효과가 없어야 합니다. 
+Flutter가 위젯을 렌더링하는 방법에 대한 자세한 내용은, [Flutter 아키텍처 개요][Flutter architectural overview]를 참조하세요.
 
-### Widget state
-The framework introduces two major classes of widget: 
-stateful and stateless widgets.
+### 위젯 상태 {:#widget-state}
 
-Widgets that have no mutable state 
-(they have no class properties 
-that change over time) subclass [`StatelessWidget`][]. 
-Many built-in widgets are stateless, 
-such as `Padding`, `Text`, and `Icon`. 
-When you create your own widgets, 
-you’ll create `Stateless` widgets most of the time.
+프레임워크는 두 가지 주요 위젯 클래스를 소개합니다. stateful 위젯과 stateless 위젯입니다.
 
-On the other hand, 
-if the unique characteristics of a widget need to change 
-based on user interaction or other factors, 
-that widget is stateful. 
-For example, if a widget has a counter that 
-increments whenever the user taps a button, 
-then the value of the counter is the state for that widget. 
-When that value changes, the widget needs to be 
-rebuilt to update its part of the UI. 
-These widgets subclass [`StatefulWidget`][], 
-and (because the widget itself is immutable) 
-they store mutable state in a separate class that 
-subclasses [`State`][]. 
-`StatefulWidgets` don't have a `build` method; 
-instead, their user interface is built through
-their `State` object, as shown in the example below.
+변경 가능한(mutable) 상태가 없는 위젯(시간이 지남에 따라 변경되는 클래스 속성이 없음)은 [`StatelessWidget`][]의 하위 클래스입니다. 
+`Padding`, `Text`, `Icon`과 같이 많은 빌트인 위젯은 stateless 위젯입니다. 
+사용자 고유의 위젯을 만들 때, 대부분 `Stateless` 위젯을 만들게 됩니다.
+
+반면, 위젯의 고유한 특성이 사용자 상호 작용이나 기타 요인에 따라 변경되어야 하는 경우, 해당 위젯은 stateful 위젯입니다. 
+예를 들어, 위젯에 사용자가 버튼을 탭할 때마다 증가하는 카운터가 있는 경우, 카운터의 값은 해당 위젯의 상태입니다. 
+해당 값이 변경되면, 위젯을 다시 빌드하여, UI의 해당 부분을 업데이트해야 합니다. 
+이러한 위젯은 [`StatefulWidget`][]의 하위 클래스이며(위젯 자체가 변경 불가능(immutable)하기 때문에), 
+[`State`][]의 하위 클래스에 변경 가능한(mutable) 상태를 저장합니다. 
+`StatefulWidgets`에는 `build` 메서드가 없습니다. 
+대신 아래 예에서 볼 수 있듯이, `State` 객체를 통해 사용자 인터페이스가 빌드됩니다.
 
 ```dart
 class CounterWidget extends StatefulWidget {
@@ -338,60 +246,46 @@ class _CounterWidgetState extends State<CounterWidget> {
 }
 ```
 
-Whenever you mutate a `State` object 
-(for example, by incrementing the counter), 
-you must call [`setState`][] to signal the framework
-to update the user interface by 
-calling the `State`'s `build` method again.
+`State` 객체를 변형(mutate)할 때마다(예: 카운터 증가), [`setState`][]를 호출하여, 
+프레임워크에 `State`의 `build` 메서드를 다시 호출하여, 사용자 인터페이스를 업데이트하도록 신호를 보내야 합니다.
 
-Separating state from widget objects 
-lets other widgets treat both 
-stateless and stateful widgets in exactly the same way, 
-without being concerned about losing state. 
-Instead of needing to hold on to 
-a child to preserve its state,
-the parent can create a new instance of the child
-at any time without losing 
-the child's persistent state. 
-The framework does all the work of finding and 
-reusing existing state objects when appropriate.
+위젯 객체에서 상태를 분리하면, 
+다른 위젯이 stateless 위젯과 stateful 위젯을 모두 정확히 같은 방식으로 처리할 수 있으며, 
+상태 손실에 대해 걱정할 필요가 없습니다. 
+상태를 보존하기 위해 자식을 붙잡아둘 필요가 없는 대신, 
+부모는 자식의 지속 상태를 잃지 않고, 
+언제든지 자식의 새 인스턴스를 만들 수 있습니다. 
+프레임워크는 적절한 경우, 기존 상태 객체를 찾고 재사용하는 모든 작업을 수행합니다.
 
-There’s more information about 
-[`StatefulWidget`][] objects later in this 
-series, in the [state management lesson][].
+이 시리즈의 후반부인 [상태 관리 레슨][state management lesson]에서
+[`StatefulWidget`][] 객체에 대한 자세한 정보를 제공합니다.
 
-## Important widgets to know
+## 알아두어야 할 중요한 위젯 {:#important-widgets-to-know}
 
-The Flutter SDK includes many built-in widgets,
-from the smallest pieces of UI, like `Text`,
-to layout widgets, and widgets that style
-your application. The following widgets are
-the most important to be aware of as you move onto the
-next lesson in the learning pathway.
+Flutter SDK에는 `Text`와 같은 가장 작은 UI부터, 
+레이아웃 위젯, 애플리케이션의 스타일을 지정하는 위젯까지, 
+많은 내장 위젯이 포함되어 있습니다. 
+다음 위젯은 학습 경로의 다음 레슨으로 넘어갈 때 알아야 할 가장 중요한 위젯입니다.
 
 * [`Container`][]
 * [`Text`][]
 * [`Scaffold`][]
 * [`AppBar`][]
-* [`Row`][] and [`Column`][]
+* [`Row`][] 및 [`Column`][]
 * [`ElevatedButton`][]
 * [`Image`][]
 * [`Icon`][]
 
-## Next: Layouts
+## 다음: 레이아웃 {:#next-layouts}
 
-This page is an introduction to foundational
-Flutter concepts, like widgets,
-and helps you become familiar with reading
-Flutter and Dart code. It's okay if you don't
-feel clear on every topic you encountered, as every page after
-this is a deep-dive on specific topics.
-In the next section, you'll start building more
-interesting UIs by creating more complex layouts in Flutter.
+이 페이지는 위젯과 같은 기본적인 Flutter 개념에 대한 소개이며, 
+Flutter와 Dart 코드를 읽는 데 익숙해지는 데 도움이 됩니다. 
+이후의 모든 페이지는 특정 주제에 대한 심층 분석이므로, 
+마주친 모든 주제에 대해 명확하게 느끼지 못해도 괜찮습니다. 
+다음 섹션에서는 Flutter에서 더 복잡한 레이아웃을 만들어, 더 흥미로운 UI를 빌드하기 시작합니다.
 
-If you’d like practice with the
-information you learned on this page,
-you can read [Building user interfaces with Flutter][].
+이 페이지에서 배운 정보로 연습하고 싶다면, 
+[Flutter로 사용자 인터페이스 빌드][Building user interfaces with Flutter]를 읽어보세요.
 
 [Building user interfaces with Flutter]: /ui
 [Introduction to Dart]: {{site.dart-site}}/language
@@ -419,9 +313,8 @@ you can read [Building user interfaces with Flutter][].
 [`Scaffold`]: {{site.api}}/flutter/material/Scaffold-class.html
 [`Text`]: {{site.api}}/flutter/widgets/Text-class.html
 
-## Feedback
+## 피드백 {:#feedback}
 
-As this section of the website is evolving, 
-we [welcome your feedback][]!
+이 웹사이트의 이 섹션이 발전하기 때문에, 우리는 [당신의 피드백을 환영합니다][welcome your feedback]!
 
 [welcome your feedback]: https://google.qualtrics.com/jfe/form/SV_6A9KxXR7XmMrNsy?page="fundamentals"

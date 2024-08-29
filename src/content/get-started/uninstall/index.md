@@ -1,16 +1,17 @@
 ---
-title: Uninstall Flutter
-description: How to remove the Flutter SDK.
+# title: Uninstall Flutter
+title: Flutter 제거 
+# description: How to remove the Flutter SDK.
+description: Flutter SDK를 제거하는 방법.
 toc: false
 os-list: [Windows, macOS, Linux, ChromeOS]
 ---
 
-To remove all of Flutter from your development machine,
-delete the directories that store Flutter and its configuration files.
+개발 머신에서 Flutter를 모두 제거하려면, Flutter와 해당 구성 파일이 저장된 디렉토리를 삭제하세요.
 
-## Uninstall the Flutter SDK
+## Flutter SDK 제거 {:#uninstall-the-flutter-sdk}
 
-Select your development platform from the following tabs.
+다음 탭에서 개발 플랫폼을 선택하세요.
 
 {% tabs %}
 
@@ -74,59 +75,56 @@ Select your development platform from the following tabs.
 {% endcapture %}
 {% endcase -%}
 
-This guide presumes that you installed Flutter in `{{path}}` on {{os}}.
+이 가이드에서는 Flutter를 {{os}}의 `{{path}}`에 설치했다고 가정합니다.
 
-To uninstall the SDK, remove the `flutter` directory.
+SDK를 제거하려면, `flutter` 디렉토리를 제거하세요.
 
 ```console
 {{prompt}} {{rm-sdk}}
 ```
 
-## Remove configuration and package directories {:.no_toc}
+## 구성 및 패키지 디렉토리 제거 (Remove configuration and package directories) {:.no_toc}
 
-Flutter and Dart install additional directories in your home directory.
-These contain configuration files and package downloads.
-Each of the following procedures are _optional_.
+Flutter와 Dart는 홈 디렉토리에 추가적인 디렉토리를 설치합니다. 
+여기에는 구성 파일과 패키지 다운로드가 포함됩니다. 
+다음 절차는 모두 _선택 사항_ 입니다.
 
-### Remove Flutter configuration files {:.no_toc}
+<!-- ### Remove Flutter configuration files {:.no_toc} -->
+### Flutter 구성 파일 제거 (Remove Flutter configuration files) {:.no_toc}
 
-If you don't want to preserve your Flutter configuration,
-remove the following directories from your home directory.
+Flutter 구성을 보존하지 않으려면, 홈 디렉토리에서 다음 디렉토리를 제거하세요.
 
 ```plaintext
 {{ flutter-files | strip }}
 ```
 
-To remove these directories, run the following command.
+이러한 디렉토리를 제거하려면, 다음 명령을 실행하세요.
 
 ```console
 {{rm-flutter-files | strip}}
 ```
 
-### Remove Dart configuration files {:.no_toc}
+### Dart 구성 파일 제거 (Remove Dart configuration files) {:.no_toc}
 
-If you don't want to preserve your Dart configuration,
-remove the following directories from your home directory.
+Dart 구성을 보존하지 않으려면, 홈 디렉토리에서 다음 디렉토리를 제거하세요.
 
 ```plaintext
 {{ dart-files | strip}}
 ```
 
-To remove these directories, run the following command.
+이러한 디렉토리를 제거하려면, 다음 명령을 실행하세요.
 
 ```console
 {{rm-dart-files | strip}}
 ```
 
-### Remove pub package files {:.no_toc}
+### Pub 패키지 파일 제거 (Remove pub package files) {:.no_toc}
 
 :::important
-If you want to remove Flutter but not Dart,
-don't complete this section.
+Flutter는 제거하지만 Dart는 제거하지 않으려는 경우, 이 섹션을 완료하지 마세요.
 :::
 
-If you don't want to preserve your pub packages,
-remove the `.pub-cache` directory from your home directory.
+Pub 패키지를 보존하지 않으려면, 홈 디렉토리에서 `.pub-cache` 디렉토리를 제거하세요.
 
 ```console
 {{rm-pub-dir | strip}}
@@ -142,8 +140,7 @@ remove the `.pub-cache` directory from your home directory.
 
 {% endtabs %}
 
-## Reinstall Flutter
+## Flutter 재설치 {:#reinstall-flutter}
 
-You can [reinstall Flutter](/get-started/install) at any time.
-If you removed the configuration directories,
-reinstalling Flutter restores them to default settings.
+언제든지 [Flutter를 다시 설치](/get-started/install)할 수 있습니다. 
+구성 디렉토리를 제거한 경우, Flutter를 다시 설치하면 기본 설정으로 복원됩니다.

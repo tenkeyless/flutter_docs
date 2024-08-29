@@ -1,108 +1,91 @@
 ---
-title: Local caching
-description: Learn how to persist data locally.
+# title: Local caching
+title: 로컬 캐싱
+# description: Learn how to persist data locally.
+description: 데이터를 로컬에 저장하는 방법을 알아보세요.
 prev:
-  title: Networking and data
+  # title: Networking and data
+  title: 네트워킹 및 데이터
   path: /get-started/fwe/networking
 next:
-  title: Learn more
+  # title: Learn more
+  title: 더 알아보기
   path: /get-started/learn-more
 ---
 
-Now that you've learned about how to load data from servers
-over the network, your Flutter app should feel more alive.
-However, just because you *can* load data from remote servers
-doesn't mean you always *should*. Sometimes, it's better to
-re-render the data you received from the previous network
-request rather than repeat it and make your user wait until
-it completes again. This technique of retaining application
-data to show again at a future time is called *caching*, and
-this page covers how to approach this task in your Flutter app.
+이제 네트워크를 통해 서버에서 데이터를 로드하는 방법을 알게 되었으니, Flutter 앱이 더욱 생동감 있게 느껴질 것입니다. 
+그러나, 원격 서버에서 데이터를 *로드할 수* 있다고 해서, 항상 *로드해야만* 한다는 것은 아닙니다. 
+때로는, 이전 네트워크 요청에서 받은 데이터를 다시 렌더링하는 것이, 
+반복해서 완료될 때까지 사용자를 기다리게 하는 것보다 낫습니다. 
+나중에 다시 표시하기 위해 애플리케이션 데이터를 보관하는 이 기술을 *캐싱*이라고 하며, 
+이 페이지에서는 Flutter 앱에서 이 작업에 접근하는 방법을 다룹니다.
 
-## Introduction to caching
+## 캐싱 소개 {:#introduction-to-caching}
 
-At its most basic, all caching strategies amount to the same
-three-step operation, represented with the following pseudocode:
+가장 기본적으로, 모든 캐싱 전략은 다음의 pseudocode로 표현된 동일한 3단계 작업으로 구성됩니다.
 
 ```dart
 Data? _cachedData;
 
 Future<Data> get data async {
-    // Step 1: Check whether your cache already contains the desired data
+    // 1단계: 캐시에 원하는 데이터가 이미 포함되어 있는지 확인하세요.
     if (_cachedData == null) {
-        // Step 2: Load the data if the cache was empty
+        // 2단계: 캐시가 비어있는 경우 데이터 로드
         _cachedData = await _readData();
     }
-    // Step 3: Return the value in the cache
+    // 3단계: 캐시에 있는 값 반환
     return _cachedData!;
 }
 ```
 
-There are many interesting ways to vary this strategy,
-including the location of the cache, the extent to which you
-preemptively write values to, or "warm", the cache; and others.
+캐시의 위치, 캐시에 값을 미리 쓰는(preemptively) 정도 또는 캐시를 "예열(warm)"하는 정도 등, 
+이 전략을 다양하게 바꿀 수 있는 흥미로운 방법이 많이 있습니다.
 
-## Common caching terminology
+## 일반적인 캐싱 용어 {:#common-caching-terminology}
 
-Caching comes with its own terminology, some of which is
-defined and explained below.
+캐싱에는 고유한 용어가 있으며, 그 중 일부는 아래에 정의되어 설명되어 있습니다.
 
-**Cache hit**
-: An app is said to have had a cache hit when the cache already
-  contained their desired information and loading it from the
-  real source of truth was unnecessary.
+**캐시 적중 (Cache hit)**
+: 캐시에 이미 원하는 정보가 포함되어 있고 실제 진실 소스에서 로드할 필요가 없을 때, 
+  앱은 캐시 적중이 발생했다고 합니다.
 
-**Cache miss**
-: An app is said to have had a cache miss when the cache was
-  empty and the desired data is loaded from the real source
-  of truth, and then saved to the cache for future reads.
+**캐시 미스 (Cache miss)**
+: 캐시가 비어 있고 원하는 데이터가 실제 진실 소스에서 로드된 다음 향후 읽기를 위해 캐시에 저장될 때, 
+  앱은 캐시 미스가 발생했다고 합니다.
 
-## Risks of caching data
+## 데이터 캐싱의 위험 {:#risks-of-caching-data}
 
-An app is said to have a **stale cache** when the data within 
-the source of truth has changed, which puts the app at risk
-of rendering old, outdated information.
+앱은 진실의 근원에 있는 데이터가 변경되어, 오래되고 오래된 정보를 렌더링할 위험이 있을 때, 
+**오래된 캐시(stale cache)** 를 가지고 있다고 합니다.
 
-All caching strategies run the risk of holding onto stale data.
-Unfortunately, the action of verifying the freshness of a cache
-often takes as much time to complete as fully loading the data
-in question. This means that most apps tend to only benefit
-from caching data if they trust the data to be fresh at runtime
-without verification.
+모든 캐싱 전략은 오래된 데이터를 보관할 위험이 있습니다. 
+안타깝게도 캐시의 신선도를 확인하는 작업은 종종 해당 데이터를 완전히 로드하는 데 걸리는 시간만큼 걸립니다. 
+즉, 대부분의 앱은 검증 없이 런타임에 데이터가 신선하다고 믿을 때만, 데이터 캐싱의 이점을 얻는 경향이 있습니다.
 
-To deal with this, most caching systems include a time limit
-on any individual piece of cached data. After this time limit
-is exceeded, would-be cache hits are treated as cache misses
-until fresh data is loaded.
+이를 처리하기 위해, 대부분의 캐싱 시스템은 캐시된 데이터의 개별 부분에 시간 제한을 포함합니다. 
+이 시간 제한을 초과하면, 캐시 히트가 캐시 미스로 처리되어, 신선한 데이터가 로드될 때까지 처리됩니다.
 
-A popular joke among computer scientists is that "The two
-hardest things in computer science are cache invalidation,
-naming things, and off-by-one errors." 😄
+컴퓨터 과학자들 사이에서 인기 있는 농담은, 
+"컴퓨터 과학에서 가장 어려운 두 가지는 캐시 무효화, 사물 명명 및 off-by-one 오류"라는 것입니다. 😄
 
-Despite the risks, almost every app in the world makes heavy
-use of data caching. The rest of this page explores multiple
-approaches to caching data in your Flutter app, but know that
-all of these approaches can be tweaked or combined for your
-situation.
+위험에도 불구하고, 전 세계의 거의 모든 앱은 데이터 캐싱을 많이 사용합니다. 
+이 페이지의 나머지 부분에서는 Flutter 앱에서 데이터를 캐싱하는 여러 가지 접근 방식을 살펴보겠지만, 
+이러한 모든 접근 방식은 상황에 맞게 조정하거나 결합할 수 있습니다.
 
-## Caching data in local memory
+## 로컬 메모리에 데이터 캐싱 {:#caching-data-in-local-memory}
 
-The simplest and most performant caching strategy is an
-in-memory cache. The downside of this strategy is that,
-because the cache is only held in system memory, no data is
-retained beyond the session in which it is originally cached.
-(Of course, this "downside" also has the upside of automatically
-solving most stale cache problems!)
+가장 간단하고 성능이 좋은 캐싱 전략은 메모리 내 캐시(in-memory cache)입니다. 
+이 전략의 단점은, 캐시가 시스템 메모리에만 보관되기 때문에, 
+원래 캐시된 세션을 넘어서는 데이터가 보관되지 않는다는 것입니다. 
+(물론, 이 "단점"은 대부분의 오래된 캐시 문제를 자동으로 해결한다는 장점도 있습니다!)
 
-Due to their simplicity, in-memory caches closely mimic
-the pseudocode seen above. That said, it is best to use proven
-design principles, like the [repository pattern][],
-to organize your code and prevent cache checks like the above
-from appearing all over your code base.
+메모리 내 캐시(in-memory cache)는 단순하기 때문에, 위에서 본 pseudocode와 매우 유사합니다. 
+그렇기는 하지만, ([저장소 패턴][repository pattern]과 같은) 입증된 설계 원칙을 사용하여 코드를 구성하고, 
+위와 같은 캐시 검사가 코드 기반 전체에 나타나지 않도록 하는 것이 가장 좋습니다.
 
-Imagine a `UserRepository` class that is also tasked with
-caching users in memory to avoid duplicate network requests.
-Its implementation might look like this:
+중복된 네트워크 요청을 방지하기 위해, 
+메모리에 사용자를 캐싱하는 작업도 맡은 `UserRepository` 클래스를 상상해 보세요. 
+구현은 다음과 같습니다.
 
 ```dart
 class UserRepository {
@@ -125,81 +108,68 @@ class UserRepository {
 }
 ```
 
-This `UserRepository` follows multiple proven design
-principles including:
+이 `UserRepository`는 다음을 포함한 여러 입증된 설계 원칙을 따릅니다.
 
-* [dependency injection][], which helps with testing
-* [loose coupling][], which protects surrounding code from
-its implementation details, and
-* [separation of concerns][], which prevents its implementation
-from juggling too many concerns.
+* [종속성 주입][dependency injection], 테스트에 도움이 됨
+* [느슨한 결합][loose coupling], 주변 코드를 구현 세부 정보로부터 보호함
+* [관심사 분리][separation of concerns], 구현이 너무 많은 관심사를 처리하지 못하도록 함.
 
-And best of all, no matter how many times within a single session
-a user visits pages in your Flutter app that load a given user,
-the `UserRepository` class only loads that data over the network *once*.
+그리고 무엇보다도, 사용자가 단일 세션 내에서 Flutter 앱에서 주어진 사용자를 로드하는 페이지를 몇 번 방문하든,
+`UserRepository` 클래스는 네트워크를 통해 해당 데이터를 *한 번*만 로드합니다.
 
-However, your users might eventually tire of waiting for data
-to load every time they relaunch your app. For that, you should
-choose from one of the persistent caching strategies found below.
+그러나, 사용자는 결국 앱을 다시 시작할 때마다 데이터가 로드될 때까지 기다리는 데 지칠 수 있습니다. 
+이를 위해 아래에 있는 지속적(persistent) 캐싱 전략 중 하나를 선택해야 합니다.
 
 [dependency injection]: https://en.wikipedia.org/wiki/Dependency_injection
 [loose coupling]: https://en.wikipedia.org/wiki/Loose_coupling
 [repository Pattern]: https://medium.com/@pererikbergman/repository-design-pattern-e28c0f3e4a30
 [separation of concerns]: https://en.wikipedia.org/wiki/Separation_of_concerns
 
-## Persistent caches
+## 지속적(Persistent) 캐시 {:#persistent-caches}
 
-Caching data in memory will never see your precious cache
-outlive a user single session.
-To enjoy the performance benefits of cache hits on fresh
-launches of your application, you need to cache data somewhere
-on the device's hard drive.
+메모리에 데이터를 캐싱해도, 귀중한 캐시가 사용자 단일 세션보다 오래 지속되는 경우는 없습니다. 
+애플리케이션을 새로 시작할 때, 캐시 히트의 성능 이점을 누리려면, 
+장치의 하드 드라이브 어딘가에 데이터를 캐싱해야 합니다.
 
-### Caching data with `shared_preferences`
+### (1) `shared_preferences`로 데이터 캐시 {:#caching-data-with-shared_preferences}
 
-[`shared_preferences`][] is a Flutter plugin that wraps
-platform-specific [key-value storage][] on all six of Flutter's
-target platforms.
-Although these underlying platform key-value stores were designed
-for small data sizes, they are still suitable for a caching
-strategy for most applications.
-For a complete guide, see our other resources on using key-value stores.
+[`shared_preferences`][]는 Flutter의 6개 대상 플랫폼 모두에서, 
+플랫폼별 [키-값 저장소][key-value storage]를 래핑하는 Flutter 플러그인입니다. 
+이러한 기본 플랫폼 키-값 저장소는 작은 데이터 크기를 위해 설계되었지만, 
+대부분 애플리케이션의 캐싱 전략에 여전히 적합합니다. 
+전체 가이드는, 키-값 저장소 사용에 대한 다른 리소스를 참조하세요.
 
-* Cookbook: [Store key-value data on disk][]
-* Video: [Package of the Week: `shared_preferences`][]
+* 쿡북: [키-값 데이터를 디스크에 저장][Store key-value data on disk]
+* 비디오: [주간 패키지: `shared_preferences`][Package of the Week: `shared_preferences`]
 
 [key-value storage]: https://en.wikipedia.org/wiki/Key%E2%80%93value_database
 [Package of the Week: `shared_preferences`]: https://www.youtube.com/watch?v=sa_U0jffQII
 [`shared_preferences`]: {{site.pub-pkg}}/shared_preferences
 [Store key-value data on disk]: /cookbook/persistence/key-value
 
-### Caching data with the file system
+### (2) 파일 시스템으로 데이터 캐싱 {:#caching-data-with-the-file-system}
 
-If your Flutter app outgrows the low-throughput scenarios
-ideal for `shared_preferences`, you might be ready to explore
-caching data with your device's file system.
-For a more thorough guide, see our other resources on
-file system caching.
+Flutter 앱이 `shared_preferences`에 이상적인 저처리량 시나리오를 벗어나면, 
+기기의 파일 시스템으로 데이터 캐싱을 탐색할 준비가 되었을 수 있습니다. 
+더 자세한 가이드는 파일 시스템 캐싱에 대한 다른 리소스를 참조하세요.
 
-* Cookbook: [Read and write files][]
+* 쿡북: [파일 읽기 및 쓰기][Read and write files]
 
 [Read and write files]: /cookbook/persistence/reading-writing-files
 
-### Caching data with an on-device database
+### (3) 온디바이스 데이터베이스로 데이터 캐싱 {:#caching-data-with-an-on-device-database}
 
-The final boss of local data caching is any strategy
-that uses a proper database to read and write data.
-Multiple flavors exist, including relational and
-non-relational databases.
-All approaches offer dramatically improved performance over
-simple files - especially for large datasets.
-For a more thorough guide, see the following resources:
+로컬 데이터 캐싱의 최종 보스는 적절한 데이터베이스를 사용하여 데이터를 읽고 쓰는 모든 전략입니다. 
+관계형 및 비관계형 데이터베이스를 포함하여 여러 가지 플레이버가 있습니다. 
+모든 접근 방식은 간단한 파일보다 성능이 크게 향상됩니다. 
+특히 대규모 데이터 세트의 경우 더욱 그렇습니다. 
+더 자세한 가이드는 다음 리소스를 참조하세요.
 
-* Cookbook: [Persist data with SQLite][]
-* SQLite alternate: [`sqlite3` package][]
-* Drift, a relational database: [`drift` package][]
-* Hive, a non-relational database: [`hive` package][]
-* Isar, a non-relational database: [`isar` package][]
+* 쿡북: [SQLite로 데이터 유지][Persist data with SQLite]
+* SQLite 대체: [`sqlite3` 패키지][`sqlite3` package]
+* 관계형 데이터베이스인, Drift: [`drift` 패키지][`drift` package]
+* 비관계형 데이터베이스인, Hive: [`hive` 패키지][`hive` package]
+* 비관계형 데이터베이스인, Isar: [`isar` 패키지][`isar` package]
 
 [`drift` package]: {{site.pub-pkg}}/drift
 [`hive` package]: {{site.pub-pkg}}/hive
@@ -207,14 +177,12 @@ For a more thorough guide, see the following resources:
 [Persist data with SQLite]: /cookbook/persistence/sqlite
 [`sqlite3` package]: {{site.pub-pkg}}/sqlite3
 
-## Caching images
+## 이미지 캐싱 {:#caching-images}
 
-Caching images is a similar problem space to caching regular data,
-though with a one-size-fits-all solution.
-To direct your Flutter app to use the file system to store images,
-use the [`cached_network_image` package][].
+이미지 캐싱은 일반 데이터 캐싱과 비슷한 문제 공간이지만, 모든 상황에 맞는 솔루션이 있습니다. 
+Flutter 앱이 파일 시스템을 사용하여 이미지를 저장하도록 지시하려면, [`cached_network_image` 패키지][`cached_network_image` package]를 사용하세요.
 
-* Video: [Package of the Week: `cached_network_image`][]
+* 비디오: [주간 패키지: `cached_network_image`][Package of the Week: `cached_network_image`]
 
 {% comment %}
 TODO: My understanding is that we now recommend `Image.network` instead of cache_network_image.
@@ -223,28 +191,24 @@ TODO: My understanding is that we now recommend `Image.network` instead of cache
 [`cached_network_image` package]: {{site.pub-pkg}}/cached_network_image
 [Package of the Week: `cached_network_image`]: https://www.youtube.com/watch?v=fnHr_rsQwDA
 
-## State restoration
+## 상태 복원 {:#state-restoration}
 
-Along with application data, you might also want to persist other
-aspects of a user's session, like their navigation stack, scroll
-positions, and even partial progress filling out forms. This
-pattern is called "state restoration", and is built in to Flutter.
+애플리케이션 데이터와 함께 탐색 스택, 스크롤 위치, 심지어 양식 작성의 부분 진행률과 같이, 
+사용자 세션의 다른 측면을 지속하고 싶을 수도 있습니다. 
+이 패턴을 "상태 복원"이라고 하며, Flutter에 내장되어 있습니다.
 
-State restoration works by instructing the Flutter framework
-to sync data from its Element tree with the Flutter engine,
-which then caches it in platform-specific storage for future 
-sessions. To enable state restoration on Flutter for Android
-and iOS, see the following documentation:
+상태 복원은 Flutter 프레임워크에 Element 트리의 데이터를 Flutter 엔진과 동기화하도록 지시하여 작동하며, 
+그런 다음, 이를 플랫폼별 저장소에 캐시하여 향후 세션에 사용합니다. 
+Android 및 iOS용 Flutter에서 상태 복원을 활성화하려면 다음 문서를 참조하세요.
 
-* Android documentation: [Android state restoration][]
-* iOS documentation: [iOS state restoration][]
+* Android 문서: [Android 상태 복원][Android state restoration]
+* iOS 문서: [iOS 상태 복원][iOS state restoration]
 
 [Android state restoration]: /platform-integration/android/restore-state-android
 [iOS state restoration]: /platform-integration/ios/restore-state-ios
 
-## Feedback
+## 피드백 {:#feedback}
 
-As this section of the website is evolving, 
-we [welcome your feedback][]!
+이 웹사이트의 이 섹션이 발전하기 때문에, 우리는 [당신의 피드백을 환영합니다][welcome your feedback]!
 
 [welcome your feedback]: https://google.qualtrics.com/jfe/form/SV_6A9KxXR7XmMrNsy?page="local-caching"

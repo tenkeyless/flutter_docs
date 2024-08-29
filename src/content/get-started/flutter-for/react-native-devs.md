@@ -12,7 +12,7 @@ RN 프레임워크의 기본 사항을 이해한다면 이 문서를 Flutter 개
 
 이 문서는 돌아다니며 필요에 가장 적합한 질문을 찾아 쿡북으로 사용할 수 있습니다.
 
-## Introduction to Dart for JavaScript Developers (ES6)
+## JavaScript 개발자를 위한 Dart 소개(ES6) {:#introduction-to-dart-for-javascript-developers-es6}
 
 Like React Native, Flutter uses reactive-style views. However, while RN
 transpiles to native widgets, Flutter compiles all the way to native code.
@@ -31,7 +31,7 @@ Dart is an easy language to learn and offers the following features:
 A few examples of the differences between JavaScript and Dart are described
 below.
 
-### Entry point
+### 진입점 {:#entry-point}
 
 JavaScript doesn't have a pre-defined entry
 function&mdash;you define the entry point.
@@ -54,7 +54,7 @@ void main() {}
 
 Try it out in [DartPad][DartPadA].
 
-### Printing to the console
+### 콘솔에 출력하기 {:#printing-to-the-console}
 
 To print to the console in Dart, use `print()`.
 
@@ -71,7 +71,7 @@ print('Hello world!');
 
 Try it out in [DartPad][DartPadB].
 
-### Variables
+### 변수 {:#variables}
 
 Dart is type safe&mdash;it uses a combination of static type checking
 and runtime checks to ensure that a variable's value always matches
@@ -79,7 +79,7 @@ the variable's static type. Although types are mandatory,
 some type annotations are optional because
 Dart performs type inference.
 
-#### Creating and assigning variables
+#### 변수 생성 및 할당 {:#creating-and-assigning-variables}
 
 In JavaScript, variables cannot be typed.
 
@@ -103,7 +103,7 @@ Try it out in [DartPad][DartPadC].
 
 For more information, see [Dart's Type System][].
 
-#### Default value
+#### 기본값 {:#default-value}
 
 In JavaScript, uninitialized variables are `undefined`.
 
@@ -134,7 +134,7 @@ Try it out in [DartPad][DartPadD].
 For more information, see the documentation on
 [variables][].
 
-### Checking for null or zero
+### null 또는 0 확인 {:#checking-for-null-or-zero}
 
 In JavaScript, values of 1 or any non-null objects
 are treated as `true` when using the `==` comparison operator.
@@ -165,7 +165,7 @@ if (zero == 0) {
 
 Try it out in [DartPad][DartPadE].
 
-### Functions
+### 함수 {:#functions}
 
 Dart and JavaScript functions are generally similar.
 The primary difference is the declaration.
@@ -191,9 +191,9 @@ Try it out in [DartPad][DartPadF].
 For more information, see the documentation on
 [functions][].
 
-### Asynchronous programming
+### 비동기 프로그래밍 {:#asynchronous-programming}
 
-#### Futures
+#### Futures {:#futures}
 
 Like JavaScript, Dart supports single-threaded execution. In JavaScript,
 the Promise object represents the eventual completion (or failure)
@@ -255,7 +255,7 @@ void main() {
 For more information, see the documentation on
 [`Future`][] objects.
 
-#### `async` and `await`
+#### `async` 및 `await` {:#async-and-await}
 
 The `async` function declaration defines an asynchronous function.
 
@@ -324,9 +324,9 @@ void main() async {
 
 For more information, see the documentation for [async and await][].
 
-## The basics
+## 기본 사항 {:#the-basics}
 
-### How do I create a Flutter app?
+### Flutter 앱은 어떻게 만들나요? {:#how-do-i-create-a-flutter-app}
 
 To create an app using React Native,
 you would run `create-react-native-app` from the command line.
@@ -350,7 +350,7 @@ walks you through creating a button-click counter app.
 Creating a Flutter project builds all the files that you
 need to run a sample app on both Android and iOS devices.
 
-### How do I run my app?
+### 앱을 어떻게 실행하나요? {:#how-do-i-run-my-app}
 
 In React Native, you would run `npm run` or `yarn run` from the project
 directory.
@@ -366,7 +366,7 @@ or the Android emulator.
 For more information, see the Flutter [Getting started][]
 documentation.
 
-### How do I import widgets?
+### 위젯을 어떻게 가져오나요? {:#how-do-i-import-widgets}
 
 In React Native, you need to import each required component.
 
@@ -395,7 +395,7 @@ Dart pulls in only the widgets that are used in your app.
 
 For more information, see the [Flutter Widget Catalog][].
 
-### What is the equivalent of the React Native "Hello world!" app in Flutter?
+### Flutter에서 React Native "Hello world!" 앱과 동일한 것은 무엇입니까? {:#what-is-the-equivalent-of-the-react-native-hello-world-app-in-flutter}
 
 In React Native, the `HelloWorldApp` class extends `React.Component` and
 implements the render method by returning a view component.
@@ -456,7 +456,7 @@ Now that you've seen the most basic Flutter app, the next section shows how to
 take advantage of Flutter's rich widget libraries to create a modern, polished
 app.
 
-### How do I use widgets and nest them to form a widget tree?
+### 위젯을 어떻게 사용하고 위젯을 중첩하여 위젯 트리를 형성하나요? {:#how-do-i-use-widgets-and-nest-them-to-form-a-widget-tree}
 
 In Flutter, almost everything is a widget.
 
@@ -530,7 +530,7 @@ functions that return the widget or smaller classes.
 Creating separate functions
 and widgets allows you to reuse the components within the app.
 
-### How do I create reusable components?
+### 재사용 가능한 컴포넌트를 어떻게 만들 수 있나요? {:#how-do-i-create-reusable-components}
 
 In React Native, you would define a class to create a
 reusable component and then use `props` methods to set
@@ -618,9 +618,9 @@ The following screenshots show an example of the reusable
 
 {% include docs/android-ios-figure-pair.md image="react-native/custom-cards.png" alt="Custom cards" class="border" %}
 
-## Project structure and resources
+## 프로젝트 구조 및 리소스 {:#project-structure-and-resources}
 
-### Where do I start writing the code?
+### 어디서부터 코드 작성을 시작해야 하나요? {:#where-do-i-start-writing-the-code}
 
 Start with the `lib/main.dart` file.
 It's autogenerated when you create a Flutter app.
@@ -637,7 +637,7 @@ In Flutter, the entry point file is
 `{project_name}/lib/main.dart` and execution
 starts from the `main` function.
 
-### How are files structured in a Flutter app?
+### Flutter 앱에서 파일은 어떻게 구성되나요? {:#how-are-files-structured-in-a-flutter-app}
 
 When you create a new Flutter project,
 it builds the following directory structure.
@@ -662,7 +662,7 @@ You can customize it later, but this is where you start.
                    This is equivalent to the package.json file in React Native.
 ```
 
-### Where do I put my resources and assets and how do I use them?
+### 내 리소스와 assets을 어디에 두어야 하며 어떻게 사용해야 합니까? {:#where-do-i-put-my-resources-and-assets-and-how-do-i-use-them}
 
 A Flutter resource or asset is a file that is bundled and deployed
 with your app and is accessible at runtime.
@@ -724,7 +724,7 @@ Image.asset('assets/background.png');
 
 For more information, see [Adding Assets and Images in Flutter][].
 
-### How do I load images over a network?
+### How do I load images over a network? {:#how-do-i-load-images-over-a-network}
 
 In React Native, you would specify the `uri` in the
 `source` prop of the `Image` component and also provide the
@@ -738,7 +738,7 @@ an image from a URL.
 Image.network('https://docs.flutter.dev/assets/images/docs/owl.jpg');
 ```
 
-### How do I install packages and package plugins?
+### How do I install packages and package plugins? {:#how-do-i-install-packages-and-package-plugins}
 
 Flutter supports using shared packages contributed by other developers to the
 Flutter and Dart ecosystems. This allows you to quickly build your app without
@@ -773,7 +773,7 @@ For more information, see [Using Packages][] and
 You can find many packages shared by Flutter developers in the
 [Flutter packages][] section of [pub.dev][].
 
-## Flutter widgets
+## Flutter 위젯 {:#flutter-widgets}
 
 In Flutter, you build your UI out of widgets that describe what their view
 should look like given their current configuration and state.
@@ -802,9 +802,9 @@ see [Flutter Basic Widgets][],
 the [Flutter Widget Catalog][],
 or the [Flutter Widget Index][].
 
-## Views
+## Views {:#views}
 
-### What is the equivalent of the `View` container?
+### `View` 컨테이너와 동일한 것은 무엇입니까? {:#what-is-the-equivalent-of-the-view-container}
 
 In React Native, `View` is a container that supports layout with `Flexbox`,
 style, touch handling, and accessibility controls.
@@ -814,7 +814,7 @@ library, such as [`Container`][], [`Column`][],
 [`Row`][], and [`Center`][].
 For more information, see the [Layout Widgets][] catalog.
 
-### What is the equivalent of `FlatList` or `SectionList`?
+### `FlatList` 또는 `SectionList`와 동일한 것은 무엇입니까? {:#what-is-the-equivalent-of-flatlist-or-sectionlist}
 
 A `List` is a scrollable list of components arranged vertically.
 
@@ -855,7 +855,7 @@ return ListView.builder(
 To learn how to implement an infinite scrolling list, see the official
 [`infinite_list`][infinite_list] sample.
 
-### How do I use a Canvas to draw or paint?
+### 캔버스를 이용해 그리거나 칠하려면(draw or paint) 어떻게 해야 하나요? {:#how-do-i-use-a-canvas-to-draw-or-paint}
 
 In React Native, canvas components aren't present
 so third party libraries like `react-native-canvas` are used.
@@ -924,9 +924,9 @@ class MyCanvasWidget extends StatelessWidget {
 
 {% include docs/android-ios-figure-pair.md image="react-native/canvas.png" alt="Canvas" class="border" %}
 
-## Layouts
+## Layouts {:#layouts}
 
-### How do I use widgets to define layout properties?
+### 위젯을 사용하여 레이아웃 속성을 정의하려면 어떻게 해야 하나요? {:#how-do-i-use-widgets-to-define-layout-properties}
 
 In React Native, most of the layout can be done with the props
 that are passed to a specific component.
@@ -992,7 +992,7 @@ For a complete list, see [Layout Widgets][].
 
 {% include docs/android-ios-figure-pair.md image="react-native/basic-layout.gif" alt="Layout" class="border" %}
 
-### How do I layer widgets?
+### 위젯을 어떻게 겹쳐 놓나요? {:#how-do-i-layer-widgets}
 
 In React Native, components can be layered using `absolute` positioning.
 
@@ -1033,9 +1033,9 @@ and `Alignment` coordinates.
 
 For more information, see the [`Stack`][] class documentation.
 
-## Styling
+## 스타일링 {:#styling}
 
-### How do I style my components?
+### 구성요소의 스타일을 어떻게 지정하나요? {:#how-do-i-style-my-components}
 
 In React Native, inline styling and `stylesheets.create`
 are used to style components.
@@ -1090,7 +1090,7 @@ return const Center(
 
 {% include docs/android-ios-figure-pair.md image="react-native/flutterstyling.gif" alt="Styling" class="border" %}
 
-### How do I use `Icons` and `Colors`?
+### `아이콘`과 `색상`은 어떻게 사용하나요? {:#how-do-i-use-icons-and-colors}
 
 React Native doesn't include support for icons
 so third party libraries are used.
@@ -1158,7 +1158,7 @@ class SampleApp extends StatelessWidget {
 }
 ```
 
-### How do I add style themes?
+### 스타일 테마를 어떻게 추가하나요? {:#how-do-i-add-style-themes}
 
 In React Native, common themes are defined for
 components in stylesheets and then used in components.
@@ -1203,7 +1203,7 @@ Widget build(BuildContext context) {
 }
 ```
 
-## State management
+## 상태 관리 {:#state-management}
 
 State is information that can be read synchronously
 when a widget is built or information
@@ -1214,7 +1214,7 @@ use a [`StatefulWidget`][] paired with a State object.
 For more information on ways to approach managing state in Flutter,
 see [State management][].
 
-### The StatelessWidget
+### StatelessWidget {:#the-statelesswidget}
 
 A `StatelessWidget` in Flutter is a widget
 that doesn't require a state change&mdash;
@@ -1269,7 +1269,7 @@ in only three situations:
 * When the widget's parent changes its configuration
 * When an [`InheritedWidget`][] it depends on, changes
 
-### The StatefulWidget
+### StatefulWidget {:#the-statefulwidget}
 
 A [`StatefulWidget`][] is a widget that changes state.
 Use the `setState` method to manage the
@@ -1372,7 +1372,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
 }
 ```
 
-### What are the StatefulWidget and StatelessWidget best practices?
+### StatefulWidget과 StatelessWidget의 모범 사례는 무엇입니까? {:#what-are-the-statefulwidget-and-statelesswidget-best-practices}
 
 Here are a few things to consider when designing your widget.
 
@@ -1458,7 +1458,7 @@ class MyStatelessWidget extends StatelessWidget {
 
 {% include docs/android-ios-figure-pair.md image="react-native/state-change.gif" alt="State change" class="border" %}
 
-## Props
+## Props {:#props}
 
 In React Native, most components can be customized when they are
 created with different parameters or properties, called `props`.
@@ -1548,14 +1548,14 @@ class UseCard extends StatelessWidget {
 
 {% include docs/android-ios-figure-pair.md image="react-native/modular.png" alt="Cards" class="border" %}
 
-## Local storage
+## 로컬 스토리지 {:#local-storage}
 
 If you don't need to store a lot of data, and it doesn't require
 structure, you can use `shared_preferences` which allows you to
 read and write persistent key-value pairs of primitive data
 types: booleans, floats, ints, longs, and strings.
 
-### How do I store persistent key-value pairs that are global to the app?
+### 앱 전체에 적용되는 지속적인 키-값 쌍을 어떻게 저장합니까? {:#how-do-i-store-persistent-key-value-pairs-that-are-global-to-the-app}
 
 In React Native, you use the `setItem` and `getItem` functions
 of the `AsyncStorage` component to store and retrieve data
@@ -1613,7 +1613,7 @@ Future<void> updateCounter() async {
 }
 ```
 
-## Routing
+## Routing {:#routing}
 
 Most apps contain several screens for displaying different
 types of information. For example, you might have a product
@@ -1625,7 +1625,7 @@ In iOS, new screens are new ViewControllers. In Flutter,
 screens are just Widgets! And to navigate to new
 screens in Flutter, use the Navigator widget.
 
-### How do I navigate between screens?
+### 화면 간을 어떻게 이동하나요? {:#how-do-i-navigate-between-screens}
 
 In React Native, there are three main navigators:
 StackNavigator, TabNavigator, and DrawerNavigator.
@@ -1722,14 +1722,14 @@ Navigator.push(
 );
 ```
 
-### How do I use tab navigation and drawer navigation?
+### 탭 네비게이션과 서랍 네비게이션은 어떻게 사용하나요? {:#how-do-i-use-tab-navigation-and-drawer-navigation}
 
 In Material Design apps, there are two primary options
 for Flutter navigation: tabs and drawers.
 When there is insufficient space to support tabs, drawers
 provide a good alternative.
 
-#### Tab navigation
+#### 탭 네비게이션 {:#tab-navigation}
 
 In React Native, `createBottomTabNavigator`
 and `TabNavigation` are used to
@@ -1838,7 +1838,7 @@ class _NavigationHomePageState extends State<NavigationHomePage>
 }
 ```
 
-#### Drawer navigation
+#### 서랍 네비게이션 {:#drawer-navigation}
 
 In React Native, import the needed react-navigation packages and then use
 `createDrawerNavigator` and `DrawerNavigation`.
@@ -1917,7 +1917,7 @@ Widget build(BuildContext context) {
 
 {% include docs/android-ios-figure-pair.md image="react-native/navigation.gif" alt="Navigation" class="border" %}
 
-## Gesture detection and touch event handling
+## 제스처 감지 및 터치 이벤트 처리 {:#gesture-detection-and-touch-event-handling}
 
 To listen for and respond to gestures,
 Flutter supports taps, drags, and scaling.
@@ -1929,7 +1929,7 @@ The second layer includes gestures,
 which describe semantic actions
 that consist of one or more pointer movements.
 
-### How do I add a click or press listeners to a widget?
+### 위젯에 클릭 또는 프레스 리스너를 추가하려면 어떻게 해야 하나요? {:#how-do-i-add-a-click-or-press-listeners-to-a-widget}
 
 In React Native, listeners are added to components
 using `PanResponder` or the `Touchable` components.
@@ -2022,12 +2022,12 @@ see the [GestureDetector class][].
 
 {% include docs/android-ios-figure-pair.md image="react-native/flutter-gestures.gif" alt="Gestures" class="border" %}
 
-## Making HTTP network requests
+## HTTP 네트워크 요청하기 {:#making-http-network-requests}
 
 Fetching data from the internet is common for most apps. And in Flutter,
 the `http` package provides the simplest way to fetch data from the internet.
 
-### How do I fetch data from API calls?
+### API 호출에서 데이터를 가져오려면 어떻게 해야 하나요? {:#how-do-i-fetch-data-from-api-calls}
 
 React Native provides the Fetch API for networking—you make a fetch request
 and then receive the response to get the data.
@@ -2085,14 +2085,14 @@ Future<void> getIPAddress() async {
 
 {% include docs/android-ios-figure-pair.md image="react-native/api-calls.gif" alt="API calls" class="border" %}
 
-## Form input
+## Form 입력 {:#form-input}
 
 Text fields allow users to type text into your app so they can be
 used to build forms, messaging apps, search experiences, and more.
 Flutter provides two core text field widgets:
 [`TextField`][] and [`TextFormField`][].
 
-### How do I use text field widgets?
+### 텍스트 필드 위젯을 어떻게 사용하나요? {:#how-do-i-use-text-field-widgets}
 
 In React Native, to enter text you use a `TextInput` component to show a text
 input box and then use the callback to store the value in a variable.
@@ -2156,7 +2156,7 @@ widget that displays the alert message, and the text from
 the `TextField` is accessed by the `text` property of the
 [`TextEditingController`][].
 
-### How do I use Form widgets?
+### Form 위젯을 어떻게 사용하나요? {:#how-do-i-use-form-widgets}
 
 In Flutter, use the [`Form`][] widget where
 [`TextFormField`][] widgets along with the submit
@@ -2227,7 +2227,7 @@ void _submit() {
 
 {% include docs/android-ios-figure-pair.md image="react-native/input-fields.gif" alt="Input" class="border" %}
 
-## Platform-specific code
+## 플랫폼별 코드 {:#platform-specific-code}
 
 When building a cross-platform app, you want to re-use as much code as
 possible across platforms. However, scenarios might arise where it
@@ -2264,9 +2264,9 @@ if (platform == TargetPlatform.fuchsia) {
 return 'not recognized ';
 ```
 
-## Debugging
+## 디버깅 {:#debugging}
 
-### What tools can I use to debug my app in Flutter?
+### Flutter에서 앱을 디버깅하는 데 어떤 도구를 사용할 수 있나요? {:#what-tools-can-i-use-to-debug-my-app-in-flutter}
 
 Use the [DevTools][] suite for debugging Flutter or Dart apps.
 
@@ -2279,7 +2279,7 @@ fragmentation. For more information, check out the
 If you're using an IDE,
 you can debug your application using the IDE's debugger.
 
-### How do I perform a hot reload?
+### 핫 리로딩은 어떻게 실행하나요? {:#how-do-i-perform-a-hot-reload}
 
 Flutter's Stateful Hot Reload feature helps you quickly and easily experiment,
 build UIs, add features, and fix bugs. Instead of recompiling your app
@@ -2299,7 +2299,7 @@ type `r` in the Terminal window.
 You can also perform a full restart by typing `R` in the
 Terminal window.
 
-### How do I access the in-app developer menu?
+### 앱 내 개발자 메뉴에 어떻게 접근하나요? {:#how-do-i-access-the-in-app-developer-menu}
 
 In React Native, the developer menu can be accessed by shaking your device: ⌘D
 for the iOS Simulator or ⌘M for Android emulator.
@@ -2323,7 +2323,7 @@ in the terminal window, or type the following shortcuts:
 
 {:.table .table-striped}
 
-## Animation
+## 애니메이션 {:#animation}
 
 Well-designed animation makes a UI feel intuitive,
 contributes to the look and feel of a polished app,
@@ -2346,7 +2346,7 @@ play an animation forward or in reverse,
 or stop animation and set the animation
 to a specific value to customize the motion.
 
-### How do I add a simple fade-in animation?
+### 간단한 페이드인 애니메이션을 추가하려면 어떻게 해야 하나요? {:#how-do-i-add-a-simple-fade-in-animation}
 
 In the React Native example below, an animated component,
 `FadeInView` is created using the Animated API.
@@ -2472,7 +2472,7 @@ class _LogoFadeState extends State<LogoFade>
 
 {% include docs/android-ios-figure-pair.md image="react-native/flutter-fade.gif" alt="Flutter fade" class="border" %}
 
-### How do I add swipe animation to cards?
+### 카드에 스와이프 애니메이션을 추가하려면 어떻게 해야 하나요? {:#how-do-i-add-swipe-animation-to-cards}
 
 In React Native, either the `PanResponder` or
 third-party libraries are used for swipe animation.
@@ -2495,7 +2495,7 @@ return Dismissible(
 
 {% include docs/android-ios-figure-pair.md image="react-native/card-swipe.gif" alt="Card swipe" class="border" %}
 
-## React Native and Flutter widget equivalent components
+## React Native와 Flutter 위젯 동등 구성 요소 {:#react-native-and-flutter-widget-equivalent-components}
 
 The following table lists commonly-used React Native
 components mapped to the corresponding Flutter widget
