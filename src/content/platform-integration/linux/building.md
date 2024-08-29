@@ -13,32 +13,23 @@ Flutter를 사용하여 Linux 앱을 빌드하는 데 고유한 고려 사항에
 
 ## Linux와 통합 {:#integrate-with-linux}
 
-The Linux programming interface,
-comprising library functions and system calls,
-is designed around the C language and ABI.
-Fortunately, Dart provides the `dart:ffi` package,
-which enables Dart programs to call into C libraries.
+라이브러리 함수와 시스템 호출로 구성된 Linux 프로그래밍 인터페이스는 C 언어와 ABI를 중심으로 설계되었습니다. 
+다행히도 Dart는 Dart 프로그램이 C 라이브러리를 호출할 수 있도록 하는 `dart:ffi` 패키지를 제공합니다.
 
-Foreign Function Interfaces (FFI) allow Flutter apps to perform the
-following with native libraries:
+외부 함수 인터페이스(FFI)를 사용하면, Flutter 앱이 네이티브 라이브러리로 다음을 수행할 수 있습니다.
 
-* allocate native memory with `malloc` or `calloc`
-* support pointers, structs, and callbacks
-* support Application Binary Interface (ABI) types like `long` and `size_t`
+* `malloc` 또는 `calloc`로 네이티브 메모리를 할당합니다.
+* 포인터, 구조체 및 콜백을 지원합니다.
+* `long` 및 `size_t`와 같은 애플리케이션 바이너리 인터페이스(ABI, Application Binary Interface) 타입을 지원합니다.
 
-To learn more about calling C libraries from Flutter,
-consult [C interop using `dart:ffi`][].
+Flutter에서 C 라이브러리를 호출하는 방법에 대해 자세히 알아보려면, [C interop using `dart:ffi`][]를 참조하세요.
 
-Many apps benefit from using a package that wraps the underlying library
-calls in a more convenient, idiomatic Dart API.
-[Canonical has built a series of packages][Canonical]
-with a focus on enabling Dart and Flutter on Linux,
-including support for desktop notifications,
-dbus, network management, and Bluetooth.
+많은 앱은 더 편리하고, 관용적인 Dart API로 기본 라이브러리 호출을 래핑하는 패키지를 사용하는 데서 이점을 얻습니다.
+Canonical은, 데스크톱 알림, DBUS, 네트워크 관리, Bluetooth에 대한 지원을 포함하여, 
+Linux에서 Dart와 Flutter를 활성화하는 데 중점을 둔 [일련의 패키지를 구축했습니다][Canonical].
 
-In general, many other [packages support creating Linux apps][support-linux],
-including common packages such as [`url_launcher`],
-[`shared_preferences`], [`file_selector`], and [`path_provider`].
+일반적으로, [`url_launcher`], [`shared_preferences`], [`file_selector`], [`path_provider`]와 같은 
+일반적인 패키지를 포함하여 다른 많은 [패키지가 Linux 앱 생성을 지원합니다][support-linux].
 
 [C interop using `dart:ffi`]: {{site.dart-site}}/guides/libraries/c-interop
 [Canonical]: {{site.pub}}/publishers/canonical.com/packages
@@ -50,46 +41,39 @@ including common packages such as [`url_launcher`],
 
 ## 배포를 위한 Linux 앱 준비 {:#prepare-linux-apps-for-distribution}
 
-The executable binary can be found in your project under
-`build/linux/x64/<build mode>/bundle/`.
-Alongside your executable binary in the `bundle` directory,
-you can find two directories:
+실행 가능한 바이너리는 프로젝트에서 `build/linux/x64/<build mode>/bundle/`에서 찾을 수 있습니다. 
+`bundle` 디렉토리의 실행 가능한 바이너리와 함께 두 개의 디렉토리를 찾을 수 있습니다.
 
-* `lib` contains the required `.so` library files
-* `data` contains the application's data assets, such as fonts or images
+* `lib`에는 필요한 `.so` 라이브러리 파일이 들어 있습니다.
+* `data`에는 글꼴이나 이미지와 같은 애플리케이션의 데이터 assets이 들어 있습니다.
 
-In addition to these files, your application also relies on various
-operating system libraries against which it's been compiled.
-To see the full list of libraries,
-use the `ldd` command on your application's directory.
+이러한 파일 외에도 애플리케이션은 컴파일된 다양한 운영 체제 라이브러리에 의존합니다. 
+라이브러리의 전체 리스트를 보려면 애플리케이션 디렉토리에서 `ldd` 명령을 사용하세요.
 
-For example, assume you have a Flutter desktop application
-called `linux_desktop_test`.
-To inspect the its system library dependencies, use the following commands:
+예를 들어, `linux_desktop_test`라는 Flutter 데스크톱 애플리케이션이 있다고 가정해 보겠습니다. 
+해당 시스템 라이브러리 종속성을 검사하려면 다음 명령을 사용하세요.
 
 ```console
 $ flutter build linux --release
 $ ldd build/linux/x64/release/bundle/linux_desktop_test
 ```
 
-To wrap up this application for distribution,
-include everything in the `bundle` directory
-and verify the target Linux system has all required system libraries.
+이 애플리케이션을 배포하기 위해 `bundle` 디렉토리에 있는 모든 것을 포함하여, 
+대상 Linux 시스템에 필요한 모든 시스템 라이브러리가 있는지 확인하고 래핑합니다.
 
-This might only require using the following command.
+다음 명령만 사용하면 될 수 있습니다.
 
 ```console
 $ sudo apt-get install libgtk-3-0 libblkid1 liblzma5
 ```
 
-To learn how to publish a Linux application to the [Snap Store],
-consult [Build and release a Linux application to the Snap Store][].
+[Snap Store]에 Linux 애플리케이션을 게시하는 방법을 알아보려면, 
+[Snap Store에 Linux 애플리케이션 빌드 및 릴리스][Build and release a Linux application to the Snap Store]를 참조하세요.
 
 ## 추가적인 리소스 {:#additional-resources}
 
-To learn how to create Linux Debian (`.deb`) and RPM (`.rpm`)
-builds of your Flutter desktop app,
-consult the step-by-step [Linux packaging guide][linux_packaging_guide].
+Flutter 데스크톱 앱의 Linux Debian(`.deb`) 및 RPM(`.rpm`) 빌드를 만드는 방법을 알아보려면, 
+단계별 [Linux 패키징 가이드][linux_packaging_guide]를 참조하세요.
 
 [Snap Store]: https://snapcraft.io/store
 [Build and release a Linux application to the Snap Store]: /deployment/linux
