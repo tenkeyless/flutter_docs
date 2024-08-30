@@ -147,3 +147,11 @@
   link: "https://www.flutterengineering.io"
   # desc: "Craft Awesome Flutter Apps with Confidence"
   desc: "자신감을 가지고 멋진 Flutter 앱을 만들어보세요"
+- title: 'Flutter Foundation - A Comprehensive Guide for Technical Interviews and Beyond (Flutter Foundation - 기술 인터뷰 및 그 이상을 위한 포괄적인 가이드)'
+  authors:
+    - Chetankumar Akarte
+  publisher: Self Published
+  cover: the-flutter-foundation-a-comprehensive-guide-for-technical-interviews-and-beyond.png
+  link: "https://chetanakarte.gumroad.com/l/the_flutter_foundation"
+  # desc: "Welcome to The Flutter Foundation: A Comprehensive Guide for Technical Interviews and Beyond! Whether you are a seasoned developer looking to delve into the world of Flutter or a newcomer eager to master the latest in cross-platform app development, this book is your ultimate companion."
+  desc: "The Flutter Foundation에 오신 것을 환영합니다: 기술 인터뷰 및 그 이상을 위한 포괄적인 가이드! Flutter의 세계를 탐구하고자 하는 노련한 개발자이든, 크로스 플랫폼 앱 개발의 최신 기술을 마스터하고자 하는 신입이든, 이 책은 당신의 궁극적인 동반자입니다."
