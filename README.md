@@ -28,6 +28,13 @@ main 브랜치에 한해서 번역되며, Flutter_[버전]-[날짜] 와 같은 �
 가령, Flutter_3.24.0-240827 이 태그는, Flutter 3.24.0 버전에 대한 번역본이며, 
 240827의 날짜에 해당하는 main 브랜치에서 fork하여 번역된 것입니다.
 
+## 배포
+
+```console
+$ firebase use flutter-docs-kr
+$ firebase deploy --only hosting
+```
+
 ## Docker를 활용한 빌드
 
 이 서비스는 로컬로 Docker를 활용해 웹페이지를 열 수 있습니다.
