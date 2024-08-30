@@ -78,7 +78,7 @@ Xcode를 사용하여 대부분의 코드를 디버깅하는 경우, 이 섹션�
 
 ##### VS Code에서 Dart VM에 연결 {:#attach-to-the-dart-vm-in-vs-code}
 
-1. 명령 팔레트를 열려면 **View** <span aria-label="그리고">></span> **Command Palette...**로 이동합니다.
+1. 명령 팔레트를 열려면 **View** <span aria-label="그리고">></span> **Command Palette...** 로 이동합니다.
 
     <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd>를 누를 수도 있습니다.
 
