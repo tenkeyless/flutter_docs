@@ -31,7 +31,7 @@ description: Flutter를 시작하세요. 첫 번째 Flutter 앱을 작성하는 
 |       |      |
 |:-----:|:----|
 | Flutter 버전 | 3.24.0 |
-| 최종 업데이트 | 2024-08-29 |
+| 최종 업데이트 | 2024-08-30 |
 | 웹사이트 주소 | [flutter-docs-kr.web.app](https://flutter-docs-kr.web.app/) |
 | GitHub 주소 | <https://github.com/tenkeyless/flutter_docs/tree/develop> |
 
@@ -42,8 +42,9 @@ description: Flutter를 시작하세요. 첫 번째 Flutter 앱을 작성하는 
 - 주기적으로, [flutter docs Github](https://github.com/flutter/website)에서 문서를 fork 및 업데이트하여, 최신으로 유지할 예정입니다.
 - 몇몇 내용은 번역되지 않은 부분이 있을 수 있습니다. 이후, 추가로 번역이 진행될 예정입니다.
   - [Flutter for 파트](/get-started/flutter-for/)
-  - [Flutter 역대 릴리즈 노트](/release/release-notes/)
   - [Flutter 중요한 변경사항](/release/breaking-changes/)
+  - [Flutter 역대 릴리즈 노트](/release/release-notes/)
+  - [Flutter DevTools 릴리즈 노트](/tools/devtools/release-notes/)
 
 ---
 
