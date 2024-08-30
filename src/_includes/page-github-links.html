@@ -4,8 +4,9 @@
 {% assign url = site.url | append: page.url -%}
 
 <p id="page-github-links">
-  <span>Unless stated otherwise, the documentation on this site reflects the latest stable version of Flutter. Page last updated on {{page.date | toSimpleDate}}.</span>
-  <a href="{{pageSource}}" target="_blank" rel="noopener">View source</a>
-  <span> or </span>
-  <a href="{{repo}}/issues/new?template=1_page_issue.yml&&page-url={{url}}&page-source={{pageSource}}" title="Report an issue with this page" target="_blank" rel="noopener">report an issue</a>.
+  <!-- <span>Unless stated otherwise, the documentation on this site reflects the latest stable version of Flutter. Page last updated on {{page.date | toSimpleDate}}.</span> -->
+  <span>달리 명시하지 않는 한, 이 사이트의 문서는 Flutter의 최신 stable 버전을 반영합니다. 페이지 마지막 업데이트 날짜: {{page.date | toSimpleDate}}.</span>
+  <a href="{{pageSource}}" target="_blank" rel="noopener">소스 보기</a>
+  <span> 또는 </span>
+  <a href="{{repo}}/issues/new?template=1_page_issue.yml&&page-url={{url}}&page-source={{pageSource}}" title="Report an issue with this page" target="_blank" rel="noopener">이슈를 알려주세요</a>.
 </p>
