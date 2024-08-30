@@ -18,127 +18,87 @@ Microsoft 문서에는 [Windows Installer][msidocs]를 포함하여,
 
 ## 사전 준비 {:#preliminaries}
 
-Before beginning the process of releasing
-a Flutter Windows desktop app to the Microsoft Store,
-first confirm that it satisfies [Microsoft Store Policies][storepolicies].
+Microsoft Store에 Flutter Windows 데스크톱 앱을 출시하는 프로세스를 시작하기 전에, 
+먼저 [Microsoft Store 정책][storepolicies]를 충족하는지 확인하세요.
 
-Also, you must join the
-[Microsoft Partner Network][microsoftpartner] to be able to submit apps.
+또한 앱을 제출하려면 [Microsoft 파트너 네트워크][microsoftpartner]에 가입해야 합니다.
 
 ## 파트너 센터(Partner Center)에서 애플리케이션 설정 {:#set-up-your-application-in-the-partner-center}
 
-Manage an application's life cycle in the
-[Microsoft Partner Center][microsoftpartner].
+[Microsoft Partner Center][microsoftpartner]에서 애플리케이션의 수명 주기를 관리합니다.
 
-First, reserve the application name and
-ensure that the required rights to the name exist.
-Once the name is reserved, the application
-will be provisioned for services (such as
-push notifications), and you can start adding add-ons.
+먼저 애플리케이션 이름을 예약하고, 이름에 필요한 권한이 있는지 확인합니다. 
+이름이 예약되면, 애플리케이션이 서비스(예: 푸시 알림)에 프로비저닝되고 애드온을 추가할 수 있습니다.
 
-Options such as pricing, availability,
-age ratings, and category have to be
-configured together with the first submission
-and are automatically retained
-for the subsequent submissions.
+가격, 가용성, 연령 등급, 범주와 같은 옵션은 첫 번째 제출과 함께 구성해야 하며, 
+이후 제출에 자동으로 유지됩니다.
 
 ## 패키징 및 배포 {:#packaging-and-deployment}
 
-In order to publish an application to Microsoft Store,
-you must first package it.
-The valid formats are **.msix**, **.msixbundle**,
-**.msixupload**, **.appx**, **.appxbundle**,
-**.appxupload**, and **.xap**.
+Microsoft Store에 애플리케이션을 게시하려면 먼저 패키징해야 합니다. 
+유효한 형식은 **.msix**, **.msixbundle**, **.msixupload**, **.appx**, **.appxbundle**, **.appxupload**, **.xap**입니다.
 
 ### Microsoft Store에 대한 수동 패키징 및 배포 {:#manual-packaging-and-deployment-for-the-microsoft-store}
 
-Check out [MSIX packaging][msix packaging]
-to learn about packaging
-Flutter Windows desktop applications.
+[MSIX 패키징][msix packaging]을 확인하여, 
+Flutter Windows 데스크톱 애플리케이션 패키징에 대해 알아보세요.
 
-Note that each product has a unique identity,
-which the Store assigns.
+각 제품에는 스토어에서 할당하는 고유한 identity가 있습니다.
 
-If the package is being built manually,
-you have to include its identity details
-manually during the packaging.
-The essential information can be retrieved
-from the Partner Center using the following instructions:
+패키지가 수동으로 빌드되는 경우, 패키징 중에 identity 세부 정보를 수동으로 포함해야 합니다. 
+다음 지침에 따라 파트너 센터에서 필수 정보를 검색할 수 있습니다.
 
-1. In the Partner Center, navigate to the application.
-2. Select **Product management**.
-3. Retrieve the package identity name, publisher,
-   and publisher display name by clicking **Product identity**.
+1. 파트너 센터에서, 애플리케이션으로 이동합니다.
+2. **Product management**를 선택합니다.
+3. **Product identity**를 클릭하여, 패키지 identity 이름, 
+   게시자 및 게시자 표시 이름을 검색합니다.
 
-After manually packaging the application,
-manually submit it to the
-[Microsoft Partner Center][microsoftpartner].
-You can do this by creating a new submission,
-navigating to **Packages**,
-and uploading the created application package.
+애플리케이션을 수동으로 패키징한 후, 
+[Microsoft Partner Center][microsoftpartner]에 수동으로 제출합니다. 
+새 제출을 만들고 **Packages**로 이동한 다음, 
+생성된 애플리케이션 패키지를 업로드하여 이를 수행할 수 있습니다.
 
 ### 지속적인 배포 {:#continuous-deployment}
 
-In addition to manually creating and deploying the package,
-you can automate the build, package, versioning,
-and deployment process using CI/CD tooling after having submitted
-the application to the Microsoft Store for the first time.
+패키지를 수동으로 만들고 배포하는 것 외에도, 
+처음으로 Microsoft Store에 애플리케이션을 제출한 후 CI/CD 도구를 사용하여, 
+빌드, 패키징, 버전 관리 및 배포 프로세스를 자동화할 수 있습니다.
 
 #### Codemagic CI/CD {:#codemagic-cicd}
 
-[Codemagic CI/CD][codemagic] uses the
-[`msix` pub package][msix package] to package
-Flutter Windows desktop applications.
+[Codemagic CI/CD][codemagic]은 [`msix` pub 패키지][msix package]를 사용하여, 
+Flutter Windows 데스크톱 애플리케이션을 패키징합니다.
 
-For Flutter applications, use either the
-[Codemagic Workflow Editor][cmworkfloweditor]
-or [codemagic.yaml][cmyaml]
-to package the application and deploy it
-to the Microsoft Partner Center.
-Additional options (such as the list of
-capabilities and language resources
-contained in the package)
-can be configured using this package.
+Flutter 애플리케이션의 경우, 
+[Codemagic Workflow Editor][cmworkfloweditor] 또는 [codemagic.yaml][cmyaml]을 사용하여, 
+애플리케이션을 패키징하고 Microsoft 파트너 센터에 배포합니다. 
+이 패키지를 사용하여 추가 옵션(패키지에 포함된 기능 및 언어 리소스 리스트 등)을 구성할 수 있습니다.
 
-For publishing, Codemagic uses the
-[Partner Center submission API][partnercenterapi];
-so, Codemagic requires
-[associating the Azure Active Directory
-and Partner Center accounts][azureadassociation].
+게시의 경우 Codemagic은 [파트너 센터 제출 API][partnercenterapi]를 사용하므로, 
+Codemagic에는 [Azure Active Directory 및 파트너 센터 계정 연결][azureadassociation]이 필요합니다.
 
 #### GitHub Actions CI/CD {:#github-actions-cicd}
 
-GitHub Actions can use the
-[Microsoft Dev Store CLI](https://learn.microsoft.com/windows/apps/publish/msstore-dev-cli/overview)
-to package applications into an MSIX and publish them to the Microsoft Store.
-The [setup-msstore-cli](https://github.com/microsoft/setup-msstore-cli)
-GitHub Action installs the cli so that the Action can use it for packaging
-and publishing.
+GitHub Actions는 [Microsoft Dev Store CLI](https://learn.microsoft.com/windows/apps/publish/msstore-dev-cli/overview)를 사용하여, 
+애플리케이션을 MSIX로 패키징하고 Microsoft Store에 게시할 수 있습니다. 
+[setup-msstore-cli](https://github.com/microsoft/setup-msstore-cli) GitHub Action은 Action이 패키징 및 게시에 사용할 수 있도록 cli를 설치합니다.
 
-As packaging the MSIX uses the
-[`msix` pub package][msix package], the project's `pubspec.yaml`
-must contain an appropriate `msix_config` node.
+MSIX를 패키징하는 데 [`msix` pub 패키지][msix package]가 사용되므로, 
+프로젝트의 `pubspec.yaml`에는 적절한 `msix_config` 노드가 포함되어야 합니다.
 
-You must create an Azure AD directory from the Dev Center with
-[global administrator permission](https://azure.microsoft.com/documentation/articles/active-directory-assign-admin-roles/).
+Dev Center에서 [전역 관리자 권한](https://azure.microsoft.com/documentation/articles/active-directory-assign-admin-roles/)으로 Azure AD 디렉터리를 만들어야 합니다.
 
-The GitHub Action requires environment secrets from the partner center.
-`AZURE_AD_TENANT_ID`, `AZURE_AD_ClIENT_ID`, and `AZURE_AD_CLIENT_SECRET`
-are visible on the Dev Center following the instructions for the
-[Windows Store Publish Action](https://github.com/marketplace/actions/windows-store-publish#obtaining-your-credentials).
-You also need the `SELLER_ID` secret, which can be found in the Dev Center
-under **Account Settings** > **Organization Profile** > **Legal Info**.
+GitHub Action에는 파트너 센터의 환경 비밀(environment secrets)이 필요합니다. 
+`AZURE_AD_TENANT_ID`, `AZURE_AD_ClIENT_ID`, `AZURE_AD_CLIENT_SECRET`는 [Windows Store Publish Action](https://github.com/marketplace/actions/windows-store-publish#obtaining-your-credentials)에 대한 지침에 따라, Dev Center에 표시됩니다. 
+또한 **Account Settings** > **Organization Profile** > **Legal Info**에서, 
+Dev Center에서 찾을 수 있는 `SELLER_ID` 비밀도 필요합니다.
 
-The application must already be present in the Microsoft Dev Center with at
-least one complete submission, and `msstore init` must be run once within
-the repository before the Action can be performed. Once complete, running
-[`msstore package .`](https://learn.microsoft.com/windows/apps/publish/msstore-dev-cli/package-command)
-and
-[`msstore publish`](https://learn.microsoft.com/windows/apps/publish/msstore-dev-cli/publish-command)
-in a GitHub Action packages the
-application into an MSIX and uploads it to a new submission on the dev center.
+애플리케이션은 적어도 하나의 완전한 제출과 함께 Microsoft Dev Center에 이미 있어야 하며, 
+Action을 수행하기 전에 리포지토리 내에서 `msstore init`를 한 번 실행해야 합니다. 
+완료되면, GitHub Action에서 [`msstore package .`](https://learn.microsoft.com/windows/apps/publish/msstore-dev-cli/package-command)와 [`msstore publish`](https://learn.microsoft.com/windows/apps/publish/msstore-dev-cli/publish-command)를 실행하여, 
+애플리케이션을 MSIX로 패키징하고 개발자 센터의 새 제출에 업로드합니다.
 
-The steps necessary for MSIX publishing resemble the following
+MSIX 게시에 필요한 단계는 다음과 유사합니다.
 
 ```yaml
 - uses: microsoft/setup-msstore-cli@v1
@@ -158,94 +118,72 @@ The steps necessary for MSIX publishing resemble the following
 
 ## 앱 버전 번호 업데이트 {:#updating-the-apps-version-number}
 
-For apps published to the Microsoft Store,
-the version number must be set during the
-packaging process.
+Microsoft Store에 게시된 앱의 경우, 패키징 프로세스 중에 버전 번호를 설정해야 합니다.
 
-The default version number of the app is `1.0.0.0`.
+앱의 기본 버전 번호는 `1.0.0.0`입니다.
 
 :::note
-Microsoft Store apps are not allowed to have a
-Version with a revision number other than zero.
-Therefore, the last number of the version must
-remain zero for all releases.
-Ensure that you follow Microsoft's
-[versioning guidelines][windowspackageversioning].
+Microsoft Store 앱은 0이 아닌 수정 번호가 있는 버전을 가질 수 없습니다. 
+따라서, 모든 릴리스에서 버전의 마지막 번호는 0으로 유지되어야 합니다. 
+Microsoft의 [버전 관리 지침][windowspackageversioning]을 따르세요.
 :::
 
-For apps not published to the Microsoft Store, you
-can set the app's executable's file and product versions.
-The executable's default file version is `1.0.0.1`,
-and its default product version is `1.0.0+1`. To update these,
-navigate to the `pubspec.yaml` file and update the
-following line:
+Microsoft Store에 게시되지 않은 앱의 경우, 
+앱 실행 파일의 파일 및 제품 버전을 설정할 수 있습니다. 
+실행 파일의 기본 파일 버전은 `1.0.0.1`이고, 기본 제품 버전은 `1.0.0+1`입니다. 
+이를 업데이트하려면, `pubspec.yaml` 파일로 이동하여 다음 줄을 업데이트합니다.
 
 ```yaml
 version: 1.0.0+1
 ```
 
-The build name is three numbers separated by dots,
-followed by an optional build number that is separated
-by a `+`. In the example above, the build name is `1.0.0`
-and the build number is `1`.
+빌드 이름은 점으로 구분된 세 개의 숫자이며, 그 뒤에는 `+`로 구분된 선택적 빌드 번호가 옵니다. 
+위의 예에서 빌드 이름은 `1.0.0`이고 빌드 번호는 `1`입니다.
 
-The build name becomes the first three numbers of the
-file and product versions, while the build number becomes
-the fourth number of the file and product versions.
+빌드 이름은 파일 및 제품 버전의 처음 세 숫자가 되고, 
+빌드 번호는 파일 및 제품 버전의 네 번째 숫자가 됩니다.
 
-Both the build name and number can be overridden in
-`flutter build windows` by specifying `--build-name` and
-`--build-number`, respectively.
+빌드 이름과 번호는 각각 `--build-name`과 `--build-number`를 지정하여, 
+`flutter build windows`에서 재정의할 수 있습니다.
 
 :::note
-Flutter projects created before Flutter 3.3
-need to be updated to set the executable's version
-information. For more information,
-refer to the [version migration guide][].
+Flutter 3.3 이전에 생성된 Flutter 프로젝트는, 
+실행 파일의 버전 정보를 설정하도록 업데이트해야 합니다. 
+자세한 내용은 [버전 마이그레이션 가이드][version migration guide]를 참조하세요.
 :::
 
 ## 앱 아이콘 추가 {:#add-app-icons}
 
-To update the icon of a Flutter Windows
-desktop application before packaging use the
-following instructions:
+패키징하기 전에 Flutter Windows 데스크톱 애플리케이션의 아이콘을 업데이트하려면, 다음 지침을 따르세요.
 
-1. In the Flutter project, navigate to
-   **windows\runner\resources**.
-2. Replace the **app_icon.ico** with the desired icon.
-3. If the name of the icon is other than **app_icon.ico**,
-   proceed to change the **IDI_APP_ICON** value in the
-   **windows\runner\Runner.rc** file to point to the new path.
+1. Flutter 프로젝트에서 **windows\runner\resources**로 이동합니다.
+2. **app_icon.ico**를 원하는 아이콘으로 바꿉니다.
+3. 아이콘 이름이 **app_icon.ico**가 아닌 경우, 
+   **windows\runner\Runner.rc** 파일에서 
+   **IDI_APP_ICON** 값을 변경하여 새 경로를 가리키도록 합니다.
 
-When packaging with the [`msix` pub package][msix package],
-the logo path can also be configured inside the `pubspec.yaml` file.
+[`msix` pub 패키지][msix package]로 패키징하는 경우, 
+로고 경로도 `pubspec.yaml` 파일 내부에서 구성할 수 있습니다.
 
-To update the application image in the Store listing,
-navigate to the Store listing step of the submission
-and select Store logos.
-From there, you can upload the logo with
-the size of 300 x 300 pixels.
+스토어 리스트에서 애플리케이션 이미지를 업데이트하려면, 
+제출의 스토어 리스트 단계로 이동하여 스토어 로고를 선택합니다. 
+거기에서 300 x 300픽셀 크기의 로고를 업로드할 수 있습니다.
 
-All uploaded images are retained for subsequent submissions.
+업로드된 모든 이미지는 후속 제출을 위해 보관됩니다.
 
 ## 애플리케이션 패키지 검증 {:#validating-the-application-package}
 
-Before publication to the Microsoft Store,
-first validate the application package locally.
+Microsoft Store에 게시하기 전에, 먼저 로컬에서 애플리케이션 패키지를 검증합니다.
 
-[Windows App Certification Kit][windowsappcertification]
-is a tool included in the
-Windows Software Development Kit (SDK).
+[Windows 앱 인증 키트][windowsappcertification]은 Windows 소프트웨어 개발 키트(SDK)에 포함된 도구입니다.
 
-To validate the application:
+애플리케이션을 검증하려면:
 
-1. Launch Windows App Cert Kit.
-2. Select the Flutter Windows desktop package
-   (**.msix**, **.msixbundle**, etc.).
-3. Choose a destination for the test report.
+1. Windows App Cert Kit를 시작합니다.
+2. Flutter Windows 데스크톱 패키지(**.msix**, **.msixbundle** 등)를 선택합니다.
+3. 테스트 보고서의 대상을 선택합니다.
 
-The report might contain important warnings and information,
-even if the certification passes.
+인증에 통과하더라도, 보고서에는 중요한 경고와 정보가 포함될 수 있습니다.
 
 [azureadassociation]: https://docs.microsoft.com/windows/uwp/publish/associate-azure-ad-with-partner-center
 [cmworkfloweditor]: https://docs.codemagic.io/flutter-publishing/publishing-to-microsoft-store/

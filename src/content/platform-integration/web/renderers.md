@@ -15,72 +15,67 @@ Flutter 웹은 두 가지 _빌드 모드_ 와 두 가지 _렌더러_ 를 제공�
 
 ## Renderers {:renderers}
 
-Rendering UI in Flutter begins in the framework with widgets and render objects.
-Once processed, render objects generate a `Scene` object made of layers. The
-scene is then passed to the Flutter _engine_ that turns it into pixels. All of
-the framework, including all widgets and custom app code, and much of the engine
-are written in Dart. However, a big part of the engine is written in C++, which
-includes Skia, as well as custom Flutter engine code. Multiple options are
-available on the web for how to compile Dart and C++, what graphics system to
-use to convert UI into pixels, how to split the workload across threads, etc.
+Flutter에서 UI 렌더링은 위젯과 렌더 객체가 있는 프레임워크에서 시작됩니다. 
+처리된 렌더 객체는 레이어로 구성된 `Scene` 객체를 생성합니다. 
+그런 다음 장면은 Flutter _엔진_ 으로 전달되어 픽셀로 변환됩니다. 
+모든 위젯과 커스텀 앱 코드를 포함한 모든 프레임워크와 엔진의 대부분은 Dart로 작성되었습니다. 
+그러나, 엔진의 큰 부분은 Skia와 커스텀 Flutter 엔진 코드를 포함한 C++로 작성되었습니다. 
+Dart와 C++를 컴파일하는 방법, UI를 픽셀로 변환하는 데 사용할 그래픽 시스템, 
+스레드 간에 작업 부하를 분할하는 방법 등에 대한 여러 옵션이 웹에서 제공됩니다.
 
-Flutter web does not offer all possible combinations of options. Instead, it
-provides just two bundles of carefully chosen combinations.
+Flutter 웹은 가능한 모든 옵션 조합을 제공하지 않습니다. 
+대신, 신중하게 선택한 조합의 두 가지 번들만 제공합니다.
 
 ### canvaskit
 
-When using the `canvaskit` renderer, the Dart code is compiled to JavaScript,
-and the UI is rendered on the main thread into WebGL. It is compatible with all
-modern browsers. It includes a copy of Skia compiled to WebAssembly, which adds
-about 1.5MB in download size.
+`canvaskit` 렌더러를 사용할 때, Dart 코드는 JavaScript로 컴파일되고, 
+UI는 메인 스레드에서 WebGL로 렌더링됩니다. 
+모든 최신 브라우저와 호환됩니다. 
+여기에는 WebAssembly로 컴파일된 Skia 사본이 포함되어 있어, 다운로드 크기가 약 1.5MB 추가됩니다.
 
 ### skwasm
 
-When using `skwasm` the Dart code is compiled to WebAssembly. Additionally, if
-the hosting server meets the [SharedArrayBuffer security requirements][],
-Flutter will use a dedicated [web worker][] to offload part of the rendering
-workload to a separate thread, taking advantage of multiple CPU cores. This
-renderer includes a more compact version of Skia compiled to WebAssembly, adding
-about 1.1MB in download size.
+`skwasm`을 사용하면 Dart 코드가 WebAssembly로 컴파일됩니다. 
+또한, 호스팅 서버가 [SharedArrayBuffer 보안 요구 사항][SharedArrayBuffer security requirements]을 충족하는 경우, 
+Flutter는 전용 [웹 워커][web worker]를 사용하여, 
+렌더링 작업 부하의 일부를 별도의 스레드로 오프로드하여 여러 CPU 코어를 활용합니다. 
+이 렌더러에는 WebAssembly로 컴파일된 Skia의 더 컴팩트한 버전이 포함되어 있어, 
+다운로드 크기가 약 1.1MB 추가됩니다.
 
 ## 빌드 모드 {:build-modes}
 
-### Default build mode
+### 기본 빌드 모드 {:#default-build-mode}
 
-The default mode is used when `flutter run` and `flutter build web` commands are
-used without passing `--wasm` or by passing `--no-wasm`. This build mode only
-uses the `canvaskit` renderer.
+기본 모드는 `flutter run` 및 `flutter build web` 명령이, 
+`--wasm`을 전달하지 않고 사용되거나 `--no-wasm`을 전달하여 사용될 때 사용됩니다. 
+이 빌드 모드는 `canvaskit` 렌더러만 사용합니다.
 
-### WebAssembly build mode
+### WebAssembly 빌드 모드 {:#webassembly-build-mode}
 
-This mode is enabled by passing `--wasm` to `flutter run` and
-`flutter build web` commands.
+이 모드는 `--wasm`을 `flutter run` 및 `flutter build web` 명령에 전달하여 활성화됩니다.
 
-This mode makes both `skwasm` and `canvaskit` available. `skwasm` requires
-[wasm garbage collection][], which is not yet supported by all modern browsers.
-Therefore, at runtime Flutter will pick `skwasm` if garbage collection is
-supported, and fallback to `canvaskit` if not. This allows apps compiled in the
-WebAssembly mode to still run in all modern browsers.
+이 모드에서는 `skwasm`과 `canvaskit`을 모두 사용할 수 있습니다. 
+`skwasm`은 [wasm 가비지 수집][wasm garbage collection]을 필요로 하는데, 아직 모든 최신 브라우저에서 지원되지 않습니다. 
+따라서, 런타임에 Flutter는 가비지 수집이 지원되는 경우 `skwasm`을 선택하고, 
+지원되지 않는 경우 `canvaskit`으로 대체합니다. 
+이를 통해 WebAssembly 모드에서 컴파일된 앱이 모든 최신 브라우저에서 계속 실행될 수 있습니다.
 
-The `--wasm` flag is not supported by non-web platforms.
+`--wasm` 플래그는 웹이 아닌 플랫폼에서는 지원되지 않습니다.
 
-## Choosing a renderer at runtime
+## 런타임에 렌더러 선택 {:#choosing-a-renderer-at-runtime}
 
-By default, when building in WebAssembly mode, Flutter will decide when to
-use `skwasm`, and when to fallback to `canvaskit`. This can be overridden by
-passing a configuration object to the loader, as follows:
+기본적으로 WebAssembly 모드에서 빌드할 때, 
+Flutter는 `skwasm`을 사용할 때와 `canvaskit`으로 대체할 때를 결정합니다. 
+다음과 같이 로더에 구성 객체를 전달하여 재정의할 수 있습니다.
 
- 1. Build the app with the `--wasm` flag to make both `skwasm` and `canvaskit`
-    renderers available to the app.
- 1. Set up custom web app initialization as described in
-    [Write a custom `flutter_bootstrap.js`][custom-bootstrap].
- 1. Prepare a configuration object with the `renderer` property set to
-    `"canvaskit"` or `"skwasm"`.
- 1. Pass your prepared config object as the `config` property of
-    a new object to the `_flutter.loader.load` method that is
-    provided by the earlier injected code.
+1. `--wasm` 플래그로 앱을 빌드하여 `skwasm`과 `canvaskit` 렌더러를 모두 앱에서 사용할 수 있도록 합니다.
+1. [커스텀 `flutter_bootstrap.js` 작성][custom-bootstrap]에서 설명한 대로, 
+   커스텀 웹 앱 초기화를 설정합니다.
+2. `renderer` 속성이 `"canvaskit"` 또는 `"skwasm"`으로 설정된 구성 객체를 준비합니다.
+3. 준비된 구성 객체를 새 객체의 `config` 속성으로 전달하여, 
+   이전에 주입된 코드에서 제공하는 `_flutter.loader.load` 메서드에 전달합니다.
 
-Example:
+예:
 
 ```html highlightLines=9-14
 <body>
@@ -88,7 +83,7 @@ Example:
     {% raw %}{{flutter_js}}{% endraw %}
     {% raw %}{{flutter_build_config}}{% endraw %}
 
-    // TODO: Replace this with your own code to determine which renderer to use.
+    // TODO: 이 코드를 자신의 코드로 바꿔서 사용할 렌더러를 결정하세요.
     const useCanvasKit = true;
 
     const config = {
@@ -101,14 +96,13 @@ Example:
 </body>
 ```
 
-The web renderer can't be changed after calling the `load` method. Therefore,
-any decisions about which renderer to use, must be made prior to calling
-`_flutter.loader.load`.
+`load` 메서드를 호출한 후에는 웹 렌더러를 변경할 수 없습니다. 
+따라서, 어떤 렌더러를 사용할지에 대한 결정은 `_flutter.loader.load`를 호출하기 전에 내려야 합니다.
 
 :::version-note
-The method of specifying the web renderer was changed in Flutter 3.22.
-To learn how to configure the renderer in earlier Flutter versions,
-check out [Legacy web app initialization][web-init-legacy].
+웹 렌더러를 지정하는 방법은 Flutter 3.22에서 변경되었습니다. 
+이전 Flutter 버전에서 렌더러를 구성하는 방법을 알아보려면, 
+[레거시 웹 앱 초기화][web-init-legacy]를 확인하세요.
 :::
 
 [custom-bootstrap]: /platform-integration/web/initialization#custom-bootstrap-js
@@ -117,50 +111,46 @@ check out [Legacy web app initialization][web-init-legacy].
 
 ## 사용할 빌드 모드 선택 {:#choosing-which-build-mode-to-use}
 
-Compiling Dart to WebAssembly comes with a few new requirements that must be met
-by all app code, and all plugins and packages used by the app:
+Dart를 WebAssembly로 컴파일하면, 
+모든 앱 코드와 앱에서 사용하는 모든 플러그인 및 패키지에서 충족해야 하는 몇 가지 새로운 요구 사항이 있습니다.
 
-- The code must only use the new JS interop library `dart:js_interop`. Old-style
-  `dart:js`, `dart:js_util`, and `package:js` are no longer supported.
-- Code using Web APIs must use the new `package:web` instead of `dart:html`.
-- WebAssembly implements Dart's numeric types `int` and `double` exactly the
-  same as the Dart VM. In JavaScript these types are emulated using the JS
-  `Number` type. It is possible that your code accidentally or purposefully
-  relies on the JS behavior for numbers. If so, such code needs to be updated to
-  behave correctly with the Dart VM behavior.
+- 코드는 새로운 JS 상호 운용 라이브러리 `dart:js_interop`만 사용해야 합니다. 
+  이전 스타일의 `dart:js`, `dart:js_util`, `package:js`는 더 이상 지원되지 않습니다.
+- 웹 API를 사용하는 코드는 `dart:html` 대신 새로운 `package:web`을 사용해야 합니다.
+- WebAssembly는 Dart의 숫자 타입 `int`와 `double`을 Dart VM과 정확히 동일하게 구현합니다. 
+  JavaScript에서 이러한 타입은 JS `Number` 타입을 사용하여 에뮬레이트됩니다. 
+  코드가 실수로 또는 의도적으로 숫자에 대한 JS 동작에 의존할 수 있습니다. 
+  그렇다면 이러한 코드는 Dart VM 동작과 올바르게 동작하도록 업데이트해야 합니다.
 
-General recommendations can be summarized as follows:
+일반적인 권장 사항은 다음과 같이 요약할 수 있습니다.
 
-* Choose the default mode if your app relies on plugins and packages that do
-  not yet support WebAssembly.
-* Choose the WebAssembly mode if your app's code and packages are compatible
-  with WebAssembly and app performance is important. `skwasm` has noticeably
-  better app start-up time and frame performance compared to `canvaskit`.
-  `skwasm` is particularly effective in multi-threaded mode, so consider
-  configuring the server such that it meets the
-  [SharedArrayBuffer security requirements][].
+* 앱이 아직 WebAssembly를 지원하지 않는 플러그인과 패키지에 의존하는 경우, 기본 모드를 선택합니다.
+* 앱의 코드와 패키지가 WebAssembly와 호환되고 앱 성능이 중요한 경우, WebAssembly 모드를 선택합니다. 
+  `skwasm`은 `canvaskit`에 비해 앱 시작 시간과 프레임 성능이 눈에 띄게 더 좋습니다. 
+  `skwasm`은 특히 멀티스레드 모드에서 효과적이므로, 
+  [SharedArrayBuffer 보안 요구 사항][SharedArrayBuffer security requirements]을 충족하도록 서버를 구성하는 것을 고려하세요.
 
 ## 예제 {:#examples}
 
-Run in Chrome using the default build mode:
+기본 빌드 모드를 사용하여 Chrome에서 실행합니다.
 
 ```console
 flutter run -d chrome
 ```
 
-Build your app for release using the default build mode:
+기본 빌드 모드를 사용하여 릴리스용 앱을 빌드하세요.
 
 ```console
 flutter build web
 ```
 
-Build your app for release using the WebAssembly mode:
+WebAssembly 모드를 사용하여 릴리스용 앱을 빌드하세요.
 
 ```console
 flutter build web --wasm
 ```
 
-Run your app for profiling using the default build mode:
+기본 빌드 모드를 사용하여 프로파일링을 위해 앱을 실행합니다.
 
 ```console
 flutter run -d chrome --profile

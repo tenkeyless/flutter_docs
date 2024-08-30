@@ -36,16 +36,14 @@ macOS에서 플랫폼 뷰를 만들려면, 다음 지침을 따르세요.
 
 ## Dart 측에서 {:#on-the-dart-side}
 
-On the Dart side, create a `Widget` and add the build implementation, as shown
-in the following steps.
+Dart 쪽에서, `Widget`을 만들고 다음 단계에 표시된 대로 빌드 구현을 추가합니다.
 
-In the Dart widget file, make changes similar to those 
-shown in `native_view_example.dart`:
+Dart 위젯 파일에서, `native_view_example.dart`에 표시된 것과 유사한 변경을 합니다.
 
 <ol>
 <li>
 
-Add the following imports:
+다음 imports를 추가합니다.
 
 <?code-excerpt "lib/native_view_example_4.dart (import)"?>
 ```dart
@@ -57,14 +55,14 @@ import 'package:flutter/services.dart';
 
 <li>
 
-Implement a `build()` method:
+`build()` 메서드를 구현합니다.
 
 <?code-excerpt "lib/native_view_example_4.dart (macos-composition)"?>
 ```dart
 Widget build(BuildContext context) {
-  // This is used in the platform side to register the view.
+  // 이는 플랫폼 측에서 뷰를 등록하는 데 사용됩니다.
   const String viewType = '<platform-view-type>';
-  // Pass parameters to the platform side.
+  // 플랫폼 측에 매개변수를 전달합니다.
   final Map<String, dynamic> creationParams = <String, dynamic>{};
 
   return AppKitView(
@@ -79,15 +77,15 @@ Widget build(BuildContext context) {
 </li>
 </ol>
 
-For more information, see the API docs for: [`AppKitView`][].
+자세한 내용은 [`AppKitView`][]에 대한 API 문서를 참조하세요.
 
 [`AppKitView`]: {{site.api}}/flutter/widgets/AppKitView-class.html
 
 ## 플랫폼 측에서 {:#on-the-platform-side}
 
-Implement the factory and the platform view. The `NativeViewFactory` creates the
-platform view, and the platform view provides a reference to the `NSView`. For
-example, `NativeView.swift`:
+팩토리와 플랫폼 뷰를 구현합니다. 
+`NativeViewFactory`는 플랫폼 뷰를 생성하고 플랫폼 뷰는 `NSView`에 대한 참조를 제공합니다. 
+예를 들어, `NativeView.swift`:
 
 ```swift
 import Cocoa
@@ -111,7 +109,7 @@ class NativeViewFactory: NSObject, FlutterPlatformViewFactory {
       binaryMessenger: messenger)
   }
 
-  /// Implementing this method is only necessary when the `arguments` in `createWithFrame` is not `nil`.
+  /// 이 메서드를 구현하는 것은 `createWithFrame`의 `arguments`가 `nil`이 아닌 경우에만 필요합니다.
   public func createArgsCodec() -> (FlutterMessageCodec & NSObjectProtocol)? {
     return FlutterStandardMessageCodec.sharedInstance()
   }
@@ -127,7 +125,7 @@ class NativeView: NSView {
     super.init(frame: CGRect(x: 0, y: 0, width: 200, height: 200))
     wantsLayer = true
     layer?.backgroundColor = NSColor.systemBlue.cgColor
-    // macOS views can be created here
+    // macOS 뷰는 여기에서 생성할 수 있습니다.
     createNativeView(view: self)
   }
     
@@ -151,9 +149,9 @@ class NativeView: NSView {
 
 ```
 
-Finally, register the platform view. This can be done in an app or a plugin.
+마지막으로, 플랫폼 뷰를 등록합니다. 이는 앱이나 플러그인에서 수행할 수 있습니다.
 
-For app registration, modify the App's `MainFlutterWindow.swift`:
+앱 등록의 경우, 앱의 `MainFlutterWindow.swift`를 수정합니다.
 
 ```swift
 import Cocoa
@@ -172,8 +170,7 @@ class MainFlutterWindow: NSWindow {
 }
 ```
 
-For plugin registration, modify the plugin's main file (for example,
-`Plugin.swift`):
+플러그인 등록을 위해, 플러그인의 메인 파일을 수정합니다(예: `Plugin.swift`):
 
 ```swift
 import Cocoa
@@ -187,7 +184,7 @@ public class Plugin: NSObject, FlutterPlugin {
 }
 ```
 
-For more information, see the API docs for:
+자세한 내용은 다음 API 문서를 참조하세요.
 
 * [`FlutterPlatformViewFactory`][]
 * [`FlutterPlatformView`][]
@@ -197,27 +194,26 @@ For more information, see the API docs for:
 [`FlutterPlatformViewFactory`]: {{site.api}}/ios-embedder/protocol_flutter_platform_view_factory-p.html
 [`PlatformView`]: {{site.api}}/javadoc/io/flutter/plugin/platform/PlatformView.html
 
-## 그것을 함께 넣기 {:#putting-it-together}
+## 함께 모으기 {:#putting-it-together}
 
-When implementing the `build()` method in Dart,
-you can use [`defaultTargetPlatform`][]
-to detect the platform, and decide which widget to use:
+Dart에서 `build()` 메서드를 구현할 때, 
+[`defaultTargetPlatform`][]을 사용하여 플랫폼을 감지하고 어떤 위젯을 사용할지 결정할 수 있습니다.
 
 <?code-excerpt "lib/native_view_example_4.dart (together-widget)"?>
 ```dart
 Widget build(BuildContext context) {
-  // This is used in the platform side to register the view.
+  // 이는 플랫폼 측에서 뷰를 등록하는 데 사용됩니다.
   const String viewType = '<platform-view-type>';
-  // Pass parameters to the platform side.
+  // 플랫폼 측에 매개변수를 전달합니다.
   final Map<String, dynamic> creationParams = <String, dynamic>{};
 
   switch (defaultTargetPlatform) {
     case TargetPlatform.android:
-    // return widget on Android.
+    // Android에 대한 위젯을 반환합니다.
     case TargetPlatform.iOS:
-    // return widget on iOS.
+    // iOS에 대한 위젯을 반환합니다.
     case TargetPlatform.macOS:
-    // return widget on macOS.
+    // macOS에 대한 위젯을 반환합니다.
     default:
       throw UnsupportedError('Unsupported platform view');
   }
@@ -227,15 +223,14 @@ Widget build(BuildContext context) {
 [`defaultTargetPlatform`]: {{site.api}}/flutter/foundation/defaultTargetPlatform.html
 
 ## 성능 {:#performance}
-Platform views in Flutter come with performance trade-offs.
 
-For example, in a typical Flutter app, the Flutter UI is composed on a dedicated
-raster thread. This allows Flutter apps to be fast, as this thread is rarely
-blocked.
+Flutter의 플랫폼 뷰는 성능 트레이드 오프와 함께 제공됩니다.
 
-When a platform view is rendered with hybrid composition, the Flutter UI
-continues to be composed from the dedicated raster thread, but the platform view
-performs graphics operations on the platform thread. To rasterize the combined
-contents, Flutter performs synchronization between its raster thread and the
-platform thread. As such, any slow or blocking operations on the platform thread
-can negatively impact Flutter graphics performance.
+예를 들어, 일반적인 Flutter 앱에서 Flutter UI는 전용 래스터 스레드에서 구성됩니다. 
+이 스레드는 거의 차단되지 않으므로, Flutter 앱이 빠르게 실행될 수 있습니다.
+
+하이브리드 구성으로 플랫폼 뷰를 렌더링하는 경우, 
+Flutter UI는 전용 래스터 스레드에서 계속 구성되지만, 
+플랫폼 뷰는 플랫폼 스레드에서 그래픽 작업을 수행합니다. 
+결합된 콘텐츠를 래스터화하기 위해, Flutter는 래스터 스레드와 플랫폼 스레드 간에 동기화를 수행합니다. 
+따라서, 플랫폼 스레드에서 느리거나 차단되는 작업은 Flutter 그래픽 성능에 부정적인 영향을 미칠 수 있습니다.

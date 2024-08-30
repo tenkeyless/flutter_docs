@@ -35,35 +35,26 @@ macOS에서 Dart FFI 라이브러리를 사용하여 바인딩하는 방법을 �
 
 ## Dynamic vs static 링크 {:#dynamic-vs-static-linking}
 
-A native library can be linked into an app either
-dynamically or statically. A statically linked library
-is embedded into the app's executable image,
-and is loaded when the app starts.
+네이티브 라이브러리는 동적으로 또는 정적으로 앱에 링크될 수 있습니다. 
+정적으로 링크된 라이브러리는 앱의 실행 가능 이미지에 내장되고 앱이 시작될 때 로드됩니다.
 
-Symbols from a statically linked library can be
-loaded using `DynamicLibrary.executable` or
-`DynamicLibrary.process`.
+정적으로 링크된 라이브러리의 심볼은 `DynamicLibrary.executable` 또는 
+`DynamicLibrary.process`를 사용하여 로드할 수 있습니다.
 
-A dynamically linked library, by contrast, is distributed
-in a separate file or folder within the app,
-and loaded on-demand. On macOS, the dynamically linked
-library is distributed as a `.framework` folder.
+반면, 동적으로 링크된 라이브러리는 앱 내의 별도 파일이나 폴더에 배포되고 필요에 따라 로드됩니다. 
+macOS에서 동적으로 링크된 라이브러리는 `.framework` 폴더로 배포됩니다.
 
-A dynamically linked library can be loaded into
-Dart using `DynamicLibrary.open`.
+동적으로 링크된 라이브러리는 `DynamicLibrary.open`을 사용하여 Dart에 로드할 수 있습니다.
 
-API documentation is available from the Dart dev channel:
-[Dart API reference documentation][].
-
+API 문서는 Dart 개발 채널에서 제공됩니다: [Dart API 참조 문서][Dart API reference documentation].
 
 [Dart API reference documentation]: {{site.dart.api}}/dev/
 
 ## FFI 플러그인 만들기 {:#create-an-ffi-plugin}
 
-If you already have a plugin, skip this step.
+이미 플러그인이 있는 경우, 이 단계를 건너뜁니다.
 
-To create a plugin called "native_add",
-do the following:
+"native_add"라는 플러그인을 만들려면 다음을 수행합니다.
 
 ```console
 $ flutter create --platforms=macos --template=plugin_ffi native_add
@@ -71,46 +62,37 @@ $ cd native_add
 ```
 
 :::note
-You can exclude platforms from `--platforms` that you don't want
-to build to. However, you need to include the platform of 
-the device you are testing on.
+빌드하고 싶지 않은 플랫폼을 `--platforms`에서 제외할 수 있습니다. 
+그러나 테스트하는 기기의 플랫폼을 포함해야 합니다.
 :::
 
-This will create a plugin with C/C++ sources in `native_add/src`.
-These sources are built by the native build files in the various
-os build folders.
+이렇게 하면 `native_add/src`에 C/C++ 소스가 있는 플러그인이 생성됩니다. 
+이러한 소스는 다양한 os 빌드 폴더의 네이티브 빌드 파일에 의해 빌드됩니다.
 
-The FFI library can only bind against C symbols,
-so in C++ these symbols are marked `extern "C"`.
+FFI 라이브러리는 C 심볼에 대해서만 바인딩할 수 있으므로, 
+C++에서 이러한 심볼은 `extern "C"`로 표시됩니다.
 
-You should also add attributes to indicate that the
-symbols are referenced from Dart,
-to prevent the linker from discarding the symbols
-during link-time optimization.
+또한 심볼이 Dart에서 참조된다는 것을 나타내는 속성을 추가하여, 
+링커가 링크 타임 최적화 중에 심볼을 삭제하지 못하도록 해야 합니다. 
 `__attribute__((visibility("default"))) __attribute__((used))`.
 
-On iOS, the `native_add/macos/native_add.podspec` links the code.
+iOS에서 `native_add/macos/native_add.podspec`은 코드를 연결합니다.
 
-The native code is invoked from dart in `lib/native_add_bindings_generated.dart`.
+네이티브 코드는 `lib/native_add_bindings_generated.dart`에서 dart에서 호출됩니다.
 
-The bindings are generated with [package:ffigen]({{site.pub-pkg}}/ffigen).
+바인딩은 [package:ffigen]({{site.pub-pkg}}/ffigen)으로 생성됩니다.
 
 ## 다른 사용 사례 {:#other-use-cases}
 
 ### iOS 및 macOS {:#ios-and-macos}
 
-Dynamically linked libraries are automatically loaded by
-the dynamic linker when the app starts. Their constituent
-symbols can be resolved using [`DynamicLibrary.process`][].
-You can also get a handle to the library with
-[`DynamicLibrary.open`][] to restrict the scope of
-symbol resolution, but it's unclear how Apple's
-review process handles this.
+동적으로 링크된 라이브러리는 앱이 시작될 때 동적 링커에 의해 자동으로 로드됩니다. 
+구성 심볼은 [`DynamicLibrary.process`][]를 사용하여 해결할 수 있습니다. 
+또한 [`DynamicLibrary.open`][]을 사용하여, 라이브러리에 대한 핸들을 가져와, 
+심볼 해결 범위를 제한할 수 있지만, Apple의 검토 프로세스가 이를 어떻게 처리하는지는 불분명합니다.
 
-Symbols statically linked into the application binary
-can be resolved using [`DynamicLibrary.executable`][] or
-[`DynamicLibrary.process`][].
-
+애플리케이션 바이너리에 정적으로 링크된 심볼은, 
+[`DynamicLibrary.executable`][] 또는 [`DynamicLibrary.process`][]를 사용하여 해결할 수 있습니다.
 
 [`DynamicLibrary.executable`]: {{site.dart.api}}/dev/dart-ffi/DynamicLibrary/DynamicLibrary.executable.html
 [`DynamicLibrary.open`]: {{site.dart.api}}/dev/dart-ffi/DynamicLibrary/DynamicLibrary.open.html
@@ -118,33 +100,25 @@ can be resolved using [`DynamicLibrary.executable`][] or
 
 #### Platform 라이브러리 {:#platform-library}
 
-To link against a platform library,
-use the following instructions:
+플랫폼 라이브러리에 연결하려면, 다음 지침을 따르세요.
 
-1. In Xcode, open `Runner.xcworkspace`.
-1. Select the target platform.
-1. Click **+** in the **Linked Frameworks and Libraries**
-   section.
-1. Select the system library to link against.
+1. Xcode에서 `Runner.xcworkspace`를 엽니다.
+2. 대상 플랫폼을 선택합니다.
+3. **Linked Frameworks and Libraries** 섹션에서 **+**를 클릭합니다.
+4. 연결할 시스템 라이브러리를 선택합니다.
 
 #### 퍼스트파티 라이브러리 {:#first-party-library}
 
-A first-party native library can be included either
-as source or as a (signed) `.framework` file.
-It's probably possible to include statically linked
-archives as well, but it requires testing.
+퍼스트파티 네이티브 라이브러리는 소스 또는 (서명된) `.framework` 파일로 포함될 수 있습니다. 
+정적으로 링크된 아카이브도 포함할 수 있지만 테스트가 필요합니다.
 
 #### 소스 코드 {:#source-code}
 
-To link directly to source code,
-use the following instructions:
+소스 코드에 직접 링크하려면, 다음 지침을 따르세요.
 
- 1. In Xcode, open `Runner.xcworkspace`.
- 2. Add the C/C++/Objective-C/Swift
-    source files to the Xcode project.
- 3. Add the following prefix to the
-    exported symbol declarations to ensure they
-    are visible to Dart:
+1. Xcode에서 `Runner.xcworkspace`를 엽니다.
+2. C/C++/Objective-C/Swift 소스 파일을 Xcode 프로젝트에 추가합니다.
+3. Dart에서 볼 수 있도록 내보낸 심볼 선언에 다음 접두사를 추가합니다.
 
     **C/C++/Objective-C**
 
@@ -160,49 +134,36 @@ use the following instructions:
 
 #### 컴파일된(dynamic) 라이브러리 {:#compiled-dynamic-library}
 
-To link to a compiled dynamic library,
-use the following instructions:
+컴파일된 동적 라이브러리에 링크하려면, 다음 지침을 따르세요.
 
-1. If a properly signed `Framework` file is present,
-   open `Runner.xcworkspace`.
-1. Add the framework file to the **Embedded Binaries**
-   section.
-1. Also add it to the **Linked Frameworks & Libraries**
-   section of the target in Xcode.
+1. 적절하게 서명된 `Framework` 파일이 있는 경우, `Runner.xcworkspace`를 엽니다.
+1. 프레임워크 파일을 **Embedded Binaries** 섹션에 추가합니다.
+1. 또한 Xcode에서 대상의 **Linked Frameworks & Libraries** 섹션에도 추가합니다.
 
 #### 컴파일된(dynamic) 라이브러리 (macOS) {:#compiled-dynamic-library-macos}
 
-To add a closed source library to a
-[Flutter macOS Desktop][] app,
-use the following instructions:
+[Flutter macOS Desktop][] 앱에, closed 소스 라이브러리를 추가하려면, 다음 지침을 따르세요.
 
-1. Follow the instructions for Flutter desktop to create
-   a Flutter desktop app.
-1. Open the `yourapp/macos/Runner.xcworkspace` in Xcode.
-   1. Drag your precompiled library (`libyourlibrary.dylib`)
-      into `Runner/Frameworks`.
-   1. Click `Runner` and go to the `Build Phases` tab.
-      1. Drag `libyourlibrary.dylib` into the
-         `Copy Bundle Resources` list.
-      1. Under `Embed Libraries`, check `Code Sign on Copy`.
-      1. Under `Link Binary With Libraries`,
-         set status to `Optional`. (We use dynamic linking,
-         no need to statically link.)
-   1. Click `Runner` and go to the `General` tab.
-      1. Drag `libyourlibrary.dylib` into the **Frameworks,
-         Libraries and Embedded Content** list.
-      1. Select **Embed & Sign**.
-   1. Click **Runner** and go to the **Build Settings** tab.
-      1. In the **Search Paths** section configure the
-         **Library Search Paths** to include the path
-         where `libyourlibrary.dylib` is located.
-1. Edit `lib/main.dart`.
-   1. Use `DynamicLibrary.open('libyourlibrary.dylib')`
-      to dynamically link to the symbols.
-   1. Call your native function somewhere in a widget.
-1. Run `flutter run` and check that your native function gets called.
-1. Run `flutter build macos` to build a self-contained release
-   version of your app.
+1. Flutter 데스크톱에 대한 지침에 따라 Flutter 데스크톱 앱을 만듭니다.
+1. Xcode에서 `yourapp/macos/Runner.xcworkspace`를 엽니다.
+   1. 사전 컴파일된 라이브러리(`libyourlibrary.dylib`)를 `Runner/Frameworks`로 드래그합니다.
+   2. `Runner`를 클릭하고 `Build Phases` 탭으로 이동합니다.
+      1. `libyourlibrary.dylib`를 `Copy Bundle Resources` 목록으로 드래그합니다.
+      2. `Embed Libraries`에서 `Code Sign on Copy`를 선택합니다.
+      3. `Link Binary With Libraries`에서 상태를 `Optional`로 설정합니다. 
+         (동적 링크를 사용하므로 정적으로 링크할 필요가 없습니다.)
+   3. `Runner`를 클릭하고 `General` 탭으로 이동합니다.
+      1. `libyourlibrary.dylib`를 **Frameworks, Libraries and Embedded Content** 리스트로 
+         끌어다 놓습니다.
+      2. **Embed & Sign**을 선택합니다.
+   4. **Runner**를 클릭하고, **Build Settings** 탭으로 이동합니다.
+      1. **Search Paths** 섹션에서 `libyourlibrary.dylib`가 있는 경로를 포함하도록, 
+         **Library Search Paths**를 구성합니다.
+2. `lib/main.dart`를 편집합니다.
+   1. `DynamicLibrary.open('libyourlibrary.dylib')`를 사용하여 심볼에 동적으로 연결합니다.
+   2. 위젯의 어딘가에서 네이티브 함수를 호출합니다.
+3. `flutter run`을 실행하고, 네이티브 함수가 호출되는지 확인합니다.
+4. `flutter build macos`를 실행하여, 앱의 독립형 릴리스 버전을 빌드합니다.
 
 [Flutter macOS Desktop]: /platform-integration/macos/building
 

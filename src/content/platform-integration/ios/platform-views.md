@@ -30,17 +30,14 @@ iOS에서 플랫폼 뷰를 만들려면, 다음 지침을 따르세요.
 
 ## Dart 측에서 {:#on-the-dart-side}
 
-On the Dart side, create a `Widget`
-and add the build implementation,
-as shown in the following steps.
+Dart 쪽에서 `Widget`을 만들고 다음 단계에 표시된 대로 빌드 구현을 추가합니다.
 
-In the Dart widget file, make changes similar to those 
-shown in `native_view_example.dart`:
+Dart 위젯 파일에서, `native_view_example.dart`에 표시된 것과 유사한 변경을 합니다.
 
 <ol>
 <li>
 
-Add the following imports:
+다음 import를 추가합니다.
 
 <?code-excerpt "lib/native_view_example_3.dart (import)"?>
 ```dart
@@ -52,14 +49,14 @@ import 'package:flutter/services.dart';
 
 <li>
 
-Implement a `build()` method:
+`build()` 메서드를 구현합니다.
 
 <?code-excerpt "lib/native_view_example_3.dart (ios-composition)"?>
 ```dart
 Widget build(BuildContext context) {
-  // This is used in the platform side to register the view.
+  // 이는 플랫폼 측에서 뷰를 등록하는 데 사용됩니다.
   const String viewType = '<platform-view-type>';
-  // Pass parameters to the platform side.
+  // 플랫폼 측에 매개변수를 전달합니다.
   final Map<String, dynamic> creationParams = <String, dynamic>{};
 
   return UiKitView(
@@ -74,22 +71,20 @@ Widget build(BuildContext context) {
 </li>
 </ol>
 
-For more information, see the API docs for:
-[`UIKitView`][].
+자세한 내용은, [`UIKitView`][]에 대한 API 문서를 참조하세요.
 
 [`UIKitView`]: {{site.api}}/flutter/widgets/UiKitView-class.html
 
 ## 플랫폼 측에서 {:#on-the-platform-side}
 
-On the platform side, use either Swift or Objective-C:
+플랫폼 측에서는, Swift 또는 Objective-C를 사용하세요.
 
 {% tabs "darwin-language" %}
 {% tab "Swift" %}
 
-Implement the factory and the platform view.
-The `FLNativeViewFactory` creates the platform view,
-and the platform view provides a reference to the `UIView`.
-For example, `FLNativeView.swift`:
+팩토리와 플랫폼 뷰를 구현합니다. 
+`FLNativeViewFactory`는 플랫폼 뷰를 생성하고, 플랫폼 뷰는 `UIView`에 대한 참조를 제공합니다. 
+예를 들어, `FLNativeView.swift`:
 
 ```swift
 import Flutter
@@ -115,7 +110,7 @@ class FLNativeViewFactory: NSObject, FlutterPlatformViewFactory {
             binaryMessenger: messenger)
     }
 
-    /// Implementing this method is only necessary when the `arguments` in `createWithFrame` is not `nil`.
+    /// 이 메서드를 구현하는 것은 `createWithFrame`의 `arguments`가 `nil`이 아닌 경우에만 필요합니다.
     public func createArgsCodec() -> FlutterMessageCodec & NSObjectProtocol {
           return FlutterStandardMessageCodec.sharedInstance()
     }
@@ -132,7 +127,7 @@ class FLNativeView: NSObject, FlutterPlatformView {
     ) {
         _view = UIView()
         super.init()
-        // iOS views can be created here
+        // iOS 뷰는 여기에서 생성할 수 있습니다.
         createNativeView(view: _view)
     }
 
@@ -152,11 +147,9 @@ class FLNativeView: NSObject, FlutterPlatformView {
 }
 ```
 
-Finally, register the platform view.
-This can be done in an app or a plugin.
+마지막으로, 플랫폼 뷰를 등록합니다. 이는 앱이나 플러그인에서 수행할 수 있습니다.
 
-For app registration,
-modify the App's `AppDelegate.swift`:
+앱 등록의 경우, 앱의 `AppDelegate.swift`를 수정합니다.
 
 ```swift
 import Flutter
@@ -181,9 +174,7 @@ import UIKit
 }
 ```
 
-For plugin registration,
-modify the plugin's main file
-(for example, `FLPlugin.swift`):
+플러그인 등록을 위해, 플러그인의 메인 파일을 수정합니다. (예: `FLPlugin.swift`)
 
 ```swift
 import Flutter
@@ -200,8 +191,8 @@ class FLPlugin: NSObject, FlutterPlugin {
 {% endtab %}
 {% tab "Objective-C" %}
 
-In Objective-C, add the headers for the factory and the platform view.
-For example, as shown in `FLNativeView.h`:
+Objective-C에서, 팩토리와 플랫폼 뷰의 헤더를 추가합니다.
+예를 들어, `FLNativeView.h`에 표시된 대로:
 
 ```objc
 #import <Flutter/Flutter.h>
@@ -221,10 +212,10 @@ For example, as shown in `FLNativeView.h`:
 @end
 ```
 
-Implement the factory and the platform view.
-The `FLNativeViewFactory` creates the platform view,
-and the platform view provides a reference to the
-`UIView`. For example, `FLNativeView.m`:
+팩토리와 플랫폼 뷰를 구현합니다. 
+`FLNativeViewFactory`는 플랫폼 뷰를 생성하고, 
+플랫폼 뷰는 `UIView`에 대한 참조를 제공합니다. 
+예를 들어, `FLNativeView.m`:
 
 ```objc
 #import "FLNativeView.h"
@@ -250,7 +241,7 @@ and the platform view provides a reference to the
                              binaryMessenger:_messenger];
 }
 
-/// Implementing this method is only necessary when the `arguments` in `createWithFrame` is not `nil`.
+/// 이 메서드를 구현하는 것은 `createWithFrame`의 `arguments`가 `nil`이 아닌 경우에만 필요합니다.
 - (NSObject<FlutterMessageCodec>*)createArgsCodec {
     return [FlutterStandardMessageCodec sharedInstance];
 }
@@ -278,11 +269,9 @@ and the platform view provides a reference to the
 @end
 ```
 
-Finally, register the platform view.
-This can be done in an app or a plugin.
+마지막으로, 플랫폼 뷰를 등록합니다. 이는 앱이나 플러그인에서 수행할 수 있습니다.
 
-For app registration,
-modify the App's `AppDelegate.m`:
+앱 등록의 경우, 앱의 `AppDelegate.m`을 수정합니다.
 
 ```objc
 #import "AppDelegate.h"
@@ -309,9 +298,7 @@ modify the App's `AppDelegate.m`:
 @end
 ```
 
-For plugin registration,
-modify the main plugin file
-(for example, `FLPlugin.m`):
+플러그인 등록을 위해, 메인 플러그인 파일을 수정합니다. (예: `FLPlugin.m`)
 
 ```objc
 #import <Flutter/Flutter.h>
@@ -334,7 +321,7 @@ modify the main plugin file
 {% endtab %}
 {% endtabs %}
 
-For more information, see the API docs for:
+자세한 내용은 다음 API 문서를 참조하세요.
 
 * [`FlutterPlatformViewFactory`][]
 * [`FlutterPlatformView`][]
@@ -344,27 +331,26 @@ For more information, see the API docs for:
 [`FlutterPlatformViewFactory`]: {{site.api}}/ios-embedder/protocol_flutter_platform_view_factory-p.html
 [`PlatformView`]: {{site.api}}/javadoc/io/flutter/plugin/platform/PlatformView.html
 
-## 그것을 함께 넣기 {:#putting-it-together}
+## 함께 모으기 {:#putting-it-together}
 
-When implementing the `build()` method in Dart,
-you can use [`defaultTargetPlatform`][]
-to detect the platform, and decide which widget to use:
+Dart에서 `build()` 메서드를 구현할 때, 
+[`defaultTargetPlatform`][]을 사용하여 플랫폼을 감지하고, 어떤 위젯을 사용할지 결정할 수 있습니다.
 
 <?code-excerpt "lib/native_view_example_3.dart (together-widget)"?>
 ```dart
 Widget build(BuildContext context) {
-  // This is used in the platform side to register the view.
+  // 이는 플랫폼 측에서 뷰를 등록하는 데 사용됩니다.
   const String viewType = '<platform-view-type>';
-  // Pass parameters to the platform side.
+  // 플랫폼 측에 매개변수를 전달합니다.
   final Map<String, dynamic> creationParams = <String, dynamic>{};
 
   switch (defaultTargetPlatform) {
     case TargetPlatform.android:
-    // return widget on Android.
+    // Android에서 위젯을 반환합니다.
     case TargetPlatform.iOS:
-    // return widget on iOS.
+    // iOS에서 위젯을 반환합니다.
     case TargetPlatform.macOS:
-    // return widget on macOS.
+    // macOS에서 위젯을 반환합니다.
     default:
       throw UnsupportedError('Unsupported platform view');
   }
@@ -372,37 +358,28 @@ Widget build(BuildContext context) {
 ```
 
 ## 성능 {:#performance}
-Platform views in Flutter come with performance trade-offs.
 
-For example, in a typical Flutter app, the Flutter UI is 
-composed on a dedicated raster thread. 
-This allows Flutter apps to be fast, 
-as the main platform thread is rarely blocked.
+Flutter의 플랫폼 뷰는 성능 트레이드 오프가 따릅니다.
 
-When a platform view is rendered with hybrid composition, 
-the Flutter UI is composed from the platform thread. 
-The platform thread competes with other tasks 
-like handling OS or plugin messages.
+예를 들어, 일반적인 Flutter 앱에서, Flutter UI는 전용 래스터 스레드에서 구성됩니다. 
+이를 통해 Flutter 앱은 빠르게 실행될 수 있는데, 메인 플랫폼 스레드가 거의 차단되지 않기 때문입니다.
 
-When an iOS PlatformView is on screen, the screen refresh rate is 
-capped at 80fps to avoid rendering janks.
+하이브리드 구성으로 플랫폼 뷰를 렌더링하면, Flutter UI가 플랫폼 스레드에서 구성됩니다. 
+플랫폼 스레드는 OS 또는 플러그인 메시지 처리와 같은 다른 작업과 경쟁합니다.
 
-For complex cases, there are some techniques that can be used 
-to mitigate performance issues.
+iOS PlatformView가 화면에 표시되면, 렌더링 janks를 방지하기 위해, 화면 새로 고침 빈도가 80fps로 제한됩니다.
 
-For example, you could use a placeholder texture while an 
-animation is happening in Dart. 
-In other words, if an animation is slow while a platform view is rendered, 
-then consider taking a screenshot of the native view and rendering it as a texture.
+복잡한 경우, 성능 문제를 완화하는 데 사용할 수 있는 몇 가지 기술이 있습니다.
+
+예를 들어, Dart에서 애니메이션이 실행되는 동안 플레이스홀더 텍스처를 사용할 수 있습니다. 
+즉, 플랫폼 뷰가 렌더링되는 동안 애니메이션이 느리면, 기본 뷰의 스크린샷을 찍어 텍스처로 렌더링하는 것을 고려하세요.
 
 ## 구성 제한 사항 {:#composition-limitations}
 
-There are some limitations when composing iOS Platform Views.
+iOS 플랫폼 뷰를 구성할 때 몇 가지 제한이 있습니다.
 
-- The [`ShaderMask`][] and [`ColorFiltered`][] widgets are not supported.
-- The [`BackdropFilter`][] widget is supported, 
-but there are some limitations on how it can be used. 
-For more details, check out the [iOS Platform View Backdrop Filter Blur design doc][design-doc].
+- [`ShaderMask`][] 및 [`ColorFiltered`][] 위젯은 지원되지 않습니다.
+- [`BackdropFilter`][] 위젯은 지원되지만 사용 방법에 몇 가지 제한이 있습니다. 자세한 내용은 [iOS 플랫폼 뷰 배경 필터 흐림 디자인 문서][design-doc]를 확인하세요.
 
 [`ShaderMask`]: {{site.api}}/flutter/foundation/ShaderMask.html
 [`ColorFiltered`]: {{site.api}}/flutter/foundation/ColorFiltered.html

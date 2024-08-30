@@ -18,388 +18,329 @@ description: >
 
 ## 초기화 및 셋업 {:#installation-and-setup}
 
-Follow the [Set up an editor](/get-started/editor?tab=androidstudio)
-instructions to install the Dart and Flutter plugins.
+[편집기 설정](/get-started/editor?tab=androidstudio) 지침에 따라, 
+Dart 및 Flutter 플러그인을 설치하세요.
 
-### Updating the plugins {:#updating}
+### 플러그인 업데이트 {:#updating}
 
-Updates to the plugins are shipped on a regular basis.
-You should be prompted in the IDE when an update is available.
+플러그인 업데이트는 정기적으로 제공됩니다. 업데이트가 제공되면 IDE에서 메시지가 표시됩니다.
 
-To check for updates manually:
+수동으로 업데이트를 확인하려면:
 
- 1. Open preferences (**Android Studio > Check for Updates** on macOS,
-    **Help > Check for Updates** on Linux).
- 1. If `dart` or `flutter` are listed, update them.
+1. 환경 설정을 엽니다. 
+   (macOS에서는 **Android Studio > Check for Updates**, Linux에서는 **Help > Check for Updates**)
+2. `dart` 또는 `flutter`가 나열되어 있으면 업데이트합니다.
 
-## Creating projects
+## 프로젝트 생성 {:#creating-projects}
 
-You can create a new project in one of several ways.
+여러 가지 방법으로 새 ​​프로젝트를 만들 수 있습니다.
 
-### Creating a new project
+### 새로운 프로젝트 만들기 {:#creating-a-new-project}
 
-Creating a new Flutter project from the Flutter starter app template
-differs between Android Studio and IntelliJ.
+Flutter 시작 앱 템플릿에서 새 Flutter 프로젝트를 만드는 방법은 Android Studio와 IntelliJ에서 다릅니다.
 
-**In Android Studio:**
+**Android Studio에서:**
 
- 1. In the IDE, click **New Flutter Project** from the **Welcome** window or
-    **File > New > New Flutter Project** from the main IDE window.
- 1. Specify the **Flutter SDK path** and click **Next**.
- 1. Enter your desired **Project name**, 
-    **Description**, and **Project location**.
- 1. If you might publish this app,
-    [set the company domain](#set-the-company-domain).
- 1. Click **Finish**.
+1. IDE에서 **Welcome** 창에서 **New Flutter Project**를 클릭하거나, 
+   메인 IDE 창에서 **File > New > New Flutter Project**를 클릭합니다.
+2. **Flutter SDK path**를 지정하고, **Next**를 클릭합니다.
+3. 원하는 **Project name**, **Description**, **Project location**을 입력합니다.
+4. 이 앱을 게시할 경우, [회사 도메인을 설정합니다](#set-the-company-domain).
+5. **Finish**를 클릭합니다.
 
-**In IntelliJ:**
+**IntelliJ에서:**
 
- 1. In the IDE, click **New Project** from the **Welcome** window or
-    **File > New > Project** from the main IDE window.
- 1. Select **Flutter** from the **Generators** list in the left panel
- 1. Specify the **Flutter SDK path** and click **Next**.
- 1. Enter your desired **Project name**,
-    **Description**, and **Project location**.
- 1. If you might publish this app,
-    [set the company domain](#set-the-company-domain).
- 1. Click **Finish**.
+1. IDE에서 **Welcome** 창에서 **New Project**를 클릭하거나, 
+   메인 IDE 창에서 **File > New > Project**를 클릭합니다.
+2. 왼쪽 패널의 **Generators** 리스트에서 **Flutter**를 선택합니다.
+3. **Flutter SDK path**를 지정하고, **Next**를 클릭합니다.
+4. 원하는 **Project name**, **Description**, **Project location**을 입력합니다.
+5. 이 앱을 게시할 경우, [회사 도메인을 설정합니다](#set-the-company-domain).
+6. **Finish**를 클릭합니다.
 
-#### Set the company domain
+#### 회사 도메인 설정 {:#set-the-company-domain}
 
-When creating a new app, some Flutter IDE plugins ask for an
-organization name in reverse domain order,
-something like `com.example`. Along with the name of the app,
-this is used as the package name for Android, and the Bundle ID for iOS
-when the app is released. If you think you might ever release this app,
-it is better to specify these now. They cannot be changed once the app
-is released. Your organization name should be unique.
+새로운 앱을 만들 때, 일부 Flutter IDE 플러그인은 도메인 순서의 역순으로 조직 이름을 요구합니다. 
+예를 들어 `com.example`과 같습니다. 
+앱 이름과 함께 Android의 패키지 이름으로 사용되고, 앱이 출시될 때 iOS의 번들 ID로 사용됩니다. 
+이 앱을 출시할 가능성이 있다고 생각되면 지금 지정하는 것이 좋습니다. 
+앱이 출시되면 변경할 수 없습니다. 조직 이름은 고유해야 합니다.
 
-### Opening a project from existing source code
+### 기존 소스 코드에서 프로젝트 열기 {:#opening-a-project-from-existing-source-code}
 
-To open an existing Flutter project:
+기존 Flutter 프로젝트를 여는 방법:
 
- 1. In the IDE, click **Open** from the **Welcome** window, or
-    **File > Open** from the main IDE window. 
- 1. Browse to the directory holding your existing
-    Flutter source code files.
- 1. Click **Open**.
-
+1. IDE에서, **Welcome** 창에서 **Open**를 클릭하거나, 메인 IDE 창에서 **File > Open**를 클릭합니다.
+1. 기존 Flutter 소스 코드 파일이 있는 디렉터리로 이동합니다.
+1. **Open**를 클릭합니다.
+   
     :::important
-    Do *not* use the **New > Project from existing sources**
-    option for Flutter projects.
+    Flutter 프로젝트에 **New > Project from existing sources** 옵션을 사용하지 *마십시오*.
     :::
 
+## 코드 편집 및 문제 보기 {:#editing-code-and-viewing-issues}
 
-## Editing code and viewing issues
+Flutter 플러그인은 다음을 가능하게 하는 코드 분석을 수행합니다.
 
-The Flutter plugin performs code analysis that enables the following:
-
-* Syntax highlighting.
-* Code completions based on rich type analysis.
-* Navigating to type declarations (**Navigate > Declaration**),
-  and finding type usages (**Edit > Find > Find Usages**).
-* Viewing all current source code problems
-  (**View > Tool Windows > Dart Analysis**).
-  Any analysis issues are shown in the Dart Analysis pane:<br>
+* 구문 강조 표시.
+* 풍부한 타입 분석을 기반으로 한 코드 완성.
+* 타입 선언으로 이동(**Navigate > Declaration**) 및 타입 사용 찾기(**Edit > Find > Find Usages**).
+* 모든 현재 소스 코드 문제 보기(**View > Tool Windows > Dart Analysis**). 
+  모든 분석 문제는 Dart Analysis 창에 표시됩니다.<br>
   ![Dart Analysis pane](/assets/images/docs/tools/android-studio/dart-analysis.png){:width="90%"}
 
-## Running and debugging
+## 실행 및 디버깅 {:#running-and-debugging}
 
 :::note
-You can debug your app in a few ways.
+앱을 디버깅하는 방법은 여러 가지가 있습니다.
 
-* Using [DevTools][], a suite of debugging and profiling
-  tools that run in a browser
-  _and include the Flutter inspector_.
-* Using Android Studio's (or IntelliJ's) built-in debugging
-  features, such as the ability to set breakpoints.
-* Using the Flutter inspector, directly available in
-  Android Studio and IntelliJ.
+* 브라우저에서 실행되고 _Flutter 인스펙터를 포함하는_ 디버깅 및 프로파일링 도구 모음인 [DevTools][]를 사용합니다.
+* 중단점을 설정하는 기능과 같은 Android Studio(또는 IntelliJ)의 기본 제공 디버깅 기능을 사용합니다.
+* Android Studio 및 IntelliJ에서 바로 사용할 수 있는 Flutter 인스펙터를 사용합니다.
 
-The instructions below describe features available in Android
-Studio and IntelliJ. For information on launching DevTools,
-see [Running DevTools from Android Studio][] in the
-[DevTools][] docs.
+아래 지침에서는 Android Studio 및 IntelliJ에서 사용할 수 있는 기능을 설명합니다. 
+DevTools를 시작하는 방법에 대한 자세한 내용은, 
+[DevTools][] 문서의 [Android Studio에서 DevTools 실행][Running DevTools from Android Studio]을 참조하세요.
 :::
 
-Running and debugging are controlled from the main toolbar:
+실행 및 디버깅은 메인 도구 모음에서 제어됩니다.
 
 ![Main IntelliJ toolbar](/assets/images/docs/tools/android-studio/main-toolbar.png){:width="90%"}
 
-### Selecting a target
+### 타겟 선택 {:#selecting-a-target}
 
-When a Flutter project is open in the IDE, you should see a set of
-Flutter-specific buttons on the right-hand side of the toolbar.
-
-:::note
-If the Run and Debug buttons are disabled, and no targets are listed,
-Flutter has not been able to discover any connected iOS or
-Android devices or simulators.
-You need to connect a device, or start a simulator, to proceed.
-:::
-
- 1. Locate the **Flutter Target Selector** drop-down button.
-    This shows a list of available targets.
- 2. Select the target you want your app to be started on.
-    When you connect devices, or start simulators,
-    additional entries appear.
-
-### Run app without breakpoints
-
- 1. Click the **Play icon** in the toolbar, or invoke **Run > Run**.
-    The bottom **Run** pane shows logs output.
-
-### Run app with breakpoints
-
- 1. If desired, set breakpoints in your source code.
- 1. Click the **Debug icon** in the toolbar, or invoke **Run > Debug**.
-    * The bottom **Debugger** pane shows Stack Frames and Variables.
-    * The bottom **Console** pane shows detailed logs output.
-    * Debugging is based on a default launch configuration.
-      To customize this, click the drop-down button to the right
-      of the device selector, and select **Edit configuration**.
-
-## Fast edit and refresh development cycle
-
-Flutter offers a best-in-class developer cycle enabling you to see the effect
-of your changes almost instantly with the _Stateful Hot Reload_ feature.
-To learn more, check out [Hot reload][].
-
-### Show performance data
+IDE에서 Flutter 프로젝트를 열면, 도구 모음 오른쪽에 Flutter 관련 버튼 세트가 표시됩니다.
 
 :::note
-To examine performance issues in Flutter, see the
-[Timeline view][].
+실행 및 디버그 버튼이 비활성화되고, 대상이 나열되지 않으면, 
+Flutter가 연결된 iOS 또는 Android 기기나 시뮬레이터를 발견하지 못한 것입니다. 
+계속하려면 기기를 연결하거나 시뮬레이터를 시작해야 합니다.
 :::
 
-To view the performance data, including the widget rebuild
-information, start the app in **Debug** mode, and then open
-the Performance tool window using
-**View > Tool Windows > Flutter Performance**.
+1. **Flutter Target Selector** 드롭다운 버튼을 찾습니다. 
+   여기에는 사용 가능한 대상 리스트가 표시됩니다.
+2. 앱을 시작할 대상을 선택합니다. 
+   기기를 연결하거나 시뮬레이터를 시작하면 추가 항목이 나타납니다.
+
+### 중단점 없이 앱 실행 {:#run-app-without-breakpoints}
+
+1. 툴바에서 **Play icon**을 클릭하거나, **Run > Run**을 호출합니다. 
+   하단의 **Run** 창에 로그 출력이 표시됩니다.
+
+### 중단점을 사용하여 앱 실행 {:#run-app-with-breakpoints}
+
+1. 원하는 경우, 소스 코드에 중단점을 설정합니다.
+1. 도구 모음에서 **Debug icon**을 클릭하거나, **Run > Debug**를 호출합니다.
+   * 하단 **Debugger** 창에는 스택 프레임과 변수가 표시됩니다.
+   * 하단 **Console** 창에는 자세한 로그 출력이 표시됩니다.
+   * 디버깅은 기본 실행 구성을 기반으로 합니다. 
+     이를 커스터마이즈 하려면, 장치 선택기 오른쪽에 있는 드롭다운 버튼을 클릭하고, 
+     **Edit configuration**을 선택합니다.
+
+## 편집 및 새로 고침으로 빠른 개발 주기 {:#fast-edit-and-refresh-development-cycle}
+
+Flutter는 _Stateful Hot Reload_ 기능으로, 
+변경 사항의 효과를 거의 즉시 확인할 수 있는 동급 최고의 개발자 주기를 제공합니다. 
+자세한 내용은 [Hot reload][]를 확인하세요.
+
+### 성능 데이터 표시 {:#show-performance-data}
+
+:::note
+Flutter에서 성능 문제를 조사하려면, [타임라인 뷰][Timeline view]를 참조하세요.
+:::
+
+위젯 재구축 정보를 포함한 성능 데이터를 보려면, 
+앱을 **Debug** 모드에서 시작한 다음, 
+**View > Tool Windows > Flutter Performance**을 사용하여 성능 도구 창을 엽니다.
 
 ![Flutter performance window](/assets/images/docs/tools/android-studio/widget-rebuild-info.png){:width="90%"}
 
-To see the stats about which widgets are being rebuilt, and how often,
-click **Show widget rebuild information** in the **Performance** pane.
-The exact count of the rebuilds for this frame displays in the second
-column from the right. For a high number of rebuilds, a yellow spinning
-circle displays. The column to the far right shows how many times a
-widget was rebuilt since entering the current screen.
-For widgets that aren't rebuilt, a solid grey circle displays.
-Otherwise, a grey spinning circle displays.
+어떤 위젯이 얼마나 자주 재구축되고 있는지에 대한 통계를 보려면, 
+**Performance** 창에서 **Show widget rebuild information**를 클릭합니다. 
+이 프레임의 정확한 재구축 횟수는 오른쪽에서 두 번째 열에 표시됩니다. 
+재구축 횟수가 많으면, 노란색 회전 원이 표시됩니다. 
+가장 오른쪽 열은 현재 화면에 들어온 이후 위젯이 재구축된 횟수를 보여줍니다. 
+재구축되지 않은 위젯의 경우, 단색 회색 원이 표시됩니다. 
+그렇지 않으면 회색 회전 원이 표시됩니다.
 
 :::secondary
-The app shown in this screenshot has been designed to deliver
-poor performance, and the rebuild profiler gives you a clue
-about what is happening in the frame that might cause poor
-performance. The widget rebuild profiler is not a diagnostic
-tool, by itself, about poor performance.
+이 스크린샷에 표시된 앱은 성능이 좋지 않도록 설계되었으며, 
+재구축 프로파일러는 프레임에서 성능이 좋지 않을 수 있는 일이 무엇인지에 대한 단서를 제공합니다. 
+위젯 재구축 프로파일러 자체는 성능이 좋지 않은 것에 대한 진단 도구가 아닙니다.
 :::
 
-The purpose of this feature is to make you aware when widgets are
-rebuilding&mdash;you might not realize that this is happening when just
-looking at the code. If widgets are rebuilding that you didn't expect,
-it's probably a sign that you should refactor your code by splitting
-up large build methods into multiple widgets.
+이 기능의 목적은 위젯이 재구축될 때 사용자에게 알리는 것입니다. 
+코드를 볼 때는 이런 일이 일어나고 있다는 것을 깨닫지 못할 수도 있습니다. 
+예상치 못한 위젯이 재구축되는 경우, 
+대규모 빌드 메서드를 여러 위젯으로 나누어 코드를 리팩토링해야 한다는 신호일 수 있습니다.
 
-This tool can help you debug at least four common performance issues:
+이 도구는 최소한 네 가지 일반적인 성능 문제를 디버깅하는 데 도움이 될 수 있습니다.
 
-1. The whole screen (or large pieces of it) are built by a single
-   StatefulWidget, causing unnecessary UI building. Split up the
-   UI into smaller widgets with smaller `build()` functions.
+1. 전체 화면(또는 큰 화면 부분)이 단일 StatefulWidget에 의해 빌드되어, 불필요한 UI 빌드가 발생합니다. 
+   UI를 더 작은 `build()` 함수로 더 작은 위젯으로 분할합니다.
 
-1. Offscreen widgets are being rebuilt. This can happen, for example,
-   when a ListView is nested in a tall Column that extends offscreen.
-   Or when the RepaintBoundary is not set for a list that extends
-   offscreen, causing the whole list to be redrawn.
+2. 오프스크린 위젯이 다시 빌드됩니다. 
+   예를 들어, ListView가 오프스크린으로 확장되는 긴 Column에 중첩되어 있는 경우 발생할 수 있습니다. 
+   또는 오프스크린으로 확장되는 리스트에 대해 RepaintBoundary가 설정되지 않아, 
+   전체 리스트가 다시 그려지는 경우입니다.
 
-1. The `build()` function for an AnimatedBuilder draws a subtree that
-   does not need to be animated, causing unnecessary rebuilds of static
-   objects.
+3. AnimatedBuilder의 `build()` 함수는 애니메이션이 필요하지 않은 하위 트리를 그려, 
+   정적 객체의 불필요한 다시 빌드를 발생시킵니다.
 
-1. An Opacity widget is placed unnecessarily high in the widget tree.
-   Or, an Opacity animation is created by directly manipulating the
-   opacity property of the Opacity widget, causing the widget itself
-   and its subtree to rebuild.
+4. Opacity 위젯이 위젯 트리에서 불필요하게 높은 위치에 배치됩니다. 
+   또는 Opacity 위젯의 opacity 속성을 직접 조작하여, 
+   Opacity 애니메이션을 만들어 위젯 자체와 하위 트리가 다시 빌드됩니다.
 
-You can click on a line in the table to navigate to the line
-in the source where the widget is created. As the code runs,
-the spinning icons also display in the code pane to help you
-visualize which rebuilds are happening.
+테이블의 줄을 클릭하면 위젯이 생성된 소스의 줄로 이동할 수 있습니다. 
+코드가 실행되면, 회전하는 아이콘도 코드 창에 표시되어, 
+어떤 재구축이 발생하고 있는지 시각화하는 데 도움이 됩니다.
 
-Note that numerous rebuilds doesn't necessarily indicate a problem.
-Typically you should only worry about excessive rebuilds if you have
-already run the app in profile mode and verified that the performance
-is not what you want.
+여러 번 재구축한다고 해서 반드시 문제가 있는 것은 아닙니다. 
+일반적으로 프로필 모드에서 앱을 이미 실행하고, 
+성능이 원하는 수준이 아님을 확인한 경우에만, 
+과도한 재구축에 대해 걱정해야 합니다.
 
-And remember, _the widget rebuild information is only available in
-a debug build_. Test the app's performance on a real device in a profile
-build, but debug performance issues in a debug build.
+그리고 _위젯 재구축 정보는 디버그 빌드에서만 사용할 수 있습니다_. 
+프로필 빌드에서 실제 기기에서 앱의 성능을 테스트하지만, 
+디버그 빌드에서 성능 문제를 디버그합니다.
 
-## Editing tips for Flutter code
+## Flutter 코드 편집 팁 {:#editing-tips-for-flutter-code}
 
-If you have additional tips we should share, [let us know][]!
+추가로 공유하고 싶은 팁이 있다면, [알려주세요][let us know]!
 
-### Assists & quick fixes
+### 지원 및 빠른 수정 {:#assists-quick-fixes}
 
-Assists are code changes related to a certain code identifier.
-A number of these are available when the cursor is placed on a
-Flutter widget identifier, as indicated by the yellow lightbulb icon.
-The assist can be invoked by clicking the lightbulb, or by using the
-keyboard shortcut (`Alt`+`Enter` on Linux and Windows,
-`Option`+`Return` on macOS), as illustrated here:
+지원(Assists)은 특정 코드 식별자와 관련된 코드 변경입니다. 
+이 중 다수는 노란색 전구 아이콘으로 표시된 Flutter 위젯 식별자에 커서를 놓았을 때 사용할 수 있습니다. 
+전구를 클릭하거나, 키보드 단축키(Linux 및 Windows에서는 `Alt`+`Enter`, macOS에서는 `Option`+`Return`)를 사용하여, 여기에서 설명한 대로 지원을 호출할 수 있습니다.
 
 ![IntelliJ editing assists](/assets/images/docs/tools/android-studio/assists.gif){:width="100%"}
 
-Quick Fixes are similar, only they are shown with a piece of code has an error
-and they can assist in correcting it. They are indicated with a red lightbulb.
+빠른 수정은 비슷하지만, 코드에 오류가 있고 이를 수정하는 데 도움이 될 수 있는 코드 조각과 함께 표시됩니다. 
+빨간색 전구로 표시됩니다.
 
-#### Wrap with new widget assist
+#### 새로운 위젯으로 래핑 지원 {:#wrap-with-new-widget-assist}
 
-This can be used when you have a widget that you want to wrap in a surrounding
-widget, for example if you want to wrap a widget in a `Row` or `Column`.
+이 기능은 주변 위젯으로 위젯을 래핑하려는 경우, 
+예를 들어 위젯을 `Row` 또는 `Column`로 래핑하려는 경우에 사용할 수 있습니다.
 
-#### Wrap widget list with new widget assist
+#### 새로운 위젯으로 위젯 리스트 래핑 지원 {:#wrap-widget-list-with-new-widget-assist}
 
-Similar to the assist above, but for wrapping an existing list of
-widgets rather than an individual widget.
+위의 지원과 비슷하지만, 개별 위젯이 아닌 기존 위젯 리스트를 래핑하는 데 사용됩니다.
 
-#### Convert child to children assist
+#### child를 children로 전환 지원 {:#convert-child-to-children-assist}
 
-Changes a child argument to a children argument,
-and wraps the argument value in a list.
+child 인수를 children 인수로 변경하고, 인수 값을 리스트로 묶습니다.
 
-### Live templates
+### 라이브 템플릿 {:#live-templates}
 
-Live templates can be used to speed up entering typical code structures.
-They are invoked by typing their prefix, and then selecting it in the code
-completion window:
+라이브 템플릿은 일반적인 코드 구조 입력 속도를 높이는 데 사용할 수 있습니다. 
+접두사를 입력한 다음, 코드 완성 창에서 선택하여 호출합니다.
 
 ![IntelliJ live templates](/assets/images/docs/tools/android-studio/templates.gif){:width="100%"}
 
-The Flutter plugin includes the following templates:
+Flutter 플러그인에는 다음 템플릿이 포함되어 있습니다.
 
-* Prefix `stless`: Create a new subclass of `StatelessWidget`.
-* Prefix `stful`: Create a new subclass of `StatefulWidget` and
-  its associated State subclass.
-* Prefix `stanim`: Create a new subclass of `StatefulWidget` and its
-  associated State subclass, including a field initialized with an
-  `AnimationController`.
+* 접두사 `stless`: `StatelessWidget`의 새 하위 클래스를 만듭니다.
+* 접두사 `stful`: `StatefulWidget`의 새 하위 클래스와 연관된 State 하위 클래스를 만듭니다.
+* 접두사 `stanim`: `AnimationController`로 초기화된 필드를 포함하여, `StatefulWidget`의 새 하위 클래스와 
+  연관된 State 하위 클래스를 만듭니다.
 
-You can also define custom templates in **Settings > Editor > Live Templates**.
+**Settings > Editor > Live Templates**에서 커스텀 템플릿을 정의할 수도 있습니다.
 
-### Keyboard shortcuts
+### 키보드 단축키 {:#keyboard-shortcuts}
 
-**Hot reload**
+**핫 리로드**
 
-On Linux (keymap _Default for XWin_) and Windows the keyboard shortcuts
-are `Control`+`Alt`+`;` and `Control`+`Backslash`.
+Linux(키맵 _Default for XWin_)와 Windows에서 키보드 단축키는 `Control`+`Alt`+`;`와 `Control`+`Backslash`입니다.
 
-On macOS (keymap _Mac OS X 10.5+ copy_) the keyboard shortcuts are
-`Command`+`Option` and `Command`+`Backslash`.
+macOS(키맵 _Mac OS X 10.5+ copy_)에서 키보드 단축키는 `Command`+`Option`와 `Command`+`Backslash`입니다.
 
-Keyboard mappings can be changed in the IDE Preferences/Settings: Select
-*Keymap*, then enter _flutter_ into the search box in the upper right corner.
-Right click the binding you want to change and _Add Keyboard Shortcut_.
+키보드 매핑은 IDE 환경 설정/설정에서 변경할 수 있습니다. 
+*Keymap*을 선택한 다음 오른쪽 상단 모서리에 있는 검색 상자에 _flutter_ 를 입력합니다. 
+변경하려는 바인딩을 마우스 오른쪽 버튼으로 클릭하고 _Add Keyboard Shortcut_ 를 클릭합니다.
 
 ![IntelliJ settings keymap](/assets/images/docs/tools/android-studio/keymap-settings-flutter-plugin.png){:width="100%"}
 
-### Hot reload vs. hot restart
+### 핫 리로드 vs. 핫 리스타트 {:#hot-reload-vs-hot-restart}
 
-Hot reload works by injecting updated source code files into the running
-Dart VM (Virtual Machine). This includes not only adding new classes,
-but also adding methods and fields to existing classes,
-and changing existing functions.
-A few types of code changes cannot be hot reloaded though:
+핫 리로드는 업데이트된 소스 코드 파일을 실행 중인 Dart VM(가상 머신)에 주입하여 작동합니다. 
+여기에는 새 클래스를 추가하는 것뿐만 아니라, 
+기존 클래스에 메서드와 필드를 추가하고 기존 함수를 변경하는 것도 포함됩니다. 
+그러나 몇 가지 타입의 코드 변경은 핫 리로드할 수 없습니다.
 
-* Global variable initializers
-* Static field initializers
-* The `main()` method of the app
+* 전역 변수 initializer
+* 정적 필드 initializer
+* 앱의 `main()` 메서드
 
-For these changes you can fully restart your application,
-without having to end your debugging session. To perform a hot restart,
-don't click the Stop button, simply re-click the Run button (if in a run
-session) or Debug button (if in a debug session), or shift-click the 'hot
-reload' button.
+이러한 변경의 경우 디버깅 세션을 종료하지 않고도, 애플리케이션을 완전히 다시 시작할 수 있습니다. 
+핫 리로드를 수행하려면, 중지 버튼을 클릭하지 말고, 
+실행 버튼(실행 세션에 있는 경우) 또는 디버그 버튼(디버그 세션에 있는 경우)을 다시 클릭하거나, 
+Shift 키를 누른 채 '핫 리로드' 버튼을 클릭합니다.
 
-## Editing Android code in Android Studio with full IDE support {:#android-ide}
+## IDE 전체 지원을 통해 Android Studio에서 Android 코드 편집 {:#android-ide}
 
-Opening the root directory of a Flutter project doesn't expose all the Android
-files to the IDE. Flutter apps contain a subdirectory named `android`. If you
-open this subdirectory as its own separate project in Android Studio, the IDE
-will be able to fully support editing and refactoring all Android files (like
-Gradle scripts).
+Flutter 프로젝트의 루트 디렉토리를 열면, 모든 Android 파일이 IDE에 노출되지 않습니다. 
+Flutter 앱에는 `android`라는 하위 디렉토리가 있습니다. 
+Android Studio에서 이 하위 디렉토리를 별도의 프로젝트로 열면, 
+IDE에서 모든 Android 파일(Gradle 스크립트 등)의 편집 및 리팩토링을 완벽하게 지원할 수 있습니다.
 
-If you already have the entire project opened as a Flutter app in Android
-Studio, there are two equivalent ways to open the Android files on their own
-for editing in the IDE. Before trying this, make sure that you're on the latest
-version of Android Studio and the Flutter plugins.
+Android Studio에서 전체 프로젝트를 Flutter 앱으로 이미 열었다면, 
+IDE에서 편집하기 위해 Android 파일을 직접 여는 두 가지 동등한 방법이 있습니다. 
+이 작업을 시도하기 전에 Android Studio와 Flutter 플러그인의 최신 버전을 사용하고 있는지 확인하세요.
 
-* In the ["project view"][], you should see a subdirectory immediately under
-  the root of your flutter app named `android`. Right click on it,
-  then select **Flutter > Open Android module in Android Studio**.
-* OR, you can open any of the files under the `android` subdirectory for
-  editing. You should then see a "Flutter commands" banner at the top of the
-  editor with a link  labeled **Open for Editing in Android Studio**.
-  Click that link.
+* ["project view"][]에서, flutter 앱 루트 바로 아래에 `android`라는 하위 디렉토리가 보일 것입니다. 
+  여기서 마우스 오른쪽 버튼을 클릭한 다음, 
+  **Flutter > Open Android module in Android Studio**를 선택합니다.
+* 또는 `android` 하위 디렉토리에 있는 파일을 편집을 위해 열 수 있습니다. 
+  그러면 편집기 상단에 **Open for Editing in Android Studio**라는 링크가 있는 
+  "Flutter commands" 배너가 보일 것입니다. 해당 링크를 클릭합니다.
 
-For both options, Android Studio gives you the option to use separate windows or
-to replace the existing window with the new project when opening a second
-project. Either option is fine.
+두 옵션 모두 Android Studio에서 두 번째 프로젝트를 열 때 별도의 창을 사용하거나, 
+기존 창을 새 프로젝트로 바꿀 수 있는 옵션을 제공합니다. 어느 옵션이든 괜찮습니다.
 
-If you don't already have the Flutter project opened in Android studio,
-you can open the Android files as their own project from the start:
+Android Studio에서 아직 Flutter 프로젝트를 열지 않은 경우, 
+처음부터 Android 파일을 자체 프로젝트로 열 수 있습니다.
 
-1. Click **Open an existing Android Studio Project** on the Welcome
-   splash screen, or **File > Open** if Android Studio is already open.
-2. Open the `android` subdirectory immediately under the flutter app root.
-   For example if the project is called `flutter_app`,
-   open `flutter_app/android`.
+1. 시작 시작 화면에서 **Open an existing Android Studio Project**를 클릭하거나,
+   Android Studio가 이미 열려 있는 경우, **File > Open**를 클릭합니다.
+2. Flutter 앱 루트 바로 아래에 있는 `android` 하위 디렉터리를 엽니다. 
+   예를 들어, 프로젝트 이름이 `flutter_app`인 경우 `flutter_app/android`를 엽니다.
 
-If you haven't run your Flutter app yet, you might see Android Studio report a
-build error when you open the `android` project. Run `flutter pub get` in
-the app's root directory and rebuild the project by selecting **Build > Make**
-to fix it.
+Flutter 앱을 아직 실행하지 않은 경우 `android` 프로젝트를 열 때, 
+Android Studio에서 빌드 오류를 보고할 수 있습니다. 
+앱의 루트 디렉터리에서 `flutter pub get`을 실행하고, 
+**Build > Make**를 선택하여 프로젝트를 다시 빌드하여 수정합니다.
 
-## Editing Android code in IntelliJ IDEA {:#edit-android-code}
+## IntelliJ IDEA에서 Android 코드 편집 {:#edit-android-code}
 
-To enable editing of Android code in IntelliJ IDEA, you need to configure the
-location of the Android SDK:
+IntelliJ IDEA에서 Android 코드 편집을 활성화하려면, Android SDK의 위치를 ​​구성해야 합니다.
 
- 1. In **Preferences > Plugins**, enable **Android Support** if you
-    haven't already.
- 1. Right-click the **android** folder in the Project view, and select **Open
-    Module Settings**.
- 1. In the **Sources** tab, locate the **Language level** field, and
-    select level 8 or later.
- 1. In the **Dependencies** tab, locate the **Module SDK** field,
-    and select an Android SDK. If no SDK is listed, click **New**
-    and specify the location of the Android SDK.
-    Make sure to select an Android SDK matching the one used by
-    Flutter (as reported by `flutter doctor`).
- 1. Click **OK**.
+1. **Preferences > Plugins**에서 아직 활성화하지 않았다면, **Android Support**를 활성화합니다.
+2. Project 뷰에서 **android** 폴더를 마우스 오른쪽 버튼으로 클릭하고, **Open Module Settings**를 선택합니다.
+3. **Sources** 탭에서 **Language level** 필드를 찾아, 레벨 8 이상을 선택합니다.
+4. **Dependencies** 탭에서 **Module SDK** 필드를 찾아, Android SDK를 선택합니다. 
+   SDK가 나열되지 않으면 **New**를 클릭하고, Android SDK의 위치를 ​​지정합니다. 
+   Flutter에서 사용하는 것과 일치하는 Android SDK를 선택해야 합니다. (`flutter doctor`에서 보고한 대로)
+5. **OK**를 클릭합니다.
 
-## Troubleshooting
+## 문제 해결 {:#troubleshooting}
 
-### Known issues and feedback
+### 알려진 문제 및 피드백 {:#known-issues-and-feedback}
 
-Important known issues that might impact your experience are documented
-in the [Flutter plugin README][] file.
+경험에 영향을 줄 수 있는 중요한 알려진 문제는 [Flutter 플러그인 README][Flutter plugin README] 파일에 기록되어 있습니다.
 
-All known bugs are tracked in the issue trackers:
+알려진 모든 버그는 이슈 트래커에서 추적됩니다.
 
-* Flutter plugin: [GitHub issue tracker][]
-* Dart plugin: [JetBrains YouTrack][]
+* Flutter 플러그인: [GitHub 이슈 트래커][GitHub issue tracker]
+* Dart 플러그인: [JetBrains YouTrack][JetBrains YouTrack]
 
-We welcome feedback, both on bugs/issues and feature requests.
-Prior to filing new issues:
+버그/문제와 기능 요청에 대한 피드백을 환영합니다. 새로운 이슈를 제출하기 전에:
 
-* Do a quick search in the issue trackers to see if the issue is already
-  tracked.
-* Make sure you have [updated](#updating) to the most recent version of the
-  plugin.
+* 이슈 트래커에서 빠르게 검색하여 문제가 이미 추적되고 있는지 확인합니다.
+* 플러그인의 최신 버전으로 [업데이트](#updating)했는지 확인합니다.
 
-When filing new issues, include the output of [`flutter doctor`][].
+새로운 이슈를 제출할 때 [`flutter doctor`][]의 출력을 포함합니다.
 
 [DevTools]: /tools/devtools
 [GitHub issue tracker]: {{site.repo.flutter}}-intellij/issues
