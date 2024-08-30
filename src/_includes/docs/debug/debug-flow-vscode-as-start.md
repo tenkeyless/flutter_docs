@@ -1,12 +1,12 @@
 1. Flutter 앱 디렉토리를 열려면, 
-   **File** <span aria-label="and then">></span> **Open Folder...**로 가서, 
+   **File** <span aria-label="and then">></span> **Open Folder...** 로 가서, 
    `my_app` 디렉토리를 선택합니다.
 
 2. `lib/main.dart` 파일을 엽니다.
 
 3. 두 개 이상의 기기에 앱을 빌드할 수 있는 경우, 먼저 기기를 선택해야 합니다.
 
-   **View** <span aria-label="and then">></span> **Command Palette...**로 이동합니다.
+   **View** <span aria-label="and then">></span> **Command Palette...** 로 이동합니다.
 
    <kbd>Ctrl</kbd> / <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd>를 누를 수도 있습니다.
 

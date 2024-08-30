@@ -1,27 +1,24 @@
-##### Enable automatic attachment
+##### 자동 첨부 활성화 {:#enable-automatic-attachment}
 
-You can configure VS Code to attach to your Flutter module project
-whenever you start debugging.
-To enable this feature,
-create a `.vscode/launch.json` file in your Flutter module project.
+디버깅을 시작할 때마다 VS Code를 Flutter 모듈 프로젝트에 연결하도록 구성할 수 있습니다. 
+이 기능을 사용하려면, Flutter 모듈 프로젝트에 `.vscode/launch.json` 파일을 만드세요.
 
-1. Go to **View** <span aria-label="and then">></span> **Run**.
+1. **View** <span aria-label="and then">></span> **Run**으로 이동합니다.
 
-   You can also press
-   <kbd>Ctrl</kbd> / <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>D</kbd>.
+   <kbd>Ctrl</kbd> / <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>D</kbd>를 누를 수도 있습니다.
 
-   VS Code displays the **Run and Debug** sidebar.
+   VS Code가 **Run and Debug** 사이드바를 표시합니다.
 
-1. In this sidebar, click **create a launch.json file**.
+2. 이 사이드바에서, **create a launch.json file**을 클릭합니다.
 
-   VS Code displays the **Select debugger** menu at the top.
+   VS Code가 상단에 **Select debugger** 메뉴를 표시합니다.
 
-1. Select **Dart & Flutter**.
+3. **Dart & Flutter**를 선택합니다.
 
-   VS Code creates then opens the `.vscode/launch.json` file.
+   VS Code가 `.vscode/launch.json` 파일을 만든 다음 엽니다.
 
    <details markdown="1">
-   <summary>Expand to see an example launch.json file</summary>
+   <summary>확장하여 launch.json 파일 예를 확인하세요.</summary>
 
     ```json
     {
@@ -53,7 +50,6 @@ create a `.vscode/launch.json` file in your Flutter module project.
 
     </details>
 
-1. To attach, go to **Run** <span aria-label="and then">></span>
-   **Start Debugging**.
+4. 첨부하려면, **Run** <span aria-label="and then">></span> **Start Debugging**으로 이동합니다.
 
-   You can also press <kbd>F5</kbd>.
+   <kbd>F5</kbd>를 누를 수도 있습니다.
