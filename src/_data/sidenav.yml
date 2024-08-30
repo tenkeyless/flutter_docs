@@ -30,7 +30,7 @@
         - title: Flutter vs Swift concurrency
           permalink: /get-started/flutter-for/dart-swift-concurrency
     - title: "Dart 언어 개요"
-      permalink: https://dart.dev/overview
+      permalink: https://dart-docs-kr.web.app/overview
 
 - title: 최신 소식
   permalink: /release
