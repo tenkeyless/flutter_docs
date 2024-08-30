@@ -30,10 +30,14 @@ main 브랜치에 한해서 번역되며, Flutter_[버전]-[날짜] 와 같은 �
 
 ## 배포
 
-```console
-$ firebase use flutter-docs-kr
-$ firebase deploy --only hosting
-```
+1. Git에 태그 붙이기 (예: `Flutter_3.24.0-240831`)
+2. src/content/index.md 번역 개요 변경
+3. Firebase 배포
+
+   ```console
+   $ firebase use flutter-docs-kr
+   $ firebase deploy --only hosting
+   ```
 
 ## Docker를 활용한 빌드
 
