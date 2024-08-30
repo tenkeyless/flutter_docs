@@ -11,65 +11,59 @@ description: 기존 iOS 앱에 단일 Flutter 화면을 추가하는 방법을 �
 
 ## FlutterEngine 및 FlutterViewController 시작 {:#start-a-flutterengine-and-flutterviewcontroller}
 
-To launch a Flutter screen from an existing iOS app, you start a
-[`FlutterEngine`][] and a [`FlutterViewController`][].
+기존 iOS 앱에서 Flutter 화면을 시작하려면, 
+[`FlutterEngine`][]과 [`FlutterViewController`][]를 시작합니다.
 
 :::note
-The `FlutterEngine` serves as a host to the Dart VM and your Flutter runtime,
-and the `FlutterViewController` attaches to a `FlutterEngine` to pass 
-input events into Flutter and to display frames rendered by the
-`FlutterEngine`.
+`FlutterEngine`은 Dart VM과 Flutter 런타임에 대한 호스트 역할을 하며, `FlutterViewController`는 `FlutterEngine`에 연결되어,
+입력 이벤트를 Flutter에 전달하고 `FlutterEngine`에서 렌더링한 프레임을 표시합니다.
 :::
 
-The `FlutterEngine` might have the same lifespan as your
-`FlutterViewController` or outlive your `FlutterViewController`.
+`FlutterEngine`은 `FlutterViewController`와 같은 수명을 가질 수도 있고, `FlutterViewController`보다 더 오래 지속될 수도 있습니다.
 
 :::tip
-It's generally recommended to pre-warm a long-lived
-`FlutterEngine` for your application because:
+일반적으로 애플리케이션에 대해 오래 지속되는 `FlutterEngine`을 미리 워밍업하는 것이 좋습니다. 
+그 이유는 다음과 같습니다.
 
-* The first frame appears faster when showing the `FlutterViewController`.
-* Your Flutter and Dart state will outlive one `FlutterViewController`.
-* Your application and your plugins can interact with Flutter and your Dart
-  logic before showing the UI.
+* `FlutterViewController`를 표시할 때, 첫 번째 프레임이 더 빨리 나타납니다.
+* Flutter와 Dart 상태가 하나의 `FlutterViewController`보다 오래 지속됩니다.
+* 애플리케이션과 플러그인은 UI를 표시하기 전에, Flutter와 Dart 로직과 상호 작용할 수 있습니다.
 :::
 
-See [Loading sequence and performance][]
-for more analysis on the latency and memory
-trade-offs of pre-warming an engine.
+엔진 예열의 지연 시간과 메모리 트레이드 오프에 대한 자세한 분석은, 
+[로딩 순서 및 성능][Loading sequence and performance]을 참조하세요.
 
 ### FlutterEngine 만들기 {:#create-a-flutterengine}
 
-Where you create a `FlutterEngine` depends on your host app.
+`FlutterEngine`을 생성하는 위치는 호스트 앱에 따라 달라집니다.
 
 {% tabs "darwin-framework" %}
 {% tab "SwiftUI" %}
 
-In this example, we create a `FlutterEngine` object inside a SwiftUI [`Observable`][] 
-object called `FlutterDependencies`. 
-Pre-warm the engine by calling `run()`, and then inject this object 
-into a `ContentView` using the `environment()` view modifier. 
+이 예에서, 우리는 `FlutterDependencies`라는 SwiftUI [`Observable`][] 객체 내부에 `FlutterEngine` 객체를 생성합니다. 
+`run()`을 호출하여 엔진을 사전 워밍업한 다음, 
+`environment()` 뷰 수정자를 사용하여 이 객체를 `ContentView`에 주입합니다.
 
  ```swift title="MyApp.swift"
 import SwiftUI
 import Flutter
-// The following library connects plugins with iOS platform code to this app.
+// 다음 라이브러리는 플러그인을 iOS 플랫폼 코드와 이 앱에 연결합니다.
 import FlutterPluginRegistrant
 
 @Observable
 class FlutterDependencies {
   let flutterEngine = FlutterEngine(name: "my flutter engine")
   init() {
-    // Runs the default Dart entrypoint with a default Flutter route.
+    // 기본 Flutter 경로로 기본 Dart 진입점을 실행합니다.
     flutterEngine.run()
-    // Connects plugins with iOS platform code to this app.
+    // 플러그인을 iOS 플랫폼 코드와 이 앱에 연결합니다.
     GeneratedPluginRegistrant.register(with: self.flutterEngine);
   }
 }
 
 @main
 struct MyApp: App {
-    // flutterDependencies will be injected through the view environment.
+    // flutterDependencies는 뷰 환경을 통해 주입됩니다.
     @State var flutterDependencies = FlutterDependencies()
     var body: some Scene {
       WindowGroup {
@@ -83,24 +77,23 @@ struct MyApp: App {
 {% endtab %}
 {% tab "UIKit-Swift" %}
 
-As an example, we demonstrate creating a
-`FlutterEngine`, exposed as a property, on app startup in
-the app delegate.
+예를 들어, 앱 시작 시 앱 delegate에서 속성으로 노출되는 
+`FlutterEngine`을 생성하는 방법을 보여줍니다.
 
 ```swift title="AppDelegate.swift"
 import UIKit
 import Flutter
-// The following library connects plugins with iOS platform code to this app.
+// 다음 라이브러리는 플러그인을 iOS 플랫폼 코드와 이 앱에 연결합니다.
 import FlutterPluginRegistrant
 
 @UIApplicationMain
-class AppDelegate: FlutterAppDelegate { // More on the FlutterAppDelegate.
+class AppDelegate: FlutterAppDelegate { // FlutterAppDelegate에 대해 자세히 알아보세요.
   lazy var flutterEngine = FlutterEngine(name: "my flutter engine")
 
   override func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-    // Runs the default Dart entrypoint with a default Flutter route.
+    // 기본 Flutter 경로로 기본 Dart 진입점을 실행합니다.
     flutterEngine.run();
-    // Connects plugins with iOS platform code to this app.
+    // 플러그인을 iOS 플랫폼 코드와 이 앱에 연결합니다.
     GeneratedPluginRegistrant.register(with: self.flutterEngine);
     return super.application(application, didFinishLaunchingWithOptions: launchOptions);
   }
@@ -110,20 +103,19 @@ class AppDelegate: FlutterAppDelegate { // More on the FlutterAppDelegate.
 {% endtab %}
 {% tab "UIKit-ObjC" %}
 
-The following example demonstrates creating a `FlutterEngine`, 
-exposed as a property, on app startup in the app delegate.
+다음 예제는 앱 시작 시 앱 delegate에서 속성으로 노출되는 `FlutterEngine`을 만드는 방법을 보여줍니다.
 
 ```objc title="AppDelegate.h"
 @import UIKit;
 @import Flutter;
 
-@interface AppDelegate : FlutterAppDelegate // More on the FlutterAppDelegate below.
+@interface AppDelegate : FlutterAppDelegate // FlutterAppDelegate에 대한 자세한 내용은 아래와 같습니다.
 @property (nonatomic,strong) FlutterEngine *flutterEngine;
 @end
 ```
 
 ```objc title="AppDelegate.m"
-// The following library connects plugins with iOS platform code to this app.
+// 다음 라이브러리는 플러그인을 iOS 플랫폼 코드와 이 앱에 연결합니다.
 #import <FlutterPluginRegistrant/GeneratedPluginRegistrant.h>
 
 #import "AppDelegate.h"
@@ -133,9 +125,9 @@ exposed as a property, on app startup in the app delegate.
 - (BOOL)application:(UIApplication *)application
     didFinishLaunchingWithOptions:(NSDictionary<UIApplicationLaunchOptionsKey, id> *)launchOptions {
   self.flutterEngine = [[FlutterEngine alloc] initWithName:@"my flutter engine"];
-  // Runs the default Dart entrypoint with a default Flutter route.
+  // 기본 Flutter 경로로 기본 Dart 진입점을 실행합니다.
   [self.flutterEngine run];
-  // Connects plugins with iOS platform code to this app.
+  // 플러그인을 iOS 플랫폼 코드와 이 앱에 연결합니다.
   [GeneratedPluginRegistrant registerWithRegistry:self.flutterEngine];
   return [super application:application didFinishLaunchingWithOptions:launchOptions];
 }
@@ -151,19 +143,17 @@ exposed as a property, on app startup in the app delegate.
 {% tabs "darwin-framework" %}
 {% tab "SwiftUI" %}
 
-The following example shows a generic `ContentView` with a 
-[`NavigationLink`][] hooked to a flutter screen. 
-First, create a `FlutterViewControllerRepresentable` to represent the 
-`FlutterViewController`. The `FlutterViewController` constructor takes 
-the pre-warmed `FlutterEngine` as an argument, which is injected through
-the view environment. 
+다음 예제는 Flutter 화면에 연결된 [`NavigationLink`][]가 있는 일반적인 `ContentView`를 보여줍니다. 
+먼저 `FlutterViewController`를 나타내는 `FlutterViewControllerRepresentable`을 만듭니다. 
+`FlutterViewController` 생성자는 미리 워밍업된 `FlutterEngine`을 인수로 받으며, 
+이는 뷰 환경을 통해 주입됩니다.
 
 ```swift title="ContentView.swift"
 import SwiftUI
 import Flutter
 
 struct FlutterViewControllerRepresentable: UIViewControllerRepresentable {
-  // Flutter dependencies are passed in through the view environment.
+  // Flutter 종속성은 뷰 환경을 통해 전달됩니다.
   @Environment(FlutterDependencies.self) var flutterDependencies
   
   func makeUIViewController(context: Context) -> some UIViewController {
@@ -191,10 +181,10 @@ struct ContentView: View {
 {% endtab %}
 {% tab "UIKit-Swift" %}
 
-The following example shows a generic `ViewController` with a
-`UIButton` hooked to present a [`FlutterViewController`][].
-The `FlutterViewController` uses the `FlutterEngine` instance
-created in the `AppDelegate`.
+다음 예제는 [`FlutterViewController`][]를 표시하기 위해, 
+`UIButton`이 연결된 일반적인 `ViewController`를 보여줍니다. 
+`FlutterViewController`는 `AppDelegate`에서 생성된, 
+`FlutterEngine` 인스턴스를 사용합니다.
 
 ```swift title="ViewController.swift"
 import UIKit
@@ -204,7 +194,7 @@ class ViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    // Make a button to call the showFlutter function when pressed.
+    // 누르면 showFlutter 함수를 호출하는 버튼을 만듭니다.
     let button = UIButton(type:UIButton.ButtonType.custom)
     button.addTarget(self, action: #selector(showFlutter), for: .touchUpInside)
     button.setTitle("Show Flutter!", for: UIControl.State.normal)
@@ -225,10 +215,9 @@ class ViewController: UIViewController {
 {% endtab %}
 {% tab "UIKit-ObjC" %}
 
-The following example shows a generic `ViewController` with a
-`UIButton` hooked to present a [`FlutterViewController`][].
-The `FlutterViewController` uses the `FlutterEngine` instance
-created in the `AppDelegate`.
+다음 예제는 [`FlutterViewController`][]를 표시하기 위해, 
+`UIButton`이 연결된 일반적인 `ViewController`를 보여줍니다. 
+`FlutterViewController`는 `AppDelegate`에서 생성된 `FlutterEngine` 인스턴스를 사용합니다.
 
 ```objc title="ViewController.m"
 @import Flutter;
@@ -239,7 +228,7 @@ created in the `AppDelegate`.
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    // Make a button to call the showFlutter function when pressed.
+    // 누르면 showFlutter 함수를 호출하는 버튼을 만듭니다.
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     [button addTarget:self
                action:@selector(showFlutter)
@@ -263,32 +252,26 @@ created in the `AppDelegate`.
 {% endtab %}
 {% endtabs %}
 
-Now, you have a Flutter screen embedded in your iOS app.
+이제, iOS 앱에 Flutter 화면이 내장되었습니다.
 
 :::note
-Using the previous example, the default `main()`
-entrypoint function of your default Dart library
-would run when calling `run` on the
-`FlutterEngine` created in the `AppDelegate`.
+이전 예제를 사용하면, 
+기본 Dart 라이브러리의 기본 `main()` 진입점 함수는, 
+`AppDelegate`에서 생성된 `FlutterEngine`에서 `run`을 호출할 때 실행됩니다.
 :::
 
 ### _대안으로_ - implicit FlutterEngine을 사용하여 FlutterViewController를 만듭니다. {:#alternatively-create-a-flutterviewcontroller-with-an-implicit-flutterengine}
 
-As an alternative to the previous example, you can let the
-`FlutterViewController` implicitly create its own `FlutterEngine` without
-pre-warming one ahead of time.
+이전 예제의 대안으로, `FlutterViewController`가 사전에 하나를 예열하지 않고도, 
+암묵적으로 자체 `FlutterEngine`을 생성하도록 할 수 있습니다.
 
-This is not usually recommended because creating a
-`FlutterEngine` on-demand could introduce a noticeable
-latency between when the `FlutterViewController` is
-presented and when it renders its first frame. This could, however, be
-useful if the Flutter screen is rarely shown, when there are no good
-heuristics to determine when the Dart VM should be started, and when Flutter
-doesn't need to persist state between view controllers.
+이는 일반적으로 권장되지 않습니다. 
+주문형으로 `FlutterEngine`을 생성하면, `FlutterViewController`가 표시되는 시점과 첫 번째 프레임을 렌더링하는 시점 사이에 눈에 띄는 지연이 발생할 수 있기 때문입니다. 
+그러나, Flutter 화면이 거의 표시되지 않고, Dart VM을 언제 시작해야 하는지 판단할 수 있는 좋은 휴리스틱이 없으며, 
+Flutter가 뷰 컨트롤러 간에 상태를 유지할 필요가 없는 경우, 이 방법이 유용할 수 있습니다.
 
-To let the `FlutterViewController` present without an existing
-`FlutterEngine`, omit the `FlutterEngine` construction, and create the
-`FlutterViewController` without an engine reference.
+기존 `FlutterEngine` 없이 `FlutterViewController`가 표시되도록 하려면, 
+`FlutterEngine` 구성을 생략하고 엔진 참조 없이 `FlutterViewController`를 만듭니다.
 
 {% tabs "darwin-framework" %}
 {% tab "SwiftUI" %}
@@ -323,7 +306,7 @@ struct ContentView: View {
 {% tab "UIKit-Swift" %}
 
 ```swift title="ViewController.swift"
-// Existing code omitted.
+// 기존 코드는 생략되었습니다.
 func showFlutter() {
   let flutterViewController = FlutterViewController(project: nil, nibName: nil, bundle: nil)
   present(flutterViewController, animated: true, completion: nil)
@@ -334,7 +317,7 @@ func showFlutter() {
 {% tab "UIKit-ObjC" %}
 
 ```objc title="ViewController.m"
-// Existing code omitted.
+// 기존 코드는 생략되었습니다.
 - (void)showFlutter {
   FlutterViewController *flutterViewController =
       [[FlutterViewController alloc] initWithProject:nil nibName:nil bundle:nil];
@@ -346,26 +329,22 @@ func showFlutter() {
 {% endtab %}
 {% endtabs %}
 
-See [Loading sequence and performance][]
-for more explorations on latency and memory usage.
+대기 시간 및 메모리 사용에 대한 자세한 내용은 [로딩 순서 및 성능][Loading sequence and performance]을 참조하세요.
 
 ## FlutterAppDelegate 사용하기 {:#using-the-flutterappdelegate}
 
-Letting your application's `UIApplicationDelegate` subclass
-`FlutterAppDelegate` is recommended but not required.
+애플리케이션의 `UIApplicationDelegate` 하위 클래스인 `FlutterAppDelegate`를 사용하는 것이 좋지만 필수는 아닙니다.
 
-The `FlutterAppDelegate` performs functions such as:
+`FlutterAppDelegate`는 다음과 같은 기능을 수행합니다.
 
-* Forwarding application callbacks such as [`openURL`][]
-  to plugins such as [local_auth][].
-* Keeping the Flutter connection open 
-  in debug mode when the phone screen locks.
+* [`openURL`][]과 같은 애플리케이션 콜백을 [local_auth][]와 같은 플러그인으로 전달합니다.
+* 휴대전화 화면이 잠길 때 디버그 모드에서 Flutter 연결을 열어둡니다.
 
 ### FlutterAppDelegate 서브클래스 생성 {:#creating-a-flutterappdelegate-subclass}
-Creating a subclass of the `FlutterAppDelegate` in UIKit apps was shown 
-in the [Start a FlutterEngine and FlutterViewController section][]. 
-In a SwiftUI app, you can create a subclass of the 
-`FlutterAppDelegate` and annotate it with the [`Observable()`][] macro as follows:
+
+UIKit 앱에서 `FlutterAppDelegate`의 하위 클래스를 만드는 것은 [FlutterEngine 및 FlutterViewController 시작 섹션][Start a FlutterEngine and FlutterViewController section]에서 보여졌습니다. 
+SwiftUI 앱에서, `FlutterAppDelegate`의 하위 클래스를 만들고, 
+다음과 같이 [`Observable()`][] 매크로로 어노테이션을 달 수 있습니다.
 
 ```swift
 import SwiftUI
@@ -379,9 +358,9 @@ class AppDelegate: FlutterAppDelegate {
   override func application(
     _ application: UIApplication,
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-      // Runs the default Dart entrypoint with a default Flutter route.
+      // 기본 Flutter 경로로 기본 Dart 진입점을 실행합니다.
       flutterEngine.run();
-      // Used to connect plugins (only if you have plugins with iOS platform code).
+      // 플러그인을 연결하는 데 사용됩니다. (iOS 플랫폼 코드가 있는 플러그인이 있는 경우에만)
       GeneratedPluginRegistrant.register(with: self.flutterEngine);
       return true;
     }
@@ -389,8 +368,8 @@ class AppDelegate: FlutterAppDelegate {
 
 @main
 struct MyApp: App {
-  // Use this property wrapper to tell SwiftUI
-  // it should use the AppDelegate class for the application delegate
+  // 이 속성 래퍼를 사용하여, 
+  // SwiftUI에 애플리케이션 delegate에 대한 AppDelegate 클래스를 사용해야 한다고 알립니다.
   @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 
   var body: some Scene {
@@ -401,14 +380,14 @@ struct MyApp: App {
 }
 ```
 
-Then, in your view, the `AppDelegate` is accessible through the view environment.
+그러면, 뷰에서 `AppDelegate`에 뷰 환경을 통해 접근할 수 있습니다.
 
 ```swift title="ContentView.swift"
 import SwiftUI
 import Flutter
 
 struct FlutterViewControllerRepresentable: UIViewControllerRepresentable {
-  // Access the AppDelegate through the view environment.
+  // 뷰 환경을 통해 AppDelegate에 액세스합니다.
   @Environment(AppDelegate.self) var appDelegate
   
   func makeUIViewController(context: Context) -> some UIViewController {
@@ -435,12 +414,12 @@ struct ContentView: View {
 
 ### FlutterAppDelegate를 직접 하위 클래스로 만들 수 없는 경우 {:#if-you-cant-directly-make-flutterappdelegate-a-subclass}
 
-If your app delegate can't directly make `FlutterAppDelegate` a subclass,
-make your app delegate implement the `FlutterAppLifeCycleProvider`
-protocol in order to make sure your plugins receive the necessary callbacks.
-Otherwise, plugins that depend on these events might have undefined behavior.
+앱 delegate가 `FlutterAppDelegate`를 하위 클래스로 직접 만들 수 없는 경우, 
+앱 delegate가 `FlutterAppLifeCycleProvider` 프로토콜을 구현하도록 하여, 
+플러그인이 필요한 콜백을 수신하도록 합니다. 
+그렇지 않으면, 이러한 이벤트에 의존하는 플러그인이 정의되지 않은 동작을 할 수 있습니다.
 
-For instance:
+예를 들어:
 
 {% tabs "darwin-language" %}
 {% tab "Swift" %}
@@ -543,8 +522,8 @@ didFinishLaunchingWithOptions:(NSDictionary<UIApplicationLaunchOptionsKey, id>*)
     return [_lifeCycleDelegate application:application didFinishLaunchingWithOptions:launchOptions];
 }
 
-// Returns the key window's rootViewController, if it's a FlutterViewController.
-// Otherwise, returns nil.
+// FlutterViewController인 경우, 키 창의 rootViewController를 반환합니다.
+// 그렇지 않으면, nil을 반환합니다.
 - (FlutterViewController*)rootFlutterViewController {
     UIViewController* viewController = [UIApplication sharedApplication].keyWindow.rootViewController;
     if ([viewController isKindOfClass:[FlutterViewController class]]) {
@@ -625,25 +604,21 @@ performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult result))comp
 
 ## 시작 옵션 {:#launch-options}
 
-The examples demonstrate running Flutter using the default launch settings.
+이 예제에서는 기본 실행(default launch) 설정을 사용하여, Flutter를 실행하는 방법을 보여줍니다.
 
-In order to customize your Flutter runtime,
-you can also specify the Dart entrypoint, library, and route.
+Flutter 런타임을 커스터마이즈하기 위해, Dart 진입점, 라이브러리 및 경로를 지정할 수도 있습니다.
 
 ### Dart 진입점 {:#dart-entrypoint}
 
-Calling `run` on a `FlutterEngine`, by default,
-runs the `main()` Dart function
-of your `lib/main.dart` file.
+`FlutterEngine`에서 `run`을 호출하면, 
+기본적으로, `lib/main.dart` 파일의 `main()` Dart 함수가 실행됩니다.
 
-You can also run a different entrypoint function by using
-[`runWithEntrypoint`][] with an `NSString` specifying
-a different Dart function.
+다른 Dart 함수를 지정하는 `NSString`과 함께, 
+[`runWithEntrypoint`][]를 사용하여 다른 진입점 함수를 실행할 수도 있습니다.
 
 :::note
-Dart entrypoint functions other than `main()`
-must be annotated with the following in order to
-not be [tree-shaken][] away when compiling:
+`main()` 이외의 Dart 진입점 함수는, 
+컴파일 시 [tree-shaken][]되지 않도록 다음과 같이 주석 처리되어야 합니다.
 
 ```dart
 @pragma('vm:entry-point')
@@ -653,11 +628,10 @@ void myOtherEntrypoint() { ... };
 
 ### Dart 라이브러리 {:#dart-library}
 
-In addition to specifying a Dart function, you can specify an entrypoint
-function in a specific file.
+Dart 함수를 지정하는 것 외에도, 특정 파일에서 진입점 함수를 지정할 수 있습니다.
 
-For instance the following runs `myOtherEntrypoint()`
-in `lib/other_file.dart` instead of `main()` in `lib/main.dart`:
+예를 들어, 다음은 `lib/main.dart`의 `main()` 대신, 
+`lib/other_file.dart`에서 `myOtherEntrypoint()`를 실행합니다.
 
 {% tabs "darwin-language" %}
 {% tab "Swift" %}
@@ -679,16 +653,16 @@ flutterEngine.run(withEntrypoint: "myOtherEntrypoint", libraryURI: "other_file.d
 
 ### Route {:#route}
 
-Starting in Flutter version 1.22, an initial route can be set for your Flutter
-[`WidgetsApp`][] when constructing the FlutterEngine or the
-FlutterViewController.
+Flutter 버전 1.22부터, 
+FlutterEngine 또는 FlutterViewController를 구성할 때, 
+Flutter [`WidgetsApp`][]에 대한 초기 경로를 설정할 수 있습니다.
 
 {% tabs "darwin-language" %}
 {% tab "Swift" %}
 
 ```swift
 let flutterEngine = FlutterEngine()
-// FlutterDefaultDartEntrypoint is the same as nil, which will run main().
+// FlutterDefaultDartEntrypoint는 main()을 실행하는 nil과 동일합니다.
 engine.run(
   withEntrypoint: "main", initialRoute: "/onboarding")
 ```
@@ -698,7 +672,7 @@ engine.run(
 
 ```objc
 FlutterEngine *flutterEngine = [[FlutterEngine alloc] init];
-// FlutterDefaultDartEntrypoint is the same as nil, which will run main().
+// FlutterDefaultDartEntrypoint는 main()을 실행하는 nil과 동일합니다.
 [flutterEngine runWithEntrypoint:FlutterDefaultDartEntrypoint
                     initialRoute:@"/onboarding"];
 ```
@@ -706,11 +680,11 @@ FlutterEngine *flutterEngine = [[FlutterEngine alloc] init];
 {% endtab %}
 {% endtabs %}
 
-This code sets your `dart:ui`'s [`PlatformDispatcher.defaultRouteName`][]
-to `"/onboarding"` instead of `"/"`.
+이 코드는 `dart:ui`의 [`PlatformDispatcher.defaultRouteName`][]을
+`"/"` 대신 `"/onboarding"`으로 설정합니다.
 
-Alternatively, to construct a FlutterViewController directly without pre-warming
-a FlutterEngine:
+또는, FlutterEngine을 미리 예열하지 않고, 
+FlutterViewController를 직접 구성하려면 다음을 수행합니다.
 
 {% tabs "darwin-language" %}
 {% tab "Swift" %}
@@ -735,25 +709,19 @@ FlutterViewController* flutterViewController =
 {% endtabs %}
 
 :::tip
-In order to imperatively change your current Flutter
-route from the platform side after the `FlutterEngine`
-is already running, use [`pushRoute()`][]
-or [`popRoute()`] on the `FlutterViewController`.
+`FlutterEngine`이 이미 실행 중일 때, 플랫폼 측에서 현재 Flutter 경로를 필수적으로 변경하려면, 
+`FlutterViewController`에서 [`pushRoute()`][] 또는 [`popRoute()`]를 사용합니다.
 
-To pop the iOS route from the Flutter side,
-call [`SystemNavigator.pop()`][].
+Flutter 측에서 iOS 경로를 팝하려면, [`SystemNavigator.pop()`][]를 호출합니다.
 :::
 
-See [Navigation and routing][] for more about Flutter's routes.
+Flutter 경로에 대한 자세한 내용은 [네비게이션 및 라우팅][Navigation and routing]을 참조하세요.
 
 ### 기타 {:#other}
 
-The previous example only illustrates a few ways to customize
-how a Flutter instance is initiated. Using [platform channels][],
-you're free to push data or prepare your Flutter environment
-in any way you'd like, before presenting the Flutter UI using a
-`FlutterViewController`.
-
+이전 예제는 Flutter 인스턴스가 시작되는 방식을 커스터마이즈하는 몇 가지 방법만 보여줍니다. 
+[platform channels][]를 사용하면, `FlutterViewController`를 사용하여, 
+Flutter UI를 표시하기 전에 원하는 대로 데이터를 푸시하거나, Flutter 환경을 준비할 수 있습니다.
 
 [`FlutterEngine`]: {{site.api}}/ios-embedder/interface_flutter_engine.html
 [`FlutterViewController`]: {{site.api}}/ios-embedder/interface_flutter_view_controller.html

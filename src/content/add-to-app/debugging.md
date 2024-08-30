@@ -14,32 +14,28 @@ Flutter는 이제 코드에 `FlutterActivity` 또는 `FlutterViewController`가 
 
 ## 개요 {:#overview}
 
-You might be used to having your suite of favorite Flutter debugging tools
-available when running `flutter run` or an equivalent command from an IDE.
-But you can also use all your Flutter [debugging functionalities][] such as
-hot reload, performance overlays, DevTools, and setting breakpoints in
-add-to-app scenarios.
+IDE에서 `flutter run` 또는 동등한 명령을 실행할 때 선호하는 Flutter 디버깅 도구 모음을 사용할 수 있는 데 익숙할 수 있습니다. 
+하지만 핫 리로드, 성능 오버레이, DevTools, 앱 추가 시나리오에서 중단점 설정과 같은 
+모든 Flutter [디버깅 기능][debugging functionalities]을 사용할 수도 있습니다.
 
-The `flutter attach` command provides these functionalities.
-To run this command, you can use the SDK's CLI tools, VS Code
-or IntelliJ IDEA or Android Studio.
+`flutter attachment` 명령은 이러한 기능을 제공합니다. 
+이 명령을 실행하려면, SDK의 CLI 도구, VS Code 또는 IntelliJ IDEA 또는 Android Studio를 사용할 수 있습니다.
 
-The `flutter attach` command connects once you run your `FlutterEngine`.
-It remains attached until you dispose your `FlutterEngine`.
-You can invoke `flutter attach` before starting your engine.
-The `flutter attach` command waits for the next available Dart VM that
-your engine hosts.
+`flutter attachment` 명령은 `FlutterEngine`을 실행하면 연결됩니다. 
+`FlutterEngine`을 폐기할 때까지 연결된 상태로 유지됩니다. 
+엔진을 시작하기 전에 `flutter attachment`를 호출할 수 있습니다. 
+`flutter attachment` 명령은 엔진이 호스팅하는 다음 사용 가능한 Dart VM을 기다립니다.
 
 ## 터미널에서 디버그 {:#debug-from-the-terminal}
 
-To attach from the terminal, run `flutter attach`.
-To select a specific target device, add `-d <deviceId>`.
+터미널에서 연결하려면 `flutter attachment`를 실행합니다. 
+특정 대상 장치를 선택하려면 `-d <deviceId>`를 추가합니다.
 
 ```console
 $ flutter attach
 ```
 
-The command should print output resembling the following:
+이 명령은 다음과 유사한 결과를 출력합니다.
 
 ```console
 Syncing files to device iPhone 15 Pro...
@@ -65,56 +61,49 @@ To detach, press "d"; to quit, press "q".
 
 ## USB 연결 없이 디버깅 {:#wireless-debugging}
 
-To debug your app over Wi-Fi on an iOS or Android device,
-use `flutter attach`.
+iOS 또는 Android 기기에서 Wi-Fi를 통해 앱을 디버깅하려면, `flutter attach`를 사용하세요.
 
 ### iOS 기기에서 Wi-Fi를 통한 디버그 {:#debug-over-wi-fi-on-ios-devices}
 
-For an iOS target, complete the follow steps:
+iOS 대상의 경우, 다음 단계를 완료하세요.
 
-1. Verify your device connects to Xcode over Wi-Fi
-   as described in the [iOS setup guide][].
+1. [iOS 설정 가이드][iOS setup guide]에 설명된 대로 기기가 Wi-Fi를 통해 Xcode에 연결되는지 확인하세요.
 
-1. On your macOS development machine,
-   open **Xcode** <span aria-label="and then">></span>
-   **Product** <span aria-label="and then">></span>
-   **Scheme** <span aria-label="and then">></span>
-   **Edit Scheme...**.
+1. macOS 개발 컴퓨터에서, **Xcode** <span aria-label="and then">></span> **Product** <span aria-label="and then">></span> **Scheme** <span aria-label="and then">></span> **Edit Scheme...** 을 엽니다.
 
-   You can also press <kbd>Cmd</kbd> + <kbd><</kbd>.
+   <kbd>Cmd</kbd> + <kbd><</kbd>를 누를 수도 있습니다.
 
-1. Click **Run**.
+1. **Run**을 클릭합니다.
 
-1. Click **Arguments**.
+1. **Arguments**를 클릭합니다.
 
-1. In **Arguments Passed On Launch**, Click **+**.
+1. **Arguments Passed On Launch**에서 **+** 를 클릭합니다.
 
    {:type="a"}
-   1. If your dev machine uses IPv4, add `--vm-service-host=0.0.0.0`.
+   1. 개발 컴퓨터에서 IPv4를 사용하는 경우, `--vm-service-host=0.0.0.0`을 추가합니다.
 
-   1. If your dev machine uses IPv6, add `--vm-service-host=::0`.
+   1. 개발 컴퓨터에서 IPv6를 사용하는 경우, `--vm-service-host=::0`을 추가합니다.
 
    {% render docs/app-figure.md, img-class:"site-mobile-screenshot border", image:"development/add-to-app/debugging/wireless-port.png",
-   caption:"Arguments Passed On Launch with an IPv4 network added", width:"100%" %}
+   caption:"IPv4 네트워크가 추가된 Launch에 대한 인수 전달", width:"100%" %}
 
 #### IPv6 네트워크에 있는지 확인하려면 {:#to-determine-if-youre-on-an-ipv6-network}
 
-1. Open **Settings** <span aria-label="and then">></span> **Wi-Fi**.
+1. **Settings** <span aria-label="and then">></span> **Wi-Fi**를 엽니다.
 
-1. Click on your connected network.
+1. 연결된 네트워크를 클릭합니다.
 
-1. Click **Details...**
+1. **Details...**를 클릭합니다.
 
-1. Click **TCP/IP**.
+1. **TCP/IP**를 클릭합니다.
 
-1. Check for an **IPv6 address** section.
+1. **IPv6 address** 섹션을 확인합니다.
 
-   {% render docs/app-figure.md, img-class:"site-mobile-screenshot border", image:"development/add-to-app/ipv6.png", caption:"WiFi dialog box for macOS System Settings", width:"60%" %}
+   {% render docs/app-figure.md, img-class:"site-mobile-screenshot border", image:"development/add-to-app/ipv6.png", caption:"macOS 시스템 설정을 위한 WiFi 대화 상자", width:"60%" %}
 
 ### Android 기기에서 Wi-Fi를 통한 디버그 {:#debug-over-wi-fi-on-android-devices}
 
-Verify your device connects to Android Studio over Wi-Fi
-as described in the [Android setup guide][].
+[Android 설정 가이드][Android setup guide]에 설명된 대로 장치가 Wi-Fi를 통해 Android Studio에 연결되어 있는지 확인하세요.
 
 [iOS setup guide]: /get-started/install/macos/mobile-ios
 [Android setup guide]: /get-started/install/macos/mobile-android?tab=physical#configure-your-target-android-device

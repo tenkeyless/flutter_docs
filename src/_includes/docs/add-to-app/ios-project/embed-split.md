@@ -1,48 +1,46 @@
-### Use frameworks in Xcode and Flutter framework as podspec {:#method-c .no_toc}
+### Xcode 및 Flutter 프레임워크의 프레임워크를 podspec으로 사용 {:#method-c .no_toc}
 
-#### Approach {:#method-c-approach}
+#### 접근법 {:#method-c-approach}
 
-This method generates Flutter as a CocoaPods podspec instead of
-distributing the large `Flutter.xcframework` to other developers,
-machines, or continuous integration systems.
-Flutter still generates iOS frameworks for your compiled Dart code,
-and for each of your Flutter plugins.
-Embed these frameworks and update your existing application's build settings.
+이 방법은 다른 개발자, 머신 또는 연속 통합 시스템에 큰 `Flutter.xcframework`를 배포하는 대신, 
+Flutter를 CocoaPods podspec으로 생성합니다. 
+Flutter는 여전히 컴파일된 Dart 코드와 각 Flutter 플러그인에 대한 iOS 프레임워크를 생성합니다. 
+이러한 프레임워크를 임베드하고 기존 애플리케이션의 빌드 설정을 업데이트합니다.
 
-#### Requirements {:#method-c-reqs}
+#### 요구 사항 {:#method-c-reqs}
 
-No additional software or hardware requirements are needed for this method.
-Use this method in the following use cases:
+이 방법에는 추가 소프트웨어 또는 하드웨어 요구 사항이 필요하지 않습니다. 
+다음 사용 사례에서 이 방법을 사용하세요.
 
-* Members of your team can't install the Flutter SDK and CocoaPods
-* You don't want to use CocoaPods as a dependency manager in existing iOS apps
+* 팀원이 Flutter SDK와 CocoaPods를 설치할 수 없는 경우
+* 기존 iOS 앱에서 CocoaPods를 종속성 관리자로 사용하고 싶지 않은 경우
 
-#### Limitations {:#method-c-limits}
+#### 제한 사항 {:#method-c-limits}
 
 {% render docs/add-to-app/ios-project/limits-common-deps.md %}
 
-This method only works with the `beta` or `stable` [release channels][].
+이 방법은 `beta` 또는 `stable` [릴리스 채널][release channels]에서만 작동합니다.
 
 [release channels]: /release/upgrade#switching-flutter-channels
 
-#### Example project structure {:#method-c-structure}
+#### 프로젝트 구조 예시 {:#method-c-structure}
 
 {% render docs/add-to-app/ios-project/embed-framework-directory-tree.md %}
 
-#### Add Flutter engine to your Podfile
+#### Podfile에 Flutter 엔진 추가 (Add Flutter engine to your Podfile)
 
-Host apps using CocoaPods can add the Flutter engine to their Podfile.
+CocoaPods를 사용하는 호스트 앱은 Flutter 엔진을 Podfile에 추가할 수 있습니다.
 
 ```ruby title="MyApp/Podfile"
 pod 'Flutter', :podspec => '/path/to/MyApp/Flutter/[![build mode]!]/Flutter.podspec'
 ```
 
 :::note
-You must hard code the `[build mode]` value.
-For example, use `Debug` if you need to use `flutter attach`
-and `Release` when you're ready to ship.
+`[build mode]` 값은 하드 코딩해야 합니다. 
+예를 들어, `flutter attach`를 사용해야 하는 경우 `Debug`를 사용하고, 
+배송할 준비가 되면 `Release`를 사용합니다.
 :::
 
-#### Link and embed app and plugin frameworks
+#### 앱 및 플러그인 프레임워크를 연결하고 임베드 (Link and embed app and plugin frameworks)
 
 {% render docs/add-to-app/ios-project/link-and-embed.md %}

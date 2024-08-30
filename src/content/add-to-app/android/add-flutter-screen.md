@@ -20,11 +20,11 @@ class="mw-100" alt="Add Flutter Screen Header">
 
 ### 1단계: AndroidManifest.xml에 FlutterActivity 추가 {:#step-1-add-flutteractivity-to-androidmanifest-xml}
 
-Flutter provides [`FlutterActivity`][] to display a Flutter
-experience within an Android app. Like any other [`Activity`][],
-`FlutterActivity` must be registered in your
-`AndroidManifest.xml`. Add the following XML to your
-`AndroidManifest.xml` file under your `application` tag:
+Flutter는 Android 앱 내에서 Flutter 경험을 표시하기 위해, 
+[`FlutterActivity`][]를 제공합니다. 
+다른 [`Activity`][]와 마찬가지로, 
+`FlutterActivity`는 `AndroidManifest.xml`에 등록해야 합니다. 
+다음 XML을 `application` 태그 아래의 `AndroidManifest.xml` 파일에 추가합니다.
 
 ```xml
 <activity
@@ -36,22 +36,17 @@ experience within an Android app. Like any other [`Activity`][],
   />
 ```
 
-The reference to `@style/LaunchTheme` can be replaced
-by any Android theme that want to apply to your `FlutterActivity`.
-The choice of theme dictates the colors applied to
-Android's system chrome, like Android's navigation bar, and to
-the background color of the `FlutterActivity` just before
-the Flutter UI renders itself for the first time.
+`@style/LaunchTheme`에 대한 참조는 `FlutterActivity`에 적용하려는 모든 Android 테마로 대체할 수 있습니다. 
+테마 선택은 Android의 시스템 크롬에 적용되는 색상(Android의 네비게이션 바와 같은)과 Flutter UI가 처음으로 렌더링되기 직전의 `FlutterActivity`의 배경색을 결정합니다.
 
 ### 2단계: FlutterActivity 실행 {:#step-2-launch-flutteractivity}
 
-With `FlutterActivity` registered in your manifest file,
-add code to launch `FlutterActivity` from whatever point
-in your app that you'd like. The following example shows
-`FlutterActivity` being launched from an `OnClickListener`.
+매니페스트 파일에 `FlutterActivity`가 등록되어 있으면, 
+앱의 원하는 지점에서 `FlutterActivity`를 시작하는 코드를 추가합니다. 
+다음 예에서는 `OnClickListener`에서 `FlutterActivity`가 시작되는 것을 보여줍니다.
 
 :::note
-Make sure to use the following import:
+다음 import를 사용해야 합니다.
 
 ```java
 import io.flutter.embedding.android.FlutterActivity;
@@ -86,13 +81,10 @@ myButton.setOnClickListener(new OnClickListener() {
 {% endtab %}
 {% endtabs %}
 
-The previous example assumes that your Dart entrypoint
-is called `main()`, and your initial Flutter route is '/'.
-The Dart entrypoint can't be changed using `Intent`,
-but the initial route can be changed using `Intent`.
-The following example demonstrates how to launch a
-`FlutterActivity` that initially renders a custom
-route in Flutter.
+이전 예제에서는 Dart 진입점이 `main()`이고 초기 Flutter 경로가 '/'라고 가정합니다. 
+Dart 진입점은 `Intent`를 사용하여 변경할 수 없지만, 
+초기 경로는 `Intent`를 사용하여 변경할 수 있습니다. 
+다음 예제에서는 Flutter에서 커스텀 경로를 처음에 렌더링하는 `FlutterActivity`를 시작하는 방법을 보여줍니다.
 
 {% tabs "android-language" %}
 {% tab "Kotlin" %}
@@ -128,31 +120,28 @@ myButton.addOnClickListener(new OnClickListener() {
 {% endtab %}
 {% endtabs %}
 
-Replace `"/my_route"` with your desired initial route.
+`"/my_route"`를 원하는 초기 경로로 바꾸세요.
 
-The use of the `withNewEngine()` factory method
-configures a `FlutterActivity` that internally create
-its own [`FlutterEngine`][] instance. This comes with a
-non-trivial initialization time. The alternative approach
-is to instruct `FlutterActivity` to use a pre-warmed,
-cached `FlutterEngine`, which minimizes Flutter's
-initialization time. That approach is discussed next.
+`withNewEngine()` 팩토리 메서드를 사용하면, 
+내부적으로 자체 [`FlutterEngine`][] 인스턴스를 만드는 `FlutterActivity`가 구성됩니다. 
+여기에는 사소한 초기화 시간이 따릅니다. 
+다른 방법은 `FlutterActivity`에 미리 워밍업되고, 
+캐시된 `FlutterEngine`을 사용하도록 지시하는 것입니다. 
+이렇게 하면 Flutter의 초기화 시간이 최소화됩니다. 
+이 방법은 다음에 설명합니다.
 
 ### 3단계: (선택 사항) 캐시된 FlutterEngine 사용 {:#step-3-optional-use-a-cached-flutterengine}
 
-Every `FlutterActivity` creates its own `FlutterEngine`
-by default. Each `FlutterEngine` has a non-trivial
-warm-up time. This means that launching a standard
-`FlutterActivity` comes with a brief delay before your Flutter
-experience becomes visible. To minimize this delay,
-you can warm up a `FlutterEngine` before arriving at
-your `FlutterActivity`, and then you can use
-your pre-warmed `FlutterEngine` instead.
+모든 `FlutterActivity`는 기본적으로 자체 `FlutterEngine`을 만듭니다. 
+각 `FlutterEngine`은 사소하지 않은 워밍업 시간을 갖습니다. 
+즉, 표준 `FlutterActivity`를 시작하면, Flutter 경험이 표시되기 전에 잠시 지연됩니다. 
+이 지연을 최소화하려면, `FlutterActivity`에 도착하기 전에, 
+`FlutterEngine`을 워밍업한 다음, 
+미리 워밍된 `FlutterEngine`을 대신 사용할 수 있습니다.
 
-To pre-warm a `FlutterEngine`, find a reasonable
-location in your app to instantiate a `FlutterEngine`.
-The following example arbitrarily pre-warms a
-`FlutterEngine` in the `Application` class:
+`FlutterEngine`을 미리 워밍하려면, 
+앱에서 `FlutterEngine`을 인스턴스화할 적절한 위치를 찾으세요. 
+다음 예제는 `Application` 클래스에서 임의로 `FlutterEngine`을 미리 워밍합니다.
 
 {% tabs "android-language" %}
 {% tab "Kotlin" %}
@@ -164,15 +153,15 @@ class MyApplication : Application() {
   override fun onCreate() {
     super.onCreate()
 
-    // Instantiate a FlutterEngine.
+    // FlutterEngine을 인스턴스화합니다.
     flutterEngine = FlutterEngine(this)
 
-    // Start executing Dart code to pre-warm the FlutterEngine.
+    // FlutterEngine을 예열하기 위해 Dart 코드 실행을 시작합니다.
     flutterEngine.dartExecutor.executeDartEntrypoint(
       DartExecutor.DartEntrypoint.createDefault()
     )
 
-    // Cache the FlutterEngine to be used by FlutterActivity.
+    // FlutterActivity에서 사용할 FlutterEngine을 캐시합니다.
     FlutterEngineCache
       .getInstance()
       .put("my_engine_id", flutterEngine)
@@ -190,15 +179,15 @@ public class MyApplication extends Application {
   @Override
   public void onCreate() {
     super.onCreate();
-    // Instantiate a FlutterEngine.
+    // FlutterEngine을 인스턴스화합니다.
     flutterEngine = new FlutterEngine(this);
 
-    // Start executing Dart code to pre-warm the FlutterEngine.
+    // FlutterEngine을 예열하기 위해 Dart 코드 실행을 시작합니다.
     flutterEngine.getDartExecutor().executeDartEntrypoint(
       DartEntrypoint.createDefault()
     );
 
-    // Cache the FlutterEngine to be used by FlutterActivity.
+    // FlutterActivity에서 사용할 FlutterEngine을 캐시합니다.
     FlutterEngineCache
       .getInstance()
       .put("my_engine_id", flutterEngine);
@@ -209,31 +198,24 @@ public class MyApplication extends Application {
 {% endtab %}
 {% endtabs %}
 
-The ID passed to the [`FlutterEngineCache`][] can be whatever you want.
-Make sure that you pass the same ID to any `FlutterActivity`
-or [`FlutterFragment`][] that should use the cached `FlutterEngine`.
-Using `FlutterActivity` with a cached `FlutterEngine`
-is discussed next.
+[`FlutterEngineCache`][]에 전달된 ID는 원하는 대로 될 수 있습니다. 
+캐시된 `FlutterEngine`을 사용해야 하는 모든 `FlutterActivity` 또는 [`FlutterFragment`][]에 동일한 ID를 전달해야 합니다. 
+캐시된 `FlutterEngine`과 함께 `FlutterActivity`를 사용하는 것에 대해서는 다음에 설명합니다.
 
 :::note
-To warm up a `FlutterEngine`, you must execute a Dart
-entrypoint. Keep in mind that the moment
-`executeDartEntrypoint()` is invoked,
-your Dart entrypoint method begins executing.
-If your Dart entrypoint invokes `runApp()`
-to run a Flutter app, then your Flutter app behaves as if it
-were running in a window of zero size until this
-`FlutterEngine` is attached to a `FlutterActivity`,
-`FlutterFragment`, or `FlutterView`. Make sure that your app
-behaves appropriately between the time you warm it up and
-the time you display Flutter content.
+`FlutterEngine`을 워밍업하려면, Dart 진입점을 실행해야 합니다. 
+`executeDartEntrypoint()`가 호출되는 순간, 
+Dart 진입점 메서드가 실행되기 시작한다는 점을 명심하세요. 
+Dart 진입점이 `runApp()`를 호출하여 Flutter 앱을 실행하면, 
+Flutter 앱은 이 `FlutterEngine`이 `FlutterActivity`, `FlutterFragment` 또는 `FlutterView`에 연결될 때까지, 
+크기가 0인 창에서 실행되는 것처럼 동작합니다. 
+앱을 워밍업하는 시간과 Flutter 콘텐츠를 표시하는 시간 사이에 앱이 적절하게 동작하는지 확인하세요.
 :::
 
-With a pre-warmed, cached `FlutterEngine`, you now need
-to instruct your `FlutterActivity` to use the cached
-`FlutterEngine` instead of creating a new one.
-To accomplish this, use `FlutterActivity`'s `withCachedEngine()`
-builder:
+미리 워밍업되고 캐시된 `FlutterEngine`을 사용하면, 
+이제 `FlutterActivity`에 새 것을 만드는 대신, 
+캐시된 `FlutterEngine`을 사용하도록 지시해야 합니다. 
+이를 수행하려면 `FlutterActivity`의 `withCachedEngine()` 빌더를 사용합니다.
 
 {% tabs "android-language" %}
 {% tab "Kotlin" %}
@@ -267,44 +249,36 @@ myButton.addOnClickListener(new OnClickListener() {
 {% endtab %}
 {% endtabs %}
 
-When using the `withCachedEngine()` factory method,
-pass the same ID that you used when caching the desired
-`FlutterEngine`.
+`withCachedEngine()` 팩토리 메서드를 사용할 때, 
+원하는 `FlutterEngine`을 캐싱할 때 사용한 것과 동일한 ID를 전달합니다.
 
-Now, when you launch `FlutterActivity`,
-there is significantly less delay in
-the display of Flutter content.
+이제 `FlutterActivity`를 실행하면, Flutter 콘텐츠 표시에 지연이 상당히 줄어듭니다.
 
 :::note
-When using a cached `FlutterEngine`, that `FlutterEngine` outlives any
-`FlutterActivity` or `FlutterFragment` that displays it. Keep in
-mind that Dart code begins executing as soon as you pre-warm the
-`FlutterEngine`, and continues executing after the destruction of your
-`FlutterActivity`/`FlutterFragment`. To stop executing and clear resources,
-obtain your `FlutterEngine` from the `FlutterEngineCache` and destroy the
-`FlutterEngine` with `FlutterEngine.destroy()`.
+캐시된 `FlutterEngine`을 사용할 때, 해당 `FlutterEngine`은 그것을 표시하는 `FlutterActivity` 또는 `FlutterFragment`보다 오래 지속됩니다. 
+Dart 코드는 `FlutterEngine`을 사전 워밍하는 즉시 실행을 시작하고, 
+`FlutterActivity`/`FlutterFragment`가 파괴된 후에도 계속 실행된다는 점을 명심하세요. 
+실행을 중지하고 리소스를 지우려면, 
+`FlutterEngineCache`에서 `FlutterEngine`을 가져오고, 
+`FlutterEngine.destroy()`로 `FlutterEngine`을 파괴하세요.
 :::
 
 :::note
-Runtime performance isn't the only reason that you might
-pre-warm and cache a `FlutterEngine`.
-A pre-warmed `FlutterEngine` executes Dart code independent
-from a `FlutterActivity`, which allows such a `FlutterEngine`
-to be used to execute arbitrary Dart code at any moment.
-Non-UI application logic can be executed in a `FlutterEngine`,
-like networking and data caching, and in background behavior
-within a `Service` or elsewhere. When using a `FlutterEngine`
-to execute behavior in the background, be sure to adhere to all
-Android restrictions on background execution.
+런타임 성능이 `FlutterEngine`을 사전 워밍하고 캐시하는 유일한 이유는 아닙니다. 
+사전 워밍된 `FlutterEngine`은 `FlutterActivity`와 독립적으로 Dart 코드를 실행하므로, 
+이러한 `FlutterEngine`을 사용하여 언제든지 임의의 Dart 코드를 실행할 수 있습니다. 
+네트워킹 및 데이터 캐싱과 같은 비 UI 애플리케이션 로직은 `FlutterEngine`에서 실행될 수 있으며, 
+`Service` 또는 다른 곳에서 백그라운드 동작으로 실행될 수 있습니다. 
+`FlutterEngine`을 사용하여 백그라운드에서 동작을 실행하는 경우, 
+백그라운드 실행에 대한 모든 Android 제한 사항을 준수해야 합니다.
 :::
 
 :::note
-Flutter's debug/release builds have drastically different
-performance characteristics. To evaluate the performance
-of Flutter, use a release build.
+Flutter의 디버그/릴리스 빌드는 성능 특성이 크게 다릅니다. 
+Flutter의 성능을 평가하려면, 릴리스 빌드를 사용하세요.
 :::
 
-#### Initial route with a cached engine
+#### 캐시된 엔진을 사용한 초기 경로 {:#initial-route-with-a-cached-engine}
 
 {% include docs/add-to-app/android-initial-route-cached-engine.md %}
 
@@ -313,21 +287,18 @@ of Flutter, use a release build.
 <img src='/assets/images/docs/development/add-to-app/android/add-flutter-screen/add-single-flutter-screen-transparent_header.png'
 class="mw-100" alt="Add Flutter Screen With Translucency Header">
 
-Most full-screen Flutter experiences are opaque.
-However, some apps would like to deploy a Flutter
-screen that looks like a modal, for example,
-a dialog or bottom sheet. Flutter supports translucent
-`FlutterActivity`s out of the box.
+대부분의 전체 화면 Flutter 경험은 불투명(opaque)합니다. 
+그러나, 일부 앱은 모달처럼 보이는 Flutter 화면, 
+예를 들어, 대화 상자나 바텀 시트를 배포하고 싶어합니다. 
+Flutter는 기본적으로 반투명(translucent) `FlutterActivity`를 지원합니다.
 
-To make your `FlutterActivity` translucent,
-make the following changes to the regular process of
-creating and launching a `FlutterActivity`.
+`FlutterActivity`를 반투명하게 만들려면, 
+`FlutterActivity`를 만들고 시작하는 일반적인 프로세스를 다음과 같이 변경합니다.
 
 ### 1단계: 반투명 테마 사용 {:#step-1-use-a-theme-with-translucency}
 
-Android requires a special theme property for `Activity`s that render
-with a translucent background. Create or update an Android theme with the
-following property:
+Android는 반투명 배경으로 렌더링되는 `Activity`에 대한 특수 테마 속성을 요구합니다. 
+다음 속성으로 Android 테마를 만들거나 업데이트하세요.
 
 ```xml
 <style name="MyTheme" parent="@style/MyParentTheme">
@@ -335,7 +306,7 @@ following property:
 </style>
 ```
 
-Then, apply the translucent theme to your `FlutterActivity`.
+그런 다음, `FlutterActivity`에 반투명 테마를 적용합니다.
 
 ```xml
 <activity
@@ -347,20 +318,19 @@ Then, apply the translucent theme to your `FlutterActivity`.
   />
 ```
 
-Your `FlutterActivity` now supports translucency.
-Next, you need to launch your `FlutterActivity`
-with explicit transparency support.
+이제 `FlutterActivity`가 반투명성을 지원합니다. 
+다음으로, 명시적 투명성 지원으로 `FlutterActivity`를 시작해야 합니다.
 
 ### 2단계: 투명성을 사용하여 FlutterActivity 시작 {:#step-2-start-flutteractivity-with-transparency}
 
-To launch your `FlutterActivity` with a transparent background,
-pass the appropriate `BackgroundMode` to the `IntentBuilder`:
+투명한 배경으로 `FlutterActivity`를 시작하려면, 
+적절한 `BackgroundMode`를 `IntentBuilder`에 전달합니다.
 
 {% tabs "android-language" %}
 {% tab "Kotlin" %}
 
 ```kotlin title="ExistingActivity.kt"
-// Using a new FlutterEngine.
+// 새로운 FlutterEngine을 사용합니다.
 startActivity(
   FlutterActivity
     .withNewEngine()
@@ -368,7 +338,7 @@ startActivity(
     .build(this)
 );
 
-// Using a cached FlutterEngine.
+// 캐시된 FlutterEngine을 사용합니다.
 startActivity(
   FlutterActivity
     .withCachedEngine("my_engine_id")
@@ -381,7 +351,7 @@ startActivity(
 {% tab "Java" %}
 
 ```java title="ExistingActivity.java"
-// Using a new FlutterEngine.
+// 새로운 FlutterEngine을 사용합니다.
 startActivity(
   FlutterActivity
     .withNewEngine()
@@ -389,7 +359,7 @@ startActivity(
     .build(context)
 );
 
-// Using a cached FlutterEngine.
+// 캐시된 FlutterEngine을 사용합니다.
 startActivity(
   FlutterActivity
     .withCachedEngine("my_engine_id")
@@ -401,13 +371,12 @@ startActivity(
 {% endtab %}
 {% endtabs %}
 
-You now have a `FlutterActivity` with a transparent background.
+이제 투명한 배경을 가진 `FlutterActivity`가 생겼습니다.
 
 :::note
-Make sure that your Flutter content also includes a
-translucent background. If your Flutter UI paints a
-solid background color, then it still appears as
-though your `FlutterActivity` has an opaque background.
+Flutter 콘텐츠에도 반투명 배경이 포함되어 있는지 확인하세요. 
+Flutter UI가 단색 배경색을 칠하는 경우, 
+`FlutterActivity`에 불투명 배경이 있는 것처럼 보입니다.
 :::
 
 [`FlutterActivity`]: {{site.api}}/javadoc/io/flutter/embedding/android/FlutterActivity.html

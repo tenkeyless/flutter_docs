@@ -25,49 +25,31 @@ FlutterView에 애플리케이션의 activity 이벤트를 공급하는 방법�
 <img src='/assets/images/docs/development/add-to-app/android/add-flutter-view/add-view-sample.gif'
 class="mw-100" alt="Add Flutter View sample video">
 
-Unlike the guides for FlutterActivity and FlutterFragment, the FlutterView
-integration could be better demonstrated with a sample project.
+FlutterActivity 및 FlutterFragment에 대한 가이드와 달리, 
+FlutterView 통합은 샘플 프로젝트로 더 잘 설명할 수 있습니다.
 
-A sample project is at [https://github.com/flutter/samples/tree/main/add_to_app/android_view]({{site.repo.samples}}/tree/main/add_to_app/android_view)
-to document a simple FlutterView integration where FlutterViews are used
-for some of the cells in a RecycleView list of cards as seen in the gif above.
+샘플 프로젝트는 [https://github.com/flutter/samples/tree/main/add_to_app/android_view]({{site.repo.samples}}/tree/main/add_to_app/android_view)에 있으며, 
+위의 gif에서 볼 수 있듯이, 카드의 RecycleView 리스트에 있는 일부 셀에, 
+FlutterView를 사용하는 간단한 FlutterView 통합을 문서화합니다.
 
 ## 일반적인 접근 방식 {:#general-approach}
 
-The general gist of the FlutterView-level integration is that you must recreate
-the various interactions between your Activity, the [FlutterView]({{site.api}}/javadoc/io/flutter/embedding/android/FlutterView.html)
-and the [FlutterEngine]({{site.api}}/javadoc/io/flutter/embedding/engine/FlutterEngine.html)
-present in the [FlutterActivityAndFragmentDelegate](https://cs.opensource.google/flutter/engine/+/master:shell/platform/android/io/flutter/embedding/android/FlutterActivityAndFragmentDelegate.java)
-in your own application's code. The connections made in the [FlutterActivityAndFragmentDelegate](https://cs.opensource.google/flutter/engine/+/master:shell/platform/android/io/flutter/embedding/android/FlutterActivityAndFragmentDelegate.java)
-are done automatically when using a [FlutterActivity]({{site.api}}/javadoc/io/flutter/embedding/android/FlutterActivity.html)
-or a [FlutterFragment]({{site.api}}/javadoc/io/flutter/embedding/android/FlutterFragment.html),
-but since the [FlutterView]({{site.api}}/javadoc/io/flutter/embedding/android/FlutterView.html)
-in this case is being added to an Activity or Fragment in your application,
-you must recreate the connections manually. Otherwise, the [FlutterView]({{site.api}}/javadoc/io/flutter/embedding/android/FlutterView.html)
-will not render anything or have other missing functionalities.
+FlutterView 레벨 통합의 일반적인 요지는 [FlutterActivityAndFragmentDelegate](https://cs.opensource.google/flutter/engine/+/master:shell/platform/android/io/flutter/embedding/android/FlutterActivityAndFragmentDelegate.java)에 있는 Activity, [FlutterView]({{site.api}}/javadoc/io/flutter/embedding/android/FlutterView.html) 및 [FlutterEngine]({{site.api}}/javadoc/io/flutter/embedding/engine/FlutterEngine.html) 간의 다양한 상호작용을 사용자 애플리케이션의 코드에서 다시 생성해야 한다는 것입니다. 
+[FlutterActivityAndFragmentDelegate](https://cs.opensource.google/flutter/engine/+/master:shell/platform/android/io/flutter/embedding/android/FlutterActivityAndFragmentDelegate.java)에서 만들어진 연결은 [FlutterActivity]({{site.api}}/javadoc/io/flutter/embedding/android/FlutterActivity.html) 또는 [FlutterFragment]({{site.api}}/javadoc/io/flutter/embedding/android/FlutterFragment.html)를 사용할 때 자동으로 이루어지지만, 
+이 경우 [FlutterView]({{site.api}}/javadoc/io/flutter/embedding/android/FlutterView.html)가 애플리케이션의 Activity 또는 Fragment에 추가되므로, 
+연결을 수동으로 다시 만들어야 합니다. 
+그렇지 않으면, [FlutterView]({{site.api}}/javadoc/io/flutter/embedding/android/FlutterView.html)는 아무것도 렌더링하지 않거나 다른 누락된 기능이 있습니다.
 
-A sample [FlutterViewEngine]({{site.repo.samples}}/blob/main/add_to_app/android_view/android_view/app/src/main/java/dev/flutter/example/androidView/FlutterViewEngine.kt)
-class shows one such possible implementation of an application-specific
-connection between an Activity, a [FlutterView]({{site.api}}/javadoc/io/flutter/embedding/android/FlutterView.html)
-and a [FlutterEngine]({{site.api}}/javadoc/io/flutter/embedding/engine/FlutterEngine.html).
+샘플 [FlutterViewEngine]({{site.repo.samples}}/blob/main/add_to_app/android_view/android_view/app/src/main/java/dev/flutter/example/androidView/FlutterViewEngine.kt) 클래스는 액티비티, [FlutterView]({{site.api}}/javadoc/io/flutter/embedding/android/FlutterView.html) 및 [FlutterEngine]({{site.api}}/javadoc/io/flutter/embedding/engine/FlutterEngine.html) 간의 애플리케이션별 연결에 대한 가능한 구현 중 하나를 보여줍니다.
 
 ### 구현할 API {:#apis-to-implement}
 
-The absolute minimum implementation needed for Flutter to draw anything at all
-is to:
+Flutter가 무엇이든 그리기 위해 필요한 최소한의 구현은 다음과 같습니다.
 
-- Call [attachToFlutterEngine]({{site.api}}/javadoc/io/flutter/embedding/android/FlutterView.html#attachToFlutterEngine-io.flutter.embedding.engine.FlutterEngine-) when the
-  [FlutterView]({{site.api}}/javadoc/io/flutter/embedding/android/FlutterView.html)
-  is added to a resumed Activity's view hierarchy and is visible; and
-- Call [appIsResumed]({{site.api}}/javadoc/io/flutter/embedding/engine/systemchannels/LifecycleChannel.html#appIsResumed--) on the [FlutterEngine]({{site.api}}/javadoc/io/flutter/embedding/engine/FlutterEngine.html)'s
-  `lifecycleChannel` field when the Activity hosting the [FlutterView]({{site.api}}/javadoc/io/flutter/embedding/android/FlutterView.html)
-  is visible.
+- [FlutterView]({{site.api}}/javadoc/io/flutter/embedding/android/FlutterView.html)가 재개된 Activity의 뷰 계층에 추가되고 표시될 때, [attachToFlutterEngine]({{site.api}}/javadoc/io/flutter/embedding/android/FlutterView.html#attachToFlutterEngine-io.flutter.embedding.engine.FlutterEngine-)을 호출합니다. 그리고
+- [FlutterView]({{site.api}}/javadoc/io/flutter/embedding/engine/systemchannels/LifecycleChannel.html)를 호스팅하는 Activity가 표시될 때, [FlutterEngine]({{site.api}}/javadoc/io/flutter/embedding/engine/FlutterEngine.html)의 `lifecycleChannel` 필드에서 [appIsResumed]({{site.api}}/javadoc/io/flutter/embedding/engine/systemchannels/LifecycleChannel.html#appIsResumed--)를 호출합니다.
 
-The reverse [detachFromFlutterEngine]({{site.api}}/javadoc/io/flutter/embedding/android/FlutterView.html#detachFromFlutterEngine--) and other lifecycle methods on the [LifecycleChannel]({{site.api}}/javadoc/io/flutter/embedding/engine/systemchannels/LifecycleChannel.html)
-class must also be called to not leak resources when the FlutterView or Activity
-is no longer visible.
+FlutterView 또는 Activity가 더 이상 표시되지 않을 때, 리소스가 누출되지 않도록, 
+[LifecycleChannel]({{site.api}}/javadoc/io/flutter/embedding/engine/systemchannels/LifecycleChannel.html) 클래스의 역방향 [detachFromFlutterEngine]({{site.api}}/javadoc/io/flutter/embedding/android/FlutterView.html#detachFromFlutterEngine--) 및 기타 라이프사이클 메서드도 호출해야 합니다.
 
-In addition, see the remaining implementation in the [FlutterViewEngine]({{site.repo.samples}}/blob/main/add_to_app/android_view/android_view/app/src/main/java/dev/flutter/example/androidView/FlutterViewEngine.kt)
-demo class or in the [FlutterActivityAndFragmentDelegate](https://cs.opensource.google/flutter/engine/+/master:shell/platform/android/io/flutter/embedding/android/FlutterActivityAndFragmentDelegate.java)
-to ensure a correct functioning of other features such as clipboards, system
-UI overlay, plugins etc.
+또한, [FlutterViewEngine]({{site.repo.samples}}/blob/main/add_to_app/android_view/android_view/app/src/main/java/dev/flutter/example/androidView/FlutterViewEngine.kt) 데모 클래스나 [FlutterActivityAndFragmentDelegate](https://cs.opensource.google/flutter/engine/+/master:shell/platform/android/io/flutter/embedding/android/FlutterActivityAndFragmentDelegate.java)에서 나머지 구현을 확인하여, 클립보드, 시스템 UI 오버레이, 플러그인 등과 같은 다른 기능이 올바르게 작동하는지 확인하세요.
