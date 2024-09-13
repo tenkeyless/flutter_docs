@@ -246,9 +246,6 @@ Flutter에서는, [제스처 시스템][gesture system]에서 일류 참여자(f
 신중하고 비용이 많이 드는 계획을 세우지 않고도, 
 동일한 코드베이스에서 여러 플랫폼에 게시하기가 더 쉽습니다.
 
-모든 코드에 단일 언어, 단일 프레임워크 및 단일 라이브러리 세트를 사용함으로써(각 플랫폼에서 UI가 다르든 아니든), 
-앱 개발 및 유지 관리 비용을 낮추는 데 도움이 됩니다.
-
 [catalog of Flutter's widgets]: /ui/widgets
 [gesture system]: /ui/interactivity/gestures
 
@@ -265,6 +262,15 @@ Flutter의 레이어화된 아키텍처는 수많은 위젯 라이브러리를 �
 
 Flutter의 상호 운용성 및 플러그인 시스템은 개발자가 새로운 모바일 OS 기능과 역량에 즉시 액세스할 수 있도록 설계되었습니다. 
 개발자는 Flutter 팀이 새로운 모바일 OS 역량을 공개할 때까지 기다릴 필요가 없습니다.
+
+### Does Flutter support code push?
+
+코드 푸시, 즉 앱 업데이트를 사용자 기기에 직접 푸시하는 기능은, 
+Flutter에서 직접 지원하지 않습니다. 
+그러나, [Shorebird][]라는 타사 솔루션이 있다는 사실은 알고 있습니다. 
+이는 공식적인 지지나 권장 사항이 아니라는 점에 유의하세요.
+
+[Shorebird]: https://shorebird.dev/
 
 ### Flutter 앱을 만들려면 어떤 운영 체제를 사용해야 하나요? {:#what-operating-systems-can-i-use-to-build-a-flutter-app}
 

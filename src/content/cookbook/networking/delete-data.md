@@ -30,6 +30,23 @@ $ flutter pub add http
 import 'package:http/http.dart' as http;
 ```
 
+Android에 배포하는 경우, `AndroidManifest.xml` 파일을 편집하여 인터넷 권한을 추가합니다.
+
+```xml
+<!-- 인터넷에서 데이터를 가져오는 데 필요합니다. -->
+<uses-permission android:name="android.permission.INTERNET" />
+```
+
+마찬가지로, macOS에 배포하는 경우, 
+`macos/Runner/DebugProfile.entitlements` 및 `macos/Runner/Release.entitlements` 
+파일을 편집하여 네트워크 클라이언트 자격을 포함시킵니다.
+
+```xml
+<!-- 인터넷에서 데이터를 가져오는 데 필요합니다. -->
+<key>com.apple.security.network.client</key>
+<true/>
+```
+
 ## 2. 서버에서 데이터 삭제 {:#2-delete-data-on-the-server}
 
 이 레시피는 `http.delete()` 메서드를 사용하여 [JSONPlaceholder][]에서 앨범을 삭제하는 방법을 다룹니다. 

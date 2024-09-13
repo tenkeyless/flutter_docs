@@ -7,4 +7,4 @@ short-title: 스크롤
 description: 스크롤을 활성화하거나 지원하는 Flutter 위젯 카탈로그입니다.
 ---
 
-{% include docs/catalogpage.html category="Scrolling" %}
+{% render docs/catalog-page.md, categoryName:"Scrolling", catalog:catalog %}

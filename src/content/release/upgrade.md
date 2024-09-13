@@ -87,10 +87,27 @@ $ flutter channel beta
 $ flutter upgrade
 ```
 
-:::note
-Flutter SDK의 특정 버전이 필요한 경우, 
-[Flutter SDK 아카이브][Flutter SDK archive]에서 다운로드할 수 있습니다.
-:::
+## Switching to a specific Flutter version
+
+특정 Flutter 버전으로 전환하려면:
+
+1. [Flutter SDK 아카이브][Flutter SDK archive]에서 원하는 **Flutter 버전**을 찾으세요.
+
+2. Flutter SDK로 이동합니다.
+
+   ```console
+   $ cd /path/to/flutter
+   ```
+
+   :::tip
+   `flutter doctor --verbose`를 사용하여 Flutter SDK의 경로를 찾을 수 있습니다.
+   :::
+
+3. `git checkout`을 사용하여 원하는 **Flutter 버전**으로 전환합니다.
+
+   ```console
+   $ git checkout <Flutter version>
+   ```
 
 ## 패키지 업그레이드 {:#upgrading-packages}
 

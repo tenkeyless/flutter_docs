@@ -24,7 +24,7 @@ Material 3을 기본값으로 전환하는 것은 Flutter 3.16에서 완료되�
 [Migrate to Material 3]: /release/breaking-changes/material-3-migration
 [Material 3 demo]: https://flutter.github.io/samples/web/material_3_demo/
 
-{% include docs/catalogpage-material.html category="Material components" %}
+{% render docs/catalog-page-material.md, categoryName:"Material components", catalog:catalog %}
 
 [Material 2 위젯 카탈로그][Material 2 widget catalog] 및 
 [위젯 카탈로그][widget catalog]의 ​​다른 카테고리에서 더 많은 위젯을 찾아보세요.

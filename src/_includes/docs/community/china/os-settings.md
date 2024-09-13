@@ -11,7 +11,7 @@
    {% capture envvarset -%}{{prompt}} {{comtoset}}{% endcapture -%}
    {% capture setpath -%}{{envvarset}}PATH = $pwd.PATH + "/flutter/bin",$env:PATH -join ";"{% endcapture -%}
    {% capture newdir -%}{{prompt}} New-Item -Path '{{installdirsuggestion}}' -ItemType Directory{% endcapture -%}
-   {% capture unzip -%} {{prompt}} Extract-Archive:{% endcapture -%}
+   {% capture unzip -%} {{prompt}} Expand-Archive .\{% endcapture -%}
    {% capture permaddexample -%}
 $newPath = $pwd.PATH + "/flutter/bin",$env:PATH -join ";"
 [System.Environment]::SetEnvironmentVariable('Path',$newPath,User)
@@ -27,9 +27,9 @@ $newPath = $pwd.PATH + "/flutter/bin",$env:PATH -join ";"
    {% capture setpath -%}{{envvarset}}PATH="$PWD/flutter/bin:$PATH"{% endcapture -%}
    {% capture newdir -%}{{prompt}} mkdir ~/dev{% endcapture -%}
    {% if id == 'macos' %}
-      {% capture unzip -%} {{prompt}} unzip{% endcapture -%}
+      {% capture unzip -%} {{prompt}} unzip {% endcapture -%}
    {% else %}
-      {% capture unzip -%} {{prompt}} tar -xf{% endcapture -%}
+      {% capture unzip -%} {{prompt}} tar -xf {% endcapture -%}
    {% endif %}
    {% capture permaddexample -%}
 cat <<EOT >> ~/.zprofile
@@ -80,7 +80,7 @@ EOT
    이 예에서는 Flutter SDK의 {{os}} 버전을 다운로드했다고 가정합니다.
 
    ```console
-   {{unzip}} {{sdk | replace: "opsys", download-os}}{{file-format}}
+   {{unzip}}{{sdk | replace: "opsys", download-os}}{{file-format}}
    ```
 
 7. `PATH` 환경 변수에 Flutter를 추가합니다.

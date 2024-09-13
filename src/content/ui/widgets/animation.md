@@ -7,4 +7,4 @@ short-title: Animation
 description: Flutter 애니메이션 위젯 카탈로그.
 ---
 
-{% include docs/catalogpage.html category="Animation and motion" %}
+{% render docs/catalog-page.md, categoryName:"Animation and motion", catalog:catalog %}

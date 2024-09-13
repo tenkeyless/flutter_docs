@@ -7,4 +7,4 @@ short-title: 입력
 description: Flutter의 입력 위젯 카탈로그.
 ---
 
-{% include docs/catalogpage.html category="Input" %}
+{% render docs/catalog-page.md, categoryName:"Input", catalog:catalog %}

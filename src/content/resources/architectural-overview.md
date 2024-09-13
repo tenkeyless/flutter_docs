@@ -323,7 +323,7 @@ Flutter의 결정적 특징은 어떠한 위젯이라도 소스를 자세히 살
 그런 다음, 프레임워크는 렌더링 가능한 객체를 렌더링 가능한 객체 트리로 연결합니다.
 
 위젯의 빌드 함수는 부수 효과가 없어야 합니다. 함수에 빌드하라는 요청이 있을 때마다, 
-위젯은, 위젯이 이전에 반환한 내용과 관계없이, 새 위젯 트리<sup><a href="#a1">1</a></sup>를 반환해야 합니다. 
+위젯은, 위젯이 이전에 반환한 내용과 관계없이, 새 위젯 트리[^1]를 반환해야 합니다. 
 프레임워크는 렌더 객체 트리(나중에 자세히 설명)를 기반으로 호출해야 하는 빌드 메서드를 결정하는 힘든 작업을 수행합니다. 
 이 프로세스에 대한 자세한 내용은 
 [Inside Flutter 토픽](/resources/inside-flutter#linear-reconciliation)에서 확인할 수 있습니다.
@@ -505,7 +505,7 @@ if (color != null)
 
 그에 따라, `Image` 및 `Text` 위젯은 빌드 프로세스 중에 
 `RawImage` 및 `RichText`와 같은 자식 위젯을 삽입할 수 있습니다. 
-따라서 최종 위젯 계층 구조는 이 경우처럼<sup><a href="#a2">2</a></sup> 코드가 나타내는 것보다 더 깊을 수 있습니다.:
+따라서 최종 위젯 계층 구조는 이 경우처럼[^2] 코드가 나타내는 것보다 더 깊을 수 있습니다.:
 
 ![Render pipeline sequencing diagram](/assets/images/docs/arch-overview/widgets.png){:width="35%"}
 
@@ -755,7 +755,7 @@ Flutter solves this by introducing platform view widgets
 ([`AndroidView`]({{site.api}}/flutter/widgets/AndroidView-class.html)
 and [`UiKitView`]({{site.api}}/flutter/widgets/UiKitView-class.html))
 that let you embed this kind of content on each platform. Platform views can be
-integrated with other Flutter content<sup><a href="#a3">3</a></sup>. Each of
+integrated with other Flutter content[^3]. Each of
 these widgets acts as an intermediary to the underlying operating system. For
 example, on Android, `AndroidView` serves three primary functions:
 
@@ -850,7 +850,7 @@ WebGL로 렌더링하기 위해, Flutter는 [CanvasKit](https://skia.org/docs/us
 WebAssembly로 컴파일된 Skia 버전을 사용합니다. 
 HTML 모드가 최상의 코드 크기 특성을 제공하는 반면, 
 `CanvasKit`은 브라우저의 그래픽 스택으로 가는 가장 빠른 경로를 제공하고, 
-기본 모바일 대상에서 다소 더 높은 그래픽 충실도를 제공합니다. <sup><a href="#a4">4</a></sup>
+네이티브 모바일 대상에서 다소 더 높은 그래픽 충실도를 제공합니다.[^4]
 
 아키텍처 레이어 다이어그램의 웹 버전은 다음과 같습니다.
 
@@ -881,10 +881,10 @@ Flutter의 내부에 대해 더 많은 정보를 원하는 분들을 위해, [In
 
 **Footnotes:**
 
-<sup><a id="a1">1</a></sup> `build` 함수는 새로운 트리를 반환하지만, 통합할 새로운 구성이 있는 경우에만 _다른_ 것을 반환하면 됩니다. 구성이 실제로 동일한 경우, 동일한 위젯을 반환하면 됩니다.
+[^1]: `build` 함수는 새로운 트리를 반환하지만, 통합할 새로운 구성이 있는 경우에만 _다른_ 것을 반환하면 됩니다. 구성이 실제로 동일한 경우, 동일한 위젯을 반환하면 됩니다.
 
-<sup><a id="a2">2</a></sup> 이것은 읽기 편하도록 약간 단순화한 것입니다. 실제로는, 트리가 더 복잡할 수 있습니다.
+[^2]: 이것은 읽기 편하도록 약간 단순화한 것입니다. 실제로는, 트리가 더 복잡할 수 있습니다.
 
-<sup><a id="a3">3</a></sup> 이 접근 방식에는 몇 가지 제한이 있습니다. 예를 들어, 플랫폼 뷰의 투명도는 다른 Flutter 위젯과 같은 방식으로 합성되지 않습니다.
+[^3]: 이 접근 방식에는 몇 가지 제한이 있습니다. 예를 들어, 플랫폼 뷰의 투명도는 다른 Flutter 위젯과 같은 방식으로 합성되지 않습니다.
 
-<sup><a id="a4">4</a></sup> 한 가지 예는 그림자(shadows)인데, 이는 일부 충실도를 희생하고 DOM과 동등한 기본 요소를 사용하여 근사화해야 합니다.
+[^4]: 한 가지 예는 그림자(shadows)인데, 이는 일부 충실도를 희생하고 DOM과 동등한 기본 요소를 사용하여 근사화해야 합니다.

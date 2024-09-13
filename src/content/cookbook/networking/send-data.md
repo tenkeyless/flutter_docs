@@ -32,13 +32,22 @@ $ flutter pub add http
 import 'package:http/http.dart' as http;
 ```
 
-Android용으로 개발하는 경우, `android/app/src/main`에 있는 `AndroidManifest.xml` 파일의 
-manifest 태그 내부에 다음 권한을 추가하세요.
+Android에 배포하는 경우, `AndroidManifest.xml` 파일을 편집하여 인터넷 권한을 추가합니다.
 
 ```xml
-<uses-permission android:name="android.permission.INTERNET"/>
+<!-- 인터넷에서 데이터를 가져오는 데 필요합니다. -->
+<uses-permission android:name="android.permission.INTERNET" />
 ```
 
+마찬가지로, macOS에 배포하는 경우, 
+`macos/Runner/DebugProfile.entitlements` 및 `macos/Runner/Release.entitlements` 
+파일을 편집하여 네트워크 클라이언트 자격을 포함시킵니다.
+
+```xml
+<!-- 인터넷에서 데이터를 가져오는 데 필요합니다. -->
+<key>com.apple.security.network.client</key>
+<true/>
+```
 
 ## 2. 서버로 데이터를 보내기 {:#2-sending-data-to-server}
 

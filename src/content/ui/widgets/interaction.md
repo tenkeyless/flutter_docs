@@ -9,4 +9,4 @@ description: >
   사용자 상호작용 및 네비게이션을 지원하는 Flutter 위젯 카탈로그입니다.
 ---
 
-{% include docs/catalogpage.html category="Interaction models" %}
+{% render docs/catalog-page.md, categoryName:"Interaction models", catalog:catalog %}
