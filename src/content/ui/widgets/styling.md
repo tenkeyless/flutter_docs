@@ -7,4 +7,4 @@ short-title: 스타일링
 description: Flutter의 테마 및 반응형 위젯 카탈로그입니다.
 ---
 
-{% include docs/catalogpage.html category="Styling" %}
+{% render docs/catalog-page.md, categoryName:"Styling", catalog:catalog %}

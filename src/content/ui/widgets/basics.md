@@ -7,4 +7,4 @@ short-title: 기본
 description: Flutter 기본 위젯 카탈로그
 ---
 
-{% include docs/catalogpage.html category="Basics" %}
+{% render docs/catalog-page.md, categoryName:"Basics", catalog:catalog %}

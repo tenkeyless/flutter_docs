@@ -9,7 +9,7 @@ show_breadcrumbs: false
 Flutter 웹사이트(이하 "웹사이트")는 Google에서 호스팅합니다. 
 웹사이트를 사용하거나 방문함으로써, 귀하는 Google의 일반 [서비스 약관][Terms of Service] 및 [개인정보 보호정책][Privacy Policy]에 동의하는 것입니다.
 
-"Flutter" 이름과 Flutter 로고 <img src="/assets/images/branding/flutter/logo/square.svg" width="32px" alt="Flutter logo" class="align-baseline text-icon">(이하 "Flutter 상표")는 Google이 소유한 상표이며, Creative Commons Attribution 4.0 International License에 따라 라이선스된 자산에 포함되지 않습니다. Google은 귀하가 [Flutter 브랜드 가이드라인](/brand)을 준수하는 경우, Flutter 상표를 사용할 수 있는 양도 불가능하고 비독점적이며 로열티 없는 제한적 라이선스를 부여합니다. 위에 명시된 경우를 제외하고, 여기에 명시된 어떤 내용도 귀하에게 Flutter 상표에 대한 권리, 소유권 또는 이익을 부여하거나 부여하는 것으로 간주되어서는 안 됩니다.
+"Flutter" 이름과 Flutter 로고 <img src="/assets/images/branding/flutter/logo/square.svg" width="24px" alt="Flutter logo" class="text-icon">(이하 "Flutter 상표")는 Google이 소유한 상표이며, Creative Commons Attribution 4.0 International License에 따라 라이선스된 자산에 포함되지 않습니다. Google은 귀하가 [Flutter 브랜드 가이드라인](/brand)을 준수하는 경우, Flutter 상표를 사용할 수 있는 양도 불가능하고 비독점적이며 로열티 없는 제한적 라이선스를 부여합니다. 위에 명시된 경우를 제외하고, 여기에 명시된 어떤 내용도 귀하에게 Flutter 상표에 대한 권리, 소유권 또는 이익을 부여하거나 부여하는 것으로 간주되어서는 안 됩니다.
 
 위에서 언급했듯이, Google은 Flutter 상표를 소유하지만, 개발자 커뮤니티에서 Flutter SDK를 지원하기 위해 사용할 수 있도록 라이선스를 부여합니다. 여기에는 교육 자료 및 기타 커뮤니티 콘텐츠가 포함됩니다.
 

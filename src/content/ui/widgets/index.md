@@ -34,9 +34,6 @@ Dart 및 Flutter의 패키지 저장소인 [pub.dev]({{site.pub}})에서 찾을 
                 <a href="{{page.url}}{{section.id}}"><header class="card-title">{{section.name}}</header></a>
                 <p class="card-text">{{section.description}}</p>
             </div>
-            <div class="card-footer card-footer--transparent">
-                <a href="{{page.url}}{{section.id}}" aria-label="Navigate to the {{section.name}} widgets catalog">Visit</a>
-            </div>
         </div>
     {% endif -%}
 {% endfor %}
@@ -54,9 +51,6 @@ Dart 및 Flutter의 패키지 저장소인 [pub.dev]({{site.pub}})에서 찾을 
             <div class="card-body">
                 <a href="{{page.url}}{{section.id}}"><header class="card-title">{{section.name}}</header></a>
                 <p class="card-text">{{section.description}}</p>
-            </div>
-            <div class="card-footer card-footer--transparent">
-                <a href="{{page.url}}{{section.id}}" aria-label="Navigate to the {{section.name}} widgets catalog">Visit</a>
             </div>
         </div>
     {% endif -%}

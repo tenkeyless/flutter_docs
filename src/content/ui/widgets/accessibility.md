@@ -7,4 +7,4 @@ short-title: 접근성
 description: Flutter의 접근성 위젯 카탈로그.
 ---
 
-{% include docs/catalogpage.html category="Accessibility" %}
+{% render docs/catalog-page.md, categoryName:"Accessibility", catalog:catalog %}

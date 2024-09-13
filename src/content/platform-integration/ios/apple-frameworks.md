@@ -9,7 +9,7 @@ description: >-
 ---
 
 iOS 개발에서 온 경우, Apple의 시스템 라이브러리와 동일한 기능을 제공하는 Flutter 플러그인을 찾아야 할 수도 있습니다. 
-여기에는 기기 하드웨어에 액세스하거나 `HealthKit` 또는 `MapKit`와 같은 특정 프레임워크와 상호 작용하는 것이 포함될 수 있습니다.
+여기에는 기기 하드웨어에 액세스하거나 `HealthKit`과 같은 특정 프레임워크와 상호 작용하는 것이 포함될 수 있습니다.
 
 SwiftUI 프레임워크가 Flutter와 어떻게 비교되는지에 대한 개요는 [SwiftUI 개발자를 위한 Flutter][Flutter for SwiftUI developers]를 참조하세요.
 
@@ -53,7 +53,6 @@ Flutter 플러그인을 추가하려면, 프로젝트 루트에서 `flutter pub 
 | 푸시 알림 보내기                        | `UserNotifications`                                                                   | [`firebase_messaging`][][^3] |
 | GPS 좌표에 액세스                         | `CoreLocation`                                                                        | [`geolocator`][]             |
 | 센서 데이터에 액세스[^4]                         | `CoreMotion`                                                                          | [`sensors_plus`][]           |
-| 지도 임베드                                     | `MapKit`                                                                              | [`google_maps_flutter`][]    |
 | 네트워크 요청하기                          | `URLSession`                                                                          | [`http`][]                   |
 | 키-값 저장                               | `@AppStorage` 속성 래퍼 및 `NSUserDefaults`   | [`shared_preferences`][]     |
 | 데이터베이스에 유지                          | `CoreData` 또는 SQLite                                                                  | [`sqflite`][]                |
@@ -90,7 +89,6 @@ Flutter 플러그인을 추가하려면, 프로젝트 루트에서 `flutter pub 
 [`in_app_purchase`]: {{site.pub-pkg}}/in_app_purchase
 [`pay`]: {{site.pub-pkg}}/pay
 [`firebase_messaging`]: {{site.pub-pkg}}/firebase_messaging
-[`google_maps_flutter`]: {{site.pub-pkg}}/google_maps_flutter
 [`google_ml_kit`]: {{site.pub-pkg}}/google_ml_kit
 [Use a custom TensorFlow Lite model with Flutter]: {{site.firebase}}/docs/ml/flutter/use-custom-models
 [`speech_to_text`]: {{site.pub-pkg}}/speech_to_text

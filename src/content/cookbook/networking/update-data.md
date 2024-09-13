@@ -33,6 +33,23 @@ $ flutter pub add http
 import 'package:http/http.dart' as http;
 ```
 
+Android에 배포하는 경우, `AndroidManifest.xml` 파일을 편집하여 인터넷 권한을 추가합니다.
+
+```xml
+<!-- 인터넷에서 데이터를 가져오는 데 필요합니다. -->
+<uses-permission android:name="android.permission.INTERNET" />
+```
+
+마찬가지로, macOS에 배포하는 경우, 
+`macos/Runner/DebugProfile.entitlements` 및 `macos/Runner/Release.entitlements` 
+파일을 편집하여 네트워크 클라이언트 자격을 포함시킵니다.
+
+```xml
+<!-- 인터넷에서 데이터를 가져오는 데 필요합니다. -->
+<key>com.apple.security.network.client</key>
+<true/>
+```
+
 ## 2. `http` 패키지를 사용하여 인터넷을 통해 데이터 업데이트 {:#2-updating-data-over-the-internet-using-the-http-package}
 
 이 레시피는 [`http.put()`][] 메서드를 사용하여 앨범 제목을 [JSONPlaceholder][]로 업데이트하는 방법을 다룹니다.

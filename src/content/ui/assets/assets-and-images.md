@@ -42,6 +42,27 @@ flutter:
 하위 디렉토리에 있는 파일을 추가하려면, 디렉토리당 엔트리를 만듭니다.
 :::
 
+:::note
+YAML에서 들여쓰기는 중요합니다. 
+`Error: unable to find directory entry in pubspec.yaml`와 같은 오류가 표시되면, 
+pubspec 파일에서 들여쓰기를 잘못했을 수도 있습니다. 
+다음의 [깨진][broken] 예를 고려해 보세요.
+
+```yaml
+flutter:
+assets:
+  - directory/
+```
+
+`assets:` 줄은 `flutter:` 줄 바로 아래에 정확히 두 칸 들여쓰기를 해야 합니다.
+
+```yaml
+flutter:
+  assets:
+    - directory/
+```
+:::
+
 ### Asset 번들링 {:#asset-bundling}
 
 `flutter` 섹션의 `assets` 하위 섹션은 앱에 포함되어야 하는 파일을 지정합니다. 

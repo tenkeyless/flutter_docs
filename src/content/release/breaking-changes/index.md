@@ -32,13 +32,17 @@ Flutter를 업그레이드한 후 Dart 오류가 발생하면, [`dart fix`][] �
 
 ### 아직 stable로 출시되지 않음 {:#not-yet-released-to-stable}
 
+* [`Color` 광범위한 색 영역 지원][`Color` wide gamut support]
 * [`InputDecoration.collapsed`에 대한 잘못된 매개변수 제거][Remove invalid parameters for `InputDecoration.collapsed`]
 * [`AssetManifest.json` 생성 중지][Stop generating `AssetManifest.json`]
 * [`TextField.canRequestFocus` Deprecate 됨][Deprecate `TextField.canRequestFocus`]
+* [SystemUiMode의 기본값을 Edge-to-Edge로 설정][Set default for SystemUiMode to Edge-to-Edge]
 
+[`Color` wide gamut support]: /release/breaking-changes/wide-gamut-framework
 [Remove invalid parameters for `InputDecoration.collapsed`]: /release/breaking-changes/input-decoration-collapsed
 [Stop generating `AssetManifest.json`]: /release/breaking-changes/asset-manifest-dot-json
 [Deprecate `TextField.canRequestFocus`]: /release/breaking-changes/can-request-focus
+[Set default for SystemUiMode to Edge-to-Edge]: /release/breaking-changes/default-systemuimode-edge-to-edge
 
 <a id="released-in-flutter-324" aria-hidden="true"></a>
 ### Flutter 3.24에서 릴리즈 {:#released-in-flutter-3-24}

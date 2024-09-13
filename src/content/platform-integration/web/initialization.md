@@ -118,6 +118,7 @@ _flutter.loader.load();
 |`canvasKitForceCpuOnly`| `true`로 설정하면, CanvasKit에서 CPU만 사용하여 렌더링합니다. (엔진은 WebGL을 사용하지 않습니다) |`bool`|
 |`canvasKitMaximumSurfaces`| CanvasKit 렌더러가 사용할 수 있는 오버레이 표면의 최대 수입니다. |`double`|
 |`debugShowSemanticNodes`| `true`이면 Flutter는 (디버깅을 위해) 시맨틱 트리를 화면에 시각적으로 렌더링합니다.  |`bool`|
+|`entryPointBaseUrl`| Flutter 앱의 진입점의 베이스 URL입니다. 기본값은 "/"입니다. |`String`|
 |`hostElement`| Flutter가 앱을 렌더링하는 HTML 요소입니다. 설정하지 않으면 Flutter 웹이 전체 페이지를 차지합니다. |`HtmlElement`|
 |`renderer`| 현재 Flutter 애플리케이션의 [웹 렌더러][web-renderers]를 `"canvaskit"` 또는 `"skwasm"`로 지정합니다. |`String`|
 

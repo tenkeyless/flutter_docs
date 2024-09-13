@@ -6,4 +6,4 @@ short-title: Assets
 description: Flutter의 asset 위젯 카탈로그입니다.
 ---
 
-{% include docs/catalogpage.html category="Assets, images, and icons" %}
+{% render docs/catalog-page.md, categoryName:"Assets, images, and icons", catalog:catalog %}

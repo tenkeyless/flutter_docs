@@ -7,4 +7,4 @@ short-title: 텍스트
 description: 텍스트를 표시하고 스타일을 지정하기 위한 Flutter 위젯 카탈로그입니다.
 ---
 
-{% include docs/catalogpage.html category="Text" %}
+{% render docs/catalog-page.md, categoryName:"Text", catalog:catalog %}

@@ -9,6 +9,8 @@
     - title: 더 알아보기
       permalink: /get-started/learn-more
     - divider
+    - title: Flutter 지원을 받을 수 있는 곳
+      permalink: /resources/support
     - title: 다른 플랫폼에서 왔나요?
       permalink: /get-started/flutter-for
       children:

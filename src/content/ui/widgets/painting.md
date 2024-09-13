@@ -9,4 +9,4 @@ description: >
   효과와 커스텀 페인팅을 제공하는 Flutter 위젯 카탈로그입니다.
 ---
 
-{% include docs/catalogpage.html category="Painting and effects" %}
+{% render docs/catalog-page.md, categoryName:"Painting and effects", catalog:catalog %}

@@ -9,5 +9,4 @@ description: >
   iOS 및 macOS에 대한 Apple의 휴먼 인터페이스 가이드라인을 준수하는 Flutter의 Cupertino 위젯 카탈로그입니다.
 ---
 
-
-{% include docs/catalogpage.html category="Cupertino" %}
+{% render docs/catalog-page.md, categoryName:"Cupertino", catalog:catalog %}

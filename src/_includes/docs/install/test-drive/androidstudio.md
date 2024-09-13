@@ -60,7 +60,7 @@
 
 {% capture save_changes -%}
   : **Save All**을 호출하거나, **Hot Reload**를 클릭하세요.
-  {% include docs/install/test-drive/hot-reload-icon.md %}.
+  {% render docs/install/test-drive/hot-reload-icon.md %}.
 {% endcapture %}
 
 {% capture ide_profile -%}

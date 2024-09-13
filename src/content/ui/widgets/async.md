@@ -6,4 +6,4 @@ short-title: Async
 description: 비동기 코드를 처리하기 위한 Flutter 위젯 카탈로그입니다.
 ---
 
-{% include docs/catalogpage.html category="Async" %}
+{% render docs/catalog-page.md, categoryName:"Async", catalog:catalog %}
